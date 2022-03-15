@@ -1,4 +1,4 @@
-const { Award } = require('../db')
+const Award = require('../db')
 const { v4:uuidv4 } = require('uuid')
 
 // create, get(awardId, userId), update, delete 
@@ -57,14 +57,14 @@ class AwardService{
 
     // DELETE
     static async deleteAward({ awardId }) {
-        const isDataDeleted = await Award.deleteById({ awardId });
+        const isDataDeleted = await Award.deleteById({ awardId })
     
         // db에서 찾지 못한 경우, 에러 메시지 반환
-        if (!isDataDeleted) {
-            const errorMessage = "해당 id를 가진 수상 데이터는 없습니다. 다시 한 번 확인해 주세요.";
-            return { errorMessage };
+        if (!isDataDeleted) { // 사라진 데이터 갯수가 1이 아님
+            const errorMessage = "해당 id를 가진 수상 데이터는 없습니다. 다시 한 번 확인해 주세요."
+            return { errorMessage }
         }
-        return { status: "ok" }
+        return { status: "ok" } // delete 성공
     }
 }
 

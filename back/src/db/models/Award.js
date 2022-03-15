@@ -1,24 +1,24 @@
 const { AwardModel } = require('../schemas/award')
 
-// Todo : create, findById, findByUserId, update, deleteById
+// create, findById, findByUserId, update, deleteById
 class Award {
     // POST
     static async create({ newAward }){
         const createNewAward = await AwardModel.create(newAward)
         return createNewAward
-    } // newAward-> awardService
+    }
 
     // GET
     static async findById({ awardId }){
         const award = await AwardModel.findOne({ id: awaridId })
         return award
-    } // award-> awardService
+    }
 
     // GET
     static async findByUserId({ user_id }){
         const awards = await AwardModel.findOne({ user_id })
         return awards
-    } // awards-> awardService
+    }
 
     // PUT
     static async update({ awardId, fieldToUpdate, newValue }){
@@ -33,16 +33,15 @@ class Award {
             option,
         )
         return updateAward
-    } // updateAward -> awardService
+    }
 
     // DELETE
     static async deleteById({ user_id }){
         const deleteResult = await AwardModel.deleteOne({ id: awardId })
-        const isDataDeleted = deleteResult.deletedCount === 1
-        console.log("isDataDeleted : ", isDataDeleted)
+        const isDataDeleted = deleteResult.deletedCount === 1 // 사라진 데이터 갯수가 1이면 true 반환
 
         return isDataDeleted
-    } // isDataDeleted -> awardService
+    } 
 }
 
 module.exports = { Award }

@@ -6,18 +6,18 @@ const AwardSchema = new Schema(
     {
         id: {
             type: String,
-            require: false,
+            required: true,
         },
         user_id: {
             type: String,
-            require: false,
+            required: true,
         }, 
         title: {
             type: String,
-            require: false,
+            required: true,
         },
         description: String,
-        require: false,
+        required: false,
     },
     {
         timestamps: true,

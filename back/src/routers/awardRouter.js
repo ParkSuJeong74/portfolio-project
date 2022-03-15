@@ -60,10 +60,11 @@ awardRouter.put('/awards/:id', async (req, res, next) => {
 
         const title = req.body.title ?? null
         const description = req.body.description ??  null
+        
         const toUpdate = { title, description }
 
         // db에서 데이터 찾기
-        const award = await AwardService.setAward({ awardId, toUpdate });
+        const award = await AwardService.setAward({ awardId, toUpdate })
 
         // errorMessage 발생시 실행
         if(award.errorMessage) {
