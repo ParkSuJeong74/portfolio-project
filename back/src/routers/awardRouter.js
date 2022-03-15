@@ -77,7 +77,7 @@ awardRouter.delete("/awards/:id", async function (req, res, next) {
             throw new Error(result.errorMessage)
         }
 
-        res.status(200).send(result);
+        res.status(200).send(result)
     } catch (error) {
         next(error)
     }
