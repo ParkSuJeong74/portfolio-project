@@ -4,6 +4,7 @@ const { AwardModel } = require('../schemas/award')
 class Award {
     // POST
     static async create({ newAward }){
+        console.log("여긴 들어옴??")
         const createNewAward = await AwardModel.create(newAward)
         return createNewAward
     }

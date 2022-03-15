@@ -1,8 +1,8 @@
-const { Schema, model } = require('mongoose')
+const { schemas, model } = require('mongoose')
 
-// Award Schema
-const AwardSchema = new Schema(
-    // award_id, user_id, title, description
+// Schema project
+// id, user_id, title, description, timestamp
+const ProjectSchema = new Schema(
     {
         id: {
             type: String,
@@ -11,14 +11,15 @@ const AwardSchema = new Schema(
         user_id: {
             type: String,
             required: true,
-        }, 
+        },
         title: {
             type: String,
             required: true,
         },
         description: {
             type: String,
-            required: true,
+            required: false,
+            default: "프로젝트를 설명해주세요."
         },
     },
     {
@@ -26,7 +27,7 @@ const AwardSchema = new Schema(
     }
 )
 
-// model과 연결
-const AwardModel = model("Award", AwardSchema)
+// model linking
+const ProjectModel = model("Project", ProjectSchema)
 
-module.exports = { AwardModel }
+module.exports = { ProjectModel }

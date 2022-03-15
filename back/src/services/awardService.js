@@ -7,6 +7,7 @@ class AwardService{
     static async addAward({ user_id, title, description }) {
         const id = uuidv4()
         const newAward = { id, user_id, title, description } // add data
+        console.log("newAward : ", newAward)
         const createNewAward = await Award.create({ newAward }) // newAward -> router
 
         return createNewAward

@@ -5,13 +5,13 @@ const { AwardService } = require('../services/awardService')
 
 const awardRouter = Router()
 
-awardRouter.use(login_required)
+// awardRouter.use(login_required)
 
 // POST : 수상 경력 생성
 awardRouter.post('/award/create', async (req, res, next) => {
     try {
         // body에 아무것도 없을 때 예외처리
-        if(is.empryObject(req.body)){
+        if(is.emptyObject(req.body)){
             throw new error("headers의 Content-Type을 application/json으로 설정해주세요.")
         }
 
@@ -24,8 +24,8 @@ awardRouter.post('/award/create', async (req, res, next) => {
         const newAward = AwardService.addAward({ user_id, title, description})
         
         // errorMessage 발생시 실행
-        if(award.errorMessage) {
-            throw new Error(award.errorMessage)
+        if(newAward.errorMessage) {
+            throw new Error(newAward.errorMessage)
         }
 
         res.status(201).json(newAward)
