@@ -29,7 +29,7 @@ class User {
     const updatedUser = await UserModel.findOneAndUpdate(
       filter,
       update,
-      option
+      option,
     );
     return updatedUser;
   }
