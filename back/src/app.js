@@ -2,7 +2,7 @@ const cors = require("cors")
 const express = require("express")
 const { userAuthRouter } = require("./routers/userRouter")
 const { awardRouter } = require("./routers/awardRouter")
-const { educationRouter } = require("./router/educationRouter")
+const { educationRouter } = require("./routers/educationRouter")
 const { errorMiddleware } = require("./middlewares/errorMiddleware")
 
 const app = express()
