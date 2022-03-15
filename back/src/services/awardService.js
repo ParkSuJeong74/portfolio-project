@@ -2,7 +2,7 @@ const { Award } = require("../db")
 const { v4: uuidv4 } = require("uuid")
 
 class AwardService {
-    static async addAward({ user_Id, title, description }) {
+    static async addAward({ user_id, title, description }) {
         const id = uuidv4()
 
         const newAward = { id, user_id, title, description }

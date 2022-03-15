@@ -35,7 +35,7 @@ educationRouter.post("/education/create", async (req, res, next) => {
 })
 
 // Todo : request에서 id를 받은 후 나머지 데이터를 받아와 응답으로 전송
-educationRouter.get("/education/:id", async (req, res, next) => {
+educationRouter.get("/educations/:id", async (req, res, next) => {
     try {
         const educationId = req.params.id
         const education = await EducationService.getEducation({ educationId })
@@ -51,7 +51,7 @@ educationRouter.get("/education/:id", async (req, res, next) => {
 })
 
 // Todo : request에서 id를 받은 후 id로 나머지 정보를 받아와 db데이터를 update
-educationRouter.put("/education:id", async (req, res, next) => {
+educationRouter.put("/educations/:id", async (req, res, next) => {
     try {
         const educationId = req.params.id
 
@@ -77,7 +77,7 @@ educationRouter.put("/education:id", async (req, res, next) => {
 })
 
 // Todo : request에서 id를 가져와 delete
-educationRouter.delete("/education/:id", async (req, res, next) => {
+educationRouter.delete("/educations/:id", async (req, res, next) => {
     try {
         const educationId = req.params.id
 
@@ -94,7 +94,7 @@ educationRouter.delete("/education/:id", async (req, res, next) => {
 })
 
 // Todo : 사용자(user_id)의 전체 교육 데이터 조회
-educationRouter.get("/education/:user_id", async (req, res, next) => {
+educationRouter.get("/educationlist/:user_id", async (req, res, next) => {
     try {
         const user_id = req.params.user_id
 
