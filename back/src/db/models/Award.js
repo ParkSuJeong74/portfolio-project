@@ -2,13 +2,13 @@ const { AwardModel } = require("../schemas/award")
 
 class Award {
     static async create({ newAward }) {
-        const createNewAward = await AwardModel.create(newAward)
+        const createdNewAward = await AwardModel.create(newAward)
         return createdNewAward
     }
 
     static async findById({ awardId }) {
-        const awards = await AwardModel.find({ user_id })
-        return awards
+        const award = await AwardModel.find({ id: awardId })
+        return award
     }
 
     static async findByUserId({ user_id }) {
@@ -21,7 +21,7 @@ class Award {
         const update = { [fieldToUpdate]: newValue }
         const option = { returnOriginal: false }
 
-        const updataAward = await AwardModel.findOneAndUpdate(
+        const updatedAward = await AwardModel.findOneAndUpdate(
             filter,
             update,
             option,
@@ -31,7 +31,7 @@ class Award {
 
     static async deleteById({ awardId }) {
         const deleteResult = await AwardModel.deleteOne({ id: awardId })
-        const isDataDelete = deleteResult.deleteCount === 1
+        const isDataDeleted = deleteResult.deletedCount === 1
 
         return isDataDeleted
     }

@@ -25,4 +25,4 @@ const AwardSchema = new Schema({
 
 const AwardModel = model("Award", AwardSchema)
 
-export { AwardModel }
+module.exports = { AwardModel }
