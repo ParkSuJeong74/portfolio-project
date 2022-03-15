@@ -1,6 +1,5 @@
 const { Award } = require("../db")
 const { v4: uuidv4 } = require("uuid")
-const { awardRouter } = require("../routers/awardRouter")
 
 class AwardService {
     static async addAward({ user_id, title, description }) {
@@ -32,7 +31,7 @@ class AwardService {
 
         if (!award) {
             const errorMessage = "해당 id를 가진 수상 데이터는 없습니다. 다시 한 번 확인해주세요."
-            return errorMessage
+            return { errorMessage }
         }
 
         if (toUpdate.title) {
