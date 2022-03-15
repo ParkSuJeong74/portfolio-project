@@ -2,11 +2,11 @@ const { Award } = require("../db")
 const { v4: uuidv4 } = require("uuid")
 
 class AwardService {
-    static async addAward({ userId, title, description }) {
+    static async addAward({ user_Id, title, description }) {
         const id = uuidv4()
 
         const newAward = { id, user_id, title, description }
-        const createNewAward = await Award.create({ newAward })
+        const createdNewAward = await Award.create({ newAward })
 
         return createdNewAward
     }
@@ -23,7 +23,7 @@ class AwardService {
     }
 
     static async getAwardList({ user_id }) {
-        const award = await Award.findByUserId({ user_id })
+        const awards = await Award.findByUserId({ user_id })
         return awards
     }
 
