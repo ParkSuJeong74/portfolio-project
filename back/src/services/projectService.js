@@ -12,7 +12,7 @@ class ProjectService{
     }
 
     // GET
-     async getProject({ projectId }){
+    async getProject({ projectId }){
         const project = await Project.findById({ projectId })
 
         if(!project){
@@ -22,13 +22,13 @@ class ProjectService{
         return project
     }
 
-     async getProjectList({ user_id }){
+    async getProjectList({ user_id }){
         const projects = await Project.findByUserId({ user_id })
         return projects
     }
 
     // PUT
-     async setProject({ projectId, toUpdate }){
+    async setProject({ projectId, toUpdate }){
         let project = await Project.findById({ projectId })
 
         if(!project){
@@ -51,7 +51,7 @@ class ProjectService{
         return project
     }
     // DELETE
-     async deleteProject({ projectId }){
+    async deleteProject({ projectId }){
         const isDataDeleted = await Project.deleteById({ projectId })
 
         if(!isDataDeleted){
