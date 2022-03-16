@@ -10,6 +10,7 @@ class ProjectService{
         const createNewProject = await Project.create({ newProject })
         return createNewProject
     }
+
     // GET
     static async getProject({ projectId }){
         const project = await Project.findById({ projectId })
@@ -19,6 +20,11 @@ class ProjectService{
             return { errorMessage }
         }
         return project
+    }
+
+    static async getProjectList({ user_id }){
+        const projects = await Project.findByUserId({ user_id })
+        return projects
     }
 
     // PUT

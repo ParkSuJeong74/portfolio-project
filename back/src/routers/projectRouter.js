@@ -102,10 +102,12 @@ projectRouter.delete('/projects/:id', async (req, res, next) => {
 // GET : 한 사용자의 프로젝트 목록 조회
 projectRouter.get('/projectlist/:user_id', async (req, res, next) => {
     try{
-        // Todo : id 가져오기
-        // Todo : db에서 데이터 조회(service)
-        // Todo : error 발생
-        res.send(200).send(projects)
+        // id 가져오기
+        const user_id = req.params.user_id
+        // db에서 데이터 조회(service)
+        const projects = await ProjectService.getProjectList({ user_id })
+        console.log(projects)
+        res.status(200).send(projects)
     } catch(err) {
         next(err)
     }

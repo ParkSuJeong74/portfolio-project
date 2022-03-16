@@ -14,6 +14,11 @@ class Project{
         return project
     }
 
+    static async findByUserId({ user_id }){
+        const project = await ProjectModel.find({ user_id })
+        return project
+    }
+
     // PUT
     static async update({ projectId, fieldToUpdate, newValue }){
         const filter = { id: projectId }
