@@ -56,8 +56,9 @@ certificateRouter.put("/certificates/:id", async (req, res, next) => {
 
         const title = req.body.title ?? null
         const description = req.body.description ?? null
+        const when_date = req.body.when_date ?? null
 
-        const toUpdate = { title, description }
+        const toUpdate = { title, description, when_date }
 
         const certificate = await CertificateService.setCertificate({ certificateId, toUpdate })
 
@@ -89,10 +90,10 @@ certificateRouter.delete("/certificates/:id", async (req, res, next) => {
     }
 })
 
-certificateRouter.get("/certificatelist/:user_id", async (res, req, next) => {
+certificateRouter.get("/certificatelist/:user_id", async (req, res, next) => {
     try {
         const user_id = req.params.user_id
-
+        console.log(user_id)
         const certificateList = await CertificateService.getCertificateList({ user_id })
     
         res.status(200).send(certificateList)

@@ -51,7 +51,7 @@ class CertificateService {
     }
 
     static async deleteCertificate({ certificateId }) {
-        const isDataDeleted = await Certificate.deleteById({ awardId })
+        const isDataDeleted = await Certificate.deleteById({ certificateId })
 
         if (!isDataDeleted) {
             const errorMessage = "해당 id를 가진 자격증 데이터는 없습니다. 다시 한 번 확인해주세요."
@@ -60,7 +60,7 @@ class CertificateService {
 
         return { status: "ok" }
     }
-    // TODO : user_id의 자격증 목록 가져오는(찾는) 기능
+
     static async getCertificateList({ user_id }) {
         const certificates = await Certificate.findByUserId({ user_id })
         return certificates
