@@ -1,17 +1,16 @@
 const { CertificateModel } = require("../schemas/certificate")
 
-class Certificate {
-    static async create({ newCertificate }) {
+// closure(비공개 멤버)가 필요 없으므로 객체 리터럴만 선언하여 싱글톤 디자인 구현
+const Certificate = {
+    create: async function({ newCertificate }) {
         const createdNewCertificate = await CertificateModel.create(newCertificate)
         return createdNewCertificate
-    }
-
-    static async findById({ certificateId }) {
+    },
+    findById: async function({ certificateId }) {
         const certificate = await CertificateModel.findOne({ id: certificateId })
         return certificate
-    }
-
-    static async update({ certificateId, fieldToUpdate, newValue }) {
+    },
+    update: async function({ certificateId, fieldToUpdate, newValue }) {
         const filter = { id: certificateId }
         const update = { [fieldToUpdate]: newValue }
         const option = { returnOriginal: false }
@@ -23,15 +22,13 @@ class Certificate {
         )
 
         return updateCertificate
-    }
-
-    static async deleteById({ certificateId }) {
+    },
+    deleteById: async function({ certificateId }) {
         const deleteResult = await CertificateModel.deleteOne({ id: certificateId })
         const isDataDeleted = deleteResult.deletedCount === 1
         return isDataDeleted
-    }
-
-    static async findByUserId({ user_id }) {
+    },
+    findByUserId: async function({ user_id }) {
         const certificates = await CertificateModel.find({ user_id })
         return certificates
     }
