@@ -14,12 +14,8 @@ class AwardService {
     static async getAward({ awardId }) {
         const award = await Award.findById({ awardId })
         if (!award) {
-<<<<<<< HEAD
             const errorMessage =
                 "해당 id를 가진 수상 데이터는 없습니다. 다시 한 번 확인해 주세요."
-=======
-            const errorMessage = "해당 id를 가진 수상 데이터는 없습니다. 다시 한 번 확인해주세요."
->>>>>>> ee4a50498ed5e9a95c083d5c7853bdfcb9609744
             return { errorMessage }
         }
 
@@ -35,12 +31,8 @@ class AwardService {
         let award = await Award.findById({ awardId })
 
         if (!award) {
-<<<<<<< HEAD
             const errorMessage =
                 "해당 id를 가진 수상 데이터는 없습니다. 다시 한 번 확인해 주세요."
-=======
-            const errorMessage = "해당 id를 가진 수상 데이터는 없습니다. 다시 한 번 확인해주세요."
->>>>>>> ee4a50498ed5e9a95c083d5c7853bdfcb9609744
             return { errorMessage }
         }
 
@@ -55,11 +47,6 @@ class AwardService {
             const newValue = toUpdate.description
             award = await Award.update({ awardId, fieldToUpdate, newValue })
         }
-<<<<<<< HEAD
-
-=======
-        
->>>>>>> ee4a50498ed5e9a95c083d5c7853bdfcb9609744
         return award
     }
 
@@ -67,21 +54,13 @@ class AwardService {
         const isDataDeleted = await Award.deleteById({ awardId })
 
         if (!isDataDeleted) {
-<<<<<<< HEAD
             const errorMessage =
                 "해당 id를 가진 수상 데이터는 없습니다. 다시 한 번 확인해 주세요."
-=======
-            const errorMessage = "해당 id를 가진 수상 데이터는 없습니다. 다시 한 번 확인해주세요."
->>>>>>> ee4a50498ed5e9a95c083d5c7853bdfcb9609744
             return { errorMessage }
         }
 
         return { status: "ok" }
-<<<<<<< HEAD
     }
-=======
-    }    
->>>>>>> ee4a50498ed5e9a95c083d5c7853bdfcb9609744
 }
 
 module.exports = { AwardService }
