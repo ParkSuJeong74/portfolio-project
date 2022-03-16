@@ -10,22 +10,13 @@ awardRouter.post("/award/create", async function (req, res, next) {
   try {
     if (is.emptyObject(req.body)) {
       throw new Error(
-<<<<<<< HEAD
-        "headers의 Content-Type을 application/json으로 설정해주세요"
-=======
         "headers의 Content-Type을 application/json으로 설정해주세요."
->>>>>>> 8049b686caf0e6ffbb0def2676009e0017956ff7
       )
     }
 
     // req (request) 에서 데이터 가져오기
-<<<<<<< HEAD
-    const user_id = req.body.user_id;
-    const title = req.body.title;
-=======
     const user_id = req.body.user_id
     const title = req.body.title
->>>>>>> 8049b686caf0e6ffbb0def2676009e0017956ff7
     const description = req.body.description
 
     // 위 데이터를 유저 db에 추가하기
@@ -35,11 +26,7 @@ awardRouter.post("/award/create", async function (req, res, next) {
       description,
     })
 
-<<<<<<< HEAD
-    res.status(201).json(newAward);
-=======
     res.status(201).json(newAward)
->>>>>>> 8049b686caf0e6ffbb0def2676009e0017956ff7
   } catch (error) {
     next(error)
   }
@@ -81,11 +68,7 @@ awardRouter.put("/awards/:id", async function (req, res, next) {
       throw new Error(award.errorMessage)
     }
 
-<<<<<<< HEAD
-    res.status(200).send(award);
-=======
     res.status(200).send(award)
->>>>>>> 8049b686caf0e6ffbb0def2676009e0017956ff7
   } catch (error) {
     next(error)
   }
@@ -113,11 +96,7 @@ awardRouter.get("/awardlist/:user_id", async function (req, res, next) {
   try {
     // 특정 사용자의 전체 수상 목록을 얻음
     // @ts-ignore
-<<<<<<< HEAD
-    const user_id = req.params.user_id;
-=======
     const user_id = req.params.user_id
->>>>>>> 8049b686caf0e6ffbb0def2676009e0017956ff7
     const awardList = await AwardService.getAwardList({ user_id })
     res.status(200).send(awardList)
   } catch (error) {
