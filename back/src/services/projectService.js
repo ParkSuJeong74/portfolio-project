@@ -45,6 +45,16 @@ class ProjectService{
         return project
     }
     // DELETE
+    static async deleteProject({ projectId }){
+        const isDataDeleted = await Project.deleteById({ projectId })
+
+        if(!isDataDeleted){
+            const errorMessage = "해당 id를 가진 수상 데이터는 없습니다. 다시 한 번 확인해 주세요."
+            return { errorMessage }
+        }
+
+        return { status : "ok" }
+    }
 }
 
 // singleton

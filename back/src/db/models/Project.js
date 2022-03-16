@@ -1,6 +1,6 @@
 const { ProjectModel } = require('../schemas/project')
 
-// Todo: Project
+// Project
 class Project{
     // POST
     static async create({ newProject }){
@@ -28,7 +28,13 @@ class Project{
 
         return updatedProject
     }
+
     // DELETE
+    static async deleteById({ projectId }){
+        const deleteResult = await ProjectModel.deleteOne({ id: projectId })
+        const isDataDeleted = deleteResult.deletedCount === 1
+        return isDataDeleted
+    }
 }
 
 // singleton

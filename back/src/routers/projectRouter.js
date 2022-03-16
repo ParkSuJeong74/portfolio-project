@@ -82,9 +82,17 @@ projectRouter.put('/projects/:id', async (req, res, next) => {
 // DELETE : 프로젝트 삭제
 projectRouter.delete('/projects/:id', async (req, res, next) => {
     try{
-        // Todo : id 가져오기
-        // Todo : db에서 데이터 삭제(service)
-        // Todo : error 발생
+        // id 가져오기
+        const projectId = req.params.id
+
+        // db에서 데이터 삭제(service)
+        const result = await ProjectService.deleteProject({ projectId })
+
+        // error 발생
+        if(result.errorMessage){
+            throw new Error(result.errorMessage)
+        }
+
         res.status(200).send(result)
     } catch(err) {
         next(err)
