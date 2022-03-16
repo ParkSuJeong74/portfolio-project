@@ -47,12 +47,12 @@ function AwardEditForm({currentAward, setAwards, setIsEditing}){
                 <Form.Control 
                     type="text" 
                     placeholder="상세내역"
-                    value={title} 
+                    value={description} 
                     onChange={(e) => setDescription(e.target.value)}
                 />
             </Form.Group>
             
-            <Form.Group as={Row} className="text-center">
+            <Form.Group as={Row} className="text-center mt-3">
                 <Col sm={{ span: 20 }}>
                     <Button className="me-3" variant="primary" type="submit">
                         확인
