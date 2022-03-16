@@ -106,7 +106,6 @@ projectRouter.get('/projectlist/:user_id', async (req, res, next) => {
         const user_id = req.params.user_id
         // db에서 데이터 조회(service)
         const projects = await ProjectService.getProjectList({ user_id })
-        console.log(projects)
         res.status(200).send(projects)
     } catch(err) {
         next(err)
