@@ -7,7 +7,7 @@ function EducationEditForm({setEducations, currentEducation, setIsEditing}){
     const [major, setMajor] = useState(currentEducation.major)
     const [position, setPosition] = useState(currentEducation.position)
     
-    async function handleSubmit(e){
+    async function submitHandler(e){
         e.preventDefault()
         e.stopPropagation()
 
@@ -26,7 +26,7 @@ function EducationEditForm({setEducations, currentEducation, setIsEditing}){
     }
     
     return (
-        <Form onSubmit={handleSubmit}>
+        <Form onSubmit={submitHandler}>
             <Form.Group controlId="formBasicSchool" className="mt-3">
                 <Form.Control
                 type="text"

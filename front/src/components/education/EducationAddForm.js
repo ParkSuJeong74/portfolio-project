@@ -53,7 +53,7 @@ function EducationAddForm({setIsAdding, portfolioOwnerId, setEducations}){
                     id="재학중"
                     label="재학중"
                     checked = {position === '재학중'}
-                    onClick = {(e) => setPosition(e.target.name)}
+                    onChange = {(e) => setPosition(e.target.name)}
                 />
                 <Form.Check 
                     inline
@@ -62,7 +62,7 @@ function EducationAddForm({setIsAdding, portfolioOwnerId, setEducations}){
                     id="학사졸업"
                     label="학사졸업"
                     checked = {position === '학사졸업'}
-                    onClick = {(e) => setPosition(e.target.name)}
+                    onChange = {(e) => setPosition(e.target.name)}
                 />
                 <Form.Check 
                     inline
@@ -71,7 +71,7 @@ function EducationAddForm({setIsAdding, portfolioOwnerId, setEducations}){
                     id="석사졸업"
                     label="석사졸업"
                     checked = {position === '석사졸업'}
-                    onClick = {(e) => setPosition(e.target.name)}
+                    onChange = {(e) => setPosition(e.target.name)}
                 />
                 <Form.Check 
                     inline
@@ -80,7 +80,7 @@ function EducationAddForm({setIsAdding, portfolioOwnerId, setEducations}){
                     id="박사졸업"
                     label="박사졸업"
                     checked = {position === '박사졸업'}
-                    onClick = {(e) => setPosition(e.target.name)}
+                    onChange = {(e) => setPosition(e.target.name)}
                 />
                 
             </Form.Group>

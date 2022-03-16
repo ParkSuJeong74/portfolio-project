@@ -1,12 +1,16 @@
 import {Card, Row, Col, Button} from 'react-bootstrap'
-import React, {useState} from 'react'
-
+import React, {useEffect, useState} from 'react'
+import * as Api from '../../api'
 import Education from './Education'
 import EducationAddForm from './EducationAddForm'
 
 function Educations({portfolioOwnerId, isEditable}) {
     const [educations, setEducations] = useState([])
     const [isAdding, setIsAdding] = useState(false)
+
+    useEffect(() => {
+        Api.get("educationlist", portfolioOwnerId).then((res) => setEducations(res.data))
+    }, [portfolioOwnerId])
 
     return (
         <Card>
@@ -21,7 +25,7 @@ function Educations({portfolioOwnerId, isEditable}) {
                     />
                 ))}
                 {isEditable && (
-                    <Row className="text-center">
+                    <Row className="text-center mt-3 mb-4">
                         <Col sm={{ span: 20 }}>
                             <Button onClick={() => setIsAdding(true)}>+</Button>
                         </Col>
