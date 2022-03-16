@@ -27,7 +27,7 @@ const UserSchema = new Schema(
   {
     timestamps: true,
   }
-);
+)
 
 const UserModel = model("User", UserSchema)
 
