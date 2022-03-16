@@ -7,7 +7,7 @@ class Award {
     }
 
     static async findById({ awardId }) {
-        const award = await AwardModel.find({ id: awardId })
+        const award = await AwardModel.findOne({ id: awardId })
         return award
     }
 
@@ -32,7 +32,6 @@ class Award {
     static async deleteById({ awardId }) {
         const deleteResult = await AwardModel.deleteOne({ id: awardId })
         const isDataDeleted = deleteResult.deletedCount === 1
-
         return isDataDeleted
     }
 }
