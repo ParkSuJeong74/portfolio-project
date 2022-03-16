@@ -4,7 +4,6 @@ const { userAuthRouter } = require("./routers/userRouter")
 const { awardRouter } = require("./routers/awardRouter")
 //const { educationRouter } = require("./routers/educationRouter")
 const { errorMiddleware } = require("./middlewares/errorMiddleware")
-const { awardRouter } = require("./routers/awardRouter")
 
 const app = express()
 
