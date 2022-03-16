@@ -31,7 +31,7 @@ class Education {
     }
 
     static async deleteById({ educationId }) {
-        const deleteResult = await EducationModel.deleteOne({ id: education })
+        const deleteResult = await EducationModel.deleteOne({ id: educationId })
         const isDataDelete = deleteResult.deletedCount === 1
 
         return isDataDelete
