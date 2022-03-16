@@ -17,16 +17,16 @@ class Award {
     }
   
     static async update({ awardId, fieldToUpdate, newValue }) {
-      const filter = { id: awardId }
-      const update = { [fieldToUpdate]: newValue }
-      const option = { returnOriginal: false }
-  
-      const updatedAward = await AwardModel.findOneAndUpdate(
-        filter,
-        update,
-        option
-      )
-      return updatedAward
+        const filter = { id: awardId }
+        const update = { [fieldToUpdate]: newValue }
+        const option = { returnOriginal: false }
+
+        const updatedAward = await AwardModel.findOneAndUpdate(
+            filter,
+            update,
+            option,
+        )
+        return updatedAward
     }
   
     static async deleteById({ awardId }) {

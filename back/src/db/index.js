@@ -1,7 +1,7 @@
 const mongoose = require("mongoose")
 const { User } = require("./models/User")
 const { Award } = require("./models/Award")
-//const certificateClass = require("./models/Certificate")
+//const { Education } = require("./models/Education")
 
 const DB_URL =
   process.env.MONGODB_URL ||
@@ -18,4 +18,3 @@ db.on("error", (error) =>
 )
 
 module.exports = { User, Award }
-//module.exports = certificateClass
