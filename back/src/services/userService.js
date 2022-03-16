@@ -41,7 +41,7 @@ class userAuthService {
     const isPasswordCorrect = await bcrypt.compare(
       password,
       correctPasswordHash
-    );
+    )
     if (!isPasswordCorrect) {
       const errorMessage =
         "비밀번호가 일치하지 않습니다. 다시 한 번 확인해 주세요."
@@ -66,12 +66,12 @@ class userAuthService {
       errorMessage: null,
     }
 
-    return loginUser;
+    return loginUser
   }
 
   static async getUsers() {
     const users = await User.findAll()
-    return users;
+    return users
   }
 
   static async setUser({ user_id, toUpdate }) {
@@ -110,7 +110,7 @@ class userAuthService {
       user = await User.update({ user_id, fieldToUpdate, newValue })
     }
 
-    return user
+    return user;
   }
 
   static async getUserInfo({ user_id }) {
@@ -126,5 +126,6 @@ class userAuthService {
     return user
   }
 }
+
 
 module.exports = { userAuthService }
