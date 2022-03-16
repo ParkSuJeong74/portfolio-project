@@ -11,7 +11,7 @@ function Certificate({setCertificates, certificate, isEditable}){
                 <CertificateEditForm 
                     setCertificates={setCertificates}
                     currentCertificate={certificate}
-                    isEditable={isEditable}
+                    setIsEditing={setIsEditing}
                 />
             ) : (
                 <CertificateCard 

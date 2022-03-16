@@ -3,7 +3,7 @@ import {Form,Row,Col, Button} from 'react-bootstrap'
 import DatePicker from "react-datepicker";
 import * as Api from '../../api'
 
-function CertificateAddForm({setIsAdding,portfolioOwnerId }){
+function CertificateAddForm({setCertificates, setIsAdding,portfolioOwnerId }){
     const [title, setTitle] = useState('')
     const [description, setDescription] = useState('')
     const [date, setDate] = useState(new Date())
@@ -20,6 +20,10 @@ function CertificateAddForm({setIsAdding,portfolioOwnerId }){
             description,
             date
         })
+
+        const res = Api.get("certificatelist", user_id)
+        setCertificates(res.data)
+        setIsAdding(false)
     }
 
     return (
