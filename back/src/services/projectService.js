@@ -1,10 +1,10 @@
-const { Project } = require('../db')
+const Project = require('../db/models/Project')
 const { v4:uuidv4 } = require('uuid')
 
 // ProjectService
 class ProjectService{
     // POST
-    static async addProject({ user_id, title, description }){
+    async addProject({ user_id, title, description }){
         const id = uuidv4()
         const newProject = { id, user_id, title, description }
         const createNewProject = await Project.create({ newProject })
@@ -12,7 +12,7 @@ class ProjectService{
     }
 
     // GET
-    static async getProject({ projectId }){
+    async getProject({ projectId }){
         const project = await Project.findById({ projectId })
 
         if(!project){
@@ -22,13 +22,13 @@ class ProjectService{
         return project
     }
 
-    static async getProjectList({ user_id }){
+    async getProjectList({ user_id }){
         const projects = await Project.findByUserId({ user_id })
         return projects
     }
 
     // PUT
-    static async setProject({ projectId, toUpdate }){
+    async setProject({ projectId, toUpdate }){
         let project = await Project.findById({ projectId })
 
         if(!project){
@@ -51,7 +51,7 @@ class ProjectService{
         return project
     }
     // DELETE
-    static async deleteProject({ projectId }){
+    async deleteProject({ projectId }){
         const isDataDeleted = await Project.deleteById({ projectId })
 
         if(!isDataDeleted){
@@ -64,6 +64,6 @@ class ProjectService{
 }
 
 // singleton
-//const projectService = new ProjectService()
+const projectService = new ProjectService()
 
-module.exports = { ProjectService }
+module.exports = projectService
