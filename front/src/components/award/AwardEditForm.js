@@ -31,8 +31,8 @@ function AwardEditForm({currentAward, setAwards, setIsEditing}){
 
     return (
         <Form onSubmit={submitHandler}>
-            <Form.Group className="mb-3" controlId="formBasicTitle">
-                <Form.Label>수상명</Form.Label>
+            <Form.Group controlId="formBasicTitle">
+                
                 <Form.Control 
                     type="text"
                     placeholder="수상내역" 
@@ -42,8 +42,8 @@ function AwardEditForm({currentAward, setAwards, setIsEditing}){
                 
             </Form.Group>
 
-            <Form.Group className="mb-3" controlId="formBasicDescription">
-                <Form.Label>상세내용</Form.Label>
+            <Form.Group controlId="formBasicDescription" className="mt-3">
+                
                 <Form.Control 
                     type="text" 
                     placeholder="상세내역"

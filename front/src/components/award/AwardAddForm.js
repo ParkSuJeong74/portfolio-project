@@ -1,4 +1,4 @@
-import {Form, Button, Col} from 'react-bootstrap'
+import {Form, Button, Col, Row} from 'react-bootstrap'
 import React, {useState} from 'react'
 import * as Api from '../../api'
 
@@ -31,7 +31,7 @@ function AwardAddForm({setIsAdding, portfolioOwnerId, setAwards}){
     return (
         <Form onSubmit={submitHandler}>
             <Form.Group controlId="formBasicTitle" className="mb-3">
-                <Form.Label>수상명</Form.Label>
+                
                 <Form.Control 
                     type="text"
                     placeholder="수상내역" 
@@ -42,7 +42,7 @@ function AwardAddForm({setIsAdding, portfolioOwnerId, setAwards}){
             </Form.Group>
 
             <Form.Group controlId="formBasicDescription" className="mb-3">
-                <Form.Label>상세내용</Form.Label>
+            
                 <Form.Control 
                     type="text" 
                     placeholder="상세내역"
@@ -51,7 +51,7 @@ function AwardAddForm({setIsAdding, portfolioOwnerId, setAwards}){
                 />
             </Form.Group>
             
-            <Form.Group className="text-center">
+            <Form.Group as={Row} className="mt-3 text-center">
                 <Col>
                     <Button className="me-3" variant="primary" type="submit">
                         확인
