@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import {Form, Button} from 'react-bootstrap'
+import {Form, Button, Row,Col} from 'react-bootstrap'
 import * as Api from '../../api'
 
 //현재 award(currentAward)의 title, description을 상태로 설정해야 함
@@ -52,13 +52,15 @@ function AwardEditForm({currentAward, setAwards, setIsEditing}){
                 />
             </Form.Group>
             
-            <Form.Group className="text-center">
-                <Button className="me-3" variant="primary" type="submit">
-                    확인
-                </Button>
-                <Button variant="secondary" onClick={() => setIsEditing(false)}> 
-                    취소
-                </Button>
+            <Form.Group as={Row} className="text-center">
+                <Col sm={{ span: 20 }}>
+                    <Button className="me-3" variant="primary" type="submit">
+                        확인
+                    </Button>
+                    <Button variant="secondary" onClick={() => setIsEditing(false)}> 
+                        취소
+                    </Button>
+                </Col>
             </Form.Group>
         </Form>
     )

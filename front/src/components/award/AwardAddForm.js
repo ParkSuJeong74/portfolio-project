@@ -10,7 +10,7 @@ function AwardAddForm({setIsAdding, portfolioOwnerId, setAwards}){
 
         e.preventDefault()
         e.stopPropagation()
-        
+
         const user_id = portfolioOwnerId
 
         //입력한 추가내용들을 post 요청함. 엔드포인트: 'award/create'
@@ -25,7 +25,7 @@ function AwardAddForm({setIsAdding, portfolioOwnerId, setAwards}){
         //awards를 res.data로 세팅함
         setAwards(res.data)
         //추가하는 과정이 끝났으니까 isAdding을 false로 설정함.
-        setIsAdding(false)
+        setIsAdding(false) 
     }
 
     return (

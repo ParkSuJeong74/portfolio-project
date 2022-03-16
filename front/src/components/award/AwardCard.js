@@ -6,17 +6,20 @@ import {Card, Row, Col, Button} from 'react-bootstrap'
 function AwardCard({award, isEditable, setIsEditing}){
     return (
         <Card.Text>
-            <Row>
+            <Row className="align-items-center">
                 <Col>
                     <span>{award.title}</span>
                     <br />
                     <span className="text-muted">{award.description}</span>
                 </Col>
                 {isEditable && (
-                    <Col>
+                    <Col xs lg="1">
                         <Button
                             variant="outline-info"
-                            onClick={() => setIsEditing(true)}>
+                            onClick={() => setIsEditing(true)}
+                            size="sm"
+                            className="mr-3"
+                            >
                             편집
                         </Button>
                     </Col>
