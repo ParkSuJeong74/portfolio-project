@@ -58,14 +58,27 @@ function ProjectAddForm({ portfolioOwnerId, setProjects, setIsAdding }) {
 
       
 
-      <div className="mt-3 row">
-        <Form.Label>시작날짜</Form.Label>
-        <DatePicker dateFormat = "yyyy.MM.dd(eee)" selected={from_date} onChange={(e) => setFrom_date(e)} />
-      
-     
-        <Form.Label>종료날짜</Form.Label>
-        <DatePicker dateFormat = "yyyy.MM.dd(eee)" selected={to_date} onChange={(e) => setTo_date(e)}/>
-      </div>
+      <Row xs={1} sm={2} className="mt-3">
+        <Col xs={'auto'} sm={'auto'}>
+          <Form.Label className="mb-1">시작날짜</Form.Label>
+          <DatePicker
+            wrapperClassName="datePicker"
+            dateFormat="yyyy.MM.dd(eee)"
+            selected={from_date}
+            onChange={(e) => setFrom_date(e)}
+          />
+        </Col>
+        <Col xs={'auto'} sm={'auto'}>
+          <Form.Label className="mb-1">종료날짜</Form.Label>
+            <DatePicker
+              wrapperClassName="datePicker"
+              dateFormat="yyyy.MM.dd(eee)"
+              selected={to_date}
+              onChange={(e) => setTo_date(e)}
+            />
+        </Col>
+      </Row>
+
       
       
 
