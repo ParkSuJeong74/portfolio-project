@@ -4,7 +4,7 @@
     "description": "portfolio web service project(21) - back",
     "main": "index.js",
     "scripts": {
-      "start": "nodemon index.js",
+      "start": "nodemon index.js --exec babel-node",
       "test": "jest --setupFiles dotenv/config"
     }, 
     "repository": {
@@ -47,5 +47,4 @@
         "__config__"
       ]
     }
-  }
-  
+}
