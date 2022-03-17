@@ -1,22 +1,22 @@
 const { AwardModel } = require("../schemas/award")
 
-class Award {
-    static async create({ newAward }) {
+const Award = {
+    create : async ({ newAward }) => {
         const createdNewAward = await AwardModel.create(newAward)
         return createdNewAward
-    }
+    },
 
-    static async findById({ awardId }) {
+    findById : async ({ awardId }) => {
         const award = await AwardModel.findOne({ id: awardId })
         return award
-    }
+    },
 
-    static async findByUserId({ user_id }) {
+    findByUserId : async ({ user_id }) => {
         const awards = await AwardModel.find({ user_id })
         return awards
-    }
+    },
 
-    static async update({ awardId, fieldToUpdate, newValue }) {
+    update : async ({ awardId, fieldToUpdate, newValue }) => {
         const filter = { id: awardId }
         const update = { [fieldToUpdate]: newValue }
         const option = { returnOriginal: false }
@@ -27,9 +27,9 @@ class Award {
             option,
         )
         return updatedAward
-    }
+    },
 
-    static async deleteById({ awardId }) {
+    deleteById : async ({ awardId }) => {
         const deleteResult = await AwardModel.deleteOne({ id: awardId })
         const isDataDeleted = deleteResult.deletedCount === 1
         return isDataDeleted

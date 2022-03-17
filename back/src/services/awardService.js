@@ -1,17 +1,17 @@
 const { Award } = require("../db")
 const { v4: uuidv4 } = require("uuid")
 
-class AwardService {
-    static async addAward({ user_id, title, description }) {
+const AwardService = {
+    addAward : async ({ user_id, title, description}) => {
         const id = uuidv4()
 
         const newAward = { id, user_id, title, description }
         const createdNewAward = await Award.create({ newAward })
 
         return createdNewAward
-    }
+    },
 
-    static async getAward({ awardId }) {
+    getAward : async ({ awardId }) => {
         const award = await Award.findById({ awardId })
         if (!award) {
             const errorMessage =
@@ -20,14 +20,14 @@ class AwardService {
         }
 
         return award
-    }
+    },
 
-    static async getAwardList({ user_id }) {
+    getAwardList : async ({ user_id }) => {
         const awards = await Award.findByUserId({ user_id })
         return awards
-    }
+    },
 
-    static async setAward({ awardId, toUpdate }) {
+    setAward : async ({ awardId, toUpdate }) => {
         let award = await Award.findById({ awardId })
 
         if (!award) {
@@ -48,9 +48,9 @@ class AwardService {
             award = await Award.update({ awardId, fieldToUpdate, newValue })
         }
         return award
-    }
+    },
 
-    static async deleteAward({ awardId }) {
+    deleteAward : async ({ awardId }) => {
         const isDataDeleted = await Award.deleteById({ awardId })
 
         if (!isDataDeleted) {
