@@ -4,20 +4,20 @@ import { Container, Col, Row } from "react-bootstrap";
 
 import { UserStateContext } from "../App";
 import * as Api from "../api";
+
 import User from "./user/User";
 import Educations from './education/Educations'
 import Certificates from "./certificate/Certificates";
-
 import Awards from "./award/Awards";
 import Projects from "./project/Projects";
 
 function Portfolio() {
 	const navigate = useNavigate();
 	const params = useParams();
-  // useState 훅을 통해 portfolioOwner 상태를 생성함.
+  	// useState 훅을 통해 portfolioOwner 상태를 생성함.
 	const [portfolioOwner, setPortfolioOwner] = useState(null);
-  // fetchPorfolioOwner 함수가 완료된 이후에만 (isFetchCompleted가 true여야) 컴포넌트가 구현되도록 함.
-  // 아래 코드를 보면, isFetchCompleted가 false이면 "loading..."만 반환되어서, 화면에 이 로딩 문구만 뜨게 됨.
+  	// fetchPorfolioOwner 함수가 완료된 이후에만 (isFetchCompleted가 true여야) 컴포넌트가 구현되도록 함.
+  	// 아래 코드를 보면, isFetchCompleted가 false이면 "loading..."만 반환되어서, 화면에 이 로딩 문구만 뜨게 됨.
 	const [isFetchCompleted, setIsFetchCompleted] = useState(false);
 	const userState = useContext(UserStateContext);
 
@@ -33,7 +33,7 @@ function Portfolio() {
 	};
 
 	useEffect(() => {
-	// 전역 상태의 user가 null이라면 로그인이 안 된 상태이므로, 로그인 페이지로 돌림.
+		// 전역 상태의 user가 null이라면 로그인이 안 된 상태이므로, 로그인 페이지로 돌림.
 		if (!userState.user) {
 			navigate("/login", { replace: true });
 			return;
@@ -59,37 +59,36 @@ function Portfolio() {
 	return (
 	<Container fluid>
 		<Row xs={1} xxl={2}>
-		<Col md="3" lg="3" xxl={3}>
-			<User
-			portfolioOwnerId={portfolioOwner.id}
-			isEditable={portfolioOwner.id === userState.user?.id}
-			/>
-		</Col>
+			<Col md="3" lg="3" xxl={3}>
+				<User
+					portfolioOwnerId={portfolioOwner.id}
+					isEditable={portfolioOwner.id === userState.user?.id}
+				/>
+			</Col>
+				
+			<Col xxl={9}>
+				<Educations 
+					portfolioOwnerId={portfolioOwner.id}
+					isEditable={portfolioOwner.id === userState.user?.id}/>
 			
-		<Col xxl={9}>
-			<Educations 
-			portfolioOwnerId={portfolioOwner.id}
-			isEditable={portfolioOwner.id === userState.user?.id}/>
-		
-			<div className="mb-3"></div>
-		
-			<Awards 
-			portfolioOwnerId={portfolioOwner.id}
-			isEditable={portfolioOwner.id === userState.user?.id}/>
+				<div className="mb-3"></div>
+			
+				<Awards 
+					portfolioOwnerId={portfolioOwner.id}
+					isEditable={portfolioOwner.id === userState.user?.id}/>
 
-			<div className="mb-3"></div>
+				<div className="mb-3"></div>
 
-			<Certificates   
-			portfolioOwnerId={portfolioOwner.id}
-			isEditable={portfolioOwner.id === userState.user?.id}/>
+				<Certificates   
+					portfolioOwnerId={portfolioOwner.id}
+					isEditable={portfolioOwner.id === userState.user?.id}/>
 
-			<div className="mb-3"></div>
+				<div className="mb-3"></div>
 
-			<Projects
-            portfolioOwnerId={portfolioOwner.id}
-            isEditable={portfolioOwner.id === userState.user?.id}/>
-		</Col>
-		
+				<Projects
+					portfolioOwnerId={portfolioOwner.id}
+					isEditable={portfolioOwner.id === userState.user?.id}/>
+			</Col>
 		</Row>
 	</Container>
 	);

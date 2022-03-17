@@ -37,8 +37,8 @@ function LoginForm() {
     try {
         // "user/login" 엔드포인트로 post요청함.
         const res = await Api.post("user/login", {
-        email,
-        password,
+            email,
+            password,
         });
         // 유저 정보는 response의 data임.
         const user = res.data;
@@ -48,8 +48,8 @@ function LoginForm() {
         sessionStorage.setItem("userToken", jwtToken);
         // dispatch 함수를 이용해 로그인 성공 상태로 만듦.
         dispatch({
-        type: "LOGIN_SUCCESS",
-        payload: user,
+            type: "LOGIN_SUCCESS",
+            payload: user,
         });
 
         // 기본 페이지로 이동함.
@@ -67,10 +67,10 @@ function LoginForm() {
             <Form.Group controlId="loginEmail">
                 <Form.Label>이메일 주소</Form.Label>
                 <Form.Control
-                type="email"
-                autoComplete="on"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                    type="email"
+                    autoComplete="on"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                 />
                 {!isEmailValid && (
                 <Form.Text className="text-success">
@@ -82,10 +82,10 @@ function LoginForm() {
             <Form.Group controlId="loginPassword" className="mt-3">
                 <Form.Label>비밀번호</Form.Label>
                 <Form.Control
-                type="password"
-                autoComplete="on"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                    type="password"
+                    autoComplete="on"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
                 />
                 {!isPasswordValid && (
                 <Form.Text className="text-success">

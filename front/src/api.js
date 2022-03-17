@@ -11,10 +11,10 @@ async function get(endpoint, params = "") {
     );
 
     return axios.get(serverUrl + endpoint + "/" + params, {
-    // JWT 토큰을 헤더에 담아 백엔드 서버에 보냄.
-    headers: {
-        Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
-    },
+        // JWT 토큰을 헤더에 담아 백엔드 서버에 보냄.
+        headers: {
+            Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
+        },
     });
 }
 
@@ -26,10 +26,10 @@ async function post(endpoint, data) {
     console.log(`%cPOST 요청 데이터: ${bodyData}`, "color: #296aba;");
 
     return axios.post(serverUrl + endpoint, bodyData, {
-    headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
-    },
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
+        },
     });
 }
 
@@ -41,10 +41,10 @@ async function put(endpoint, data) {
     console.log(`%cPUT 요청 데이터: ${bodyData}`, "color: #059c4b;");
 
     return axios.put(serverUrl + endpoint, bodyData, {
-    headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
-    },
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
+        },
     });
 }
 
@@ -53,9 +53,9 @@ async function put(endpoint, data) {
 async function del(endpoint, params = "") {
     console.log(`DELETE 요청 ${serverUrl + endpoint + "/" + params}`);
     return axios.delete(serverUrl + endpoint + "/" + params, {
-    headers: {
-        Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
-    },
+        headers: {
+            Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
+        },
     });
 }
 
