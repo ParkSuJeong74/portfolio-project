@@ -49,15 +49,15 @@ function CertificateAddForm({setCertificates, setIsAdding,portfolioOwnerId }){
                 />
 
             </Form.Group>
-
-            <Form.Group controlId="formBasicDescription" className="mt-3">
-                
+            
+            <Form.Group as={Col} xs="auto" xxl={3} controlId="formBasicDate" className="mt-3">
                 <DatePicker 
                     selected={date}
-                    onChange={(date) => setDate(date)}/>
-
+                    placeholderText="Weeks start on Monday"
+                    dateFormat = "yyyy.MM.dd(eee)"
+                    onChange={(date) => setDate(date)}/> 
             </Form.Group>
-            
+
             <Form.Group as={Row} className="mt-3 text-center">
                 <Col sm={{ span: 20 }}>
                     <Button className="me-3" variant="primary" type="submit">
