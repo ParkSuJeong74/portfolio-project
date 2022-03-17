@@ -40,7 +40,7 @@ function Header() {
             
             {isLogin && (
                 <Nav.Item>
-                <Nav.Link onClick={logout}>로그아웃</Nav.Link>
+                    <Nav.Link onClick={logout}>로그아웃</Nav.Link>
                 </Nav.Item>
             )}
             </Nav>
