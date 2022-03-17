@@ -1,8 +1,8 @@
 const Education = require("../db/models/Education")
 const { v4: uuidv4 } = require("uuid")
 
-class EducationService {
-    async addEducation({ user_id, school, major, position }) {
+const EducationService = {
+    addEducation: async ({ user_id, school, major, position }) => {
         // 인증에 사용하는 고유값을 만들어 id로 사용
         const id = uuidv4()
 
@@ -10,9 +10,9 @@ class EducationService {
         const createdNewEducation = await Education.create({ newEducation })
 
         return createdNewEducation
-    }
+    },
 
-    async getEducation({ educationId }) {
+    getEducation: async ({ educationId }) => {
         const education = await Education.findById({ educationId })
 
         if (!education) {
@@ -22,14 +22,14 @@ class EducationService {
         }
 
         return education
-    }
+    },
 
-    async getEducationList({ user_id }) {
+    getEducationList: async ({ user_id }) => {
         const education = await Education.findByUserId({ user_id })
         return education
-    }
+    },
 
-    async setEducation({ educationId, toUpdate }) {
+    setEducation: async ({ educationId, toUpdate }) => {
         let education = await Education.findById({ educationId })
 
         if (!education) {
@@ -59,9 +59,9 @@ class EducationService {
         }
 
         return education
-    }
+    },
 
-    async deleteEducation({ educationId }) {
+    deleteEducation: async ({ educationId }) => {
         const isDataDeleted = await Education.deleteById({ educationId })
 
         if (!isDataDeleted) {
