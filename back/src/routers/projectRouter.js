@@ -1,7 +1,7 @@
 const is = require('@sindresorhus/is')
 const { Router } = require('express')
 const { login_required } = require('../middlewares/login_required')
-const ProjectService =require('../services/projectService')
+const { ProjectService } = require('../services/projectService')
 
 const projectRouter = Router()
 

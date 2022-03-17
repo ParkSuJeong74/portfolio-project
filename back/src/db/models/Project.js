@@ -1,26 +1,26 @@
 const { ProjectModel } = require('../schemas/project')
 
 // Project
-class Project{
+const Project = {
     // POST
-    async create({ newProject }){
+    create : async ({ newProject }) => {
         const createNewProject = await ProjectModel.create(newProject)
         return createNewProject
-    }
+    },
 
     // GET
-    async findById({ projectId }){
+    findById : async ({ projectId }) => {
         const project = await ProjectModel.findOne({ id: projectId })
         return project
-    }
+    },
 
-    async findByUserId({ user_id }){
+    findByUserId : async ({ user_id }) => {
         const project = await ProjectModel.find({ user_id })
         return project
-    }
+    },
 
     // PUT
-    async update({ projectId, fieldToUpdate, newValue }){
+    update : async ({ projectId, fieldToUpdate, newValue }) => {
         const filter = { id: projectId }
         const update = { [fieldToUpdate]: newValue }
         const option = { returnOriginal: false }
@@ -32,10 +32,10 @@ class Project{
         )
 
         return updatedProject
-    }
+    },
 
     // DELETE
-    async deleteById({ projectId }){
+    deleteById : async ({ projectId }) => {
         const deleteResult = await ProjectModel.deleteOne({ id: projectId })
         const isDataDeleted = deleteResult.deletedCount === 1
         return isDataDeleted
@@ -43,5 +43,4 @@ class Project{
 }
 
 // singleton
-const project = new Project()
-module.exports = project
+module.exports = { Project }
