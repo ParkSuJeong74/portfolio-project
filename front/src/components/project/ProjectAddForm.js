@@ -13,8 +13,8 @@ function ProjectAddForm({ portfolioOwnerId, setProjects, setIsAdding }) {
   const [to_date, setTo_date] = useState("")
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    e.stopPropagation();
+    e.preventDefault()
+    e.stopPropagation()
 
     // portfolioOwnerId를 user_id 변수에 할당함.
     const user_id = portfolioOwnerId;
@@ -26,7 +26,7 @@ function ProjectAddForm({ portfolioOwnerId, setProjects, setIsAdding }) {
       description,
       from_date,
       to_date
-    });
+    })
 
     // "awardlist/유저id" 엔드포인트로 get요청함.
     const res = await Api.get("projectlist", user_id);
@@ -34,7 +34,7 @@ function ProjectAddForm({ portfolioOwnerId, setProjects, setIsAdding }) {
     setProjects(res.data);
     // award를 추가하는 과정이 끝났으므로, isAdding을 false로 세팅함.
     setIsAdding(false);
-  };
+  }
 
   return (
     <Form onSubmit={handleSubmit}>
@@ -58,7 +58,7 @@ function ProjectAddForm({ portfolioOwnerId, setProjects, setIsAdding }) {
 
       
 
-      
+
 
       <Row xs={1} sm={2} className="mt-3">
         <Col xs={'auto'} sm={'auto'}>
@@ -99,7 +99,7 @@ function ProjectAddForm({ portfolioOwnerId, setProjects, setIsAdding }) {
         </Col>
       </Form.Group>
     </Form>
-  );
+  )
 }
 
 export default ProjectAddForm;
