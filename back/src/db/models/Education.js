@@ -11,7 +11,7 @@ const Education = {
         return education
     },
 
-    findByUserId: async ({ userId }) => {
+    findByUserId: async ({ user_id }) => {
         const education = await EducationModel.find({ user_id })
         return education
     },
