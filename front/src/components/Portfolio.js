@@ -55,22 +55,24 @@ function Portfolio() {
 
   return (
     <Container fluid>
-      <Row>
-        <Col md="3" lg="3">
+      <Row xs={1} xxl={2}>
+        <Col md="3" lg="3" xxl={3}>
           <User
             portfolioOwnerId={portfolioOwner.id}
             isEditable={portfolioOwner.id === userState.user?.id}
           />
         </Col>
 
-        <Col>
+        <Col xxl={9}>
         <Awards
             portfolioOwnerId={portfolioOwner.id}
             isEditable={portfolioOwner.id === userState.user?.id}
           />
-        </Col>
+        
+        <div className="mb-3"></div>
+        
 
-        <Col>
+        
         <Projects
             portfolioOwnerId={portfolioOwner.id}
             isEditable={portfolioOwner.id === userState.user?.id}

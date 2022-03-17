@@ -56,33 +56,18 @@ function ProjectAddForm({ portfolioOwnerId, setProjects, setIsAdding }) {
         />
       </Form.Group>
 
-      {/* <Form.Group controlId="formBasicdate" className="mt-4 row ">
-        <Form.Control
-          size = "sm"
-          className="col-auto react-datepicker-wrapper "
-          type="text"
-          placeholder="시작날짜"
-          value={from_date}
-          onChange={(e) => setFrom_date(e.target.value)}
-        /> */}
-
-        <div className="mt-3 row">
-          <Form.Label>시작날짜</Form.Label>
-          <DatePicker selected="시작날짜" value={from_date} onChange={(e) => setFrom_date(e.target.value)} />
       
-      {/* <Form.Control
-          size = "sm"
-          className="col-auto"
-          type="text"
-          placeholder="종료날짜"
-          value={to_date}
-          onChange={(e) => setTo_date(e.target.value)}
-        /> */}
-          <Form.Label>종료날짜</Form.Label>
-          <DatePicker selected="종료날짜" value={to_date} onChange={(e) => setTo_date(e.target.value)}/>
+
+      <div className="mt-3 row">
+        <Form.Label>시작날짜</Form.Label>
+        <DatePicker dateFormat = "yyyy.MM.dd(eee)" selected={from_date} onChange={(e) => setFrom_date(e)} />
+      
+     
+        <Form.Label>종료날짜</Form.Label>
+        <DatePicker dateFormat = "yyyy.MM.dd(eee)" selected={to_date} onChange={(e) => setTo_date(e)}/>
       </div>
       
-      {/* </Form.Group> */}
+      
 
 
 

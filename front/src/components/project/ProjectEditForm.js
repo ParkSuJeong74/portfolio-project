@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Button, Form, Col, Row } from "react-bootstrap";
 import * as Api from "../../api";
+import DatePicker from "react-datepicker";
 
 function ProjectEditForm({ currentProject, setProjects, setIsEditing }) {
   //useState로 title 상태를 생성함.
@@ -55,27 +56,14 @@ function ProjectEditForm({ currentProject, setProjects, setIsEditing }) {
         />
       </Form.Group>
 
-      <Form.Group controlId="from_date" className="mt-4 row">
-        <Form.Control
-          size = "sm"
-          className="col-auto"
-          type="text"
-          placeholder="시작날짜"
-          value={from_date}
-          onChange={(e) => setFrom_date(e.target.value)}
-        />
+      <div className="mt-3 row">
+        <Form.Label>시작날짜</Form.Label>
+        <DatePicker dateFormat = "yyyy.MM.dd(eee)" selected={from_date} onChange={(e) => setFrom_date(e)} />
       
-
-      
-        <Form.Control
-          size = "sm"
-          className="col-auto"
-          type="text"
-          placeholder="종료날짜"
-          value={to_date}
-          onChange={(e) => setTo_date(e.target.value)}
-        />
-      </Form.Group>
+     
+        <Form.Label>종료날짜</Form.Label>
+        <DatePicker dateFormat = "yyyy.MM.dd(eee)" selected={to_date} onChange={(e) => setTo_date(e)}/>
+      </div>
 
       <Form.Group as={Row} className="mt-3 text-center mb-4">
         <Col sm={{ span: 20 }}>
