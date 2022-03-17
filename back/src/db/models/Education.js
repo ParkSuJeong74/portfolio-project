@@ -40,4 +40,4 @@ const Education = {
 
 const education = new Education()
 
-module.exports = education
+module.exports = { education }
