@@ -5,8 +5,6 @@ import {Card, Row, Col, Button} from 'react-bootstrap'
 //편집 버튼을 클릭하면 isEditing이 true가 되도록 설정
 function AwardCard({award, isEditable, setIsEditing}){
 
-    
-
     return (
         <Card.Text>
             <Row className="align-items-center">
@@ -33,3 +31,4 @@ function AwardCard({award, isEditable, setIsEditing}){
 }
 
 export default AwardCard
+
