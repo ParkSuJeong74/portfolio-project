@@ -75,6 +75,4 @@ const EducationService = {
     }
 }
 
-const educationService = new EducationService()
-
-module.exports = { educationService }
+module.exports = { EducationService }
