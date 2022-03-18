@@ -1,11 +1,11 @@
-import React, { useState } from "react";
-import { Button, Form, Col, Row } from "react-bootstrap";
-import * as Api from "../../api";
-import DatePicker from "react-datepicker";
+import React, { useState } from "react"
+import { Button, Form, Col, Row } from "react-bootstrap"
+import * as Api from "../../api"
+import DatePicker from "react-datepicker"
 
 function ProjectEditForm({ currentProject, setProjects, setIsEditing }) {
   //useState로 title 상태를 생성함.
-  const [title, setTitle] = useState(currentProject.title);
+  const [title, setTitle] = useState(currentProject.title)
   //useState로 description 상태를 생성함.
   const [description, setDescription] = useState(currentProject.description);
 
@@ -13,28 +13,28 @@ function ProjectEditForm({ currentProject, setProjects, setIsEditing }) {
   const [to_date, setTo_date] = useState(currentProject.to_date)
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    e.stopPropagation();
+    e.preventDefault()
+    e.stopPropagation()
 
     // currentAward의 user_id를 user_id 변수에 할당함.
     const user_id = currentProject.user_id;
 
     // "awards/수상 id" 엔드포인트로 PUT 요청함.
-    await Api.put(`awards/${currentProject.id}`, {
+    await Api.put(`projects/${currentProject.id}`, {
       user_id,
       title,
       description,
       from_date,
       to_date
-    });
+    })
 
     // "awardlist/유저id" 엔드포인트로 GET 요청함.
     const res = await Api.get("projectlist", user_id);
     // awards를 response의 data로 세팅함.
-    setProjects(res.data);
+    setProjects(res.data)
     // 편집 과정이 끝났으므로, isEditing을 false로 세팅함.
-    setIsEditing(false);
-  };
+    setIsEditing(false)
+  }
 
   return (
     <Form onSubmit={handleSubmit}>
@@ -88,7 +88,7 @@ function ProjectEditForm({ currentProject, setProjects, setIsEditing }) {
         </Col>
       </Form.Group>
     </Form>
-  );
+  )
 }
 
 export default ProjectEditForm;
