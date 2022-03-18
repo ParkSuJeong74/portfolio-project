@@ -11,9 +11,15 @@ const Certificate = {
         return certificate
     },
     update: async function({ certificateId, fieldToUpdate, newValue }) {
-        const filter = { id: certificateId }
-        const update = { [fieldToUpdate]: newValue }
-        const option = { returnOriginal: false }
+        const filter = { id: certificateId } // 바꿀 대상 찾기
+        const update = { $set:
+            { // 바꿀 내용
+                [fieldToUpdate[0]]: newValue[0],
+                [fieldToUpdate[1]]: newValue[1],
+                [fieldToUpdate[2]]: newValue[2]
+            }
+        }
+        const option = { returnOriginal: false } // 옵션 : upsert, overwrite 등
 
         const updateCertificate = await CertificateModel.findOneAndUpdate(
             filter,

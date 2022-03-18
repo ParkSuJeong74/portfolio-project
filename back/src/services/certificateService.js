@@ -27,24 +27,10 @@ const CertificateService = {
             const errorMessage = "해당 id를 가진 자격증 데이터는 없습니다. 다시 한 번 확인해주세요."
             return { errorMessage }
         }
-
-        if (toUpdate.title) {
-            const fieldToUpdate = "title"
-            const newValue = toUpdate.title
-            certificate = await Certificate.update({ certificateId, fieldToUpdate, newValue })
-        }
-
-        if (toUpdate.description) {
-            const fieldToUpdate = "description"
-            const newValue = toUpdate.description
-            certificate = await Certificate.update({ certificateId, fieldToUpdate, newValue })
-        }
-
-        if (toUpdate.when_date) {
-            const fieldToUpdate = "when_date"
-            const newValue = toUpdate.when_date
-            certificate = await Certificate.update({ certificateId, fieldToUpdate, newValue })
-        }
+        // toUpdate에는 title, description, when_date 항목이 존재하고 값은 null이거나 사용자가 입력한 값
+        const fieldToUpdate = ["title", "description", "when_date"]
+        const newValue = [toUpdate.title, toUpdate.description, toUpdate.when_date]
+        certificate = await Certificate.update({ certificateId, fieldToUpdate, newValue })
 
         return certificate
     },

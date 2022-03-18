@@ -104,4 +104,4 @@ certificateRouter.get("/certificatelist/:user_id", async (req, res, next) => {
 
 })
 
-export { certificateRouter }
+module.exports = { certificateRouter }
