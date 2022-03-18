@@ -17,7 +17,7 @@ certificateRouter.post("/certificate/create", async (req, res, next) => {
         const user_id = req.body.user_id
         const title = req.body.title
         const description = req.body.description
-        const when_date = req.body.when_date
+        const when_date = req.body.when_date.split("T")[0]
 
         const newCertificate = await CertificateService.addCertificate({
             user_id,
@@ -56,7 +56,7 @@ certificateRouter.put("/certificates/:id", async (req, res, next) => {
 
         const title = req.body.title ?? null
         const description = req.body.description ?? null
-        const when_date = req.body.when_date ?? null
+        const when_date = req.body.when_date.split("T")[0] ?? null
 
         const toUpdate = { title, description, when_date }
 
