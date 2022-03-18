@@ -2,8 +2,7 @@ const mongoose = require("mongoose")
 const { User } = require("./models/User")
 const { Award } = require("./models/Award")
 const { Project } = require("./models/Project")
-
-//const { Education } = require("./models/Education")
+const { Education } = require("./models/Education")
 
 const DB_URL =
   process.env.MONGODB_URL ||

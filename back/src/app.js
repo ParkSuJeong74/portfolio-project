@@ -3,8 +3,7 @@ const express = require("express")
 const { userAuthRouter } = require("./routers/userRouter")
 const { awardRouter } = require("./routers/awardRouter")
 const { projectRouter } = require("./routers/projectRouter")
-
-//const { educationRouter } = require("./routers/educationRouter")
+const { educationRouter } = require("./routers/educationRouter")
 const { errorMiddleware } = require("./middlewares/errorMiddleware")
 
 const app = express()
@@ -27,7 +26,7 @@ app.get("/", (req, res) => {
 app.use(userAuthRouter)
 app.use(awardRouter)
 app.use(projectRouter)
-//app.use(educationRouter)
+app.use(educationRouter)
 
 // 순서 중요 (router 에서 next() 시 아래의 에러 핸들링  middleware로 전달됨)
 app.use(errorMiddleware)
