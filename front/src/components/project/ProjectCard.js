@@ -1,6 +1,7 @@
 import { Card, Button, Row, Col } from "react-bootstrap";
 
 function ProjectCard({ project, isEditable, setIsEditing }) {
+
   return (
     <Card.Text>
       <Row className="align-items-center">

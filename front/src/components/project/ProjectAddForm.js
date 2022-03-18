@@ -9,8 +9,8 @@ function ProjectAddForm({ portfolioOwnerId, setProjects, setIsAdding }) {
   //useState로 description 상태를 생성함.
   const [description, setDescription] = useState("")
 
-  const [from_date, setFrom_date] = useState("")
-  const [to_date, setTo_date] = useState("")
+  const [from_date, setFrom_date] = useState(new Date())
+  const [to_date, setTo_date] = useState(new Date())
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -37,8 +37,6 @@ function ProjectAddForm({ portfolioOwnerId, setProjects, setIsAdding }) {
     setIsAdding(false);
   }
 
-
-
   return (
     <Form onSubmit={handleSubmit}>
       <Form.Group controlId="formBasicTitle">
@@ -59,19 +57,14 @@ function ProjectAddForm({ portfolioOwnerId, setProjects, setIsAdding }) {
         />
       </Form.Group>
 
-      
-
-
-
       <Row xs={1} sm={2} className="mt-3">
         <Col xs={'auto'} sm={'auto'}>
           <Form.Label className="mb-1">시작날짜</Form.Label>
           <DatePicker
             wrapperClassName="datePicker"
             dateFormat="yyyy.MM.dd(eee)"
-            //type="text"
             selected={from_date}
-            onChange={(e) => setFrom_date(e)}
+            onChange={(from_date) => setFrom_date(from_date)}
           />
         </Col>
         <Col xs={'auto'} sm={'auto'}>
@@ -79,19 +72,11 @@ function ProjectAddForm({ portfolioOwnerId, setProjects, setIsAdding }) {
             <DatePicker
               wrapperClassName="datePicker"
               dateFormat="yyyy.MM.dd(eee)"
-              //type="text"
               selected={to_date}
-              onChange={(e) => setTo_date(e)}
+              onChange={(to_date) => setTo_date(to_date)}
             />
         </Col>
       </Row>
-
-      
-      
-
-
-
-
 
       <Form.Group as={Row} className="mt-3 text-center">
         <Col sm={{ span: 20 }}>
