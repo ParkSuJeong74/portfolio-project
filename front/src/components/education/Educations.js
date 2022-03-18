@@ -1,10 +1,10 @@
-import {Card, Row, Col, Button} from 'react-bootstrap'
-import React, {useEffect, useState} from 'react'
+import { Card, Row, Col, Button } from 'react-bootstrap'
+import React, { useEffect, useState } from 'react'
 import * as Api from '../../api'
 import Education from './Education'
 import EducationAddForm from './EducationAddForm'
 
-function Educations({portfolioOwnerId, isEditable}) {
+function Educations({ portfolioOwnerId, isEditable }) {
     const [educations, setEducations] = useState([])
     const [isAdding, setIsAdding] = useState(false)
 
@@ -16,9 +16,9 @@ function Educations({portfolioOwnerId, isEditable}) {
         <Card>
             <Card.Body>
                 <Card.Title>학력</Card.Title>
-                {educations.map((education) => (
-                    <Education 
-                        key={educations.id}
+                {educations && educations.map((education) => (
+                    <Education
+                        key={education.id}
                         education={education}
                         isEditable={isEditable}
                         setEducations={setEducations}
@@ -32,12 +32,12 @@ function Educations({portfolioOwnerId, isEditable}) {
                     </Row>
                 )}
                 {isAdding && (
-                    <EducationAddForm 
+                    <EducationAddForm
                         setIsAdding={setIsAdding}
                         portfolioOwnerId={portfolioOwnerId}
-                        setEducations={setEducations}/>
+                        setEducations={setEducations} />
                 )}
-                
+
             </Card.Body>
         </Card>
     )

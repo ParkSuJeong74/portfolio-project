@@ -20,13 +20,14 @@ const Education = {
         const filter = { id: educationId }
 
         // String을 key값으로 쓸 땐 배열로 감싸줌
-        // $set : { key: value } -> aggregation stage
-        const update = { $set: {
-            [fieldToUpdate[0]]: newValue[0],
-            [fieldToUpdate[1]]: newValue[1],
-            [fieldToUpdate[2]]: newValue[2]
-        } }
-
+        // $set : { key0: value0, key1: value1, ... } -> aggregation stage
+        const update = {
+            $set: {
+                [fieldToUpdate[0]]: newValue[0],
+                [fieldToUpdate[1]]: newValue[1],
+                [fieldToUpdate[2]]: newValue[2]
+            }
+        }
         const option = { returnOriginal: false }
 
         const updatedEducation = await EducationModel.findOneAndUpdate(
