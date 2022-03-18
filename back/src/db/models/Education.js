@@ -18,8 +18,15 @@ const Education = {
 
     update: async ({ educationId, fieldToUpdate, newValue }) => {
         const filter = { id: educationId }
+
         // String을 key값으로 쓸 땐 배열로 감싸줌
-        const update = { [fieldToUpdate]: newValue }
+        // $set : { key: value } -> aggregation stage
+        const update = { $set: {
+            [fieldToUpdate[0]]: newValue[0],
+            [fieldToUpdate[1]]: newValue[1],
+            [fieldToUpdate[2]]: newValue[2]
+        } }
+
         const option = { returnOriginal: false }
 
         const updatedEducation = await EducationModel.findOneAndUpdate(

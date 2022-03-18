@@ -1,4 +1,4 @@
-const Education = require("../db/models/Education")
+const { Education } = require("../db/models/Education")
 const { v4: uuidv4 } = require("uuid")
 
 const EducationService = {
@@ -40,23 +40,10 @@ const EducationService = {
 
         // toUpdate는 id를 제외한 나머지 데이터(school, major, position)
         // toUpdate에서 값을 확인하고 {id, 필드명, 바뀔 값}을 db에 저장
-        if (toUpdate.school) {
-            const fieldToUpdate = "school"
-            const newValue = toUpdate.school
-            education = await Education.update({ educationId, fieldToUpdate, newValue })
-        }
-
-        if (toUpdate.major) {
-            const fieldToUpdate = "major"
-            const newValue = toUpdate.major
-            education = await Education.update({ educationId, fieldToUpdate, newValue })
-        }
-
-        if (toUpdate.position) {
-            const fieldToUpdate = "position"
-            const newValue = toUpdate.position
-            education = await Education.update({ educationId, fieldToUpdate, newValue })
-        }
+        const fieldToUpdate = Object.keys(toUpdate)
+        const newValue = Object.values(toUpdate)
+        
+        education = await Education.update({ educationId, fieldToUpdate, newValue })
 
         return education
     },
