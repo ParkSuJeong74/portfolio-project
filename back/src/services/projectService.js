@@ -36,17 +36,9 @@ const ProjectService = {
             return { errorMessage }
         }
 
-        if(toUpdate.title){
-            const fieldToUpdate = "title"
-            const newValue = toUpdate.title
-            project = await Project.update({ projectId, fieldToUpdate, newValue })
-        }
-
-        if(toUpdate.description){
-            const fieldToUpdate = "description"
-            const newValue = toUpdate.description
-            project = await Project.update({ projectId, fieldToUpdate, newValue })
-        }
+        const fieldToUpdate = ['title', 'description']
+        const newValue = [toUpdate.title, toUpdate.description]
+        project = await Project.update({ projectId, fieldToUpdate, newValue })
 
         return project
     },
