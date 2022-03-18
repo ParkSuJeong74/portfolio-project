@@ -21,8 +21,8 @@ const AwardSchema = new Schema({
     {
         timestamps: true
     }
-)
-
-const AwardModel = model("Award", AwardSchema)
+  )
+  
+  const AwardModel = model("Award", AwardSchema)
 
 module.exports = { AwardModel }
