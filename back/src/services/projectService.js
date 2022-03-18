@@ -1,12 +1,14 @@
 const { Project } = require('../db')
-const { v4:uuidv4 } = require('uuid')
+const { v4: uuidv4 } = require('uuid')
+
 
 // ProjectService
 const ProjectService = {
     // POST
-    addProject : async ({ user_id, title, description }) => {
+    addProject : async ({ user_id, title, description, from_date, to_date }) => {
         const id = uuidv4()
-        const newProject = { id, user_id, title, description }
+
+        const newProject = { id, user_id, title, description, from_date, to_date }
         const createNewProject = await Project.create({ newProject })
         return createNewProject
     },
@@ -36,8 +38,8 @@ const ProjectService = {
             return { errorMessage }
         }
 
-        const fieldToUpdate = ['title', 'description']
-        const newValue = [toUpdate.title, toUpdate.description]
+        const fieldToUpdate = ['title', 'description', 'from_date', 'to_date']
+        const newValue = [toUpdate.title, toUpdate.description, toUpdate.from_date, toUpdate.to_date]
         project = await Project.update({ projectId, fieldToUpdate, newValue })
 
         return project

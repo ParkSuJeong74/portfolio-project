@@ -20,13 +20,19 @@ projectRouter.post('/project/create', async (req, res, next) => {
         const user_id = req.body.user_id
         const title = req.body.title
         const description = req.body.description
-        
+        const from_date = req.body.from_date.split("T")[0]
+        const to_date = req.body.to_date.split("T")[0]
+
         // db에서 데이터 저장
         const newProject = await ProjectService.addProject({
             user_id,
             title,
             description,
+            from_date,
+            to_date,
         })
+
+        console.log(newProject)
         
         res.status(201).json(newProject)
     } catch(err) {
@@ -63,8 +69,10 @@ projectRouter.put('/projects/:id', async (req, res, next) => {
         // body에서 정보 추출
         const title = req.body.title ?? null
         const description = req.body.description ?? null
+        const from_date = req.body.from_date.split("T")[0] ?? null
+        const to_date = req.body.to_date.split("T")[0] ?? null
 
-        const toUpdate = { title, description }
+        const toUpdate = { title, description, from_date, to_date }
 
         // db에서 데이터 수정하기(service)
         const project = await ProjectService.setProject({ projectId, toUpdate })

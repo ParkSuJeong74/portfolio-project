@@ -25,7 +25,7 @@ function ProjectAddForm({ portfolioOwnerId, setProjects, setIsAdding }) {
       title,
       description,
       from_date,
-      to_date
+      to_date,
     })
 
     // "awardlist/유저id" 엔드포인트로 get요청함.
@@ -69,6 +69,7 @@ function ProjectAddForm({ portfolioOwnerId, setProjects, setIsAdding }) {
           <DatePicker
             wrapperClassName="datePicker"
             dateFormat="yyyy.MM.dd(eee)"
+            //type="text"
             selected={from_date}
             onChange={(e) => setFrom_date(e)}
           />
@@ -78,6 +79,7 @@ function ProjectAddForm({ portfolioOwnerId, setProjects, setIsAdding }) {
             <DatePicker
               wrapperClassName="datePicker"
               dateFormat="yyyy.MM.dd(eee)"
+              //type="text"
               selected={to_date}
               onChange={(e) => setTo_date(e)}
             />
