@@ -19,12 +19,12 @@ function Award({award, setAwards, isEditable}) {
                 <AwardCard 
                     award={award}
                     isEditable={isEditable}
-                    setIsEditing={setIsEditing}
-                    
-                    />
+                    setIsEditing={setIsEditing}                   
+                />
             )}
         </>
     )
 }
 
 export default Award
+

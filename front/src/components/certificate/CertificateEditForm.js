@@ -1,41 +1,38 @@
-import React, {useState} from 'react'
-import {Form, Button, Row,Col} from 'react-bootstrap'
+import { useState } from "react"
+import {Form,Col,Button,Row} from 'react-bootstrap'
+import DatePicker from 'react-datepicker'
 import * as Api from '../../api'
 
-//현재 award(currentAward)의 title, description을 상태로 설정해야 함
-function AwardEditForm({currentAward, setAwards, setIsEditing}){
-    const [title, setTitle] = useState(currentAward.title)
-    const [description, setDescription] = useState(currentAward.description)
+function CertificateEditForm({setCertificates, currentCertificate,setIsEditing}){
+    const [title, setTitle] = useState(currentCertificate.title)
+    const [description, setDescription] = useState(currentCertificate.description)
+    const [date, setDate] = useState(currentCertificate.date)
 
     async function submitHandler(e){
         e.preventDefault()
         e.stopPropagation()
 
-        //currentAward의 user_id를 user_id 변수에 할당함
-        const user_id = currentAward.user_id
+        const user_id = currentCertificate.user_id
 
-        //수정한 내용들을 put 요청함. 엔드포인트: 'awards/유저아이디'
-        await Api.put(`awards/${currentAward.id}`, {
+        await Api.put(`certificates/${currentCertificate.id}`,{
             user_id,
             title,
-            description
+            description,
+            date
         })
 
-        //수정을 해놨으니까, 다시 get 요청함. 엔드포인트: "awardlist/유저아이디"
-        const res = await Api.get("awardlist", user_id)
-        setAwards(res.data)
-
-        //추가하는 과정이 끝났으니까 isAdding을 false로 설정해서 수정폼을 안보이게 함
+        const res = await Api.get("certificatelist", user_id)
+        setCertificates(res.data)
         setIsEditing(false)
     }
 
     return (
         <Form onSubmit={submitHandler}>
-            <Form.Group controlId="formBasicTitle">
+            <Form.Group controlId="formBasicTitle" className="mt-3">
                 
                 <Form.Control 
                     type="text"
-                    placeholder="수상내역" 
+                    placeholder="자격증제목" 
                     value={title} 
                     onChange={(e) => setTitle(e.target.value)}
                 />
@@ -50,9 +47,18 @@ function AwardEditForm({currentAward, setAwards, setIsEditing}){
                     value={description} 
                     onChange={(e) => setDescription(e.target.value)}
                 />
+
             </Form.Group>
             
-            <Form.Group as={Row} className="text-center mt-3">
+            <Form.Group as={Col} xs="auto" xxl={3} controlId="formBasicDate" className="mt-3">
+                <DatePicker 
+                    selected={date}
+                    placeholderText="취득날짜"
+                    dateFormat = "yyyy.MM.dd(eee)"
+                    onChange={(date) => setDate(date)}/> 
+            </Form.Group>
+
+            <Form.Group as={Row} className="mt-3 text-center">
                 <Col sm={{ span: 20 }}>
                     <Button className="me-3" variant="primary" type="submit">
                         확인
@@ -65,6 +71,4 @@ function AwardEditForm({currentAward, setAwards, setIsEditing}){
         </Form>
     )
 }
-
-export default AwardEditForm
-
+export default CertificateEditForm
