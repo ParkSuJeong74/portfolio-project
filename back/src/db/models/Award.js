@@ -34,6 +34,6 @@ const Award = {
         const isDataDeleted = deleteResult.deletedCount === 1
         return isDataDeleted
     }
-}
+  }
 
 module.exports = { Award }

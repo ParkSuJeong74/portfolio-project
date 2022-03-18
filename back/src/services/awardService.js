@@ -5,8 +5,10 @@ const AwardService = {
     addAward : async ({ user_id, title, description}) => {
         const id = uuidv4()
 
-        const newAward = { id, user_id, title, description }
-        const createdNewAward = await Award.create({ newAward })
+      const id = uuidv4()
+
+      const newAward = { id, user_id, title, description }
+      const createdNewAward = await Award.create({ newAward })
 
         return createdNewAward
     },
