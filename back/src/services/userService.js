@@ -3,8 +3,8 @@ const bcrypt = require("bcrypt")
 const { v4: uuidv4 } = require("uuid")
 const jwt = require("jsonwebtoken")
 
-class userAuthService {
-  static async addUser({ name, email, password }) {
+const userAuthService = {
+  addUser: async ({ name, email, password }) => {
     // 이메일 중복 확인
     const user = await User.findByEmail({ email })
     if (user) {
@@ -25,9 +25,9 @@ class userAuthService {
     createdNewUser.errorMessage = null // 문제 없이 db 저장 완료되었으므로 에러가 없음.
 
     return createdNewUser
-  }
+  },
 
-  static async getUser({ email, password }) {
+  getUser: async ({ email, password }) => {
     // 이메일 db에 존재 여부 확인
     const user = await User.findByEmail({ email })
     if (!user) {
@@ -67,14 +67,14 @@ class userAuthService {
     }
 
     return loginUser
-  }
+  },
 
-  static async getUsers() {
+  getUsers: async () => {
     const users = await User.findAll()
     return users
-  }
+  },
 
-  static async setUser({ user_id, toUpdate }) {
+  setUser: async ({ user_id, toUpdate }) => {
     // 우선 해당 id 의 유저가 db에 존재하는지 여부 확인
     let user = await User.findById({ user_id })
 
@@ -110,10 +110,10 @@ class userAuthService {
       user = await User.update({ user_id, fieldToUpdate, newValue })
     }
 
-    return user;
-  }
+    return user
+  },
 
-  static async getUserInfo({ user_id }) {
+  getUserInfo: async ({ user_id }) => {
     const user = await User.findById({ user_id })
 
     // db에서 찾지 못한 경우, 에러 메시지 반환

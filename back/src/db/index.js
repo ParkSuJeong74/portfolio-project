@@ -1,6 +1,7 @@
 const mongoose = require("mongoose")
 const { User } = require("./models/User")
 const { Award } = require("./models/Award")
+const { Education } = require("./models/Education")
 const { Certificate } = require("./models/Certificate")
 
 const DB_URL =
@@ -17,4 +18,4 @@ db.on("error", (error) =>
   console.error("MongoDB 연결에 실패하였습니다...\n" + DB_URL + "\n" + error)
 )
 
-module.exports = { User, Award, Certificate }
+module.exports = { User, Award, Education, Certificate }
