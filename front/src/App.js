@@ -1,19 +1,20 @@
-import React, { useState, useEffect, useReducer, createContext } from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import React, { useState, useEffect, useReducer, createContext } from "react"
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
 
-import * as Api from "./api";
-import { loginReducer } from "./reducer";
+import * as Api from "./api"
+import { loginReducer } from "./reducer"
 
-import Header from "./components/Header";
-import LoginForm from "./components/user/LoginForm";
-import Network from "./components/user/Network";
-import RegisterForm from "./components/user/RegisterForm";
-import Portfolio from "./components/Portfolio";
+import Header from "./components/Header"
+import LoginForm from "./components/user/LoginForm"
+import Network from "./components/user/Network"
+import RegisterForm from "./components/user/RegisterForm"
+import Portfolio from "./components/Portfolio"
 
-export const UserStateContext = createContext(null);
-export const DispatchContext = createContext(null);
+export const UserStateContext = createContext(null)
+export const DispatchContext = createContext(null)
 
 function App() {
+
     // useReducer 훅을 통해 userState 상태와 dispatch함수를 생성함.
     const [userState, dispatch] = useReducer(loginReducer, {
         user: null,
