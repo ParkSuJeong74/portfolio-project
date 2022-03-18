@@ -9,8 +9,12 @@ function ProjectEditForm({ currentProject, setProjects, setIsEditing }) {
   //useState로 description 상태를 생성함.
   const [description, setDescription] = useState(currentProject.description);
 
-  const [from_date, setFrom_date] = useState(currentProject.from_date)
-  const [to_date, setTo_date] = useState(currentProject.to_date)
+  const [from_date, setFrom_date] = useState(
+    new Date(currentProject.from_date)
+  )
+  const [to_date, setTo_date] = useState(
+    new Date(currentProject.to_date)
+  )
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -63,7 +67,7 @@ function ProjectEditForm({ currentProject, setProjects, setIsEditing }) {
             wrapperClassName="datePicker"
             dateFormat="yyyy.MM.dd(eee)"
             selected={from_date}
-            onChange={(e) => setFrom_date(e)}
+            onChange={(from_date) => setFrom_date(from_date)}
           />
         </Col>
         <Col xs={'auto'} sm={'auto'}>
@@ -72,7 +76,7 @@ function ProjectEditForm({ currentProject, setProjects, setIsEditing }) {
               wrapperClassName="datePicker"
               dateFormat="yyyy.MM.dd(eee)"
               selected={to_date}
-              onChange={(e) => setTo_date(e)}
+              onChange={(to_date) => setTo_date(to_date)}
             />
         </Col>
       </Row>

@@ -2,8 +2,10 @@ const cors = require("cors")
 const express = require("express")
 const { userAuthRouter } = require("./routers/userRouter")
 const { awardRouter } = require("./routers/awardRouter")
+const { projectRouter } = require("./routers/projectRouter")
 const { educationRouter } = require("./routers/educationRouter")
 const { certificateRouter } = require("./routers/certificateRouter")
+
 const { errorMiddleware } = require("./middlewares/errorMiddleware")
 
 const app = express()
@@ -25,6 +27,7 @@ app.get("/", (req, res) => {
 // router, service 구현 (userAuthRouter는 맨 위에 있어야 함.)
 app.use(userAuthRouter)
 app.use(awardRouter)
+app.use(projectRouter)
 app.use(educationRouter)
 app.use(certificateRouter)
 
