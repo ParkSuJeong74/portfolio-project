@@ -20,7 +20,7 @@ function ProjectAddForm({ portfolioOwnerId, setProjects, setIsAdding }) {
     const user_id = portfolioOwnerId;
 
     // "award/create" 엔드포인트로 post요청함.
-    await Api.post("award/create", {
+    await Api.post("project/create", {
       user_id: portfolioOwnerId,
       title,
       description,

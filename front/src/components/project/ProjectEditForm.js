@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import { Button, Form, Col, Row } from "react-bootstrap"
-import * as Api from "../../api
+import * as Api from "../../api"
 import DatePicker from "react-datepicker"
 
 function ProjectEditForm({ currentProject, setProjects, setIsEditing }) {
@@ -20,7 +20,7 @@ function ProjectEditForm({ currentProject, setProjects, setIsEditing }) {
     const user_id = currentProject.user_id;
 
     // "awards/수상 id" 엔드포인트로 PUT 요청함.
-    await Api.put(`awards/${currentProject.id}`, {
+    await Api.put(`projects/${currentProject.id}`, {
       user_id,
       title,
       description,
