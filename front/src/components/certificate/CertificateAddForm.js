@@ -6,22 +6,22 @@ import * as Api from '../../api'
 function CertificateAddForm({setCertificates, setIsAdding,portfolioOwnerId }){
     const [title, setTitle] = useState('')
     const [description, setDescription] = useState('')
-    const [date, setDate] = useState(new Date())
+    const [whenDate, setWhenDate] = useState(new Date())
 
     async function submitHandler(e){
         e.preventDefault()
-        e.stopPropagation()
 
         const user_id = portfolioOwnerId
+        const when_date = whenDate.toISOString().split("T")[0];
 
         await Api.post("certificate/create", {
             user_id: portfolioOwnerId,
             title,
             description,
-            date
+            when_date
         })
 
-        const res = Api.get("certificatelist", user_id)
+        const res = await Api.get("certificatelist", user_id)
         setCertificates(res.data)
         setIsAdding(false)
     }
@@ -52,10 +52,10 @@ function CertificateAddForm({setCertificates, setIsAdding,portfolioOwnerId }){
             
             <Form.Group as={Col} xs="auto" xxl={3} controlId="formBasicDate" className="mt-3">
                 <DatePicker 
-                    selected={date}
+                    selected={whenDate}
                     placeholderText="Weeks start on Monday"
                     dateFormat = "yyyy.MM.dd(eee)"
-                    onChange={(date) => setDate(date)}/> 
+                    onChange={(date) => setWhenDate(date)}/> 
             </Form.Group>
 
             <Form.Group as={Row} className="mt-3 text-center">

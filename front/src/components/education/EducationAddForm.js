@@ -11,7 +11,7 @@ function EducationAddForm({setIsAdding, portfolioOwnerId, setEducations}){
         e.preventDefault()
         e.stopPropagation()
 
-        const user_id = portfolioOwnerId.id
+        const user_id = portfolioOwnerId
 
         await Api.post('education/create', {
             user_id: portfolioOwnerId,
@@ -20,7 +20,7 @@ function EducationAddForm({setIsAdding, portfolioOwnerId, setEducations}){
             position
         })
 
-        const res = Api.get("educationlist", user_id)
+        const res = await Api.get("educationlist", user_id)
         setEducations(res.data)
         setIsAdding(false)
     }

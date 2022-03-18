@@ -6,19 +6,20 @@ import * as Api from '../../api'
 function CertificateEditForm({setCertificates, currentCertificate,setIsEditing}){
     const [title, setTitle] = useState(currentCertificate.title)
     const [description, setDescription] = useState(currentCertificate.description)
-    const [date, setDate] = useState(currentCertificate.date)
+    const [whenDate, setWhenDate] = useState(currentCertificate.when_date)
 
     async function submitHandler(e){
         e.preventDefault()
         e.stopPropagation()
 
         const user_id = currentCertificate.user_id
+        const when_date = whenDate.toISOString().split("T")[0];
 
         await Api.put(`certificates/${currentCertificate.id}`,{
             user_id,
             title,
             description,
-            date
+            when_date
         })
 
         const res = await Api.get("certificatelist", user_id)
@@ -52,10 +53,10 @@ function CertificateEditForm({setCertificates, currentCertificate,setIsEditing})
             
             <Form.Group as={Col} xs="auto" xxl={3} controlId="formBasicDate" className="mt-3">
                 <DatePicker 
-                    selected={date}
+                    selected={whenDate}
                     placeholderText="취득날짜"
                     dateFormat = "yyyy.MM.dd(eee)"
-                    onChange={(date) => setDate(date)}/> 
+                    onChange={(date) => setWhenDate(date)}/> 
             </Form.Group>
 
             <Form.Group as={Row} className="mt-3 text-center">
