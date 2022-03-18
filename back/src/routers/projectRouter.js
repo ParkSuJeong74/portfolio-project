@@ -31,8 +31,6 @@ projectRouter.post('/project/create', async (req, res, next) => {
             from_date,
             to_date,
         })
-
-        console.log(newProject)
         
         res.status(201).json(newProject)
     } catch(err) {

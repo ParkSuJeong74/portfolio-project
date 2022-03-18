@@ -93,7 +93,6 @@ certificateRouter.delete("/certificates/:id", async (req, res, next) => {
 certificateRouter.get("/certificatelist/:user_id", async (req, res, next) => {
     try {
         const user_id = req.params.user_id
-        console.log(user_id)
         const certificateList = await CertificateService.getCertificateList({ user_id })
     
         res.status(200).send(certificateList)
