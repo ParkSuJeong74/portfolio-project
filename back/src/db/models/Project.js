@@ -22,7 +22,12 @@ const Project = {
     // PUT
     update : async ({ projectId, fieldToUpdate, newValue }) => {
         const filter = { id: projectId }
-        const update = { [fieldToUpdate]: newValue }
+        const update = { $set : { 
+                [fieldToUpdate[0]]: newValue[0],
+                [fieldToUpdate[1]]: newValue[1] 
+            }
+        }
+        
         const option = { returnOriginal: false }
         
         const updatedProject = await ProjectModel.findOneAndUpdate(
