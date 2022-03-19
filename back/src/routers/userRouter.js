@@ -2,6 +2,7 @@ const is = require("@sindresorhus/is")
 const { Router } = require("express")
 const { login_required } = require("../middlewares/login_required")
 const { userAuthService } = require("../services/userService")
+const { time } = require("../common/timeUtil")
 
 const userAuthRouter = Router()
 
@@ -17,12 +18,17 @@ userAuthRouter.post("/user/register", async (req, res, next) => {
     const name = req.body.name
     const email = req.body.email
     const password = req.body.password
+    const created_at = time
+    const updated_at = time
+
 
     // 위 데이터를 유저 db에 추가하기
     const newUser = await userAuthService.addUser({
       name,
       email,
       password,
+      created_at,
+      updated_at
     })
 
     if (newUser.errorMessage) {
