@@ -18,7 +18,6 @@ const Education = {
 
     update: async ({ educationId, fieldToUpdate, newValue }) => {
         const filter = { id: educationId }
-
         // String을 key값으로 쓸 땐 배열로 감싸줌
         // $set : { key0: value0, key1: value1, ... } -> aggregation stage
         const update = {

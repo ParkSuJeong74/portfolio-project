@@ -2,7 +2,7 @@ const { Award } = require("../db")
 const { v4: uuidv4 } = require("uuid")
 
 const AwardService = {
-    addAward : async ({ user_id, title, description}) => {
+    addAward: async ({ user_id, title, description }) => {
         const id = uuidv4()
 
         const newAward = { id, user_id, title, description }
@@ -11,7 +11,7 @@ const AwardService = {
         return createdNewAward
     },
 
-    getAward : async ({ awardId }) => {
+    getAward: async ({ awardId }) => {
         const award = await Award.findById({ awardId })
         if (!award) {
             const errorMessage =
@@ -22,12 +22,12 @@ const AwardService = {
         return award
     },
 
-    getAwardList : async ({ user_id }) => {
+    getAwardList: async ({ user_id }) => {
         const awards = await Award.findByUserId({ user_id })
         return awards
     },
 
-    setAward : async ({ awardId, toUpdate }) => {
+    setAward: async ({ awardId, toUpdate }) => {
         let award = await Award.findById({ awardId })
 
         if (!award) {
@@ -36,21 +36,15 @@ const AwardService = {
             return { errorMessage }
         }
 
-        if (toUpdate.title) {
-            const fieldToUpdate = "title"
-            const newValue = toUpdate.title
-            award = await Award.update({ awardId, fieldToUpdate, newValue })
-        }
+        const fieldToUpdate = Object.keys(toUpdate)
+        const newValue = Object.values(toUpdate)
 
-        if (toUpdate.description) {
-            const fieldToUpdate = "description"
-            const newValue = toUpdate.description
-            award = await Award.update({ awardId, fieldToUpdate, newValue })
-        }
+        award = await Award.update({ awardId, fieldToUpdate, newValue })
+
         return award
     },
 
-    deleteAward : async ({ awardId }) => {
+    deleteAward: async ({ awardId }) => {
         const isDataDeleted = await Award.deleteById({ awardId })
 
         if (!isDataDeleted) {
