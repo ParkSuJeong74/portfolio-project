@@ -48,7 +48,7 @@ function Projects({ portfolioOwnerId, isEditable }) {
                   fontSize: '2rem',
                   textAlign: 'center',
                   borderRadius: '15px',
-                  padding: 0,
+                  padding: 0
                 }}>
                   +
               </button>
