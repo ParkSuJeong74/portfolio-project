@@ -2,11 +2,11 @@ const { Education } = require("../db/models/Education")
 const { v4: uuidv4 } = require("uuid")
 
 const EducationService = {
-    addEducation: async ({ user_id, school, major, position }) => {
+    addEducation: async ({ user_id, school, major, position, created_at, updated_at }) => {
         // 인증에 사용하는 고유값을 만들어 id로 사용
         const id = uuidv4()
 
-        const newEducation = { id, user_id, school, major, position }
+        const newEducation = { id, user_id, school, major, position, created_at, updated_at }
         const createdNewEducation = await Education.create({ newEducation })
 
         return createdNewEducation
