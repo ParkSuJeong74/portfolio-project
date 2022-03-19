@@ -29,7 +29,7 @@ function UserEditForm({ user, setIsEditing, setUser }) {
     };
 
     return (
-    <Card className="mb-2">
+    <Card className="mb-2" style={{backgroundColor:'#FCFAFA'}}>
         <Card.Body>
             <Form onSubmit={handleSubmit}>
                 <Form.Group controlId="useEditName" className="mb-3">
@@ -38,6 +38,7 @@ function UserEditForm({ user, setIsEditing, setUser }) {
                         placeholder="이름"
                         value={name}
                         onChange={(e) => setName(e.target.value)}
+                        style={{border: 'solid 2px #e5d6ff'}}
                     />
                 </Form.Group>
 
@@ -47,6 +48,7 @@ function UserEditForm({ user, setIsEditing, setUser }) {
                         placeholder="이메일"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
+                        style={{border: 'solid 2px #e5d6ff'}}
                     />
                 </Form.Group>
 
@@ -56,12 +58,13 @@ function UserEditForm({ user, setIsEditing, setUser }) {
                         placeholder="정보, 인사말"
                         value={description}
                         onChange={(e) => setDescription(e.target.value)}
+                        style={{border: 'solid 2px #e5d6ff'}}
                     />
                 </Form.Group>
 
                 <Form.Group as={Row} className="mt-3 text-center">
                     <Col sm={{ span: 20 }}>
-                        <Button variant="primary" type="submit" className="me-3">
+                        <Button variant="primary" type="submit" className="me-3" style={{backgroundColor: "#e5d6ff", border:"solid 2px"}}>
                         확인
                         </Button>
                         <Button variant="secondary" onClick={() => setIsEditing(false)}>

@@ -1,10 +1,12 @@
 import { useNavigate } from "react-router-dom";
 import { Card, Row, Button, Col } from "react-bootstrap";
+import './UserCard.css'; 
+
 
 function UserCard({ user, setIsEditing, isEditable, isNetwork }) {
     const navigate = useNavigate();
     return (
-        <Card className="mb-2 ms-3 mr-5" style={{ width: "18rem" }}>
+        <Card className="mb-2 ms-3 mr-5" style={{ width: "18rem", backgroundColor: "#FCFAFA"}}>
             <Card.Body>
                 <Row className="justify-content-md-center">
                     <Card.Img
@@ -23,13 +25,16 @@ function UserCard({ user, setIsEditing, isEditable, isNetwork }) {
                     <Col>
                         <Row className="mt-3 text-center text-info">
                             <Col sm={{ span: 20 }}>
-                                <Button
-                                    variant="outline-info"
-                                    size="sm"
+                                <Button style={{ 
+                                border:"solid 2px",
+                                borderRadius: '3px', 
+                                backgroundColor: '#e5d6ff'}} 
+                                    
+                                    
                                     onClick={() => setIsEditing(true)}
                                 >
-                                편집
-                            </Button>
+                                    편집
+                                </Button>
                             </Col>
                         </Row>
                     </Col>
