@@ -137,6 +137,38 @@ userAuthRouter.get(
   }
 )
 
+userAuthRouter.put("/user/follow/:id", login_required, async (req, res, next) => {
+  try {
+    const user_id_my = req.params.id
+    const user_id_you = req.body.user_id_you
+
+    // 내 데이터
+    const userInfo_my = await userAuthService
+      .getUserInfo({ user_id: user_id_my })
+    // 상대 데이터
+    const userInfo_you = await userAuthService
+      .getUserInfo({ user_id: user_id_you })
+
+    // 데이터를 setUser로 넘겨주기 전에 처리(각자의 following, follower에 서로의 id 추가)
+    let following_my = [...userInfo_my.following, user_id_you]
+    let follower_you = [...userInfo_you.follower, user_id_my]
+
+    const toUpdate_you = { follower: follower_you }
+    const updated_you = await userAuthService.setUser({ user_id: user_id_you, toUpdate: toUpdate_you })
+    // 상대 데이터가 없는 경우
+    if (updated_you.errorMessage) {
+      throw new Error(updated_you.errorMessage)
+    }
+
+    const toUpdate_my = { following: following_my }
+    const updated_my = await userAuthService.setUser({ user_id: user_id_my, toUpdate: toUpdate_my })
+
+    res.status(200).json({ updated_my, updated_you })
+  } catch (error) {
+    next(error)
+  }
+})
+
 // jwt 토큰 기능 확인용, 삭제해도 되는 라우터임.
 userAuthRouter.get("/afterlogin", login_required, (req, res, next) => {
   res
