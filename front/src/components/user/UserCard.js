@@ -34,21 +34,7 @@ function UserCard({ user, setIsEditing, isEditable, isNetwork }) {
                         </Row>
                     </Col>
                 )}
-                {isEditable && (
-                    <Col>
-                        <Row className="mt-3 text-center text-info">
-                            <Col sm={{ span: 20 }}>
-                                <Button
-                                    variant="outline-info"
-                                    size="sm"
-                                    onClick={() => setIsEditing(true)}
-                                >
-                                삭제
-                            </Button>
-                            </Col>
-                        </Row>
-                    </Col>
-                )}
+                
 
                 {isNetwork && (
                     <Card.Link

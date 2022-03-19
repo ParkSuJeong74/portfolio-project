@@ -21,7 +21,15 @@ function AwardCard({award, isEditable, setIsEditing}){
                             size="sm"
                             className="mr-3"
                             >
-                            편집
+                            수정
+                        </Button>
+                        <Button
+                            variant="outline-info"
+                            onClick={() => setIsEditing(true)}
+                            size="sm"
+                            className="mr-3"
+                            >
+                            삭제
                         </Button>
                     </Col>
                 )}

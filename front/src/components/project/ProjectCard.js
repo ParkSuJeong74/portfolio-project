@@ -4,7 +4,8 @@ function ProjectCard({ project, isEditable, setIsEditing }) {
 
   return (
     <Card.Text>
-      <Row className="align-items-center" style={{paddingLeft: '28px'}}>
+      <Row className="align-items-center" 
+          style={{paddingLeft: '28px',}}>
         <Col>
           <span style={{
             fontWeight: 'bold',

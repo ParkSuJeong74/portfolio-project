@@ -3,6 +3,7 @@ import { Card, Button, Row, Col } from "react-bootstrap";
 import * as Api from "../../api";
 import Project from "./Project";
 import ProjectAddForm from "./ProjectAddForm";
+import '../../App.css'
 
 function Projects({ portfolioOwnerId, isEditable }) {
   //useState로 projects 상태를 생성함.
@@ -39,18 +40,7 @@ function Projects({ portfolioOwnerId, isEditable }) {
 
               <button
                 onClick={() => setIsAdding(true)}
-                style={{
-                  backgroundColor: '#B041E3',
-                  color: 'white',
-                  border: '#B041E3',
-                  width: '50px',
-                  height: '50px',
-                  fontSize: '2rem',
-                  textAlign: 'center',
-                  borderRadius: '15px',
-                  padding: 0
-                }}>
-                  +
+                className="formAddButton">
               </button>
               
             </Col>
