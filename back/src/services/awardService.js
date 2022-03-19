@@ -2,10 +2,10 @@ const { Award } = require("../db")
 const { v4: uuidv4 } = require("uuid")
 
 const AwardService = {
-    addAward: async ({ user_id, title, description }) => {
+    addAward: async ({ user_id, title, description, created_at, updated_at }) => {
         const id = uuidv4()
 
-        const newAward = { id, user_id, title, description }
+        const newAward = { id, user_id, title, description, created_at, updated_at }
         const createdNewAward = await Award.create({ newAward })
 
         return createdNewAward

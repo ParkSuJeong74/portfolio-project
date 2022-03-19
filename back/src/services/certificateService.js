@@ -3,10 +3,10 @@ const { v4: uuidv4 } = require("uuid")
 
 // closure(비공개 멤버)가 필요 없으므로 객체 리터럴만 선언하여 싱글톤 디자인 구현
 const CertificateService = {
-    addCertificate: async function({ user_id, title, description, when_date }) {
+    addCertificate: async function({ user_id, title, description, when_date, created_at, updated_at }) {
         const id = uuidv4()
 
-        const newCertificate = { id, user_id, title, description, when_date }
+        const newCertificate = { id, user_id, title, description, when_date, created_at, updated_at }
         const createdNewCertificate = await Certificate.create({ newCertificate })
 
         return createdNewCertificate

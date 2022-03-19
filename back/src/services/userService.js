@@ -4,7 +4,7 @@ const { v4: uuidv4 } = require("uuid")
 const jwt = require("jsonwebtoken")
 
 const userAuthService = {
-  addUser: async ({ name, email, password }) => {
+  addUser: async ({ name, email, password, created_at, updated_at }) => {
     // 이메일 중복 확인
     const user = await User.findByEmail({ email })
     if (user) {
@@ -18,7 +18,7 @@ const userAuthService = {
 
     // id 는 유니크 값 부여
     const id = uuidv4()
-    const newUser = { id, name, email, password: hashedPassword }
+    const newUser = { id, name, email, password: hashedPassword, created_at, updated_at }
 
     // db에 저장
     const createdNewUser = await User.create({ newUser })
