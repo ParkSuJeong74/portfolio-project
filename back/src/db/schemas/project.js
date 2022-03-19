@@ -30,9 +30,14 @@ const ProjectSchema = new Schema(
             //format : Date,
             required: true,
         },
-    },
-    {
-        timestamps: true
+        created_at: {
+            type: Date,
+            required: true,
+        },
+        updated_at: {
+            type: Date,
+            required: true,
+        }
     }
 )
 
