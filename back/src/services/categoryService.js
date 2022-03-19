@@ -3,10 +3,15 @@ const { v4: uuidv4 } = require("uuid")
 
 
 const CategoryService = {
-    addCategory : async ({ user_id, name, description }) => {
+    addCategory : async ({ user_id, name, description, created_at, updated_at }) => {
         const id = uuidv4()
+        
+        // 이름 중복 검사 : DB에서 같은 이름 검색
+        if(Category.findByName({ name })) {
+            throw new Error("같은 이름이 존재합니다!!!")
+        }
 
-        const newCategory = { id, user_id, name, description }
+        const newCategory = { id, user_id, name, description, created_at, updated_at }
         const createNewCategory = await Category.create({ newCategory })
 
         return createNewCategory
@@ -21,9 +26,7 @@ const CategoryService = {
         const category = await Category.findByName({ categoryName })
         
         if(!categoryName){
-            const errorMessage =
-            "해당 Name를 가진 수상 데이터는 없습니다. 다시 한 번 확인해 주세요."
-            return { errorMessage }
+            throw new Error("해당 Name를 가진 수상 데이터는 없습니다. 다시 한 번 확인해 주세요.")
         }
         return category
     },

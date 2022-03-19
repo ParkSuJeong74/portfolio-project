@@ -2,6 +2,7 @@ const is = require('@sindresorhus/is')
 const { Router } = require('express')
 const { login_required } = require('../middlewares/login_required')
 const { CategoryService } = require('../services/categoryService')
+const { time } = require("../common/timeUtil")
 
 const categoryRouter = Router()
 
@@ -19,12 +20,16 @@ categoryRouter.post('/create', async (req, res, next) => {
         const user_id = req.body.user_id
         const name = req.body.name
         const description = req.body.description
+        const created_at = time
+        const updated_at = time
 
         // 데이터 DB 추가
         const newCategory = await CategoryService.addCategory({
             user_id,
             name,
             description,
+            created_at,
+            updated_at
         })
 
         res.status(201).json(newCategory)
@@ -70,11 +75,11 @@ categoryRouter.put('/:name', async (req, res, next) => {
 
         const name = req.body.name ?? null
         const description = req.body.description ??  null
+        const updated_at = time
+        const toUpdate = { name, description, updated_at }
 
-        const toUpdate = { name, description }
-        console.log(toUpdate)
         const category = await CategoryService.setCategory({ categoryName, toUpdate })
-        console.log(category)
+
         if (category.errorMessage) {
             throw new Error(category.errorMessage)
         }

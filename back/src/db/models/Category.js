@@ -20,7 +20,8 @@ const Category = {
         const filter = { name : categoryName }
         const update = { $set : {
             [fieldToUpdate[0]]: newValue[0],
-            [fieldToUpdate[1]]: newValue[1]
+            [fieldToUpdate[1]]: newValue[1],
+            [fieldToUpdate[2]]: newValue[2],
         }}
         const option = { returnOriginal: false }
         const updatedCategory = await CategoryModel.findOneAndUpdate(

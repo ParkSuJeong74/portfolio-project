@@ -5,10 +5,10 @@ const { v4: uuidv4 } = require('uuid')
 // ProjectService
 const ProjectService = {
     // POST
-    addProject : async ({ user_id, title, description, from_date, to_date }) => {
+    addProject : async ({ user_id, title, description, from_date, to_date, created_at, updated_at }) => {
         const id = uuidv4()
 
-        const newProject = { id, user_id, title, description, from_date, to_date }
+        const newProject = { id, user_id, title, description, from_date, to_date, created_at, updated_at }
         const createNewProject = await Project.create({ newProject })
         return createNewProject
     },
