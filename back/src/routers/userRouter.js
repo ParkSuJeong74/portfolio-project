@@ -2,7 +2,7 @@ const is = require("@sindresorhus/is")
 const { Router } = require("express")
 const { login_required } = require("../middlewares/login_required")
 const { userAuthService } = require("../services/userService")
-const { time } = require("../common/timeUtil")
+const { timeUtil } = require("../common/timeUtil")
 
 const userAuthRouter = Router()
 
@@ -18,8 +18,8 @@ userAuthRouter.post("/user/register", async (req, res, next) => {
     const name = req.body.name
     const email = req.body.email
     const password = req.body.password
-    const created_at = time
-    const updated_at = time
+    const created_at = timeUtil()
+    const updated_at = timeUtil()
 
 
     // 위 데이터를 유저 db에 추가하기
@@ -107,8 +107,9 @@ userAuthRouter.put(
       const name = req.body.name ?? null
       const email = req.body.email ?? null
       const description = req.body.description ?? null
+      const updated_at = timeUtil()
 
-      const toUpdate = { name, email, description }
+      const toUpdate = { name, email, description, updated_at }
 
       // 해당 사용자 아이디로 사용자 정보를 db에서 찾아 업데이트함. 업데이트 요소가 없을 시 생략함
       const updatedUser = await userAuthService.setUser({ user_id, toUpdate })
