@@ -6,7 +6,6 @@ import * as Api from '../../api'
 function CertificateEditForm({setCertificates, currentCertificate,setIsEditing}){
     const [title, setTitle] = useState(currentCertificate.title)
     const [description, setDescription] = useState(currentCertificate.description)
-
     const [when_date, setWhen_date] = useState(
         new Date(currentCertificate.when_date)
     )
@@ -16,7 +15,6 @@ function CertificateEditForm({setCertificates, currentCertificate,setIsEditing})
         e.stopPropagation()
 
         const user_id = currentCertificate.user_id
-        const when_date = whenDate.toISOString().split("T")[0];
 
         await Api.put(`certificates/${currentCertificate.id}`,{
             user_id,

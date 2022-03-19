@@ -23,34 +23,78 @@ function Header() {
 
     };
 
-    return (
-        <Navbar activeKey={location.pathname} bg="light">
-            <Container fluid>
-                <Row>
-                    <Col>
-                        <Navbar.Brand >안녕하세요, 포트폴리오 공유 서비스입니다.</Navbar.Brand>
-                    </Col>
-                    <Col xs="auto">
-                        <Nav>
-                            <Nav.Item>
-                                <Nav.Link onClick={() => navigate("/")}>나의 페이지</Nav.Link>
-                            </Nav.Item>
-                            <Nav.Item>
-                                <Nav.Link onClick={() => navigate("/network")}>네트워크</Nav.Link>
-                            </Nav.Item>
-                            
-                            {isLogin && (
-                                <Nav.Item>
-                                    <Nav.Link onClick={logout}>로그아웃</Nav.Link>
-                                </Nav.Item>
-                            )}
-                        </Nav>
-                    </Col>
-                </Row>
-            </Container>
-        </Navbar>
+    const naviagationInformations = [
+        {title: '마이페이지', link: '/'},
+        {title: '네트워크', link: '/network'},
+    ]
 
+    return (
+        <div
+            style={{
+                backgroundColor: '#D9DDFF',
+                display: 'flex',
+                alignItems: 'center',
+                padding: '20px 56px'
+            }}>
+            <div style= {{fontSize: '2.5em', fontFamily: 'Rosarivo'}}>MY PORTFOLIO</div>
+            <ul
+                style={{
+                    margin: '0 0 0 auto',
+                    listStyleType: 'none',
+                    padding: 0,
+                    display:'flex',
+                    gap: 30,
+                }}>
+                {naviagationInformations.map((navigationItem) => (
+                    <li
+                        onClick={() => {
+                            navigate(navigationItem.link)
+                        }}
+                        style={{
+                            borderRadius: '10px',
+                            backgroundColor: '#989CFD',
+                            color: 'white',
+                            padding: '6px 14px',
+                            cursor: 'pointer',
+                            marginLeft: 'auto',
+                            fontFamily: 'Rosarivo'
+                        }}
+                    >{navigationItem.title}
+                    </li>
+                ))}
+                
+                {isLogin && (
+                    <li onClick={logout}
+                        style={{
+                            borderRadius: '10px',
+                            backgroundColor: '#989CFD',
+                            color: 'white',
+                            padding: '6px 14px',
+                            cursor: 'pointer'
+                    }}> 로그아웃</li>
+                )}
+            </ul>
+        </div>
     );
+    {/* <Nav activeKey={location.pathname} className={'px-3'}>
+            <Nav.Item>
+                <Nav.Link disabled>안녕하세요, 포트폴리오 공유 서비스입니다.</Nav.Link>
+            </Nav.Item>
+            <Nav className={'ms-auto'}>
+                <Nav.Item>
+                    <Nav.Link onClick={() => navigate("/")}>나의 페이지</Nav.Link>
+                </Nav.Item>
+                <Nav.Item>
+                    <Nav.Link onClick={() => navigate("/network")}>네트워크</Nav.Link>
+                </Nav.Item>
+                {isLogin && (
+                    <Nav.Item>
+                        <Nav.Link onClick={logout}>로그아웃</Nav.Link>
+                    </Nav.Item>
+                )}
+            </Nav>
+        </Nav> */}
+
 }
 
 export default Header;

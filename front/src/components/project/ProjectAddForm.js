@@ -45,6 +45,10 @@ function ProjectAddForm({ portfolioOwnerId, setProjects, setIsAdding }) {
           type="text"
           placeholder="프로젝트 제목"
           value={title}
+          style={{ 
+            width: 'auto',
+            border: 'solid 2px #DBC7FF'
+          }}
           onChange={(e) => setTitle(e.target.value)}
         />
       </Form.Group>
@@ -54,6 +58,9 @@ function ProjectAddForm({ portfolioOwnerId, setProjects, setIsAdding }) {
           type="text"
           placeholder="상세내역"
           value={description}
+          style={{
+            border: 'solid 2px #DBC7FF'
+          }}
           onChange={(e) => setDescription(e.target.value)}
         />
       </Form.Group>
@@ -81,12 +88,36 @@ function ProjectAddForm({ portfolioOwnerId, setProjects, setIsAdding }) {
 
       <Form.Group as={Row} className="mt-3 text-center">
         <Col sm={{ span: 20 }}>
-          <Button variant="primary" type="submit" className="me-3">
+          
+          <button
+            type="submit"
+            className="me-3"
+            style={{
+              backgroundColor: '#B041E3',
+              color: 'white',
+              borderRadius: '5px',
+              width: '60px',
+              height: '40px',
+              border: '#B041E3',
+            }}
+          >
             확인
-          </Button>
-          <Button variant="secondary" onClick={() => setIsAdding(false)}>
+          </button>
+
+          <button
+            onClick={() => setIsAdding(false)}
+            style={{
+              backgroundColor: 'gray',
+              color: 'white',
+              borderRadius: '5px',
+              width: '60px',
+              height: '40px',
+              border: 'gray'
+            }}
+          >
             취소
-          </Button>
+          </button>
+          
         </Col>
       </Form.Group>
     </Form>

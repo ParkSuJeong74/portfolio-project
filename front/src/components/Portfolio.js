@@ -11,6 +11,8 @@ import Certificates from "./certificate/Certificates";
 import Awards from "./award/Awards";
 import Projects from "./project/Projects";
 
+import '../App.css'
+
 function Portfolio() {
 	const navigate = useNavigate();
 	const params = useParams();
@@ -66,7 +68,13 @@ function Portfolio() {
 				/>
 			</Col>
 				
-			<Col xxl={9}>
+			<Col xxl={9} style={{
+				backgroundColor: '#E5D6FF',
+				padding: '30px',
+				borderRadius: '15px',
+				marginTop: '30px'
+			}}>
+			
 				<Educations 
 					portfolioOwnerId={portfolioOwner.id}
 					isEditable={portfolioOwner.id === userState.user?.id}/>

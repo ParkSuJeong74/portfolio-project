@@ -6,22 +6,49 @@ function ProjectCard({ project, isEditable, setIsEditing }) {
     <Card.Text>
       <Row className="align-items-center">
         <Col>
-          <span>{project.title}</span>
+          <span style={{
+            fontWeight: 'bold',
+            fontSize: '1.2rem'
+          }}>{project.title}</span>
           <br />
           <span className="text-muted">{project.description}</span>
           <br />
           <span className="text-muted">{project.from_date} ~ {project.to_date}</span>
         </Col>
         {isEditable && (
-          <Col xs lg="1">
-            <Button
-              variant="outline-info"
-              size="sm"
+          <Col>
+            <button
               onClick={() => setIsEditing((prev) => !prev)}
-              className="mr-3"
-            >
-              편집
-            </Button>
+              style={{
+                backgroundColor: '#B041E3',
+                color: 'white',
+                border: '#B041E3',
+                width: '50px',
+                height: '40px',
+                fontSize: '1rem',
+                textAlign: 'center',
+                borderRadius: '5px',
+              }}>
+                  편집
+              </button>
+          </Col>
+        )}
+        {isEditable && (
+          <Col>
+            <button
+              onClick={() => setIsEditing((prev) => !prev)}
+              style={{
+                backgroundColor: '#B041E3',
+                color: 'white',
+                border: '#B041E3',
+                width: '50px',
+                height: '40px',
+                fontSize: '1rem',
+                textAlign: 'center',
+                borderRadius: '5px',
+              }}>
+                  삭제
+              </button>
           </Col>
         )}
       </Row>

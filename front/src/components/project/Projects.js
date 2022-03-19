@@ -16,9 +16,15 @@ function Projects({ portfolioOwnerId, isEditable }) {
   }, [portfolioOwnerId]);
 
   return (
-    <Card>
+    <Card
+      style={{backgroundColor: '#FFF5F5'}}>
       <Card.Body>
-        <Card.Title>프로젝트</Card.Title>
+        <Card.Title style={{
+          fontWeight: 'bold',
+          fontSize: '2em',
+          marginBottom: '20px',
+          padding: '20px 0 20px 28px'
+        }}>프로젝트</Card.Title>
         {projects.map((project) => (
           <Project
             key={project.id}
@@ -30,7 +36,23 @@ function Projects({ portfolioOwnerId, isEditable }) {
         {isEditable && (
           <Row className="mt-3 text-center mb-4">
             <Col sm={{ span: 20 }}>
-              <Button onClick={() => setIsAdding(true)}>+</Button>
+
+              <button
+                onClick={() => setIsAdding(true)}
+                style={{
+                  backgroundColor: '#B041E3',
+                  color: 'white',
+                  border: '#B041E3',
+                  width: '50px',
+                  height: '50px',
+                  fontSize: '2rem',
+                  textAlign: 'center',
+                  borderRadius: '15px',
+                  padding: 0,
+                }}>
+                  +
+              </button>
+              
             </Col>
           </Row>
         )}
