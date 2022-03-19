@@ -22,9 +22,14 @@ const CertificateSchema = new Schema(
             type: String,
             required: true,
         },
-    },
-    {
-        timestamps: true,
+        created_at: {
+            type: Date,
+            required: true,
+        },
+        updated_at: {
+            type: Date,
+            required: true,
+        }
     }
 )
 
