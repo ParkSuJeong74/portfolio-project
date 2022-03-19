@@ -39,10 +39,10 @@ const EducationService = {
         }
 
         // toUpdate는 id를 제외한 나머지 데이터(school, major, position)
-        // toUpdate에서 값을 확인하고 {id, 필드명, 바뀔 값}을 db에 저장
+        // toUpdate에서 값을 확인하고 {id, 필드명, 바뀔 값}을 return
         const fieldToUpdate = Object.keys(toUpdate)
         const newValue = Object.values(toUpdate)
-        
+
         education = await Education.update({ educationId, fieldToUpdate, newValue })
 
         return education

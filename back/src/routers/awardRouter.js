@@ -6,7 +6,7 @@ const { AwardService } = require("../services/awardService")
 const awardRouter = Router()
 awardRouter.use(login_required)
 
-awardRouter.post("/award/create", async function (req, res, next) {
+awardRouter.post("/award/create", async (req, res, next) => {
   try {
     if (is.emptyObject(req.body)) {
       throw new Error(
@@ -32,7 +32,7 @@ awardRouter.post("/award/create", async function (req, res, next) {
   }
 })
 
-awardRouter.get("/awards/:id", async function (req, res, next) {
+awardRouter.get("/awards/:id", async (req, res, next) => {
   try {
     // req (request) 에서 id 가져오기
     const awardId = req.params.id
@@ -50,7 +50,7 @@ awardRouter.get("/awards/:id", async function (req, res, next) {
   }
 })
 
-awardRouter.put("/awards/:id", async function (req, res, next) {
+awardRouter.put("/awards/:id", async (req, res, next) => {
   try {
     // URI로부터 수상 데이터 id를 추출함.
     const awardId = req.params.id
@@ -74,7 +74,7 @@ awardRouter.put("/awards/:id", async function (req, res, next) {
   }
 })
 
-awardRouter.delete("/awards/:id", async function (req, res, next) {
+awardRouter.delete("/awards/:id", async (req, res, next) => {
   try {
     // req (request) 에서 id 가져오기
     const awardId = req.params.id
@@ -92,7 +92,7 @@ awardRouter.delete("/awards/:id", async function (req, res, next) {
   }
 })
 
-awardRouter.get("/awardlist/:user_id", async function (req, res, next) {
+awardRouter.get("/awardlist/:user_id", async (req, res, next) => {
   try {
     // 특정 사용자의 전체 수상 목록을 얻음
     // @ts-ignore

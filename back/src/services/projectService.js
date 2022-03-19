@@ -38,8 +38,9 @@ const ProjectService = {
             return { errorMessage }
         }
 
-        const fieldToUpdate = ['title', 'description', 'from_date', 'to_date']
-        const newValue = [toUpdate.title, toUpdate.description, toUpdate.from_date, toUpdate.to_date]
+        const fieldToUpdate = Object.keys(toUpdate)
+        const newValue = Object.values(toUpdate)
+        
         project = await Project.update({ projectId, fieldToUpdate, newValue })
 
         return project
