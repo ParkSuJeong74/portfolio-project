@@ -27,7 +27,7 @@ function UserCard({ user, setIsEditing, isEditable, isNetwork }) {
                             <Col sm={{ span: 20 }}>
                                 <Button style={{ 
                                 border:"solid 2px",
-                                borderRadius: '3px', 
+                                borderRadius: '5px', 
                                 backgroundColor: '#e5d6ff'}} 
                                     
                                     
@@ -41,13 +41,20 @@ function UserCard({ user, setIsEditing, isEditable, isNetwork }) {
                 )}
 
                 {isNetwork && (
-                    <Card.Link
+                    <Button
                         className="mt-3"
                         href="#"
                         onClick={() => navigate(`/users/${user.id}`)}
+                        style={{
+                        margin: '0 auto',    
+                        border:"solid 2px",
+                        borderRadius: '5px', 
+                        backgroundColor: '#e5d6ff'
+                        
+                        }}
                     >
                     포트폴리오
-                    </Card.Link>
+                    </Button>
                 )}
             </Card.Body>
         </Card>
