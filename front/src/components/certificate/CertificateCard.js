@@ -8,6 +8,8 @@ function CertificateCard({isEditable, setIsEditing, certificate}){
                     <span>{certificate.title}</span>
                     <br />
                     <span className="text-muted">{certificate.description}</span>
+                    <br />
+                    <span className="text-muted">{certificate.when_date}</span>
                 </Col>
                 {isEditable && (
                     <Col xs lg="1">
