@@ -1,11 +1,12 @@
-import { Card, Button, Row, Col } from "react-bootstrap";
+import { Card, Row, Col } from "react-bootstrap";
+import '../../App.css'
 
-function ProjectCard({ project, isEditable, setIsEditing }) {
+function ProjectCard({ project, isEditable, setIsEditing, setIsRemoving }) {
 
   return (
     <Card.Text>
       <Row className="align-items-center" 
-          style={{paddingLeft: '28px',}}>
+          style={{paddingLeft: '28px'}}>
         <Col>
           <span style={{
             fontWeight: 'bold',
@@ -16,22 +17,20 @@ function ProjectCard({ project, isEditable, setIsEditing }) {
           <br />
           <span className="text-muted">{project.from_date} ~ {project.to_date}</span>
         </Col>
+
         {isEditable && (
           <Col xs={2}>
             <button
               onClick={() => setIsEditing((prev) => !prev)}
-              style={{
-                backgroundColor: '#B041E3',
-                color: 'white',
-                border: '#B041E3',
-                width: '50px',
-                height: '40px',
-                fontSize: '1rem',
-                textAlign: 'center',
-                borderRadius: '5px',
-              }}>
-                  편집
-              </button>
+              className="mvpEditButton">
+                수정
+            </button>
+
+            <button
+              onClick={() => setIsRemoving((prev) => !prev)}
+              className="mvpRemoveButton">
+                삭제
+            </button>
           </Col>
         )}
       

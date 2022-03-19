@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { Button, Form, Col, Row } from "react-bootstrap"
+import { Form, Col, Row } from "react-bootstrap"
 import * as Api from "../../api"
 import DatePicker from "react-datepicker"
 import '../../App.css'
@@ -91,30 +91,13 @@ function ProjectAddForm({ portfolioOwnerId, setProjects, setIsAdding }) {
           
           <button
             type="submit"
-            className="me-3"
-            style={{
-              backgroundColor: '#B041E3',
-              color: 'white',
-              borderRadius: '5px',
-              width: '60px',
-              height: '40px',
-              border: '#B041E3',
-            }}
-          >
+            className="mvpConfirmButton me-3">
             확인
           </button>
 
           <button
             onClick={() => setIsAdding(false)}
-            style={{
-              backgroundColor: 'gray',
-              color: 'white',
-              borderRadius: '5px',
-              width: '60px',
-              height: '40px',
-              border: 'gray'
-            }}
-          >
+            className="mvpCancelButton">
             취소
           </button>
           

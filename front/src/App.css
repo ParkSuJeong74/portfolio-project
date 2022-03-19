@@ -19,11 +19,50 @@
 .formAddButton:before{
   content: '+';
   display: block;
-  margin-top: -0.5rem
+  margin-top: -0.2rem
 }
 
 .formAddButton:after{
   content: '-';
   display: block;
   margin-top: 0.5rem
+}
+
+.mvpEditButton, .mvpRemoveButton{
+  background-color: #B041E3;
+  color: white;
+  border: #B041E3;
+  width: 50px;
+  height: 40px;
+  font-size: 1rem;
+  text-align: center;
+  border-radius: 5px;
+  margin: 0 10px 10px 0
+}
+
+.mvpEditButton {
+  margin: 0 10px 10px 0
+}
+
+.mvpConfirmButton, .mvpCancelButton {
+  color: white;
+  border-radius: 5px;
+  width: 60px;
+  height: 40px;
+}
+
+.mvpConfirmButton {
+  background-color: #B041E3;
+  border: #B041E3;
+}
+.mvpCancelButton {
+  background-color: gray;
+  border: gray
+}
+
+.mvpType {
+  font-weight: bold;
+  font-size: 2em;
+  margin-bottom: 20px;
+  padding: 20px 0 20px 28px;
 }

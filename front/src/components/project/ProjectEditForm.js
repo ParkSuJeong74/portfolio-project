@@ -1,7 +1,8 @@
 import React, { useState } from "react"
-import { Button, Form, Col, Row } from "react-bootstrap"
+import { Form, Col, Row } from "react-bootstrap"
 import * as Api from "../../api"
 import DatePicker from "react-datepicker"
+import '../../App.css'
 
 function ProjectEditForm({ currentProject, setProjects, setIsEditing }) {
   //useState로 title 상태를 생성함.
@@ -92,33 +93,16 @@ function ProjectEditForm({ currentProject, setProjects, setIsEditing }) {
         <Col sm={{ span: 20 }}>
 
         <button
-            type="submit"
-            className="me-3"
-            style={{
-              backgroundColor: '#B041E3',
-              color: 'white',
-              borderRadius: '5px',
-              width: '60px',
-              height: '40px',
-              border: '#B041E3',
-            }}
-          >
-            확인
-          </button>
+          type="submit"
+          className="mvpConfirmButton me-3">
+          확인
+        </button>
 
-          <button
-            onClick={() => setIsEditing(false)}
-            style={{
-              backgroundColor: 'gray',
-              color: 'white',
-              borderRadius: '5px',
-              width: '60px',
-              height: '40px',
-              border: 'gray'
-            }}
-          >
-            취소
-          </button>
+        <button
+          onClick={() => setIsEditing(false)}
+          className="mvpCancelButton">
+          취소
+        </button>
           
         </Col>
       </Form.Group>

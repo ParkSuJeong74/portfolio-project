@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Card, Button, Row, Col } from "react-bootstrap";
+import { Card, Row, Col } from "react-bootstrap";
 import * as Api from "../../api";
 import Project from "./Project";
 import ProjectAddForm from "./ProjectAddForm";
@@ -20,12 +20,7 @@ function Projects({ portfolioOwnerId, isEditable }) {
     <Card
       style={{backgroundColor: '#FFF5F5'}}>
       <Card.Body>
-        <Card.Title style={{
-          fontWeight: 'bold',
-          fontSize: '2em',
-          marginBottom: '20px',
-          padding: '20px 0 20px 28px'
-        }}>프로젝트</Card.Title>
+        <Card.Title class="mvpType">프로젝트</Card.Title>
         {projects.map((project) => (
           <Project
             key={project.id}
