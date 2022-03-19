@@ -28,8 +28,9 @@ const CertificateService = {
             return { errorMessage }
         }
         // toUpdate에는 title, description, when_date 항목이 존재하고 값은 null이거나 사용자가 입력한 값
-        const fieldToUpdate = ["title", "description", "when_date"]
-        const newValue = [toUpdate.title, toUpdate.description, toUpdate.when_date]
+        const fieldToUpdate = Object.keys(toUpdate)
+        const newValue = Object.values(toUpdate)
+        
         certificate = await Certificate.update({ certificateId, fieldToUpdate, newValue })
 
         return certificate
