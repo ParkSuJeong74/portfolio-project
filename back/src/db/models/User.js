@@ -27,8 +27,7 @@ const User = {
       $set: {
         [fieldToUpdate[0]]: newValue[0],
         [fieldToUpdate[1]]: newValue[1],
-        [fieldToUpdate[2]]: newValue[2],
-        [fieldToUpdate[3]]: newValue[3]
+        [fieldToUpdate[2]]: newValue[2]
       }
     }
     const option = { returnOriginal: false }
