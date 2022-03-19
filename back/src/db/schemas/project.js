@@ -20,20 +20,20 @@ const ProjectSchema = new Schema(
             required: false,
             default: "프로젝트를 설명해주세요."
         },
-        from_date : {
+        from_date: {
             type: String,
             //format : Date,
             required: true,
         },
-        to_date : {
+        to_date: {
             type: String,
             //format : Date,
             required: true,
         },
     },
-        {
-            timestamps: true
-        }
+    {
+        timestamps: true
+    }
 )
 
 // model linking

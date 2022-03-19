@@ -11,12 +11,12 @@ projectRouter.use(login_required)
 
 // POST : 프로젝트 생성
 projectRouter.post('/project/create', async (req, res, next) => {
-    try{
+    try {
         // body에 데이터 없는거 예외처리
-        if(is.emptyObject(req.body)){
+        if (is.emptyObject(req.body)) {
             throw new Error("headers의 Content-Type을 application/json으로 설정해주세요.")
         }
-        
+
         // body에서 데이터 가져오기
         const user_id = req.body.user_id
         const title = req.body.title
@@ -36,39 +36,39 @@ projectRouter.post('/project/create', async (req, res, next) => {
             created_at,
             updated_at
         })
-        
+
         res.status(201).json(newProject)
-    } catch(err) {
+    } catch (err) {
         next(err)
     }
 })
 
 // GET : 프로젝트 조회
 projectRouter.get('/projects/:id', async (req, res, next) => {
-    try{
+    try {
         // id 가져오기
         const projectId = req.params.id
 
         // db에서 데이터 불러오기(service)
         const project = await ProjectService.getProject({ projectId })
-        
+
         // error 발생
-        if(project.errorMessage){
+        if (project.errorMessage) {
             throw new Error(project.errorMessage)
         }
-        
+
         res.status(200).send(project)
-    } catch(err) {
+    } catch (err) {
         next(err)
     }
 })
 
 // PUT : 프로젝트 수정
 projectRouter.put('/projects/:id', async (req, res, next) => {
-    try{
+    try {
         // id 가져오기
         const projectId = req.params.id
-        
+
         // body에서 정보 추출
         const title = req.body.title ?? null
         const description = req.body.description ?? null
@@ -82,18 +82,18 @@ projectRouter.put('/projects/:id', async (req, res, next) => {
         const project = await ProjectService.setProject({ projectId, toUpdate })
 
         // error 발생
-        if(project.errorMessage){
+        if (project.errorMessage) {
             throw new Error(project.errorMessage)
         }
         res.status(200).send(project)
-    } catch(err) {
+    } catch (err) {
         next(err)
     }
 })
 
 // DELETE : 프로젝트 삭제
 projectRouter.delete('/projects/:id', async (req, res, next) => {
-    try{
+    try {
         // id 가져오기
         const projectId = req.params.id
 
@@ -101,25 +101,25 @@ projectRouter.delete('/projects/:id', async (req, res, next) => {
         const result = await ProjectService.deleteProject({ projectId })
 
         // error 발생
-        if(result.errorMessage){
+        if (result.errorMessage) {
             throw new Error(result.errorMessage)
         }
 
         res.status(200).send(result)
-    } catch(err) {
+    } catch (err) {
         next(err)
     }
 })
 
 // GET : 한 사용자의 프로젝트 목록 조회
 projectRouter.get('/projectlist/:user_id', async (req, res, next) => {
-    try{
+    try {
         // id 가져오기
         const user_id = req.params.user_id
         // db에서 데이터 조회(service)
         const projects = await ProjectService.getProjectList({ user_id })
         res.status(200).send(projects)
-    } catch(err) {
+    } catch (err) {
         next(err)
     }
 })
