@@ -1,6 +1,7 @@
 import { Card, Button, Row, Col } from "react-bootstrap";
 
 function ProjectCard({ project, isEditable, setIsEditing }) {
+
   return (
     <Card.Text>
       <Row className="align-items-center">
@@ -8,6 +9,8 @@ function ProjectCard({ project, isEditable, setIsEditing }) {
           <span>{project.title}</span>
           <br />
           <span className="text-muted">{project.description}</span>
+          <br />
+          <span className="text-muted">{project.from_date} ~ {project.to_date}</span>
         </Col>
         {isEditable && (
           <Col xs lg="1">

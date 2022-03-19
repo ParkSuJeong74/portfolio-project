@@ -6,7 +6,10 @@ import * as Api from '../../api'
 function CertificateEditForm({setCertificates, currentCertificate,setIsEditing}){
     const [title, setTitle] = useState(currentCertificate.title)
     const [description, setDescription] = useState(currentCertificate.description)
-    const [whenDate, setWhenDate] = useState(currentCertificate.when_date)
+
+    const [when_date, setWhen_date] = useState(
+        new Date(currentCertificate.when_date)
+    )
 
     async function submitHandler(e){
         e.preventDefault()
@@ -53,10 +56,10 @@ function CertificateEditForm({setCertificates, currentCertificate,setIsEditing})
             
             <Form.Group as={Col} xs="auto" xxl={3} controlId="formBasicDate" className="mt-3">
                 <DatePicker 
-                    selected={whenDate}
+                    selected={when_date}
                     placeholderText="취득날짜"
                     dateFormat = "yyyy.MM.dd(eee)"
-                    onChange={(date) => setWhenDate(date)}/> 
+                    onChange={(when_date) => setWhen_date(when_date)}/>
             </Form.Group>
 
             <Form.Group as={Row} className="mt-3 text-center">
