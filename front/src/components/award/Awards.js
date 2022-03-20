@@ -18,7 +18,7 @@ function Awards({ portfolioOwnerId, isEditable }) {
 
     return (
     <Card
-        style={{backgroundColor: '#FFF5F5'}}>
+        style={{backgroundColor: '#FFF5F5' , borderRadius: '15px'}}>
         <Card.Body>
         <Card.Title class="mvpType">수상이력</Card.Title>
         {awards.map((award) => (

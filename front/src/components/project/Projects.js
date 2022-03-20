@@ -18,7 +18,7 @@ function Projects({ portfolioOwnerId, isEditable }) {
 
   return (
     <Card
-      style={{backgroundColor: '#FFF5F5'}}>
+      style={{backgroundColor: '#FFF5F5' , borderRadius: '15px'}}>
       <Card.Body>
         <Card.Title class="mvpType">프로젝트</Card.Title>
         {projects.map((project) => (

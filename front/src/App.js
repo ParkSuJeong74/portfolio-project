@@ -60,12 +60,13 @@ function App() {
                     <Header />
                     <Routes>
                         {/*원래는 Portfolio 컴포넌트 */}
-                        <Route path="/" exact element={<Portfolio />} />
+                        <Route path="/" exact element={<Home />} />
                         <Route path="/login" element={<LoginForm />} />
                         <Route path="/register" element={<RegisterForm />} />
                         <Route path="/users/:userId" element={<Portfolio />} />
                         <Route path="/network" element={<Network />} />
                         <Route path="*" element={<Portfolio />} />
+                        {/*<Route path="/category" element={<Category />} />*/}
                     </Routes>
                 </Router>
             </UserStateContext.Provider>

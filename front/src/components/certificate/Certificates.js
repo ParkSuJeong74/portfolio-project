@@ -16,7 +16,7 @@ function Certificates({portfolioOwnerId, isEditable}){
 
     return (
         <Card
-            style={{backgroundColor: '#FFF5F5'}}>
+            style={{backgroundColor: '#FFF5F5', borderRadius: '15px'}}>
             <Card.Body>
                 <Card.Title class="mvpType">자격증</Card.Title>
                 {certificates.map((certificate) => (

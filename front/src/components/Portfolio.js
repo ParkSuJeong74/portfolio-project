@@ -70,10 +70,10 @@ function Portfolio() {
 				
 			<Col xxl={9} style={{
 				backgroundColor: '#E5D6FF',
-				padding: '30px',
+				padding: '20px',
 				borderRadius: '15px',
-				marginTop: '30px'
-			}}>
+				marginTop: '20px'
+			}} className="mvpBackground">
 			
 				<Educations 
 					portfolioOwnerId={portfolioOwner.id}

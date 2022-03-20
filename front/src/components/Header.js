@@ -1,8 +1,7 @@
 import React, { useContext, useEffect } from "react"
 import { useNavigate, useLocation } from "react-router-dom"
-import Nav from "react-bootstrap/Nav"
 import { UserStateContext, DispatchContext } from "../App"
-import { Col, Container, Navbar, Row } from "react-bootstrap"
+import '../App.css'
 
 function Header() {
     const navigate = useNavigate()
@@ -29,49 +28,22 @@ function Header() {
     ]
 
     return (
-        <div
-            style={{
-                backgroundColor: '#D9DDFF',
-                display: 'flex',
-                alignItems: 'center',
-                padding: '20px 56px'
-            }}>
+        <div className="navBar">
             <div style= {{fontSize: '2.5em', fontFamily: 'Rosarivo'}}>MY PORTFOLIO</div>
-            <ul
-                style={{
-                    margin: '0 0 0 auto',
-                    listStyleType: 'none',
-                    padding: 0,
-                    display:'flex',
-                    gap: 30,
-                }}>
+            <ul style={{ gap: 30 }} className="navItems">
                 {naviagationInformations.map((navigationItem) => (
                     <li
                         onClick={() => {
                             navigate(navigationItem.link)
                         }}
-                        style={{
-                            borderRadius: '10px',
-                            backgroundColor: '#989CFD',
-                            color: 'white',
-                            padding: '6px 14px',
-                            cursor: 'pointer',
-                            marginLeft: 'auto',
-                            fontFamily: 'Rosarivo'
-                        }}
+                        className="navItem"
                     >{navigationItem.title}
                     </li>
                 ))}
                 
                 {isLogin && (
                     <li onClick={logout}
-                        style={{
-                            borderRadius: '10px',
-                            backgroundColor: '#989CFD',
-                            color: 'white',
-                            padding: '6px 14px',
-                            cursor: 'pointer'
-                    }}> 로그아웃</li>
+                        className = "navItem"> 로그아웃</li>
                 )}
             </ul>
         </div>

@@ -16,7 +16,7 @@ function Educations({ portfolioOwnerId, isEditable }) {
 
     return (
         <Card
-            style={{backgroundColor: '#FFF5F5'}}>
+            style={{backgroundColor: '#FFF5F5' , borderRadius: '15px'}}>
             <Card.Body>
                 <Card.Title class="mvpType">학력</Card.Title>
 
