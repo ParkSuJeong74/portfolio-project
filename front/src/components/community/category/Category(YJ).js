@@ -6,8 +6,8 @@ import Articles from './Articles'
 function Category({category, setIsViewable}){
 
     const [page, setPage] = useState('')
-    //const res = await Api.get("articlelist", category_name);
-    //setPage(res.data);
+    const res = await Api.get("articlelist", category_name);
+    setPage(res.data);
     // 해당 카테고리네임을 가진 articlelist값을 받아오기
 
     
