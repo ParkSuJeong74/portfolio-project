@@ -165,7 +165,7 @@ userAuthRouter.put("/user/follow/:id", login_required, async (req, res, next) =>
     const indexFollowingMy = followingMy.indexOf(userIdYour)
 
     // follow
-    if (indexFollowingMy === -1 && indexFollowingMy === -1) {
+    if (indexFollowingMy === -1 && indexFollowerYour === -1) {
       followerCountYour = userInfoYour.followerCount + 1
       followerYour = [...followerYour, userIdMy]
       followingCountMy = userInfoMy.followingCount + 1
