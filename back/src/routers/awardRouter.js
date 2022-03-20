@@ -2,6 +2,7 @@ const is = require("@sindresorhus/is")
 const { Router } = require("express")
 const { login_required } = require("../middlewares/login_required")
 const { AwardService } = require("../services/awardService")
+const { timeUtil } = require("../common/timeUtil")
 
 const awardRouter = Router()
 awardRouter.use(login_required)
@@ -18,12 +19,16 @@ awardRouter.post("/award/create", async (req, res, next) => {
     const user_id = req.body.user_id
     const title = req.body.title
     const description = req.body.description
+    const created_at = timeUtil()
+    const updated_at = timeUtil()
 
     // 위 데이터를 유저 db에 추가하기
     const newAward = await AwardService.addAward({
       user_id,
       title,
       description,
+      created_at,
+      updated_at,
     })
 
     res.status(201).json(newAward)
@@ -58,8 +63,9 @@ awardRouter.put("/awards/:id", async (req, res, next) => {
     // body data 로부터 업데이트할 수상 정보를 추출함.
     const title = req.body.title ?? null
     const description = req.body.description ?? null
+    const updated_at = timeUtil()
 
-    const toUpdate = { title, description }
+    const toUpdate = { title, description, updated_at }
 
     // 위 추출된 정보를 이용하여 db의 데이터 수정하기
     const award = await AwardService.setAward({ awardId, toUpdate })
