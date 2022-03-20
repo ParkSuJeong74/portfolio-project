@@ -98,3 +98,12 @@
   cursor: pointer;
   margin-left: auto;
 }
+
+.navWithdraw {
+  border-radius: 10px;
+  background-color: #4A414E;
+  color: white;
+  padding: 6px 14px;
+  cursor: pointer;
+  margin-left: auto;
+}

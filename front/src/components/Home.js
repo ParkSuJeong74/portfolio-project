@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useState,useEffect, useContext } from "react";
 
 import * as Api from "../api";
-import { UserStateContext } from "../App";
+import { CategoryContext, UserStateContext } from "../App";
 
 import User from "./user/User";
 import Articles from "./community/article/Articles";
@@ -18,6 +18,9 @@ function Home(){
 	const [owner, setOwner] = useState(null)
 
 	const userState = useContext(UserStateContext);
+
+	//CategoryContext에서 categoryState를 불러와서 articles에 props로 전달해줌
+	const {categoryState, categoryDispatch} = useContext(CategoryContext)
 
 	const fetchOwner = async (ownerId) => {
 		// 유저 id를 가지고 "/users/유저id" 엔드포인트로 요청해 사용자 정보를 불러옴.
@@ -45,12 +48,12 @@ function Home(){
 	// 전역상태에서 user가 null이 아니라면 로그인 성공 상태임.
 	const isLogin = !!userState.user;
 
-	const [IsArticleViewable, setIsViewable] = useState(false)
+	//특정 카데고리를 클릭하면 해당하는 article들을 이제 보여줌
+	const [IsArticleOpen, setIsArticleOpen] = useState(false)
 
     //로그인하지 않아도 게시글은 볼 수 있음 
     //로그인했을 때만 글작성할 수 있음
-    //isEditable은 로그인한 사용자와 게시글 작성자가 같을 때만 true
-    //-> 자기 게시글의 수정, 삭제버튼이 보임
+    //isEditable은 로그인한 사용자와 게시글 작성자가 같을 때만 true -> 자기 게시글의 수정, 삭제버튼이 보임
     //owner: 로그인한 사용자
     //owner.id: 로그인한 사용자 아이디
     return (
@@ -66,16 +69,17 @@ function Home(){
 				</Col>
 
 				<Col>
-					<div>취업 팁 게시판</div>
 					<Categories 
 						isLogin={isLogin}
-						setIsViewable={setIsViewable}
+						setIsArticleOpen={setIsArticleOpen}
 					/>
-					{IsArticleViewable && (
-						<Articles 
+					{/*categoryState를 불러와서 이젠 Articles에 category를 넘길 수 있다..?? */}
+					{IsArticleOpen && (
+						<Articles
 							isEditable={true}
 							isLogin={isLogin}
-							owner={owner}/>
+							owner={owner}
+							category={categoryState}/>
 					)}
 					
 				</Col>

@@ -10,17 +10,17 @@ function AwardAddForm({ portfolioOwnerId, setAwards, setIsAdding }) {
     const [description, setDescription] = useState("");
 
     const handleSubmit = async (e) => {
-    e.preventDefault();
-    e.stopPropagation();
+        e.preventDefault();
+        e.stopPropagation();
 
-    // portfolioOwnerId를 user_id 변수에 할당함.
-    const user_id = portfolioOwnerId;
+        // portfolioOwnerId를 user_id 변수에 할당함.
+        const user_id = portfolioOwnerId;
 
-    // "award/create" 엔드포인트로 post요청함.
-    await Api.post("award/create", {
-        user_id: portfolioOwnerId,
-        title,
-        description,
+        // "award/create" 엔드포인트로 post요청함.
+        await Api.post("award/create", {
+            user_id: portfolioOwnerId,
+            title,
+            description,
     });
 
     // "awardlist/유저id" 엔드포인트로 get요청함.

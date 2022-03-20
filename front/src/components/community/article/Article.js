@@ -2,7 +2,6 @@ import { useState } from "react"
 import ArticleCard from "./ArticleCard"
 import ArticleEditForm from "./ArticleEditForm"
 
-
 function Article({article, setArticles, isEditable, owner}) {
     const [isEditing, setIsEditing] = useState(false)
 

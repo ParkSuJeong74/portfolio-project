@@ -7,7 +7,13 @@ function CategoryAddForm({setIsAdding, setCategories}){
     async function submitHandler(e){
         e.preventDefault()
 
-        {/* post하고, get해서 res.data를 setCategories()에 넣어야됨! */}
+        {/* 원래는 입력한 것 post하고, 다시 get해서 res.data(객체 형태)를 setCategories()에 넣어야 합니다! */}
+        /* await Api.post("category/create", {
+            title,
+        } 
+        const res = await Api.get("category/list");
+        setCategories(res.data);
+        */
         setCategories((c) => {
             return [...c, title]
         })

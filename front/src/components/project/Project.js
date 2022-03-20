@@ -3,7 +3,6 @@ import ProjectCard from "./ProjectCard";
 import ProjectEditForm from "./ProjectEditForm";
 import * as Api from '../../api'
 
-
 function Project({ project, setProjects, isEditable }) {
   //useState로 isEditing 상태를 생성함.
   const [isEditing, setIsEditing] = useState(false);

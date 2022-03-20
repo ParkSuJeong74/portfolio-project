@@ -12,13 +12,14 @@ function ArticleAddForm({owner, setIsAdding, setArticles}){
         //작성자(owner)의 아이디를 user_id 변수에 할당함
         const user_id = owner.id
 
-        //'article/create'로 post 요청해서 게시글 등록하기
+        //'/:category명/article/create'로 post 요청해서 게시글 등록하기
         await Api.post("article/create", {
             user_id,
             title,
             body
         })
 
+        //'/:category명/articlelist'로 get 요청해서 등록된 게시글도 불러오기
         const res = await Api.get("articlelist")
         setArticles(res.data)
         setIsAdding(false)
