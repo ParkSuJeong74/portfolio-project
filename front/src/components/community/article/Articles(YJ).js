@@ -11,7 +11,7 @@ function Articles({isLogin, owner, isEditable, category_name}){
 
     useEffect(() => {
         //게시글 목록 불러오기
-        //Api.get("category_id/articlelist").then((res) => setArticles(res.data))
+        Api.get("category_id/articlelist").then((res) => setArticles(res.data))
     })
 
     return(
