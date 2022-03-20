@@ -1,34 +1,38 @@
+const { text } = require('express')
 const { Schema, model } = require('mongoose')
 
 // Schema project
-const ProjectSchema = new Schema(
+const CommentSchema = new Schema(
     {
         id: {
             type: String,
             required: true,
         },
-        user_id: {
+        writer: {
             type: String,
             required: true,
         },
-        title: {
+        articleId: {
             type: String,
             required: true,
         },
-        description: {
+        comment : {
             type: String,
             required: false,
-            default: "프로젝트를 설명해주세요."
+            maxlength: 1000,
         },
-        from_date: {
-            type: String,
-            format : Date,
-            required: true,
+        responseTo: {
+            type: Schema.Types.ObjectId,
+            ref: 'Comment'
         },
-        to_date: {
-            type: String,
-            format : Date,
+        isDeleted: {
+            type: Boolean,
+            default: false
+        },
+        hidden: {
+            type: Boolean,
             required: true,
+            default: false,
         },
         created_at: {
             type: Date,
@@ -42,6 +46,6 @@ const ProjectSchema = new Schema(
 )
 
 // model linking
-const ProjectModel = model("Project", ProjectSchema)
+const CommentModel = model("Comment", CommentSchema)
 
-module.exports = { ProjectModel }
+module.exports = { CommentModel }

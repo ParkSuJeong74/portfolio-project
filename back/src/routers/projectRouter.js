@@ -72,9 +72,9 @@ projectRouter.put('/projects/:id', async (req, res, next) => {
         // body에서 정보 추출
         const title = req.body.title ?? null
         const description = req.body.description ?? null
-        const from_date = req.body.from_date.split("T")[0] ?? null
-        const to_date = req.body.to_date.split("T")[0] ?? null
-        const updated_at = timeUtil()
+        const from_date = timeUtil.getDay(to_date) ?? null
+        const to_date = timeUtil.getDay(to_date) ?? null
+        const updated_at = timeUtil.getTime()
 
         const toUpdate = { title, description, from_date, to_date, updated_at }
 

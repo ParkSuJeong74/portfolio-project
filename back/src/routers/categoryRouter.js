@@ -7,21 +7,22 @@ const { timeUtil } = require("../common/timeUtil")
 const categoryRouter = Router()
 
 // POST
-categoryRouter.post('/create', async (req, res, next) => {
+categoryRouter.post('/create', login_required, async (req, res, next) => {
     try {
-        categoryRouter.use(login_required)
-
         if(is.emptyObject(req.body)){
             throw new Error(
                 "headers의 Content-Type을 application/json으로 설정해주세요."
             )
         }
 
-        const user_id = req.body.user_id
-        const name = req.body.name
-        const description = req.body.description
+        const { user_id, name, description} = req.body
         const created_at = timeUtil()
         const updated_at = timeUtil()
+        
+        // 이름 중복 검사
+        if(CategoryService.getCategoryByName({ categoryName })){
+            throw new Error("이미 존재하는 게시판 이름 입니다!!!")
+        }
 
         // 데이터 DB 추가
         const newCategory = await CategoryService.addCategory({
@@ -72,14 +73,20 @@ categoryRouter.get('/:name', async (req, res, next) =>{
 })
 
 // PUT
-categoryRouter.put('/:name', async (req, res, next) => {
+categoryRouter.put('/:name', login_required, async (req, res, next) => {
     try {
+      
         const categoryName = req.params.name
 
         const name = req.body.name ?? null
         const description = req.body.description ??  null
         const updated_at = timeUtil()
         const toUpdate = { name, description, updated_at }
+
+        // 이름 중복 검사
+        if(CategoryService.getCategoryByName({ categoryName })){
+            throw new Error("이미 존재하는 게시판 이름 입니다!!!")
+        }
 
         const category = await CategoryService.setCategory({ categoryName, toUpdate })
 
@@ -94,13 +101,12 @@ categoryRouter.put('/:name', async (req, res, next) => {
 })
 
 // DELETE
-categoryRouter.delete('/:name', async (req, res, next) => {
+categoryRouter.delete('/:name', login_required, async (req, res, next) => {
     try {
         const categoryName = req.params.name
 
         // Todo : 게시글이 있으면 삭제 불가능
-
-
+        
         const result = await CategoryService.deleteCategory({ categoryName })
 
         if(result.errorMessage){
