@@ -2,7 +2,6 @@ import { useState } from "react"
 import {Form, Row, Col, Button} from 'react-bootstrap'
 import * as Api from '../../../api'
 
-
 function ArticleEditForm({ setArticles, currentArticle, setIsEditing}){
     const [title, setTitle] = useState(currentArticle.title)
     const [body, setBody] = useState(currentArticle.body)

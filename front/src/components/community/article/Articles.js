@@ -11,12 +11,10 @@ function Articles({isLogin, owner, isEditable}){
 
     useEffect(() => {
         //게시글 목록 불러오기
-        //Api.get("articlelist").then((res) => setArticles(res.data))
         //Api.get("category_id/articlelist").then((res) => setArticles(res.data))
     })
 
     return(
-        <Card style={{ width: '18rem' }}>
         <Card className={'mt-3'}>
             <Card.Body>
                 {articles.map((article) => (
