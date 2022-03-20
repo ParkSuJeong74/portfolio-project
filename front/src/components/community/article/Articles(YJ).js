@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react'
 import {Card, Row, Col, Button} from 'react-bootstrap'
 import Article from './Article'
-import * as Api from "../../../api"
+// import * as Api from "../../../api"
 import ArticleAddForm from './ArticleAddForm'
 
-function Articles({isLogin, owner, isEditable}){
+function Articles({isLogin, owner, isEditable, category_name}){
 
     const [articles, setArticles] = useState([])
     const [isAdding, setIsAdding] = useState(false)  
@@ -25,7 +25,8 @@ function Articles({isLogin, owner, isEditable}){
                         isEditable={isEditable}
                         owner={owner}
                     />
-                ))}
+                )).filter(category_name === {category_name})}
+                {/* filter함수로 category_name이 일치하는 글 목록들만 띄워주기*/}
 
                 {/*로그인했을 때만 글작성할 수 있음 */}
                 {isLogin && (

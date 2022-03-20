@@ -28,35 +28,7 @@ function Header() {
     ]
 
     return (
-<<<<<<< HEAD
-        <Navbar activeKey={location.pathname} bg="light">
 
-            <Container fluid>
-                <Row>
-                    <Col>
-                        <Navbar.Brand >안녕하세요, 포트폴리오 공유 서비스입니다.</Navbar.Brand>
-                    </Col>
-                    <Col xs="auto">
-                        <Nav>
-                            <Nav.Item>
-                                <Nav.Link onClick={() => navigate("/")}>나의 페이지</Nav.Link>
-                            </Nav.Item>
-                            <Nav.Item>
-                                <Nav.Link onClick={() => navigate("/network")}>네트워크</Nav.Link>
-                            </Nav.Item>
-                            
-                            {isLogin && (
-                                <Nav.Item>
-                                    <Nav.Link onClick={logout}>로그아웃</Nav.Link>
-                                </Nav.Item>
-                            )}
-                        </Nav>
-                    </Col>
-                </Row>
-            </Container>
-        </Navbar>
-
-=======
         <div className="navBar">
             <div style= {{fontSize: '2.5em', fontFamily: 'Rosarivo'}}>MY PORTFOLIO</div>
             <ul style={{ gap: 30 }} className="navItems">
@@ -76,7 +48,7 @@ function Header() {
                 )}
             </ul>
         </div>
->>>>>>> f004fc23bc2be72dd08d7d18c951274cdc08f4a7
+
     );
     {/* <Nav activeKey={location.pathname} className={'px-3'}>
             <Nav.Item>

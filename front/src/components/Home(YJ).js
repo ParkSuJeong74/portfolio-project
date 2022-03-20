@@ -1,12 +1,4 @@
-<<<<<<< HEAD
-import { Container } from "react-bootstrap";
-import { useNavigate, useParams } from "react-router-dom";
-import Articles from "./community/article/Articles";
-import * as Api from "../api";
-import { UserStateContext } from "../App";
 
-import { useState,useEffect, useContext } from "react";
-=======
 import { Container, Row, Col } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 import { useState,useEffect, useContext } from "react";
@@ -18,7 +10,7 @@ import User from "./user/User";
 import Articles from "./community/article/Articles";
 import LoginForm from "./user/LoginForm";
 import Categories from "./community/category/Categories";
->>>>>>> f004fc23bc2be72dd08d7d18c951274cdc08f4a7
+
 
 function Home(){
     const navigate = useNavigate()
@@ -46,11 +38,9 @@ function Home(){
 			fetchOwner(ownerId);
 		} else {
 			// 이외의 경우, 즉 URL이 "/" 라면, 전역 상태의 user.id를 유저 id로 설정함.
-<<<<<<< HEAD
-			const ownerId = userState.user.id;
-=======
+
 			const ownerId = userState.user?.id;
->>>>>>> f004fc23bc2be72dd08d7d18c951274cdc08f4a7
+
 			// 해당 유저 id로 fetchPorfolioOwner 함수를 실행함.
 			fetchOwner(ownerId);
 		}
@@ -59,33 +49,18 @@ function Home(){
 	// 전역상태에서 user가 null이 아니라면 로그인 성공 상태임.
 	const isLogin = !!userState.user;
 
-<<<<<<< HEAD
-=======
-	const [IsArticleViewable, setIsViewable] = useState(false)
 
->>>>>>> f004fc23bc2be72dd08d7d18c951274cdc08f4a7
+	const [IsArticleViewable, setIsArticleViewable] = useState(false)
+	const [IsCommentViewable, setIsCommentViewable] = useState(false)
+
+
     //로그인하지 않아도 게시글은 볼 수 있음 
     //로그인했을 때만 글작성할 수 있음
     //isEditable은 로그인한 사용자와 게시글 작성자가 같을 때만 true
     //-> 자기 게시글의 수정, 삭제버튼이 보임
     //owner: 로그인한 사용자
     //owner.id: 로그인한 사용자 아이디
-<<<<<<< HEAD
-    return (<Container>
-        <div>취업 팁 게시판</div>
-        <Articles 
-			isEditable={true}
-			isLogin={isLogin}
-            owner={owner}/>
-        <Comments
-            isEditable={true}
-            isLogin={isLogin}
-            owner={owner}/>
-        
-    </Container>)
-}
-export default Home
-=======
+
     return (
 		<Container>
 			<Row>
@@ -102,14 +77,23 @@ export default Home
 					<div>취업 팁 게시판</div>
 					<Categories 
 						isLogin={isLogin}
-						setIsViewable={setIsViewable}
+						setIsArticleViewable={setIsArticleViewable}
 					/>
 					{IsArticleViewable && (
 						<Articles 
+							// category_name값을 들고 Articles.js로 넘어가기
+							category_name={category_name}
 							isEditable={true}
 							isLogin={isLogin}
 							owner={owner}/>
 					)}
+					{IsCommentViewable && (
+						<Comments
+							isEditable={true}
+							isLogin={isLogin}
+							owner={owner}/>
+					)}
+
 					
 				</Col>
 			</Row>
@@ -117,4 +101,4 @@ export default Home
 	)
 }
 export default Home
->>>>>>> f004fc23bc2be72dd08d7d18c951274cdc08f4a7
+

@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import {Form, Button, Row,Col} from 'react-bootstrap'
-import * as Api from '../../api'
+import * as Api from '../../../api'
 
 
 function CommentEditForm({currentComment, setComments, setIsEditing}){
