@@ -3,6 +3,8 @@ import React, { useEffect, useState } from 'react'
 import * as Api from '../../api'
 import Education from './Education'
 import EducationAddForm from './EducationAddForm'
+import '../../App.css'
+
 
 function Educations({ portfolioOwnerId, isEditable }) {
     const [educations, setEducations] = useState([])
@@ -13,9 +15,11 @@ function Educations({ portfolioOwnerId, isEditable }) {
     }, [portfolioOwnerId])
 
     return (
-        <Card>
+        <Card
+            style={{backgroundColor: '#FFF5F5' , borderRadius: '15px'}}>
             <Card.Body>
-                <Card.Title>학력</Card.Title>
+                <Card.Title class="mvpType">학력</Card.Title>
+
                 {educations && educations.map((education) => (
                     <Education
                         key={education.id}
@@ -27,7 +31,12 @@ function Educations({ portfolioOwnerId, isEditable }) {
                 {isEditable && (
                     <Row className="text-center mt-3 mb-4">
                         <Col sm={{ span: 20 }}>
-                            <Button onClick={() => setIsAdding(true)}>+</Button>
+
+                        <button
+                            onClick={() => setIsAdding(true)}
+                            className="formAddButton">
+                        </button>
+                        
                         </Col>
                     </Row>
                 )}
