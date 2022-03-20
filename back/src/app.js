@@ -6,6 +6,7 @@ const { projectRouter } = require("./routers/projectRouter")
 const { educationRouter } = require("./routers/educationRouter")
 const { certificateRouter } = require("./routers/certificateRouter")
 const { categoryRouter } = require("./routers/categoryRouter")
+const { commentRouter } = require("./routers/commentRouter")
 
 const { errorMiddleware } = require("./middlewares/errorMiddleware")
 
@@ -32,6 +33,7 @@ app.use(projectRouter)
 app.use(educationRouter)
 app.use(certificateRouter)
 app.use('/category', categoryRouter)
+app.use('/comment', commentRouter)
 
 // 순서 중요 (router 에서 next() 시 아래의 에러 핸들링  middleware로 전달됨)
 app.use(errorMiddleware)

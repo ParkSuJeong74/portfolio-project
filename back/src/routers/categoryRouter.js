@@ -2,7 +2,7 @@ const is = require('@sindresorhus/is')
 const { Router } = require('express')
 const { login_required } = require('../middlewares/login_required')
 const { CategoryService } = require('../services/categoryService')
-const { time } = require("../common/timeUtil")
+const { timeUtil } = require("../common/timeUtil")
 
 const categoryRouter = Router()
 
@@ -20,8 +20,8 @@ categoryRouter.post('/create', async (req, res, next) => {
         const user_id = req.body.user_id
         const name = req.body.name
         const description = req.body.description
-        const created_at = time
-        const updated_at = time
+        const created_at = timeUtil()
+        const updated_at = timeUtil()
 
         // 데이터 DB 추가
         const newCategory = await CategoryService.addCategory({
@@ -59,9 +59,12 @@ categoryRouter.get('/:name', async (req, res, next) =>{
         const categoryName = req.params.name
         const category = await CategoryService.getCategoryByName({ categoryName })
 
+        // Todo : 내부 게시물 전부 출력
+
         if (category.errorMessage) {
             throw new Error(category.errorMessage)
         }
+
         res.status(200).send(category)
     } catch(err) {
         next(err)
@@ -75,7 +78,7 @@ categoryRouter.put('/:name', async (req, res, next) => {
 
         const name = req.body.name ?? null
         const description = req.body.description ??  null
-        const updated_at = time
+        const updated_at = timeUtil()
         const toUpdate = { name, description, updated_at }
 
         const category = await CategoryService.setCategory({ categoryName, toUpdate })
@@ -94,6 +97,10 @@ categoryRouter.put('/:name', async (req, res, next) => {
 categoryRouter.delete('/:name', async (req, res, next) => {
     try {
         const categoryName = req.params.name
+
+        // Todo : 게시글이 있으면 삭제 불가능
+
+
         const result = await CategoryService.deleteCategory({ categoryName })
 
         if(result.errorMessage){
