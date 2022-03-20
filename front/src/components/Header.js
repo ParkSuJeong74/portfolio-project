@@ -1,8 +1,7 @@
 import React, { useContext } from "react"
 import { useNavigate, useLocation } from "react-router-dom"
-import Nav from "react-bootstrap/Nav"
 import { UserStateContext, DispatchContext } from "../App"
-import { Col, Container, Navbar, Row } from "react-bootstrap"
+import '../App.css'
 
 function Header() {
     const navigate = useNavigate()
@@ -23,7 +22,13 @@ function Header() {
 
     };
 
+    const naviagationInformations = [
+        {title: '마이페이지', link: '/'},
+        {title: '네트워크', link: '/network'},
+    ]
+
     return (
+<<<<<<< HEAD
         <Navbar activeKey={location.pathname} bg="light">
 
             <Container fluid>
@@ -51,7 +56,47 @@ function Header() {
             </Container>
         </Navbar>
 
+=======
+        <div className="navBar">
+            <div style= {{fontSize: '2.5em', fontFamily: 'Rosarivo'}}>MY PORTFOLIO</div>
+            <ul style={{ gap: 30 }} className="navItems">
+                {naviagationInformations.map((navigationItem) => (
+                    <li
+                        onClick={() => {
+                            navigate(navigationItem.link)
+                        }}
+                        className="navItem"
+                    >{navigationItem.title}
+                    </li>
+                ))}
+                
+                {isLogin && (
+                    <li onClick={logout}
+                        className = "navItem"> 로그아웃</li>
+                )}
+            </ul>
+        </div>
+>>>>>>> f004fc23bc2be72dd08d7d18c951274cdc08f4a7
     );
+    {/* <Nav activeKey={location.pathname} className={'px-3'}>
+            <Nav.Item>
+                <Nav.Link disabled>안녕하세요, 포트폴리오 공유 서비스입니다.</Nav.Link>
+            </Nav.Item>
+            <Nav className={'ms-auto'}>
+                <Nav.Item>
+                    <Nav.Link onClick={() => navigate("/")}>나의 페이지</Nav.Link>
+                </Nav.Item>
+                <Nav.Item>
+                    <Nav.Link onClick={() => navigate("/network")}>네트워크</Nav.Link>
+                </Nav.Item>
+                {isLogin && (
+                    <Nav.Item>
+                        <Nav.Link onClick={logout}>로그아웃</Nav.Link>
+                    </Nav.Item>
+                )}
+            </Nav>
+        </Nav> */}
+
 }
 
 export default Header;

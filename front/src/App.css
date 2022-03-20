@@ -2,3 +2,99 @@
     width: 100%;
   }
   
+@import url('https://fonts.googleapis.com/css2?family=Rosarivo&display=swap');
+
+/* MVP form 버튼 스타일 */
+.formAddButton {
+  background-color: #B041E3;
+  color: white;
+  border: #B041E3;
+  width: 50px;
+  height: 50px;
+  font-size: 2rem;
+  text-align: center;
+  border-radius: 15px;
+  padding: 0;
+}
+
+.formAddButton:before{
+  content: '+';
+  display: block;
+  margin-top: -0.2rem
+}
+
+.formAddButton:after{
+  content: '-';
+  display: block;
+  margin-top: 0.5rem
+}
+
+.mvpEditButton, .mvpRemoveButton{
+  background-color: #B041E3;
+  color: white;
+  border: #B041E3;
+  width: 50px;
+  height: 40px;
+  font-size: 1rem;
+  text-align: center;
+  border-radius: 5px;
+  margin: 0 10px 10px 0
+}
+
+.mvpEditButton {
+  margin: 0 10px 10px 0
+}
+
+.mvpConfirmButton, .mvpCancelButton {
+  color: white;
+  border-radius: 5px;
+  width: 60px;
+  height: 40px;
+}
+
+.mvpConfirmButton {
+  background-color: #B041E3;
+  border: #B041E3;
+}
+.mvpCancelButton {
+  background-color: gray;
+  border: gray
+}
+
+/* MVP 타입 항목 스타일 */
+.mvpType {
+  font-weight: bold;
+  font-size: 2em;
+  margin-bottom: 20px;
+  padding: 20px 0 20px 28px;
+}
+
+/* input창 border 스타일 */
+.inputStyle {
+  border: solid 2px #DBC7FF;
+}
+
+/* header 스타일 */
+.navBar {
+  background-color: #D9DDFF;
+  display: flex;
+  align-items: center;
+  padding: 10px 56px;
+}
+
+.navItems {
+  margin: 0 0 0 auto;
+  list-style-type: none;
+  padding: 0;
+  display:flex;
+  gap: 30;
+}
+
+.navItem {
+  border-radius: 10px;
+  background-color: #989CFD;
+  color: white;
+  padding: 6px 14px;
+  cursor: pointer;
+  margin-left: auto;
+}

@@ -3,6 +3,7 @@ import { Card, Button, Row, Col } from "react-bootstrap";
 import * as Api from "../../api";
 import Award from "./Award";
 import AwardAddForm from "./AwardAddForm";
+import '../../App.css'
 
 function Awards({ portfolioOwnerId, isEditable }) {
   //useState로 awards 상태를 생성함.
@@ -16,9 +17,10 @@ function Awards({ portfolioOwnerId, isEditable }) {
     }, [portfolioOwnerId]);
 
     return (
-    <Card>
+    <Card
+        style={{backgroundColor: '#FFF5F5' , borderRadius: '15px'}}>
         <Card.Body>
-        <Card.Title>수상이력</Card.Title>
+        <Card.Title class="mvpType">수상이력</Card.Title>
         {awards.map((award) => (
             <Award
                 key={award.id}
@@ -30,7 +32,12 @@ function Awards({ portfolioOwnerId, isEditable }) {
         {isEditable && (
             <Row className="mt-3 text-center mb-4">
             <Col sm={{ span: 20 }}>
-                <Button onClick={() => setIsAdding(true)}>+</Button>
+
+                <button
+                    onClick={() => setIsAdding(true)}
+                    className="formAddButton">
+                </button>
+                
             </Col>
             </Row>
         )}

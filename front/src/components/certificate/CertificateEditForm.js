@@ -2,6 +2,8 @@ import { useState } from "react"
 import {Form,Col,Button,Row} from 'react-bootstrap'
 import DatePicker from 'react-datepicker'
 import * as Api from '../../api'
+import '../../App.css'
+
 
 function CertificateEditForm({setCertificates, currentCertificate,setIsEditing}){
     const [title, setTitle] = useState(currentCertificate.title)
@@ -36,6 +38,10 @@ function CertificateEditForm({setCertificates, currentCertificate,setIsEditing})
                     type="text"
                     placeholder="자격증제목" 
                     value={title} 
+                    style={{
+                        width: 'auto',
+                        border: 'solid 2px #DBC7FF'
+                    }}
                     onChange={(e) => setTitle(e.target.value)}
                 />
                 
@@ -47,6 +53,9 @@ function CertificateEditForm({setCertificates, currentCertificate,setIsEditing})
                     type="text" 
                     placeholder="상세내역"
                     value={description} 
+                    style={{
+                        border: 'solid 2px #DBC7FF'
+                    }}
                     onChange={(e) => setDescription(e.target.value)}
                 />
 
@@ -62,12 +71,19 @@ function CertificateEditForm({setCertificates, currentCertificate,setIsEditing})
 
             <Form.Group as={Row} className="mt-3 text-center">
                 <Col sm={{ span: 20 }}>
-                    <Button className="me-3" variant="primary" type="submit">
-                        확인
-                    </Button>
-                    <Button variant="secondary" onClick={() => setIsEditing(false)}> 
-                        취소
-                    </Button>
+
+                <button
+                    type="submit"
+                    className="mvpConfirmButton me-3">
+                    확인
+                </button>
+
+                <button
+                    onClick={() => setIsEditing(false)}
+                    className="mvpCancelButton">
+                    취소
+                </button>
+                
                 </Col>
             </Form.Group>
         </Form>

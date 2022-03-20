@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Button, Form, Col, Row } from "react-bootstrap";
 import * as Api from "../../api";
+import '../../App.css'
 
 function AwardAddForm({ portfolioOwnerId, setAwards, setIsAdding }) {
     //useState로 title 상태를 생성함.
@@ -37,6 +38,10 @@ function AwardAddForm({ portfolioOwnerId, setAwards, setIsAdding }) {
             type="text"
             placeholder="수상내역"
             value={title}
+            style={{ 
+                width: 'auto',
+                border: 'solid 2px #DBC7FF'
+            }}
             onChange={(e) => setTitle(e.target.value)}
         />
         </Form.Group>
@@ -46,18 +51,27 @@ function AwardAddForm({ portfolioOwnerId, setAwards, setIsAdding }) {
             type="text"
             placeholder="상세내역"
             value={description}
+            style={{
+                border: 'solid 2px #DBC7FF'
+            }}
             onChange={(e) => setDescription(e.target.value)}
         />
         </Form.Group>
 
         <Form.Group as={Row} className="mt-3 text-center">
         <Col sm={{ span: 20 }}>
-            <Button variant="primary" type="submit" className="me-3">
-            확인
-            </Button>
-            <Button variant="secondary" onClick={() => setIsAdding(false)}>
-            취소
-            </Button>
+
+            <button
+                type="submit"
+                className="mvpConfirmButton me-3">
+                확인
+            </button>
+
+            <button
+                onClick={() => setIsAdding(false)}
+                className="mvpCancelButton">
+                취소
+            </button>
         </Col>
         </Form.Group>
     </Form>

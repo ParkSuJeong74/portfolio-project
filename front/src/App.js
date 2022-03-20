@@ -9,12 +9,12 @@ import LoginForm from "./components/user/LoginForm"
 import Network from "./components/user/Network"
 import RegisterForm from "./components/user/RegisterForm"
 import Portfolio from "./components/Portfolio"
+import Home from './components/Home'
 
 export const UserStateContext = createContext(null)
 export const DispatchContext = createContext(null)
 
 function App() {
-
     // useReducer 훅을 통해 userState 상태와 dispatch함수를 생성함.
     const [userState, dispatch] = useReducer(loginReducer, {
         user: null,
@@ -59,12 +59,14 @@ function App() {
                 <Router>
                     <Header />
                     <Routes>
-                        <Route path="/" exact element={<Portfolio />} />
+                        {/*원래는 Portfolio 컴포넌트 */}
+                        <Route path="/" exact element={<Home />} />
                         <Route path="/login" element={<LoginForm />} />
                         <Route path="/register" element={<RegisterForm />} />
                         <Route path="/users/:userId" element={<Portfolio />} />
                         <Route path="/network" element={<Network />} />
                         <Route path="*" element={<Portfolio />} />
+                        {/*<Route path="/category" element={<Category />} />*/}
                     </Routes>
                 </Router>
             </UserStateContext.Provider>

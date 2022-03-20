@@ -3,6 +3,8 @@ import * as Api from '../../api'
 import {Row, Col, Card, Button} from 'react-bootstrap'
 import Certificate from "./Certificate";
 import CertificateAddForm from "./CertificateAddForm";
+import '../../App.css'
+
 
 function Certificates({portfolioOwnerId, isEditable}){
     const [certificates, setCertificates] = useState([])
@@ -13,9 +15,10 @@ function Certificates({portfolioOwnerId, isEditable}){
     }, [portfolioOwnerId])
 
     return (
-        <Card>
+        <Card
+            style={{backgroundColor: '#FFF5F5', borderRadius: '15px'}}>
             <Card.Body>
-                <Card.Title>자격증</Card.Title>
+                <Card.Title class="mvpType">자격증</Card.Title>
                 {certificates.map((certificate) => (
                     <Certificate 
                         key={certificate.id}
@@ -27,7 +30,12 @@ function Certificates({portfolioOwnerId, isEditable}){
                 {isEditable && (
                     <Row className="mt-3 text-center mb-4">
                         <Col sm={{ span: 20 }}>
-                            <Button onClick={() => setIsAdding(true)}>+</Button>
+
+                            <button
+                                onClick={() => setIsAdding(true)}
+                                className="formAddButton">
+                            </button>
+                            
                         </Col>
                     </Row>
                 )}

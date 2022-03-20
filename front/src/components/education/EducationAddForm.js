@@ -1,6 +1,8 @@
 import { Form, Row, Col, Button } from 'react-bootstrap'
 import React, { useState } from 'react'
 import * as Api from '../../api'
+import '../../App.css'
+
 
 function EducationAddForm({ setIsAdding, portfolioOwnerId, setEducations }) {
     const [school, setSchool] = useState('')
@@ -32,6 +34,10 @@ function EducationAddForm({ setIsAdding, portfolioOwnerId, setEducations }) {
                     type="text"
                     placeholder="학교이름"
                     value={school}
+                    style={{ 
+                        width: 'auto',
+                        border: 'solid 2px #DBC7FF'
+                    }}
                     onChange={(e) => setSchool(e.target.value)}
                 />
             </Form.Group>
@@ -41,6 +47,9 @@ function EducationAddForm({ setIsAdding, portfolioOwnerId, setEducations }) {
                     type="text"
                     placeholder="전공"
                     value={major}
+                    style={{
+                        border: 'solid 2px #DBC7FF'
+                    }}
                     onChange={(e) => setMajor(e.target.value)}
                 />
             </Form.Group>
@@ -87,12 +96,17 @@ function EducationAddForm({ setIsAdding, portfolioOwnerId, setEducations }) {
 
             <Form.Group as={Row} className="mt-3 text-center">
                 <Col sm={{ span: 20 }}>
-                    <Button variant="primary" type="submit" className="me-3">
-                        확인
-                    </Button>
-                    <Button variant="secondary" onClick={() => setIsAdding(false)}>
-                        취소
-                    </Button>
+                <button
+                    type="submit"
+                    className="mvpConfirmButton me-3">
+                    확인
+                </button>
+
+                <button
+                    onClick={() => setIsAdding(false)}
+                    className="mvpCancelButton">
+                    취소
+                </button>
                 </Col>
             </Form.Group>
         </Form>

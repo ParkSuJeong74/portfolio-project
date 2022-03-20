@@ -59,10 +59,15 @@ function LoginForm() {
     }
     };
 
-    return (
+    {/*원래 코드
     <Container>
         <Row className="justify-content-md-center mt-5">
-        <Col lg={8}>
+        <Col lg={8}> */}
+    return (
+    
+    <Container>
+        <Row className="justify-content-md-center mt-5">
+        <Col lg={12}>
             <Form onSubmit={handleSubmit}>
             <Form.Group controlId="loginEmail">
                 <Form.Label>이메일 주소</Form.Label>
@@ -70,6 +75,9 @@ function LoginForm() {
                     type="email"
                     autoComplete="on"
                     value={email}
+                    style={{
+                        border: 'solid 2px #DBC7FF'
+                    }}
                     onChange={(e) => setEmail(e.target.value)}
                 />
                 {!isEmailValid && (
@@ -85,6 +93,9 @@ function LoginForm() {
                     type="password"
                     autoComplete="on"
                     value={password}
+                    style={{
+                        border: 'solid 2px #DBC7FF'
+                    }}
                     onChange={(e) => setPassword(e.target.value)}
                 />
                 {!isPasswordValid && (
