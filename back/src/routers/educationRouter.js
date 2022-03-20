@@ -2,6 +2,7 @@ const is = require("@sindresorhus/is")
 const { Router } = require("express")
 const { login_required } = require("../middlewares/login_required")
 const { EducationService } = require("../services/educationService")
+const { timeUtil } = require("../common/timeUtil")
 
 const educationRouter = Router()
 educationRouter.use(login_required)
@@ -18,13 +19,17 @@ educationRouter.post("/education/create", async (req, res, next) => {
         const school = req.body.school
         const major = req.body.major
         const position = req.body.position
+        const created_at = timeUtil()
+        const updated_at = timeUtil()
 
         // reqest에서 받아온 값을 db에 추가
         const newEducation = await EducationService.addEducation({
             user_id,
             school,
             major,
-            position
+            position,
+            created_at,
+            updated_at
         })
 
         // 201: success to create resource, create이기 때문에 send 대신 json으로 응답
@@ -58,8 +63,9 @@ educationRouter.put("/educations/:id", async (req, res, next) => {
         const school = req.body.school
         const major = req.body.major
         const position = req.body.position
+        const updated_at = timeUtil()
 
-        const toUpdate = { school, major, position }
+        const toUpdate = { school, major, position, updated_at }
 
         const education = await EducationService.setEducation({
             educationId,

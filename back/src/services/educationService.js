@@ -2,11 +2,11 @@ const { Education } = require("../db/models/Education")
 const { v4: uuidv4 } = require("uuid")
 
 const EducationService = {
-    addEducation: async ({ user_id, school, major, position }) => {
+    addEducation: async ({ user_id, school, major, position, created_at, updated_at }) => {
         // 인증에 사용하는 고유값을 만들어 id로 사용
         const id = uuidv4()
 
-        const newEducation = { id, user_id, school, major, position }
+        const newEducation = { id, user_id, school, major, position, created_at, updated_at }
         const createdNewEducation = await Education.create({ newEducation })
 
         return createdNewEducation
@@ -39,10 +39,10 @@ const EducationService = {
         }
 
         // toUpdate는 id를 제외한 나머지 데이터(school, major, position)
-        // toUpdate에서 값을 확인하고 {id, 필드명, 바뀔 값}을 db에 저장
+        // toUpdate에서 값을 확인하고 {id, 필드명, 바뀔 값}을 return
         const fieldToUpdate = Object.keys(toUpdate)
         const newValue = Object.values(toUpdate)
-        
+
         education = await Education.update({ educationId, fieldToUpdate, newValue })
 
         return education

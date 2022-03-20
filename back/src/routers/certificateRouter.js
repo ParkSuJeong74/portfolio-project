@@ -2,6 +2,7 @@ const is = require("@sindresorhus/is")
 const { Router } = require("express")
 const { login_required } = require("../middlewares/login_required")
 const { CertificateService } = require("../services/certificateService")
+const { timeUtil } = require("../common/timeUtil")
 
 const certificateRouter = Router()
 certificateRouter.use(login_required)
@@ -18,12 +19,16 @@ certificateRouter.post("/certificate/create", async (req, res, next) => {
         const title = req.body.title
         const description = req.body.description
         const when_date = req.body.when_date.split("T")[0]
+        const created_at = timeUtil()
+        const updated_at = timeUtil()
 
         const newCertificate = await CertificateService.addCertificate({
             user_id,
             title,
             description,
             when_date,
+            created_at,
+            updated_at
         })
 
         res.status(201).json(newCertificate)
@@ -57,8 +62,9 @@ certificateRouter.put("/certificates/:id", async (req, res, next) => {
         const title = req.body.title ?? null
         const description = req.body.description ?? null
         const when_date = req.body.when_date.split("T")[0] ?? null
+        const updated_at = timeUtil()
 
-        const toUpdate = { title, description, when_date }
+        const toUpdate = { title, description, when_date, updated_at }
 
         const certificate = await CertificateService.setCertificate({ certificateId, toUpdate })
 
@@ -94,7 +100,7 @@ certificateRouter.get("/certificatelist/:user_id", async (req, res, next) => {
     try {
         const user_id = req.params.user_id
         const certificateList = await CertificateService.getCertificateList({ user_id })
-    
+
         res.status(200).send(certificateList)
 
     } catch (error) {

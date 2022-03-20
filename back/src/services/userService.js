@@ -4,7 +4,7 @@ const { v4: uuidv4 } = require("uuid")
 const jwt = require("jsonwebtoken")
 
 const userAuthService = {
-  addUser: async ({ name, email, password }) => {
+  addUser: async ({ name, email, password, created_at, updated_at }) => {
     // 이메일 중복 확인
     const user = await User.findByEmail({ email })
     if (user) {
@@ -18,7 +18,7 @@ const userAuthService = {
 
     // id 는 유니크 값 부여
     const id = uuidv4()
-    const newUser = { id, name, email, password: hashedPassword }
+    const newUser = { id, name, email, password: hashedPassword, created_at, updated_at }
 
     // db에 저장
     const createdNewUser = await User.create({ newUser })
@@ -85,30 +85,10 @@ const userAuthService = {
       return { errorMessage }
     }
 
-    // 업데이트 대상에 name이 있다면, 즉 name 값이 null 이 아니라면 업데이트 진행
-    if (toUpdate.name) {
-      const fieldToUpdate = "name"
-      const newValue = toUpdate.name
-      user = await User.update({ user_id, fieldToUpdate, newValue })
-    }
+    const fieldToUpdate = Object.keys(toUpdate)
+    const newValue = Object.values(toUpdate)
 
-    if (toUpdate.email) {
-      const fieldToUpdate = "email"
-      const newValue = toUpdate.email
-      user = await User.update({ user_id, fieldToUpdate, newValue })
-    }
-
-    if (toUpdate.password) {
-      const fieldToUpdate = "password"
-      const newValue = toUpdate.password
-      user = await User.update({ user_id, fieldToUpdate, newValue })
-    }
-
-    if (toUpdate.description) {
-      const fieldToUpdate = "description"
-      const newValue = toUpdate.description
-      user = await User.update({ user_id, fieldToUpdate, newValue })
-    }
+    user = await User.update({ user_id, fieldToUpdate, newValue })
 
     return user
   },
