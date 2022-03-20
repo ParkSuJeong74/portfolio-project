@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react"
+import React, { useContext } from "react"
 import { useNavigate, useLocation } from "react-router-dom"
 import { UserStateContext, DispatchContext } from "../App"
 import '../App.css'
@@ -39,6 +39,7 @@ function Header() {
     ]
 
     return (
+
         <div className="navBar">
             <div style= {{fontSize: '2.5em', fontFamily: 'Rosarivo'}}>MY PORTFOLIO</div>
             <ul style={{ gap: 30 }} className="navItems">
@@ -63,6 +64,7 @@ function Header() {
                 )}
             </ul>
         </div>
+
     );
 
 }

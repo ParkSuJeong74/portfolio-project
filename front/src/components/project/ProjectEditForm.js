@@ -72,6 +72,7 @@ function ProjectEditForm({ currentProject, setProjects, setIsEditing }) {
         <Col xs={'auto'} sm={'auto'}>
           <Form.Label className="mb-1">시작날짜</Form.Label>
           <DatePicker
+            type="text"
             wrapperClassName="datePicker"
             dateFormat="yyyy.MM.dd(eee)"
             selected={from_date}
@@ -81,6 +82,7 @@ function ProjectEditForm({ currentProject, setProjects, setIsEditing }) {
         <Col xs={'auto'} sm={'auto'}>
           <Form.Label className="mb-1">종료날짜</Form.Label>
             <DatePicker
+              type="text"
               wrapperClassName="datePicker"
               dateFormat="yyyy.MM.dd(eee)"
               selected={to_date}
