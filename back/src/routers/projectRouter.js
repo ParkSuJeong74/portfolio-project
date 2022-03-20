@@ -2,7 +2,6 @@ const is = require('@sindresorhus/is')
 const { Router } = require('express')
 const { login_required } = require('../middlewares/login_required')
 const { ProjectService } = require('../services/projectService')
-const { time } = require("../common/timeUtil")
 
 const projectRouter = Router()
 
@@ -23,10 +22,6 @@ projectRouter.post('/project/create', async (req, res, next) => {
         const description = req.body.description
         const from_date = req.body.from_date.split("T")[0]
         const to_date = req.body.to_date.split("T")[0]
-        const created_at = time
-        const updated_at = time
-
-        console.log(updated_at)
 
         // db에서 데이터 저장
         const newProject = await ProjectService.addProject({
@@ -76,7 +71,7 @@ projectRouter.put('/projects/:id', async (req, res, next) => {
         const description = req.body.description ?? null
         const from_date = req.body.from_date.split("T")[0] ?? null
         const to_date = req.body.to_date.split("T")[0] ?? null
-        const updated_at = time
+        const updated_at = time.getTime()
         const toUpdate = { title, description, from_date, to_date, updated_at }
 
         // db에서 데이터 수정하기(service)
