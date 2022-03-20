@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import {Form,Col,Button,Row} from 'react-bootstrap'
 import * as Api from '../../api'
+import '../../App.css'
+
 
 function EducationEditForm({setEducations, currentEducation, setIsEditing}){
     const [school, setSchool] = useState(currentEducation.school)
@@ -32,6 +34,10 @@ function EducationEditForm({setEducations, currentEducation, setIsEditing}){
                 type="text"
                 placeholder="학교이름"
                 value={school}
+                style={{
+                    width: 'auto',
+                    border: 'solid 2px #DBC7FF'
+                }}
                 onChange={(e) => setSchool(e.target.value)}
                 />
             </Form.Group>
@@ -41,6 +47,9 @@ function EducationEditForm({setEducations, currentEducation, setIsEditing}){
                 type="text"
                 placeholder="전공"
                 value={major}
+                style={{
+                    border: 'solid 2px #DBC7FF'
+                }}
                 onChange={(e) => setMajor(e.target.value)}
                 />
             </Form.Group>
@@ -87,12 +96,17 @@ function EducationEditForm({setEducations, currentEducation, setIsEditing}){
 
             <Form.Group as={Row} className="mt-3 text-center">
                 <Col sm={{ span: 20 }}>
-                <Button variant="primary" type="submit" className="me-3">
+                <button
+                    type="submit"
+                    className="mvpConfirmButton me-3">
                     확인
-                </Button>
-                <Button variant="secondary" onClick={() => setIsEditing(false)}>
+                </button>
+
+                <button
+                    onClick={() => setIsEditing(false)}
+                    className="mvpCancelButton">
                     취소
-                </Button>
+                </button>
                 </Col>
             </Form.Group>
         </Form>
