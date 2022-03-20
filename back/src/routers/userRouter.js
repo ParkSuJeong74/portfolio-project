@@ -146,31 +146,55 @@ userAuthRouter.get(
 
 userAuthRouter.put("/user/follow/:id", login_required, async (req, res, next) => {
   try {
-    const user_id_my = req.params.id
-    const user_id_you = req.body.user_id_you
+    // My -> 내 id로 db에서 가져온 데이터, Your -> 상대 id로 db에서 가져온 데이터
+    // follower -> 나를 follow하는 .. / following -> 내가 follow하는 ..
+    // 상대 db에 들어갈 데이터 먼저 처리
+    const userIdMy = req.params.id
+    const userIdYour = req.body.userIdYour
+    const userInfoYour = await userAuthService.getUserInfo({ user_id: userIdYour })
+    const userInfoMy = await userAuthService.getUserInfo({ user_id: userIdMy })
+    let followerYour = Object.values(userInfoYour.follower)
+    let followingMy = Object.values(userInfoMy.following)
 
-    // 내 데이터
-    const userInfo_my = await userAuthService
-      .getUserInfo({ user_id: user_id_my })
-    // 상대 데이터
-    const userInfo_you = await userAuthService
-      .getUserInfo({ user_id: user_id_you })
-
-    // 데이터를 setUser로 넘겨주기 전에 처리(각자의 following, follower에 서로의 id 추가)
-    let following_my = [...userInfo_my.following, user_id_you]
-    let follower_you = [...userInfo_you.follower, user_id_my]
-
-    const toUpdate_you = { follower: follower_you }
-    const updated_you = await userAuthService.setUser({ user_id: user_id_you, toUpdate: toUpdate_you })
-    // 상대 데이터가 없는 경우
-    if (updated_you.errorMessage) {
-      throw new Error(updated_you.errorMessage)
+    // 값이 존재하는 경우 index, 존재하지 않는 경우 -1 반환
+    const indexFollowerYour = followerYour.indexOf(userIdMy)
+    const indexFollowingMy = followingMy.indexOf(userIdYour)
+    // 팔로우 안한 경우
+    if (indexFollowingMy === -1) {
+      followerCountYour = userInfoYour.followerCount + 1
+      followerYour = [...followerYour, userIdMy]
+      followingCountMy = userInfoMy.followingCount + 1
+      followingMy = [...followingMy, userIdYour]
+    } else {
+      // 팔로우 한 경우
+      followerCountYour = userInfoYour.followerCount - 1
+      followerYour.splice(indexFollowerYour, 1)
+      followingCountMy = userInfoMy.followingCount - 1
+      followingMy.splice(indexFollowingMy, 1)
     }
 
-    const toUpdate_my = { following: following_my }
-    const updated_my = await userAuthService.setUser({ user_id: user_id_my, toUpdate: toUpdate_my })
+    const toUpdate_your = {
+      followerCount: followerCountYour,
+      follower: followerYour
+    }
+    const updatedYour = await userAuthService.setUser({
+      user_id: userIdYour,
+      toUpdate: toUpdate_your
+    })
+    if (updatedYour.errorMessage) {
+      throw new Error(updatedYour.errorMessage)
+    }
 
-    res.status(200).json({ updated_my, updated_you })
+    const toUpdateMy = {
+      followingCount: followingCountMy,
+      following: followingMy
+    }
+    const updatedMy = await userAuthService.setUser({
+      user_id: userIdMy,
+      toUpdate: toUpdateMy
+    })
+    
+    res.status(200).json({ updatedYour, updatedMy })
   } catch (error) {
     next(error)
   }
