@@ -8,7 +8,7 @@ const articleRouter = Router()
 articleRouter.use(login_required)
 
 // 모든 API는 app.js에서 /article로 라우팅 된 상태
-// 중간 get, put, delete 메소드는 category_name이 필요없는 것 같지만 url 명시의 장점, 통일성을 위해 그냥 두기?? -> 일단 뺐음
+// 중간 get, put, delete 메소드는 categoryName이 필요없는 것 같지만 url 명시의 장점, 통일성을 위해 그냥 두기?? -> 일단 뺐음
 
 // TODO: 게시글 등록하기 -> 1차 테스트 완료
 articleRouter.post("/create", async (req, res, next) => {
@@ -19,22 +19,22 @@ articleRouter.post("/create", async (req, res, next) => {
             )
         }
 
-        const user_id = req.body.user_id
-        const category_name = req.body.category_name
-        const author = user_id // 지금 로그인 한 사용자 = 게시글 작성자
+        const userId = req.currentUserId // jwt토큰에서 추출된 로그인 사용자 id
+        const categoryName = req.body.categoryName
+        const author = userId // 지금 로그인 한 사용자 = 게시글 작성자
         const title = req.body.title
         const description = req.body.description
-        const created_at = timeUtil()
-        const updated_at = timeUtil()
+        const createdAt = timeUtil()
+        const updatedAt = timeUtil()
         
         const newArticle = await ArticleService.addArticle({
-            user_id,
-            category_name,
+            userId,
+            categoryName,
             author,
             title,
             description,
-            created_at,
-            updated_at
+            createdAt,
+            updatedAt
         })
 
         res.status(201).json(newArticle)
@@ -63,16 +63,16 @@ articleRouter.get("/:id", async (req, res, next) => {
 // TODO: 게시글 수정하기 -> 1차 테스트 완료
 articleRouter.put("/:id", async (req, res, next) => {
     try {
-        const user_id = req.currentUserId // jwt토큰에서 추출된 로그인 사용자 id
+        const userId = req.currentUserId // jwt토큰에서 추출된 로그인 사용자 id
         const articleId = req.params.id
-        const author = req.body.author ?? null // 게시글 작성자의 user_id
+        const author = req.body.author ?? null // 게시글 작성자의 userId
         const title = req.body.title ?? null
         const description = req.body.description ?? null
-        const updated_at = timeUtil()
+        const updatedAt = timeUtil()
 
         // TODO : 프론트에서 아예 수정, 삭제 버튼이 보이지 않도록 해야 함 -> 해주신다고 함 -> 근데 그럼 나는 검증할 필요가 없는건가?(코치님께 여쭤보기)
-        if (user_id == author) { // 로그인 사용자 = 게시글 작성자이면
-            const toUpdate = { title, description, updated_at }
+        if (userId == author) { // 로그인 사용자 = 게시글 작성자이면
+            const toUpdate = { title, description, updatedAt }
             const article = await ArticleService.setArticle({ articleId, toUpdate })
 
             if (article.errorMessage) {
@@ -100,6 +100,30 @@ articleRouter.delete("/:id", async (req, res, next) => {
 
         res.status(200).send(result)
 
+    } catch (error) {
+        next(error)
+    }
+})
+
+// TODO: 게시글 좋아요/좋아요 취소 !!!!!!!!!아직 구현중!!!!!!!!!
+articleRouter.put("/:id/like", async (req, res, next) => {
+    try {
+        const userId = req.currentUserId // 로그인 한 사용자
+        const articleId = req.params.id // 게시글 Id
+        const author = req.body.author ?? null // 게시글 작성자의 userId
+
+        if (userId == author) { // 로그인 사용자 = 게시글 작성자이면
+            throw new Error("본인 글에는 좋아요 할 수 없습니다.")
+        } else { // 본인 게시글이 아니면
+            //const toUpdate = { title, description, updatedAt }
+            const article = await ArticleService.setLike({ userId, articleId })
+
+            if (article.errorMessage) {
+                throw new Error(article.errorMessage)
+            }
+
+            res.status(200).send(article)
+        }
     } catch (error) {
         next(error)
     }

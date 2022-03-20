@@ -6,11 +6,11 @@ const ArticleSchema = new Schema(
             type: String,
             required: true,
         },
-        user_id: {
+        userId: {
             type: String,
             required: true,
         },
-        category_name: {
+        categoryName: {
             type: String,
             required: true,
         },
@@ -26,21 +26,20 @@ const ArticleSchema = new Schema(
             type: String,
             required: true,
         },
-        like: {
-            type: Boolean,
-            default: false,
-            required: true,
-        },
-        like_count: {
+        likeCount: {
             type: Number,
             default: 0,
             required: true,
         },
-        created_at: {
+        likeUserIdList: {
+            type: Array,
+            required: true,
+        },
+        createdAt: {
             type: Date,
             required: true,
         },
-        updated_at: {
+        updatedAt: {
             type: Date,
             required: true,
         }

@@ -1,6 +1,5 @@
 const { ArticleModel } = require("../schemas/article")
 /* !!!!!!!!! 두 모델 완성되기 전까지 동작하지 않을 것 !!!!!!!!!
-const { LikeModel } = require("../schemas/like")
 const { CommentModel } = require("../schemas/comment") */
 
 const Article = {
@@ -10,19 +9,18 @@ const Article = {
         return createdNewArticle
     },
     // TODO : id로 게시글 찾기 -> 1차 완료
-    // !!!!!!!!! like랑 comment 쿼리 수정하기 !!!!!!!!!!
+    // !!!!!!!!! comment 쿼리 수정하기 !!!!!!!!!!
     findById: async ({ articleId }) => {
         const article = await ArticleModel.findOne({ id: articleId })
-        // const like = await LikeModel.findOne({ id: articleId })
-        // const comment = await ArticleModel.find({ id: articleId })
-        // return { article, like, comment }
+        // const comment = await CommentModel.find({ id: articleId })
+        // return { article, comment }
         return article
     },
     // TODO : 본인 게시글 확인 후 수정하기 -> 1차 완료
     update: async ({ articleId, fieldToUpdate, newValue }) => {
         const filter = { id: articleId } // 바꿀 대상 찾기
         const update = { $set:
-            { // 바꿀 내용
+            { // 바꿀 내용 -> forEach문으로 바꾸기
                 [fieldToUpdate[0]]: newValue[0],
                 [fieldToUpdate[1]]: newValue[1],
                 [fieldToUpdate[2]]: newValue[2]
@@ -43,6 +41,40 @@ const Article = {
         const deleteResult = await ArticleModel.deleteOne({ id: articleId })
         const isDataDeleted = deleteResult.deletedCount === 1
         return isDataDeleted
+    },
+    // TODO : 좋아요 개수, 좋아요 누른 사용자 목록 업데이트
+    updateLike: async ({ userId, articleId, likeUserIdList }) => {
+        //console.log(likeUserIdList.includes(userId))
+        const filter = { id: articleId } // 바꿀 게시물
+        let update = {}
+        if (likeUserIdList.includes(userId)) { // 이미 좋아요 한 상태이면
+            update = {
+                $inc: {
+                    likeCount: -1,
+                },
+                $pull: {
+                    likeUserIdList: userId, // 해당 값이 여러 번 있으면 다 없앰
+                }
+            }
+        } else {
+            update = {
+                $inc: {
+                    likeCount: 1,
+                },
+                $push: {
+                    likeUserIdList: userId,
+                }
+            }
+        }
+        const option = { returnOriginal: false }
+
+        const updateArticle = await ArticleModel.findOneAndUpdate(
+            filter,
+            update,
+            option
+        )
+
+        return updateArticle
     }
 }
 

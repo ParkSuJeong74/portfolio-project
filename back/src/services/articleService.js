@@ -3,12 +3,12 @@ const { v4: uuidv4 } = require("uuid")
 
 const ArticleService = {
     // TODO: 게시글 등록하기 -> 1차 완료
-    addArticle: async function({ user_id, category_name, author, title, description, created_at,
-        updated_at }) {
+    addArticle: async function({ userId, categoryName, author, title, description, createdAt,
+        updatedAt }) {
         const id = uuidv4()
 
-        const newArticle = { id, user_id, category_name, author, title, description, created_at,
-            updated_at }
+        const newArticle = { id, userId, categoryName, author, title, description, createdAt,
+            updatedAt }
         const createdNewArticle = await Article.create({ newArticle })
 
         return createdNewArticle
@@ -45,7 +45,21 @@ const ArticleService = {
         }
 
         return { status: "ok" }
-    }
+    },
+    // TODO: 게시글 좋아요
+    setLike: async function({ userId, articleId }) {
+        let article = await Article.findById({ articleId }) // 좋아요 할 게시글 객체 찾기
+
+        if (!article) {
+            throw new Error("해당 id를 가진 자격증 데이터는 없습니다. 다시 한 번 확인해주세요.")
+        }
+
+        const likeUserIdList = article.likeUserIdList // 좋아요 누른 사용자들의 목록
+        
+        article = await Article.updateLike({ userId, articleId, likeUserIdList })
+
+        return article
+    },
 }
 
 module.exports = { ArticleService }
