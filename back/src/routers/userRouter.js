@@ -15,9 +15,7 @@ userAuthRouter.post("/user/register", async (req, res, next) => {
     }
 
     // req (request) 에서 데이터 가져오기
-    const name = req.body.name
-    const email = req.body.email
-    const password = req.body.password
+    const { name, email, password } = req.body
     const created_at = timeUtil()
     const updated_at = timeUtil()
 
@@ -144,29 +142,36 @@ userAuthRouter.get(
   }
 )
 
+// My -> 내 id로 db에서 가져온 데이터, Your -> 상대 id로 db에서 가져온 데이터
+// follower -> 나를 follow하는 .. / following -> 내가 follow하는 ..
+// follow : count 증가, 내 following과 상대 follower에 서로의 id를 add
+// unfollow : count 감소, 내 following과 상대 follower에 서로의 id를 remove
 userAuthRouter.put("/user/follow/:id", login_required, async (req, res, next) => {
   try {
-    // My -> 내 id로 db에서 가져온 데이터, Your -> 상대 id로 db에서 가져온 데이터
-    // follower -> 나를 follow하는 .. / following -> 내가 follow하는 ..
-    // 상대 db에 들어갈 데이터 먼저 처리
     const userIdMy = req.params.id
     const userIdYour = req.body.userIdYour
-    const userInfoYour = await userAuthService.getUserInfo({ user_id: userIdYour })
-    const userInfoMy = await userAuthService.getUserInfo({ user_id: userIdMy })
+    const userInfoYour = await userAuthService.getUserInfo({
+      user_id: userIdYour
+    })
+    const userInfoMy = await userAuthService.getUserInfo({
+      user_id: userIdMy
+    })
+
     let followerYour = Object.values(userInfoYour.follower)
     let followingMy = Object.values(userInfoMy.following)
 
-    // 값이 존재하는 경우 index, 존재하지 않는 경우 -1 반환
+    // 값이 존재하는 경우 index를, 존재하지 않는 경우 -1 반환
     const indexFollowerYour = followerYour.indexOf(userIdMy)
     const indexFollowingMy = followingMy.indexOf(userIdYour)
-    // 팔로우 안한 경우
-    if (indexFollowingMy === -1) {
+
+    // follow
+    if (indexFollowingMy === -1 && indexFollowingMy === -1) {
       followerCountYour = userInfoYour.followerCount + 1
       followerYour = [...followerYour, userIdMy]
       followingCountMy = userInfoMy.followingCount + 1
       followingMy = [...followingMy, userIdYour]
     } else {
-      // 팔로우 한 경우
+      // unfollow
       followerCountYour = userInfoYour.followerCount - 1
       followerYour.splice(indexFollowerYour, 1)
       followingCountMy = userInfoMy.followingCount - 1
@@ -193,7 +198,7 @@ userAuthRouter.put("/user/follow/:id", login_required, async (req, res, next) =>
       user_id: userIdMy,
       toUpdate: toUpdateMy
     })
-    
+
     res.status(200).json({ updatedYour, updatedMy })
   } catch (error) {
     next(error)

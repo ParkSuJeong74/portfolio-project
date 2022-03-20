@@ -53,9 +53,7 @@ const userAuthService = {
     const token = jwt.sign({ user_id: user.id }, secretKey)
 
     // 반환할 loginuser 객체를 위한 변수 설정
-    const id = user.id
-    const name = user.name
-    const description = user.description
+    const { id, name, description } = user
 
     const loginUser = {
       token,
@@ -77,7 +75,7 @@ const userAuthService = {
   setUser: async ({ user_id, toUpdate }) => {
     // 우선 해당 id 의 유저가 db에 존재하는지 여부 확인
     let user = await User.findById({ user_id })
-    
+
     // db에서 찾지 못한 경우, 에러 메시지 반환
     if (!user) {
       const errorMessage =
@@ -85,10 +83,14 @@ const userAuthService = {
       return { errorMessage }
     }
 
-    const fieldToUpdate = Object.keys(toUpdate)
-    const newValue = Object.values(toUpdate)
+    let updateObject = {}
 
-    user = await User.update({ user_id, fieldToUpdate, newValue })
+    Object.entries(toUpdate)
+      .forEach((element) => {
+        updateObject[element[0]] = element[1]
+      })
+
+    user = await User.update({ user_id, updateObject })
 
     return user
   },

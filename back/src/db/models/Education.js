@@ -2,8 +2,8 @@ const { EducationModel } = require("../schemas/education")
 
 const Education = {
     create: async ({ newEducation }) => {
-        const createNewEducation = await EducationModel.create(newEducation)
-        return createNewEducation
+        const education = await EducationModel.create(newEducation)
+        return education
     },
 
     findById: async ({ educationId }) => {
