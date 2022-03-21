@@ -1,7 +1,6 @@
 const { UserModel } = require("../schemas/user")
 const { ArticleModel } = require("../schemas/article")
-/* TODO : !!!!!!!!! 댓글 모델 완성되기 전까지 동작하지 않을 것 !!!!!!!!!
-const { CommentModel } = require("../schemas/comment") */
+const { CommentModel } = require("../schemas/comment")
 
 const Article = {
     // 게시글 생성하기
@@ -14,13 +13,11 @@ const Article = {
         const user = await UserModel.findOne({ id: user_id })
         return user
     },
-    // id로 게시글 찾기
-    // TODO : !!!!!!!!! comment 쿼리 수정하기 !!!!!!!!!!
+    // id로 게시글+댓글 찾기
     findById: async ({ articleId }) => {
         const article = await ArticleModel.findOne({ id: articleId })
-        // const comment = await CommentModel.find({ id: articleId })
-        // return { article, comment }
-        return article
+        const comment = await CommentModel.find({ articleId })
+        return { article, comment }
     },
     // 본인 게시글 확인 후 수정하기
     update: async ({ articleId, fieldToUpdate, newValue }) => {
