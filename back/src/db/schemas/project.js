@@ -22,12 +22,12 @@ const ProjectSchema = new Schema(
         },
         from_date: {
             type: String,
-            //format : Date,
+            format : Date,
             required: true,
         },
         to_date: {
             type: String,
-            //format : Date,
+            format : Date,
             required: true,
         },
         created_at: {

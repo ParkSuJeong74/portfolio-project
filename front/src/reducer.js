@@ -1,4 +1,4 @@
-export function loginReducer(userState, action) {
+export function userReducer(userState, action) {
     switch (action.type) {
         case "LOGIN_SUCCESS":
             console.log("%c로그인!", "color: #d93d1a;");
@@ -14,5 +14,14 @@ export function loginReducer(userState, action) {
             };
         default:
             return userState;
+    }
+}
+
+export function categoryReducer(categoryState, action){
+    if(action.type === 'SET_CATEGORY'){
+        return {
+            ...categoryState,
+            category: action.payload,
+        }
     }
 }

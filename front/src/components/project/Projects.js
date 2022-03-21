@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { Card, Button, Row, Col } from "react-bootstrap";
+import { Card, Row, Col } from "react-bootstrap";
 import * as Api from "../../api";
 import Project from "./Project";
 import ProjectAddForm from "./ProjectAddForm";
+import '../../App.css'
 
 function Projects({ portfolioOwnerId, isEditable }) {
   //useState로 projects 상태를 생성함.
@@ -16,9 +17,10 @@ function Projects({ portfolioOwnerId, isEditable }) {
   }, [portfolioOwnerId]);
 
   return (
-    <Card>
+    <Card
+      style={{backgroundColor: '#FFF5F5' , borderRadius: '15px'}}>
       <Card.Body>
-        <Card.Title>프로젝트</Card.Title>
+        <Card.Title class="mvpType">프로젝트</Card.Title>
         {projects.map((project) => (
           <Project
             key={project.id}
@@ -30,7 +32,12 @@ function Projects({ portfolioOwnerId, isEditable }) {
         {isEditable && (
           <Row className="mt-3 text-center mb-4">
             <Col sm={{ span: 20 }}>
-              <Button onClick={() => setIsAdding(true)}>+</Button>
+
+              <button
+                onClick={() => setIsAdding(true)}
+                className="formAddButton">
+              </button>
+              
             </Col>
           </Row>
         )}

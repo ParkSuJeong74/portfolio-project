@@ -1,14 +1,16 @@
 const mongoose = require("mongoose")
+
 const { User } = require("./models/User")
 const { Award } = require("./models/Award")
 const { Project } = require("./models/Project")
 const { Education } = require("./models/Education")
 const { Certificate } = require("./models/Certificate")
+const { Category } = require('./models/Category')
 const { Article } = require("./models/Article")
+const { Comment } = require('./models/Comment')
 
 const DB_URL =
-  process.env.MONGODB_URL ||
-  "MongoDB 서버 주소가 설정되지 않았습니다.\n./db/index.ts 파일을 확인해 주세요."
+  process.env.MONGODB_URL || "mongo_url"
 
 mongoose.connect(DB_URL)
 const db = mongoose.connection
@@ -20,4 +22,4 @@ db.on("error", (error) =>
   console.error("MongoDB 연결에 실패하였습니다...\n" + DB_URL + "\n" + error)
 )
 
-module.exports = { User, Award, Project, Education, Certificate, Article }
+module.exports = { User, Award, Project, Education, Certificate, Category, Article, Comment }
