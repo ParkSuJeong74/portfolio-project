@@ -17,7 +17,7 @@ const ArticleService = {
     getArticle: async function({ articleId }) {
         const article = await Article.findById({ articleId })
         if (!article) {
-            throw new Error("해당 id를 가진 자격증 데이터는 없습니다. 다시 한 번 확인해주세요.")
+            throw new Error("해당 id를 가진 게시글 데이터는 없습니다. 다시 한 번 확인해주세요.")
         }
 
         return article
@@ -27,7 +27,7 @@ const ArticleService = {
         let article = await Article.findById({ articleId })
 
         if (!article) {
-            throw new Error("해당 id를 가진 자격증 데이터는 없습니다. 다시 한 번 확인해주세요.")
+            throw new Error("해당 id를 가진 게시글 데이터는 없습니다. 다시 한 번 확인해주세요.")
         }
         
         const fieldToUpdate = Object.keys(toUpdate)
@@ -41,21 +41,21 @@ const ArticleService = {
         const isDataDeleted = await Article.deleteById({ articleId })
 
         if (!isDataDeleted) {
-            throw new Error("해당 id를 가진 자격증 데이터는 없습니다. 다시 한 번 확인해주세요.")
+            throw new Error("해당 id를 가진 게시글 데이터는 없습니다. 다시 한 번 확인해주세요.")
         }
 
         return { status: "ok" }
     },
-    // TODO: 게시글 좋아요
+    // TODO: 게시글 좋아요 -> 1차 테스트 완료
     setLike: async function({ userId, articleId }) {
         let article = await Article.findById({ articleId }) // 좋아요 할 게시글 객체 찾기
 
         if (!article) {
-            throw new Error("해당 id를 가진 자격증 데이터는 없습니다. 다시 한 번 확인해주세요.")
+            throw new Error("해당 id를 가진 게시글 데이터는 없습니다. 다시 한 번 확인해주세요.")
         }
 
         const likeUserIdList = article.likeUserIdList // 좋아요 누른 사용자들의 목록
-        
+
         article = await Article.updateLike({ userId, articleId, likeUserIdList })
 
         return article

@@ -1,5 +1,5 @@
 const { ArticleModel } = require("../schemas/article")
-/* !!!!!!!!! 두 모델 완성되기 전까지 동작하지 않을 것 !!!!!!!!!
+/* !!!!!!!!! 댓글 모델 완성되기 전까지 동작하지 않을 것 !!!!!!!!!
 const { CommentModel } = require("../schemas/comment") */
 
 const Article = {
@@ -42,7 +42,7 @@ const Article = {
         const isDataDeleted = deleteResult.deletedCount === 1
         return isDataDeleted
     },
-    // TODO : 좋아요 개수, 좋아요 누른 사용자 목록 업데이트
+    // TODO : 좋아요 개수, 좋아요 누른 사용자 목록 업데이트 -> 1차 테스트 완료
     updateLike: async ({ userId, articleId, likeUserIdList }) => {
         //console.log(likeUserIdList.includes(userId))
         const filter = { id: articleId } // 바꿀 게시물
@@ -56,7 +56,7 @@ const Article = {
                     likeUserIdList: userId, // 해당 값이 여러 번 있으면 다 없앰
                 }
             }
-        } else {
+        } else { // 좋아요 안 누른 상태이면
             update = {
                 $inc: {
                     likeCount: 1,

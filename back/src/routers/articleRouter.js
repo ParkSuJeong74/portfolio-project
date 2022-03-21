@@ -20,10 +20,8 @@ articleRouter.post("/create", async (req, res, next) => {
         }
 
         const userId = req.currentUserId // jwt토큰에서 추출된 로그인 사용자 id
-        const categoryName = req.body.categoryName
         const author = userId // 지금 로그인 한 사용자 = 게시글 작성자
-        const title = req.body.title
-        const description = req.body.description
+        const { categoryName, title, description } = req.body
         const createdAt = timeUtil()
         const updatedAt = timeUtil()
         
@@ -65,9 +63,7 @@ articleRouter.put("/:id", async (req, res, next) => {
     try {
         const userId = req.currentUserId // jwt토큰에서 추출된 로그인 사용자 id
         const articleId = req.params.id
-        const author = req.body.author ?? null // 게시글 작성자의 userId
-        const title = req.body.title ?? null
-        const description = req.body.description ?? null
+        const { author, title, description } = req.body
         const updatedAt = timeUtil()
 
         // TODO : 프론트에서 아예 수정, 삭제 버튼이 보이지 않도록 해야 함 -> 해주신다고 함 -> 근데 그럼 나는 검증할 필요가 없는건가?(코치님께 여쭤보기)
@@ -105,17 +101,16 @@ articleRouter.delete("/:id", async (req, res, next) => {
     }
 })
 
-// TODO: 게시글 좋아요/좋아요 취소 !!!!!!!!!아직 구현중!!!!!!!!!
+// TODO: 게시글 좋아요/좋아요 취소 -> 1차 테스트 완료
 articleRouter.put("/:id/like", async (req, res, next) => {
     try {
         const userId = req.currentUserId // 로그인 한 사용자
         const articleId = req.params.id // 게시글 Id
-        const author = req.body.author ?? null // 게시글 작성자의 userId
+        const author = req.body.author // 게시글 작성자의 userId
 
         if (userId == author) { // 로그인 사용자 = 게시글 작성자이면
             throw new Error("본인 글에는 좋아요 할 수 없습니다.")
         } else { // 본인 게시글이 아니면
-            //const toUpdate = { title, description, updatedAt }
             const article = await ArticleService.setLike({ userId, articleId })
 
             if (article.errorMessage) {
