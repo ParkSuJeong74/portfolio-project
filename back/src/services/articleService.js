@@ -38,7 +38,6 @@ const ArticleService = {
         if (!article) {
             throw new Error("해당 id를 가진 게시글 데이터는 없습니다. 다시 한 번 확인해주세요.")
         }
-        //let authorName
         // 익명에 체크되어 있으면
         if (toUpdate.hidden == true) {
             toUpdate.authorName = "익명"
@@ -47,10 +46,15 @@ const ArticleService = {
             toUpdate.authorName = user.name
         }
         
-        const fieldToUpdate = Object.keys(toUpdate)
-        const newValue = Object.values(toUpdate)
+        let updateObject = {}
+        Object.entries(toUpdate)
+            .forEach((element) => {
+                if (element[1])
+                    updateObject[element[0]] = element[1]
+            })
+        console.log(Object.entries(toUpdate))
 
-        article = await Article.update({ articleId, fieldToUpdate, newValue })
+        article = await Article.update({ articleId, updateObject })
 
         return article
     },
