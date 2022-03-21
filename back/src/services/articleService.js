@@ -7,11 +7,13 @@ const ArticleService = {
     addArticle: async function({ userId, categoryName, author, hidden, title, description, createdAt,
         updatedAt }) {
         const id = uuidv4()
-        const user = await User.findById({ userId })
-        let authorName = user.name
+        let authorName
         // 익명에 체크되어 있으면
         if (hidden == true) {
             authorName = "익명"
+        } else {
+            const user = await User.findById({ userId })
+            authorName = user.name
         }
 
         const newArticle = { id, userId, categoryName, author, authorName, hidden, title, description, createdAt,
@@ -30,15 +32,24 @@ const ArticleService = {
         return article
     },
     // 게시글 수정하기
-    setArticle: async function({ articleId, toUpdate }) {
+    setArticle: async function({ userId, articleId, toUpdate }) {
         let article = await Article.findById({ articleId })
 
         if (!article) {
             throw new Error("해당 id를 가진 게시글 데이터는 없습니다. 다시 한 번 확인해주세요.")
         }
+        //let authorName
+        // 익명에 체크되어 있으면
+        if (toUpdate.hidden == true) {
+            toUpdate.authorName = "익명"
+        } else {
+            const user = await User.findById({ userId })
+            toUpdate.authorName = user.name
+        }
         
         const fieldToUpdate = Object.keys(toUpdate)
         const newValue = Object.values(toUpdate)
+
         article = await Article.update({ articleId, fieldToUpdate, newValue })
 
         return article
@@ -56,7 +67,6 @@ const ArticleService = {
     // 게시글 좋아요
     setLike: async function({ userId, articleId }) {
         let article = await Article.findById({ articleId }) // 좋아요 할 게시글 객체 찾기
-
         if (!article) {
             throw new Error("해당 id를 가진 게시글 데이터는 없습니다. 다시 한 번 확인해주세요.")
         }

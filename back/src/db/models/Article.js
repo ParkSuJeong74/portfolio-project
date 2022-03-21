@@ -29,7 +29,9 @@ const Article = {
             { // 바꿀 내용 -> TODO : forEach문으로 바꾸기
                 [fieldToUpdate[0]]: newValue[0],
                 [fieldToUpdate[1]]: newValue[1],
-                [fieldToUpdate[2]]: newValue[2]
+                [fieldToUpdate[2]]: newValue[2],
+                [fieldToUpdate[3]]: newValue[3],
+                [fieldToUpdate[4]]: newValue[4]
             }
         }
         const option = { returnOriginal: false } // 옵션

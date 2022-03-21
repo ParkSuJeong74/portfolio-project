@@ -48,10 +48,6 @@ articleRouter.get("/:id", async (req, res, next) => {
 
         const article = await ArticleService.getArticle({ articleId })
 
-        if (article.errorMessage) {
-            throw new Error(article.errorMessage)
-        }
-
         res.status(200).send(article)
 
     } catch (error) {
@@ -63,16 +59,12 @@ articleRouter.put("/:id", async (req, res, next) => {
     try {
         const userId = req.currentUserId // jwt토큰에서 추출된 로그인 사용자 id
         const articleId = req.params.id
-        const { author, title, description } = req.body
+        const { author, hidden, title, description } = req.body
         const updatedAt = timeUtil()
 
         if (userId == author) { // 로그인 사용자 = 게시글 작성자이면
-            const toUpdate = { title, description, updatedAt }
-            const article = await ArticleService.setArticle({ articleId, toUpdate })
-
-            if (article.errorMessage) {
-                throw new Error(article.errorMessage)
-            }
+            const toUpdate = { hidden, title, description, updatedAt }
+            const article = await ArticleService.setArticle({ userId, articleId, toUpdate })
 
             res.status(200).send(article)
         } else {
@@ -88,10 +80,6 @@ articleRouter.delete("/:id", async (req, res, next) => {
         const articleId = req.params.id
 
         const result = await ArticleService.deleteArticle({ articleId })
-
-        if (result.errorMessage) {
-            throw new Error(result.errorMessage)
-        }
 
         res.status(200).send(result)
 
@@ -111,10 +99,6 @@ articleRouter.put("/:id/like", async (req, res, next) => {
             throw new Error("본인 글에는 좋아요 할 수 없습니다.")
         } else { // 본인 게시글이 아니면
             const article = await ArticleService.setLike({ userId, articleId })
-
-            if (article.errorMessage) {
-                throw new Error(article.errorMessage)
-            }
 
             res.status(200).send(article)
         }
