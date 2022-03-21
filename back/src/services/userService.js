@@ -87,7 +87,7 @@ const userAuthService = {
 
     Object.entries(toUpdate)
       .forEach((element) => {
-        if (element[1] !== "")
+        if (element[1])
           updateObject[element[0]] = element[1]
       })
 
