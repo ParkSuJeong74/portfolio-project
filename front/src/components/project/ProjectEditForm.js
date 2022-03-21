@@ -1,7 +1,8 @@
 import React, { useState } from "react"
-import { Button, Form, Col, Row } from "react-bootstrap"
+import { Form, Col, Row } from "react-bootstrap"
 import * as Api from "../../api"
 import DatePicker from "react-datepicker"
+import '../../App.css'
 
 function ProjectEditForm({ currentProject, setProjects, setIsEditing }) {
   //useState로 title 상태를 생성함.
@@ -47,6 +48,10 @@ function ProjectEditForm({ currentProject, setProjects, setIsEditing }) {
           type="text"
           placeholder="프로젝트 제목"
           value={title}
+          style={{
+            width: 'auto',
+            border: 'solid 2px #DBC7FF'
+          }}
           onChange={(e) => setTitle(e.target.value)}
         />
       </Form.Group>
@@ -56,6 +61,9 @@ function ProjectEditForm({ currentProject, setProjects, setIsEditing }) {
           type="text"
           placeholder="상세내역"
           value={description}
+          style={{
+            border: 'solid 2px #DBC7FF'
+          }}
           onChange={(e) => setDescription(e.target.value)}
         />
       </Form.Group>
@@ -64,6 +72,7 @@ function ProjectEditForm({ currentProject, setProjects, setIsEditing }) {
         <Col xs={'auto'} sm={'auto'}>
           <Form.Label className="mb-1">시작날짜</Form.Label>
           <DatePicker
+            type="text"
             wrapperClassName="datePicker"
             dateFormat="yyyy.MM.dd(eee)"
             selected={from_date}
@@ -73,6 +82,7 @@ function ProjectEditForm({ currentProject, setProjects, setIsEditing }) {
         <Col xs={'auto'} sm={'auto'}>
           <Form.Label className="mb-1">종료날짜</Form.Label>
             <DatePicker
+              type="text"
               wrapperClassName="datePicker"
               dateFormat="yyyy.MM.dd(eee)"
               selected={to_date}
@@ -83,12 +93,19 @@ function ProjectEditForm({ currentProject, setProjects, setIsEditing }) {
 
       <Form.Group as={Row} className="mt-3 text-center mb-4">
         <Col sm={{ span: 20 }}>
-          <Button variant="primary" type="submit" className="me-3">
-            확인
-          </Button>
-          <Button variant="secondary" onClick={() => setIsEditing(false)}>
-            취소
-          </Button>
+
+        <button
+          type="submit"
+          className="mvpConfirmButton me-3">
+          확인
+        </button>
+
+        <button
+          onClick={() => setIsEditing(false)}
+          className="mvpCancelButton">
+          취소
+        </button>
+          
         </Col>
       </Form.Group>
     </Form>

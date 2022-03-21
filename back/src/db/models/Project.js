@@ -28,7 +28,7 @@ const Project = {
                 [fieldToUpdate[1]]: newValue[1],
                 [fieldToUpdate[2]]: newValue[2],
                 [fieldToUpdate[3]]: newValue[3],
-                [fieldToUpdate[4]]: newValue[4]
+                [fieldToUpdate[4]]: newValue[4],
             }
         }
 

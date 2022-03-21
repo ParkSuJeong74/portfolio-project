@@ -11,8 +11,8 @@ const User = {
         return user
     },
 
-    findById: async ({ user_id }) => {
-        const user = await UserModel.findOne({ id: user_id })
+    findById: async ({ userId }) => {
+        const user = await UserModel.findOne({ id: userId })
         return user
     },
 

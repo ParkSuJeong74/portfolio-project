@@ -1,6 +1,8 @@
 import React, {useState} from 'react'
 import {Form, Button, Row,Col} from 'react-bootstrap'
 import * as Api from '../../api'
+import '../../App.css'
+
 
 //현재 award(currentAward)의 title, description을 상태로 설정해야 함
 function AwardEditForm({currentAward, setAwards, setIsEditing}){
@@ -37,6 +39,10 @@ function AwardEditForm({currentAward, setAwards, setIsEditing}){
                     type="text"
                     placeholder="수상내역" 
                     value={title} 
+                    style={{
+                        width: 'auto',
+                        border: 'solid 2px #DBC7FF'
+                    }}
                     onChange={(e) => setTitle(e.target.value)}
                 />
                 
@@ -48,18 +54,28 @@ function AwardEditForm({currentAward, setAwards, setIsEditing}){
                     type="text" 
                     placeholder="상세내역"
                     value={description} 
+                    style={{
+                        border: 'solid 2px #DBC7FF'
+                    }}
                     onChange={(e) => setDescription(e.target.value)}
                 />
             </Form.Group>
             
             <Form.Group as={Row} className="text-center mt-3">
                 <Col sm={{ span: 20 }}>
-                    <Button className="me-3" variant="primary" type="submit">
-                        확인
-                    </Button>
-                    <Button variant="secondary" onClick={() => setIsEditing(false)}> 
-                        취소
-                    </Button>
+
+                <button
+                    type="submit"
+                    className="mvpConfirmButton me-3">
+                    확인
+                </button>
+
+                <button
+                    onClick={() => setIsEditing(false)}
+                    className="mvpCancelButton">
+                    취소
+                </button>
+                
                 </Col>
             </Form.Group>
         </Form>
