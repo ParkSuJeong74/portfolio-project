@@ -18,6 +18,15 @@ const ArticleSchema = new Schema(
             type: String,
             required: true
         },
+        authorName: {
+            type: String,
+            required: true
+        },
+        hidden: {
+            type: Boolean,
+            default: false,
+            required: true
+        },
         title: {
             type: String,
             required: true,

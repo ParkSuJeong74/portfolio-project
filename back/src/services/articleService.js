@@ -1,19 +1,26 @@
 const { Article } = require("../db")
+const { User } = require("../db")
 const { v4: uuidv4 } = require("uuid")
 
 const ArticleService = {
-    // TODO: 게시글 등록하기 -> 1차 완료
-    addArticle: async function({ userId, categoryName, author, title, description, createdAt,
+    // 게시글 등록하기
+    addArticle: async function({ userId, categoryName, author, hidden, title, description, createdAt,
         updatedAt }) {
         const id = uuidv4()
+        const user = await User.findById({ userId })
+        let authorName = user.name
+        // 익명에 체크되어 있으면
+        if (hidden == true) {
+            authorName = "익명"
+        }
 
-        const newArticle = { id, userId, categoryName, author, title, description, createdAt,
+        const newArticle = { id, userId, categoryName, author, authorName, hidden, title, description, createdAt,
             updatedAt }
         const createdNewArticle = await Article.create({ newArticle })
 
         return createdNewArticle
     },
-    // TODO: 게시글 상세 페이지 보여주기 -> 1차 완료
+    // 게시글 상세 페이지 보여주기
     getArticle: async function({ articleId }) {
         const article = await Article.findById({ articleId })
         if (!article) {
@@ -22,7 +29,7 @@ const ArticleService = {
 
         return article
     },
-    // TODO: 게시글 수정하기 -> 1차 완료
+    // 게시글 수정하기
     setArticle: async function({ articleId, toUpdate }) {
         let article = await Article.findById({ articleId })
 
@@ -36,7 +43,7 @@ const ArticleService = {
 
         return article
     },
-    // TODO: 게시글 삭제하기 -> 1차 완료
+    // 게시글 삭제하기
     deleteArticle: async function({ articleId }) {
         const isDataDeleted = await Article.deleteById({ articleId })
 
@@ -46,7 +53,7 @@ const ArticleService = {
 
         return { status: "ok" }
     },
-    // TODO: 게시글 좋아요 -> 1차 테스트 완료
+    // 게시글 좋아요
     setLike: async function({ userId, articleId }) {
         let article = await Article.findById({ articleId }) // 좋아요 할 게시글 객체 찾기
 
