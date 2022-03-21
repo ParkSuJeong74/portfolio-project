@@ -1,6 +1,7 @@
 const { Article } = require("../db")
 const { User } = require("../db")
 const { v4: uuidv4 } = require("uuid")
+const { setUtil } = require("../common/setUtil")
 
 const ArticleService = {
     // 게시글 등록하기
@@ -45,14 +46,9 @@ const ArticleService = {
             const user = await User.findById({ userId })
             toUpdate.authorName = user.name
         }
-        
-        let updateObject = {}
-        Object.entries(toUpdate)
-            .forEach((element) => {
-                if (element[1])
-                    updateObject[element[0]] = element[1]
-            })
-        console.log(Object.entries(toUpdate))
+
+        const originalArticle = article.article
+        const updateObject = setUtil.compareValues(toUpdate, originalArticle)
 
         article = await Article.update({ articleId, updateObject })
 
