@@ -21,10 +21,6 @@ const CommentSchema = new Schema(
             required: false,
             maxlength: 1000,
         },
-        responseTo: {
-            type: Schema.Types.ObjectId,
-            ref: 'Comment'
-        },
         isDeleted: {
             type: Boolean,
             default: false

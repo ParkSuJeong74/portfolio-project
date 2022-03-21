@@ -6,7 +6,8 @@ const Comment = {
         return createNewComment
     },
     findById : async({ commentId }) => {
-        const comment = await CommentModel.findOne({ commentId })
+        const comment = await CommentModel.findOne({ id : commentId })
+        console.log(comment)
         return comment
     },
     update : async ({ commentId, fieldToUpdate, newValue }) => {
@@ -16,16 +17,16 @@ const Comment = {
                 [fieldToUpdate[0]] : newValue[0],
                 [fieldToUpdate[1]] : newValue[1],
                 [fieldToUpdate[2]] : newValue[2],
-                [fieldToUpdate[3]] : newValue[3]
+                [fieldToUpdate[3]] : newValue[3],
             }
         }
         const option = { returnOriginal: false }
-
         const updateComment = await CommentModel.findOneAndUpdate(
             filter,
             update,
             option
         )
+
         return updateComment
     },
     delete : async ({ commentId, fieldToUpdate, newValue }) => {

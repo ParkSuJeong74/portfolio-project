@@ -16,20 +16,14 @@ commentRouter.post('/create', async (req, res, next) => {
         const comment = req.body.comment
         const hidden = req.body.hidden
 
-        // 대댓글 구현
-        if(req.body.responseTo){
-            let responseTo = req.body.responseTo
-        }
-        let responseTo = null // 대댓글?
+        const created_at = timeUtil.getTime()
+        const updated_at = timeUtil.getTime()
 
-        const created_at = timeUtil()
-        const updated_at = timeUtil()
         const newComment = await CommentService.addComment ({
             writer,
             articleId,
             comment,
             hidden,
-            responseTo,
             created_at,
             updated_at
         })
@@ -40,28 +34,27 @@ commentRouter.post('/create', async (req, res, next) => {
     }
 })
 
-// put: 댓글 수정(익명)
+// put: 댓글 수정
 commentRouter.put('/:id', async (req, res, next) => {
     try {
-        // todo : 로그인한 사용자 == 글 작성자
+        // 로그인한 사용자 == 글 작성자
         const userId = req.currentUserId
         const writer = req.body.writer
-        const commetId = req.params.id
-        console.log(writer, userId)
+        const commentId = req.params.id
 
         if(writer !== userId) {
-            throw new Error("작성자가 아니라서 댓글을 수정할 수 없습니다!!!!!!")
+            throw new Error("작성자가 아니라서 댓글을 수정할 수 없습니다!")
         }
 
         const comment = req.body.comment
         const hidden = req.body.hidden
-        let responseTo = null // 대댓글?
 
-        const updated_at = timeUtil()
+        const updated_at = timeUtil.getTime()
         const toUpdate = { writer, comment, hidden, updated_at }
-        const newComment = await CommentService.setComment({ commetId, toUpdate })
-        
-        if(project.errorMessage){
+
+        const newComment = await CommentService.setComment({ commentId, toUpdate })
+
+        if(newComment.errorMessage){
             throw new Error(newComment.errorMessage)
         }
 
@@ -81,19 +74,17 @@ commentRouter.put('/:id/delete', async (req, res, next) => {
         const writer = req.body.writer
 
         if(writer !== userId) {
-            throw new Error("작성자가 아니라서 댓글을 삭제할 수 없습니다!!!!!!")
+            throw new Error("작성자가 아니라서 댓글을 삭제할 수 없습니다!")
         }
         
-        // todo : 댓글인지 대댓글인지 검사
-        let responseTo = null // 대댓글?
-        const commetId = req.params.id
+        const commentId = req.params.id
         const isDeleted = true
-        const updated_at = timeUtil()
+        const updated_at = timeUtil.getTime()
 
         const toUpdate = { isDeleted, updated_at }
-        const newComment = await CommentService.deleteComment({ commetId, toUpdate })
+        const newComment = await CommentService.deleteComment({ commentId, toUpdate })
 
-        if(project.errorMessage){
+        if(newComment.errorMessage){
             throw new Error(newComment.errorMessage)
         }
 
