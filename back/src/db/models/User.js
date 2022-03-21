@@ -21,15 +21,10 @@ const User = {
     return users
   },
 
-  update: async ({ user_id, fieldToUpdate, newValue }) => {
+  update: async ({ user_id, updateObject }) => {
     const filter = { id: user_id }
     const update = {
-      $set: {
-        [fieldToUpdate[0]]: newValue[0],
-        [fieldToUpdate[1]]: newValue[1],
-        [fieldToUpdate[2]]: newValue[2],
-        [fieldToUpdate[3]]: newValue[3],
-      }
+      $set: updateObject 
     }
     const option = { returnOriginal: false }
 

@@ -15,9 +15,7 @@ userAuthRouter.post("/user/register", async (req, res, next) => {
     }
 
     // req (request) 에서 데이터 가져오기
-    const name = req.body.name
-    const email = req.body.email
-    const password = req.body.password
+    const { name, email, password } = req.body
     const created_at = timeUtil()
     const updated_at = timeUtil()
 
@@ -143,6 +141,69 @@ userAuthRouter.get(
     }
   }
 )
+
+// My -> 내 id로 db에서 가져온 데이터, Your -> 상대 id로 db에서 가져온 데이터
+// follower -> 나를 follow하는 .. / following -> 내가 follow하는 ..
+// follow : count 증가, 내 following과 상대 follower에 서로의 id를 add
+// unfollow : count 감소, 내 following과 상대 follower에 서로의 id를 remove
+userAuthRouter.put("/user/follow/:id", login_required, async (req, res, next) => {
+  try {
+    const userIdMy = req.params.id
+    const userIdYour = req.body.userIdYour
+    const userInfoYour = await userAuthService.getUserInfo({
+      user_id: userIdYour
+    })
+    const userInfoMy = await userAuthService.getUserInfo({
+      user_id: userIdMy
+    })
+
+    let followerYour = Object.values(userInfoYour.follower)
+    let followingMy = Object.values(userInfoMy.following)
+
+    // 값이 존재하는 경우 index를, 존재하지 않는 경우 -1 반환
+    const indexFollowerYour = followerYour.indexOf(userIdMy)
+    const indexFollowingMy = followingMy.indexOf(userIdYour)
+
+    // follow
+    if (indexFollowingMy === -1 && indexFollowerYour === -1) {
+      followerCountYour = userInfoYour.followerCount + 1
+      followerYour = [...followerYour, userIdMy]
+      followingCountMy = userInfoMy.followingCount + 1
+      followingMy = [...followingMy, userIdYour]
+    } else {
+      // unfollow
+      followerCountYour = userInfoYour.followerCount - 1
+      followerYour.splice(indexFollowerYour, 1)
+      followingCountMy = userInfoMy.followingCount - 1
+      followingMy.splice(indexFollowingMy, 1)
+    }
+
+    const toUpdate_your = {
+      followerCount: followerCountYour,
+      follower: followerYour
+    }
+    const updatedYour = await userAuthService.setUser({
+      user_id: userIdYour,
+      toUpdate: toUpdate_your
+    })
+    if (updatedYour.errorMessage) {
+      throw new Error(updatedYour.errorMessage)
+    }
+
+    const toUpdateMy = {
+      followingCount: followingCountMy,
+      following: followingMy
+    }
+    const updatedMy = await userAuthService.setUser({
+      user_id: userIdMy,
+      toUpdate: toUpdateMy
+    })
+
+    res.status(200).json({ updatedYour, updatedMy })
+  } catch (error) {
+    next(error)
+  }
+})
 
 // jwt 토큰 기능 확인용, 삭제해도 되는 라우터임.
 userAuthRouter.get("/afterlogin", login_required, (req, res, next) => {
