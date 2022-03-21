@@ -100,23 +100,4 @@ categoryRouter.put('/:name', login_required, async (req, res, next) => {
     }
 })
 
-// DELETE
-categoryRouter.delete('/:name', login_required, async (req, res, next) => {
-    try {
-        const categoryName = req.params.name
-
-        // Todo : 게시글이 있으면 삭제 불가능
-        
-        const result = await CategoryService.deleteCategory({ categoryName })
-
-        if(result.errorMessage){
-            throw new Error(result.errorMessage)
-        }
-
-        res.status(200).send(result)
-    } catch(err) {
-        next(err)
-    }
-})
-
 module.exports = { categoryRouter }

@@ -3,6 +3,7 @@ const { Router } = require("express")
 const { login_required } = require("../middlewares/login_required")
 const { userAuthService } = require("../services/userService")
 const { timeUtil } = require("../common/timeUtil")
+const { passports } = require('../passport/kakaoStrategy')
 
 const userAuthRouter = Router()
 
@@ -143,6 +144,20 @@ userAuthRouter.get(
     }
   }
 )
+
+// userAuthRouter.get('/user/kakao', passports.authenticate('kakao'))
+
+// userAuthRouter.get(process.env.KAKAO_REDIRECT_URL, 
+//   passports.authenticate('kakao', {
+//     failureRedirect: '/user/login',
+//   }),
+//   (req, res) => {
+//     console.log("여긴 들어오나?????")
+//     // 회원가입 이메일, 이름 입력
+//     // 자동 비번 생성.....?
+//     res.redirect('/')
+//   }
+// )
 
 // jwt 토큰 기능 확인용, 삭제해도 되는 라우터임.
 userAuthRouter.get("/afterlogin", login_required, (req, res, next) => {

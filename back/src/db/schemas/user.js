@@ -14,6 +14,10 @@ const UserSchema = new Schema(
           type: String,
           required: true,
         },
+        nickname: {
+          type: String,
+          required: true,
+        },
         password: {
           type: String,
           required: true,
@@ -22,6 +26,10 @@ const UserSchema = new Schema(
           type: String,
           required: false,
           default: "설명이 아직 없습니다. 추가해 주세요.",
+        },
+        provider: {
+          type: String,
+          required: false
         },
         created_at: {
           type: Date,
