@@ -45,8 +45,9 @@ const UserSchema = new Schema(
             type: Array,
             required: true,
         },
-        imageUrl: {
+        imageName: {
             type: String,
+            default: "user_default_image.PNG",
         }
     },
     {
