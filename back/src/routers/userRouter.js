@@ -17,8 +17,8 @@ userAuthRouter.post("/user/register", async (req, res, next) => {
 
         // req (request) 에서 데이터 가져오기
         const { name, email, password } = req.body
-        const created_at = timeUtil()
-        const updated_at = timeUtil()
+        const created_at = timeUtil.getTime()
+        const updated_at = timeUtil.getTime()
 
 
         // 위 데이터를 유저 db에 추가하기
@@ -106,7 +106,7 @@ userAuthRouter.put(
             const name = req.body.name ?? null
             const email = req.body.email ?? null
             const description = req.body.description ?? null
-            const updated_at = timeUtil()
+            const updated_at = timeUtil.getTime()
 
             const toUpdate = { name, email, description, updated_at }
 

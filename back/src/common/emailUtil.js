@@ -19,14 +19,15 @@ const transporter = nodemailer.createTransport({
 })
 
 const emailUtil = {
-    sendEmail: async(email) => {
+    sendEmail: async(email, message) => {
         await transporter.sendMail({   
             from: process.env.GMAIL_ID, // 보내는 주소 입력
             to: email, // 위에서 선언해준 받는사람 이메일
-            subject: '안녕하세요', // 메일 제목
+            subject: '안녕하세요, 포트폴리오 서비스입니다.', // 메일 제목
             html: // 내용
-                `<p>아래 인증번호를 입력해주세요.</p>` +
-                `<b>${number}</b>`,
+                message + 
+                `<p>아래의 인증번호를 입력하여 인증을 완료해주세요.</p>` +
+                `<b style="font-size:25px; color:blue;">${number}</b>`
         })
         
         return number
@@ -34,14 +35,3 @@ const emailUtil = {
 }
 
 module.exports = { emailUtil }
-// 기본적으로 메일 보내기 api
-// emailRouter.post('/sendEmail', async (req, res, next) => {
-//     try {
-//         const { email } = req.body
-//         const authCode = await emailUtil.sendEmail(email)
-
-//         res.status(200).send(`${authCode}`)
-//     } catch (error) {
-//         next(error)
-//     }
-// })

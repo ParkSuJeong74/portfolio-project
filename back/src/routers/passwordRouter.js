@@ -10,7 +10,9 @@ passwordRouter.post('/emailAuth', async (req, res, next) => {
         const { email } = req.body
         // 가입한 사용자인지 검증, 맞으면 이메일 보내기
         await passwordService.getUser({ email })
-        const authCode = await emailUtil.sendEmail(email)
+        const message = `<p>비밀번호 변경을 위한 인증번호입니다.</p>`
+
+        const authCode = await emailUtil.sendEmail(email, message)
 
         res.status(200).send(`${authCode}`)
     } catch (error) {
