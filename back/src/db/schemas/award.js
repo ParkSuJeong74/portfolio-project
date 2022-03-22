@@ -6,7 +6,7 @@ const AwardSchema = new Schema(
             type: String,
             required: true,
         },
-        user_id: {
+        userId: {
             type: String,
             required: true,
         },
@@ -17,15 +17,10 @@ const AwardSchema = new Schema(
         description: {
             type: String,
             required: true,
-        },
-        created_at: {
-            type: Date,
-            required: true,
-        },
-        updated_at: {
-            type: Date,
-            required: true,
         }
+    },
+    {
+        timestamps: true
     }
 )
 

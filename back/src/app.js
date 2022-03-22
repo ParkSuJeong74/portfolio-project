@@ -29,7 +29,7 @@ app.get("/", (req, res) => {
 
 // router, service 구현 (userAuthRouter는 맨 위에 있어야 함.)
 app.use('/user', userAuthRouter)
-app.use(awardRouter)
+app.use('/award', awardRouter)
 app.use('/project', projectRouter)
 app.use('/education', educationRouter)
 app.use(certificateRouter)
