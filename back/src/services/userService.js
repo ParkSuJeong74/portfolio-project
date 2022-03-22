@@ -2,6 +2,7 @@ const { User } = require("../db") // from을 폴더(db) 로 설정 시, 디폴�
 const bcrypt = require("bcrypt")
 const { v4: uuidv4 } = require("uuid")
 const jwt = require("jsonwebtoken")
+const { emailUtil } = require("../common/emailUtil")
 const { setUtil } = require("../common/setUtil")
 
 const userAuthService = {
