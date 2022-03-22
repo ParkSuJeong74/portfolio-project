@@ -5,6 +5,7 @@ const { userAuthService } = require("../services/userService")
 
 const userAuthRouter = Router()
 
+// 회원가입
 userAuthRouter.post("/register", async (req, res, next) => {
   try {
     if (is.emptyObject(req.body)) {
@@ -25,6 +26,7 @@ userAuthRouter.post("/register", async (req, res, next) => {
   }
 })
 
+// 로그인
 userAuthRouter.post("/login", async (req, res, next) => {
   try {
     const { email, password } = req.body
@@ -36,6 +38,7 @@ userAuthRouter.post("/login", async (req, res, next) => {
   }
 })
 
+// user list
 userAuthRouter.get("/list", login_required, async (req, res, next) => {
     try {
       const users = await userAuthService.getUsers()
@@ -46,6 +49,7 @@ userAuthRouter.get("/list", login_required, async (req, res, next) => {
   }
 )
 
+// login session
 userAuthRouter.get("/current", login_required, async (req, res, next) => {
     try {
       // jwt토큰에서 추출된 사용자 id를 가지고 db에서 사용자 정보를 찾음.
@@ -61,6 +65,7 @@ userAuthRouter.get("/current", login_required, async (req, res, next) => {
   }
 )
 
+// put user info
 userAuthRouter.put("/:id", login_required, async (req, res, next) => {
     try {
       const userId = req.params.id
@@ -76,6 +81,7 @@ userAuthRouter.put("/:id", login_required, async (req, res, next) => {
   }
 )
 
+// get user info
 userAuthRouter.get("/:id", login_required, async (req, res, next) => {
     try {
       const userId = req.params.id
@@ -97,10 +103,10 @@ userAuthRouter.put("/follow/:id", login_required, async (req, res, next) => {
     const userIdMy = req.params.id
     const { userIdYour } = req.body
     const userInfoYour = await userAuthService.getUserInfo({
-      user_id: userIdYour
+      userId: userIdYour
     })
     const userInfoMy = await userAuthService.getUserInfo({
-      user_id: userIdMy
+      userId: userIdMy
     })
 
     let followerYour = Object.values(userInfoYour.follower)
@@ -129,7 +135,7 @@ userAuthRouter.put("/follow/:id", login_required, async (req, res, next) => {
       follower: followerYour
     }
     const updatedYour = await userAuthService.setUser({
-      user_id: userIdYour,
+      userId: userIdYour,
       toUpdate: toUpdate_your
     })
     if (updatedYour.errorMessage) {
@@ -141,7 +147,7 @@ userAuthRouter.put("/follow/:id", login_required, async (req, res, next) => {
       following: followingMy
     }
     const updatedMy = await userAuthService.setUser({
-      user_id: userIdMy,
+      userId: userIdMy,
       toUpdate: toUpdateMy
     })
 
