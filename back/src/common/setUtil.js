@@ -1,5 +1,5 @@
 class setUtil {
-    static compareValue(toUpdate, model) {
+    static compareValues(toUpdate, model) {
         let updateObject = {}
 
         Object.entries(toUpdate)

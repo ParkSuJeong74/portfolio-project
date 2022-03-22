@@ -14,6 +14,10 @@ const UserSchema = new Schema(
             type: String,
             required: true,
         },
+        nickname: {
+            type: String,
+            required: true,
+        },
         password: {
             type: String,
             required: true,
@@ -43,15 +47,10 @@ const UserSchema = new Schema(
         },
         imageUrl: {
             type: String,
-        },
-        created_at: {
-            type: Date,
-            required: true,
-        },
-        updated_at: {
-            type: Date,
-            required: true,
         }
+    },
+    {
+        timestamps: true
     }
 )
 

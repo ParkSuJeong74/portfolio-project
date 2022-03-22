@@ -11,8 +11,8 @@ const User = {
         return user
     },
 
-    findById: async ({ user_id }) => {
-        const user = await UserModel.findOne({ id: user_id })
+    findById: async ({ userId }) => {
+        const user = await UserModel.findOne({ id: userId })
         return user
     },
 
@@ -21,8 +21,8 @@ const User = {
         return users
     },
 
-    update: async ({ user_id, updateObject }) => {
-        const filter = { id: user_id }
+    update: async ({ userId, updateObject }) => {
+        const filter = { id: userId }
         const update = { $set: updateObject }
         const option = { returnOriginal: false }
 

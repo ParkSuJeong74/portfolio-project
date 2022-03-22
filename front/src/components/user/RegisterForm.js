@@ -67,6 +67,9 @@ function RegisterForm() {
                                 type="email"
                                 autoComplete="off"
                                 value={email}
+                                style={{
+                                    border: 'solid 2px #DBC7FF'
+                                }}
                                 onChange={(e) => setEmail(e.target.value)}
                             />
                             {!isEmailValid && (
@@ -82,6 +85,9 @@ function RegisterForm() {
                                 type="password"
                                 autoComplete="off"
                                 value={password}
+                                style={{
+                                    border: 'solid 2px #DBC7FF'
+                                }}
                                 onChange={(e) => setPassword(e.target.value)}
                             />
                             {!isPasswordValid && (
@@ -97,6 +103,9 @@ function RegisterForm() {
                                 type="password"
                                 autoComplete="off"
                                 value={confirmPassword}
+                                style={{
+                                    border: 'solid 2px #DBC7FF'
+                                }}
                                 onChange={(e) => setConfirmPassword(e.target.value)}
                             />
                             {!isPasswordSame && (
@@ -112,6 +121,9 @@ function RegisterForm() {
                                 type="text"
                                 autoComplete="off"
                                 value={name}
+                                style={{
+                                    border: 'solid 2px #DBC7FF'
+                                }}
                                 onChange={(e) => setName(e.target.value)}
                             />
                             {!isNameValid && (

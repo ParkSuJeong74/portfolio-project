@@ -1,14 +1,16 @@
 const { Project } = require('../db')
 const { v4: uuidv4 } = require('uuid')
+const { timeUtil } = require("../common/timeUtil")
+const { setUtil } = require('../common/setUtil')
 
-
-// ProjectService
 const ProjectService = {
     // POST
-    addProject : async ({ user_id, title, description, from_date, to_date, created_at, updated_at }) => {
+    addProject : async ({ userId, title, description, fromDate, toDate }) => {
         const id = uuidv4()
+        fromDate = timeUtil.getDay(fromDate)
+        toDate = timeUtil.getDay(toDate)
 
-        const newProject = { id, user_id, title, description, from_date, to_date, created_at, updated_at }
+        const newProject = { id, userId, title, description, fromDate, toDate }
         const createNewProject = await Project.create({ newProject })
         return createNewProject
     },
@@ -18,14 +20,13 @@ const ProjectService = {
         const project = await Project.findById({ projectId })
 
         if(!project){
-            const errorMessage = "해당 id를 가진 수상 데이터는 없습니다. 다시 한 번 확인해 주세요."
-            return { errorMessage }
+            throw new Error("해당 id를 가진 수상 데이터는 없습니다. 다시 한 번 확인해 주세요.")
         }
         return project
     },
 
-    getProjectList : async ({ user_id }) => {
-        const projects = await Project.findByUserId({ user_id })
+    getProjectList : async ({ userId }) => {
+        const projects = await Project.findByUserId({ userId })
         return projects
     },
 
@@ -34,14 +35,11 @@ const ProjectService = {
         let project = await Project.findById({ projectId })
 
         if(!project){
-            const errorMessage = "해당 id를 가진 수상 데이터는 없습니다. 다시 한 번 확인해 주세요."
-            return { errorMessage }
+            throw new Error("해당 id를 가진 수상 데이터는 없습니다. 다시 한 번 확인해 주세요.")
         }
 
-        const fieldToUpdate = Object.keys(toUpdate)
-        const newValue = Object.values(toUpdate)
-        
-        project = await Project.update({ projectId, fieldToUpdate, newValue })
+        const updateObject = setUtil.compareValues(toUpdate, project)
+        project = await Project.update({ projectId, updateObject })
 
         return project
     },
@@ -50,8 +48,7 @@ const ProjectService = {
         const isDataDeleted = await Project.deleteById({ projectId })
 
         if(!isDataDeleted){
-            const errorMessage = "해당 id를 가진 수상 데이터는 없습니다. 다시 한 번 확인해 주세요."
-            return { errorMessage }
+            throw new Error("해당 id를 가진 수상 데이터는 없습니다. 다시 한 번 확인해 주세요.")
         }
 
         return { status : "ok" }

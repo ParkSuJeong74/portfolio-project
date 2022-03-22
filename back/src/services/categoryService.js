@@ -1,0 +1,46 @@
+const { Category } = require("../db")
+const { v4: uuidv4 } = require("uuid")
+const { setUtil } = require('../common/setUtil')
+
+const CategoryService = {
+    addCategory : async ({ userId, name, description }) => {
+        const id = uuidv4()
+        const category = await Category.findByName({ name })
+        if(category) {
+            throw new Error("같은 이름의 게시판이 이미 존재합니다.")
+        }
+
+        const newCategory = { id, userId, name, description }
+        const createNewCategory = await Category.create({ newCategory })
+
+        return createNewCategory
+    },
+
+    getCategory : async() => {
+        const category = await Category.findAll({})
+        return category
+    },
+
+    getCategoryByName : async({ name }) => {
+        const category = await Category.findAllByName({ name })
+        
+        if(!name){
+            throw new Error("해당 Name를 가진 수상 데이터는 없습니다. 다시 한 번 확인해 주세요.")
+        }
+        return category
+    },
+
+    setCategory : async({ name, toUpdate }) => {
+        if(!name){
+            throw new Error("해당 Name를 가진 수상 데이터는 없습니다. 다시 한 번 확인해 주세요.")
+        }
+
+        let category = await Category.findByName({ name })
+        const updateObject = setUtil.compareValues(toUpdate, category)
+        category = await Category.update({ name, updateObject })
+        
+        return category
+    }
+}
+
+module.exports = { CategoryService }

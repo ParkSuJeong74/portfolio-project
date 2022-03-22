@@ -1,13 +1,12 @@
 const { Schema, model } = require('mongoose')
 
-// Schema project
 const ProjectSchema = new Schema(
     {
         id: {
             type: String,
             required: true,
         },
-        user_id: {
+        userId: {
             type: String,
             required: true,
         },
@@ -20,28 +19,22 @@ const ProjectSchema = new Schema(
             required: false,
             default: "프로젝트를 설명해주세요."
         },
-        from_date: {
+        fromDate: {
             type: String,
-            //format : Date,
+            format : Date,
             required: true,
         },
-        to_date: {
+        toDate: {
             type: String,
-            //format : Date,
-            required: true,
-        },
-        created_at: {
-            type: Date,
-            required: true,
-        },
-        updated_at: {
-            type: Date,
+            format : Date,
             required: true,
         }
+    },
+    {
+        timestamps: true
     }
 )
 
-// model linking
 const ProjectModel = model("Project", ProjectSchema)
 
 module.exports = { ProjectModel }

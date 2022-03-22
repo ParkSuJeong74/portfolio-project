@@ -10,17 +10,9 @@ const Certificate = {
         const certificate = await CertificateModel.findOne({ id: certificateId })
         return certificate
     },
-    update: async ({ certificateId, fieldToUpdate, newValue }) => {
+    update: async ({ certificateId, updateObject }) => {
         const filter = { id: certificateId } // 바꿀 대상 찾기
-        const update = {
-            $set: {
-                // 바꿀 내용
-                [fieldToUpdate[0]]: newValue[0],
-                [fieldToUpdate[1]]: newValue[1],
-                [fieldToUpdate[2]]: newValue[2],
-                [fieldToUpdate[3]]: newValue[3]
-            }
-        }
+        const update = { $set: updateObject }
         const option = { returnOriginal: false } // 옵션 : upsert, overwrite 등
 
         const updateCertificate = await CertificateModel.findOneAndUpdate(
@@ -36,8 +28,8 @@ const Certificate = {
         const isDataDeleted = deleteResult.deletedCount === 1
         return isDataDeleted
     },
-    findByUserId: async ({ user_id }) => {
-        const certificates = await CertificateModel.find({ user_id })
+    findByUserId: async ({ userId }) => {
+        const certificates = await CertificateModel.find({ userId })
         return certificates
     }
 }
