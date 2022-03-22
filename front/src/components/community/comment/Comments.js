@@ -4,7 +4,7 @@ import * as Api from "../../../api";
 import Comment from "./Comment";
 import CommentAddForm from "./CommentAddForm";
 
-function Comments({ ownerId, isEditable }) {
+function Comments({ isLogin, ownerId, setIsEditable ,isEditable }) {
   //useState로 comments 상태를 생성함.
     const [comments, setComments] = useState([]);
     //useState로 isAdding 상태를 생성함.
@@ -27,11 +27,12 @@ function Comments({ ownerId, isEditable }) {
                 key={comment.id}
                 commnet={comment}
                 setComments={setComments}
-                isEditable={isEditable}
+                setIsEditable={setIsEditable}
+                ownerId={ownerId}
             />
         ))}
 
-        // 로그인했을 때 댓글 추가/수정을 할 수 있음 
+        {/* 로그인했을 때 댓글 추가/수정을 할 수 있음 */}
 
         {isLogin && (
             <Row className="text-center">

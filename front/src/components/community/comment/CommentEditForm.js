@@ -3,7 +3,7 @@ import {Form, Button, Row,Col} from 'react-bootstrap'
 import * as Api from '../../../api'
 
 
-function CommentEditForm({currentComment, setComments, setIsEditing}){
+function CommentEditForm({currentComment, setComments, setIsEditing, ownerId}){
     
     const [description, setDescription] = useState(currentComment.description)
 
@@ -15,7 +15,7 @@ function CommentEditForm({currentComment, setComments, setIsEditing}){
         const user_id = currentComment.user_id
 
         //수정한 내용들을 put 요청함. 엔드포인트: 'awards/유저아이디'
-        await Api.put(`awards/${currentComment.id}`, {
+        await Api.put(`comments/${currentComment.id}`, {
             user_id,
             description
         })
@@ -30,7 +30,7 @@ function CommentEditForm({currentComment, setComments, setIsEditing}){
 
     return (
         <>
-            <div>{user_id}</div>
+            <div>{ownerId}</div>
 
 
             <Form onSubmit={submitHandler}>
