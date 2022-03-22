@@ -4,11 +4,12 @@ import * as Api from "../../api";
 
 function UserEditForm({ user, setIsEditing, setUser }) {
     //useState로 name 상태를 생성함.
-    const [name, setName] = useState(user.name);
+    const name = user.name;
     //useState로 email 상태를 생성함.
-    const [email, setEmail] = useState(user.email);
+    const email = user.email;
     //useState로 description 상태를 생성함.
     const [description, setDescription] = useState(user.description);
+    const [image, setImage] = useState(user.image);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -18,6 +19,7 @@ function UserEditForm({ user, setIsEditing, setUser }) {
             name,
             email,
             description,
+            image
         });
         // 유저 정보는 response의 data임.
         const updatedUser = res.data;
@@ -27,6 +29,7 @@ function UserEditForm({ user, setIsEditing, setUser }) {
         // isEditing을 false로 세팅함.
         setIsEditing(false);
     };
+    
 
     return (
     <Card className="mb-2" style={{backgroundColor:'#FCFAFA'}}>
@@ -34,20 +37,22 @@ function UserEditForm({ user, setIsEditing, setUser }) {
             <Form onSubmit={handleSubmit}>
                 <Form.Group controlId="useEditName" className="mb-3">
                     <Form.Control
+                        disabled
                         type="text"
                         placeholder="이름"
                         value={name}
-                        onChange={(e) => setName(e.target.value)}
+                        
                         style={{border: 'solid 2px #e5d6ff'}}
                     />
                 </Form.Group>
 
                 <Form.Group controlId="userEditEmail" className="mb-3">
                     <Form.Control
+                        disabled
                         type="email"
                         placeholder="이메일"
                         value={email}
-                        onChange={(e) => setEmail(e.target.value)}
+                        
                         style={{border: 'solid 2px #e5d6ff'}}
                     />
                 </Form.Group>
@@ -61,6 +66,20 @@ function UserEditForm({ user, setIsEditing, setUser }) {
                         style={{border: 'solid 2px #e5d6ff'}}
                     />
                 </Form.Group>
+
+                <input 
+                  style={{marginTop: 5}} 
+                  type="file" 
+                  name="attachment"
+                  
+                  onChange={(e) => {
+                    console.log(e.target.files)
+                    setImage(e.target.files[0])
+                }}>
+                  
+
+                  </input>
+                
 
                 <Form.Group as={Row} className="mt-3 text-center">
                     <Col sm={{ span: 20 }}>

@@ -16,6 +16,8 @@ function RegisterForm() {
     //useState로 name 상태를 생성함.
     const [name, setName] = useState("");
 
+    const [nickname, setNickname] = useState("")
+
     //이메일이 abc@example.com 형태인지 regex를 이용해 확인함.
     const validateEmail = (email) => {
         return email
@@ -34,9 +36,11 @@ function RegisterForm() {
     // 이름이 2글자 이상인지 여부를 확인함.
     const isNameValid = name.length >= 2;
 
+    const isNicknameValid = nickname.length >= 2
+
     // 위 4개 조건이 모두 동시에 만족되는지 여부를 확인함.
     const isFormValid =
-    isEmailValid && isPasswordValid && isPasswordSame && isNameValid;
+    isEmailValid && isPasswordValid && isPasswordSame && isNameValid && isNicknameValid;
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -47,6 +51,7 @@ function RegisterForm() {
                 email,
                 password,
                 name,
+                nickname
             });
 
             // 로그인 페이지로 이동함.
@@ -132,6 +137,26 @@ function RegisterForm() {
                             </Form.Text>
                             )}
                         </Form.Group>
+
+                        <Form.Group controlId="registerName" className="mt-3">
+                            <Form.Label>닉네임</Form.Label>
+                            <Form.Control
+                                type="text"
+                                autoComplete="off"
+                                value={nickname}
+                                style={{
+                                    border: 'solid 2px #DBC7FF'
+                                }}
+                                onChange={(e) => setNickname(e.target.value)}
+                            />
+                            {!isNicknameValid && (
+                            <Form.Text className="text-success">
+                                닉네임은 2글자 이상으로 설정해 주세요.
+                            </Form.Text>
+                            )}
+                        </Form.Group>
+
+
 
                         <Form.Group as={Row} className="mt-3 text-center">
                             <Col sm={{ span: 20 }}>
