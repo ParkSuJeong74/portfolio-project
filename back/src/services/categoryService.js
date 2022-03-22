@@ -1,17 +1,16 @@
 const { Category } = require("../db")
 const { v4: uuidv4 } = require("uuid")
-
+const { setUtil } = require('../common/setUtil')
 
 const CategoryService = {
-    addCategory : async ({ user_id, name, description, created_at, updated_at }) => {
+    addCategory : async ({ userId, name, description }) => {
         const id = uuidv4()
-        
-        // 이름 중복 검사 : DB에서 같은 이름 검색
-        if(Category.findByName({ name })) {
-            throw new Error("같은 이름이 존재합니다!!!")
+        const category = await Category.findByName({ name })
+        if(category) {
+            throw new Error("같은 이름의 게시판이 이미 존재합니다.")
         }
 
-        const newCategory = { id, user_id, name, description, created_at, updated_at }
+        const newCategory = { id, userId, name, description }
         const createNewCategory = await Category.create({ newCategory })
 
         return createNewCategory
@@ -22,40 +21,25 @@ const CategoryService = {
         return category
     },
 
-    getCategoryByName : async({ categoryName }) => {
-        const category = await Category.findByName({ categoryName })
+    getCategoryByName : async({ name }) => {
+        const category = await Category.findAllByName({ name })
         
-        if(!categoryName){
+        if(!name){
             throw new Error("해당 Name를 가진 수상 데이터는 없습니다. 다시 한 번 확인해 주세요.")
         }
         return category
     },
 
-    setCategory : async({ categoryName, toUpdate }) => {
-        let category = await Category.findByName({ categoryName })
-
-        if(!categoryName){
-            const errorMessage = "해당 Name를 가진 수상 데이터는 없습니다. 다시 한 번 확인해 주세요."
-            return { errorMessage }
+    setCategory : async({ name, toUpdate }) => {
+        if(!name){
+            throw new Error("해당 Name를 가진 수상 데이터는 없습니다. 다시 한 번 확인해 주세요.")
         }
 
-        const fieldToUpdate = Object.keys(toUpdate)
-        const newValue = Object.values(toUpdate)
-
-        category = await Category.update({ categoryName, fieldToUpdate, newValue })
+        let category = await Category.findByName({ name })
+        const updateObject = setUtil.compareValues(toUpdate, category)
+        category = await Category.update({ name, updateObject })
         
         return category
-    },
-
-    deleteCategory : async({ categoryName }) => {
-        const isDataDeleted = await Category.deleteByName({ categoryName })
-
-        if(!isDataDeleted){
-            const errorMessage = "해당 Name를 가진 수상 데이터는 없습니다. 다시 한 번 확인해 주세요."
-            return { errorMessage }
-        }
-
-        return { status : 'ok' }
     }
 }
 

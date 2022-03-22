@@ -3,7 +3,7 @@ import CommentCard from './CommentCard'
 import CommentEditForm from './CommentEditForm'
 
 
-function Comment({comment, setComments, isEditable}) {
+function Comment({comment, setComments, isEditable, ownerId}) {
     const [isEditing, setIsEditing] = useState(false)
     return (
         <>
@@ -12,12 +12,14 @@ function Comment({comment, setComments, isEditable}) {
                     setComments={setComments}
                     currentComments={comment}
                     setIsEditing={setIsEditing}
+                    ownerId={ownerId}
                 />
             ) : (
                 <CommentCard 
                     comment={comment}
                     isEditable={isEditable}
-                    setIsEditing={setIsEditing}                   
+                    setIsEditing={setIsEditing} 
+                    ownerId={ownerId}                  
                 />
             )}
         </>

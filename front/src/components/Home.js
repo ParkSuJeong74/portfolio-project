@@ -62,6 +62,8 @@ function Home(){
 	//특정 카데고리를 클릭하면 해당하는 article들을 이제 보여줌
 	const [IsArticleOpen, setIsArticleOpen] = useState(false)
 
+	const [isEditable, setIsEditable] = useState(false)
+
 
 	const [IsArticleViewable, setIsArticleViewable] = useState(false)
 	const [IsCommentViewable, setIsCommentViewable] = useState(false)
@@ -94,28 +96,22 @@ function Home(){
 					{/*categoryState를 불러와서 이젠 Articles에 category를 넘길 수 있다..?? */}
 					{IsArticleOpen && (
 						<Articles
-						setIsArticleViewable={setIsArticleViewable}
-						category={categoryState}/>
-					)}
-
-					{IsArticleViewable && (
-						<Articles 
-							// category_name값을 들고 Articles.js로 넘어가기
-							category_name={category_name}
+							setIsArticleViewable={setIsArticleViewable}
+							category={categoryState}
 							isEditable={true}
 							isLogin={isLogin}
-							owner={owner}
+							owner={owner} 
 							/>
-
 					)}
+
 					{IsCommentViewable && (
 						<Comments
 							isEditable={true}
+							setIsEditable={setIsEditable}
 							isLogin={isLogin}
 							owner={owner}/>
 					)}
 
-					
 				</Col>
 			</Row>
 		</Container>

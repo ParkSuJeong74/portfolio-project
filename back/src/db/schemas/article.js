@@ -43,15 +43,10 @@ const ArticleSchema = new Schema(
         likeUserIdList: {
             type: Array,
             required: true,
-        },
-        createdAt: {
-            type: Date,
-            required: true,
-        },
-        updatedAt: {
-            type: Date,
-            required: true,
         }
+    },
+    {
+        timestamps: true,
     }
 )
 

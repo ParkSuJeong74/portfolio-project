@@ -1,14 +1,20 @@
-const { text } = require('express')
 const { Schema, model } = require('mongoose')
 
-// Schema project
 const CommentSchema = new Schema(
     {
         id: {
             type: String,
             required: true,
         },
-        writer: {
+        userId: {
+            type: String,
+            required: true,
+        },
+        writerId: { // 작성자 Id
+            type: String,
+            required: true,
+        },
+        writerName: { // 표시되는 이름 : nickname, hidden일 때 '익명'
             type: String,
             required: true,
         },
@@ -21,27 +27,21 @@ const CommentSchema = new Schema(
             required: false,
             maxlength: 1000,
         },
-        isDeleted: {
+        isDeleted: { // soft delete
             type: Boolean,
             default: false
         },
-        hidden: {
+        hidden: { // 익명 처리
             type: Boolean,
             required: true,
             default: false,
-        },
-        created_at: {
-            type: Date,
-            required: true,
-        },
-        updated_at: {
-            type: Date,
-            required: true,
         }
+    },
+    {
+        timestamps: true,
     }
 )
 
-// model linking
 const CommentModel = model("Comment", CommentSchema)
 
 module.exports = { CommentModel }

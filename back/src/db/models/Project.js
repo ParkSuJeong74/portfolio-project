@@ -14,23 +14,15 @@ const Project = {
         return project
     },
 
-    findByUserId: async ({ user_id }) => {
-        const project = await ProjectModel.find({ user_id })
+    findByUserId: async ({ userId }) => {
+        const project = await ProjectModel.find({ userId })
         return project
     },
 
     // PUT
-    update: async ({ projectId, fieldToUpdate, newValue }) => {
+    update: async ({ projectId, updateObject }) => {
         const filter = { id: projectId }
-        const update = {
-            $set: {
-                [fieldToUpdate[0]]: newValue[0],
-                [fieldToUpdate[1]]: newValue[1],
-                [fieldToUpdate[2]]: newValue[2],
-                [fieldToUpdate[3]]: newValue[3],
-                [fieldToUpdate[4]]: newValue[4],
-            }
-        }
+        const update = { $set: updateObject }
 
         const option = { returnOriginal: false }
 

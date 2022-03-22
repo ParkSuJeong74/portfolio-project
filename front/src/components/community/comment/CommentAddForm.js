@@ -31,7 +31,7 @@ function CommentAddForm({ ownerId, setComments, setIsAdding }) {
     return (
     
     <>
-        <div>{user_id}</div>
+        <div>{ownerId}</div>
     
     
     

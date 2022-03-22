@@ -1,8 +1,8 @@
 const is = require('@sindresorhus/is')
 const { Router } = require('express')
-const { timeUtil } = require('../common/timeUtil')
 const { login_required } = require('../middlewares/login_required')
 const { CommentService } = require('../services/commentService')
+const { User } = require('../db/models/User')
 
 const commentRouter = Router()
 
@@ -11,21 +11,22 @@ commentRouter.use(login_required)
 // POST : 댓글 작성
 commentRouter.post('/create', async (req, res, next) => {
     try {  
-        const writer = req.currentUserId
-        const articleId = req.body.articleId
-        const comment = req.body.comment
-        const hidden = req.body.hidden
+        if (is.emptyObject(req.body)) {
+            throw new Error(
+                "headers의 Content-Type을 application/json으로 설정해주세요"
+            )
+        }
 
-        const created_at = timeUtil.getTime()
-        const updated_at = timeUtil.getTime()
+        const userId = req.currentUserId
+        const writerId = userId // 작성자 = 현재 로그인한 사용자 
+        const { articleId, comment, hidden } = req.body
 
         const newComment = await CommentService.addComment ({
-            writer,
+            userId,
+            writerId,
             articleId,
             comment,
-            hidden,
-            created_at,
-            updated_at
+            hidden
         })
 
         res.status(201).json(newComment)
@@ -34,32 +35,29 @@ commentRouter.post('/create', async (req, res, next) => {
     }
 })
 
-// put: 댓글 수정
+// PUT : 댓글 수정
 commentRouter.put('/:id', async (req, res, next) => {
     try {
-        // 로그인한 사용자 == 글 작성자
         const userId = req.currentUserId
-        const writer = req.body.writer
         const commentId = req.params.id
+        const { comment, hidden } = req.body
 
-        if(writer !== userId) {
-            throw new Error("작성자가 아니라서 댓글을 수정할 수 없습니다!")
+        if(hidden == true) { // 익명 처리
+            writerName = '익명'
+        }
+        else {
+            const user = await User.findById({ userId })
+            writerName = user.nickname // 닉네임으로 출력
         }
 
-        const comment = req.body.comment
-        const hidden = req.body.hidden
-
-        const updated_at = timeUtil.getTime()
-        const toUpdate = { writer, comment, hidden, updated_at }
-
-        const newComment = await CommentService.setComment({ commentId, toUpdate })
+        const toUpdate = { comment, hidden, writerName }
+        const newComment = await CommentService.setComment({ userId, commentId, toUpdate })
 
         if(newComment.errorMessage){
             throw new Error(newComment.errorMessage)
         }
 
         res.status(200).send(newComment)
-
     } catch(err) {
         next(err)
     }
@@ -69,20 +67,13 @@ commentRouter.put('/:id', async (req, res, next) => {
 // DELETE : 댓글 삭제(soft delete)
 commentRouter.put('/:id/delete', async (req, res, next) => {
     try {
-        // 로그인한 사용자 == 글 작성자
         const userId = req.currentUserId
-        const writer = req.body.writer
-
-        if(writer !== userId) {
-            throw new Error("작성자가 아니라서 댓글을 삭제할 수 없습니다!")
-        }
-        
         const commentId = req.params.id
+        const { comment} = req.body
         const isDeleted = true
-        const updated_at = timeUtil.getTime()
 
-        const toUpdate = { isDeleted, updated_at }
-        const newComment = await CommentService.deleteComment({ commentId, toUpdate })
+        const toUpdate = { isDeleted, comment }
+        const newComment = await CommentService.deleteComment({ userId, commentId, toUpdate })
 
         if(newComment.errorMessage){
             throw new Error(newComment.errorMessage)
