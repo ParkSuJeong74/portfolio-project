@@ -7,18 +7,12 @@ const Comment = {
     },
     findById : async({ commentId }) => {
         const comment = await CommentModel.findOne({ id : commentId })
-        console.log(comment)
         return comment
     },
-    update : async ({ commentId, fieldToUpdate, newValue }) => {
+    update : async ({ commentId, updateObject }) => {
         const filter = { id: commentId }
         const update = {
-            $set: {
-                [fieldToUpdate[0]] : newValue[0],
-                [fieldToUpdate[1]] : newValue[1],
-                [fieldToUpdate[2]] : newValue[2],
-                [fieldToUpdate[3]] : newValue[3],
-            }
+            $set: updateObject
         }
         const option = { returnOriginal: false }
         const updateComment = await CommentModel.findOneAndUpdate(
@@ -29,14 +23,9 @@ const Comment = {
 
         return updateComment
     },
-    delete : async ({ commentId, fieldToUpdate, newValue }) => {
+    delete : async ({ commentId, updateObject }) => {
         const filter = { id: commentId }
-        const update = {
-            $set: {
-                [fieldToUpdate[0]] : newValue[0],
-                [fieldToUpdate[1]] : newValue[1],
-            }
-        }
+        const update ={ $set: updateObject } 
         const option = { returnOriginal: false }
 
         const updateComment = await CommentModel.findOneAndUpdate(
