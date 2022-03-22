@@ -102,16 +102,12 @@ const userAuthService = {
 
         return user
     },
-    // TODO : (find로 user정보 찾고?) 받은 image정보를 가공, update로 db안 imageInfo에 날려줌
-    setUserImage: async ({ user_id, updateObject }) => {
-        const user = await User
-            .findById({ user_id })
-            .email
-            .split("@")[0]
 
-        const filename = `${user}_프로필사진`
+    // TODO : 받은 image정보를 가공, update로 db안 imageInfo에 날려줌
+    setUserImage: async ({ user_id, location }) => {
+        const updateObject = { imageUrl: location }
 
-        user = await User.update({ user_id, updateObject })
+        const user = await User.update({ user_id, updateObject })
 
         return user
     }

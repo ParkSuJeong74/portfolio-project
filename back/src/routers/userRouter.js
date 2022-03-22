@@ -1,9 +1,9 @@
 const is = require("@sindresorhus/is")
-const multer = require("multer")
 const { Router } = require("express")
 const { login_required } = require("../middlewares/login_required")
 const { userAuthService } = require("../services/userService")
 const { timeUtil } = require("../common/timeUtil")
+const { s3Upload, s3Delete } = require("../middlewares/multerS3")
 
 const userAuthRouter = Router()
 
@@ -17,8 +17,8 @@ userAuthRouter.post("/user/register", async (req, res, next) => {
 
         // req (request) 에서 데이터 가져오기
         const { name, email, password } = req.body
-        const created_at = timeUtil()
-        const updated_at = timeUtil()
+        const created_at = timeUtil.getTime()
+        const updated_at = timeUtil.getTime()
 
 
         // 위 데이터를 유저 db에 추가하기
@@ -206,55 +206,44 @@ userAuthRouter.put("/user/follow/:id", login_required, async (req, res, next) =>
     }
 })
 
-// TODO : user_id와 multer로 처리한 image정보를 setUserImage에 뿌려주기
-// (get은 usercard에 기본으로 포함할 예정이니 구현x)
-// Client에서 HTTP Header에 multipart/form-data 라고 지정해야 함
-// upload.single("file")은 req.file안에 파일 정보를 얻을 수 있게 함
-const limits = {
-    fieldNameSize: 200,
-    fileSize: 5242880,
-}
-const upload = multer({
-    dest: "src/imgStorage/"
-})
 userAuthRouter.put("/user/:id/img",
     login_required,
+    s3Upload,
     async (req, res, next) => {
         try {
             const user_id = req.params.id
-            console.log(req.file)
-            const {
-                fieldname, originalname, mimetype, destination, path, size } = req.file
-            // 중간에 필터링하려면 여기서 하면 됨
-            //
+            const { location } = req.file
 
-            const updateObject = {
-                imageInfo: {
-                    fieldname,
-                    originalname,
-                    mimetype,
-                    destination,
-                    path,
-                    size
-                }
-            }
-            const updatedUser = await userAuthService.setUserImage({ user_id, updateObject })
+            const userInfo = await getUserInfo({ user_id })
 
-            console.log(updatedUser)
+            s3Delete(userInfo.imageName)
 
-            res.status(200).json({  })
+            let updatedUser = await userAuthService.setUserImage({ user_id, location })
+
+            res.status(200).json({ updatedUser })
         } catch (error) {
             next(error)
         }
     })
 
-// jwt 토큰 기능 확인용, 삭제해도 되는 라우터임.
-userAuthRouter.get("/afterlogin", login_required, (req, res, next) => {
-    res
-        .status(200)
-        .send(
-            `안녕하세요 ${req.currentUserId}님, jwt 웹 토큰 기능 정상 작동 중입니다.`
-        )
-})
+userAuthRouter.delete("/user/:id/img",
+    login_required,
+    async (req, res, next) => {
+        try {
+            const user_id = req.params.id
+            const userInfo = await userAuthService.getUserInfo({ user_id })
+
+            const location = "https://21c-devs-bucket.s3.ap-northeast-2.amazonaws.com/user_default_image.PNG"
+
+            s3Delete(userInfo.imageName)
+
+            let updatedUser = await userAuthService.setUserImage({ user_id, location })
+
+
+            res.status(200).json({ updatedUser })
+        } catch (error) {
+            next(error)
+        }
+    })
 
 module.exports = { userAuthRouter }
