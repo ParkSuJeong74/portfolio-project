@@ -31,7 +31,7 @@ app.get("/", (req, res) => {
 app.use('/user', userAuthRouter)
 app.use(awardRouter)
 app.use('/project', projectRouter)
-app.use(educationRouter)
+app.use('/education', educationRouter)
 app.use(certificateRouter)
 app.use('/category', categoryRouter)
 app.use('/article', articleRouter)
