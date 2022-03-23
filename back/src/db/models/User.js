@@ -45,6 +45,11 @@ const User = {
             option
         )
         return updatedUser
+    },
+    deleteById: async ({ userId }) => {
+        const deleteResult = await UserModel.deleteOne({ id: userId })
+        const isDataDeleted = deleteResult.deletedCount === 1
+        return isDataDeleted
     }
 }
 
