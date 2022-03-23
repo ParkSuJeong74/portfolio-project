@@ -27,17 +27,6 @@ awardRouter.post("/create", async (req, res, next) => {
   }
 })
 
-awardRouter.get("/:id", async (req, res, next) => {
-  try {
-    const awardId = req.params.id
-    const award = await AwardService.getAward({ awardId })
-
-    res.status(200).send(award)
-  } catch (error) {
-    next(error)
-  }
-})
-
 awardRouter.get("/list/:userId", async (req, res, next) => {
   try {
     const userId = req.params.userId

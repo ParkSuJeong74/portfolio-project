@@ -39,7 +39,6 @@ articleRouter.post("/create", async (req, res, next) => {
 articleRouter.get("/:id", async (req, res, next) => {
     try {
         const articleId = req.params.id
-
         const article = await ArticleService.getArticle({ articleId })
 
         res.status(200).send(article)

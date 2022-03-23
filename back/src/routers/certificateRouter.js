@@ -30,18 +30,6 @@ certificateRouter.post("/create", async (req, res, next) => {
     }
 })
 
-certificateRouter.get("/:id", async (req, res, next) => {
-    try {
-        const certificateId = req.params.id
-        const certificate = await CertificateService.getCertificate({ certificateId })
-
-        res.status(200).send(certificate)
-
-    } catch (error) {
-        next(error)
-    }
-})
-
 certificateRouter.get("/list/:userId", async (req, res, next) => {
     try {
         const userId = req.params.userId

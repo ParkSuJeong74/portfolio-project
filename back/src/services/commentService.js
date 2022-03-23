@@ -5,12 +5,13 @@ const { setUtil } = require('../common/setUtil')
 const CommentService = {
     addComment : async ({ userId, writerId, articleId, comment, hidden }) => {
         const id = uuidv4()
-
+        let writerName
         if(hidden == true) { // 익명 처리
             writerName = '익명'
         }
         else {
             const user = await User.findById({ userId })
+            console.log(user)
             writerName = user.nickname // 닉네임으로 출력
         }
 

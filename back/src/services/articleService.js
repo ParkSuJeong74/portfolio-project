@@ -8,7 +8,6 @@ const ArticleService = {
     addArticle: async ({ userId, categoryName, author, hidden, title, description }) => {
         const id = uuidv4()
         let authorName
-        console.log(userId)
         // 익명에 체크되어 있으면
         if (hidden == true) {
             authorName = "익명"

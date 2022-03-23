@@ -17,10 +17,10 @@ commentRouter.post('/create', async (req, res, next) => {
             )
         }
 
-        const userId = req.currentUserId
+        const userId = req.body.userId
         const writerId = userId // 작성자 = 현재 로그인한 사용자 
         const { articleId, comment, hidden } = req.body
-
+        console.log(userId)
         const newComment = await CommentService.addComment ({
             userId,
             writerId,
