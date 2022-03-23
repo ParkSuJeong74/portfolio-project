@@ -1,7 +1,7 @@
 const { Article } = require("../db")
 const { User } = require("../db")
 const { v4: uuidv4 } = require("uuid")
-const { setUtil } = require("../common/setUtil")
+const { SetUtil } = require("../common/setUtil")
 
 const ArticleService = {
     // 게시글 등록하기
@@ -46,7 +46,7 @@ const ArticleService = {
         }
 
         const originalArticle = article.article
-        const updateObject = setUtil.compareValues(toUpdate, originalArticle)
+        const updateObject = SetUtil.compareValues(toUpdate, originalArticle)
 
         article = await Article.update({ articleId, updateObject })
 

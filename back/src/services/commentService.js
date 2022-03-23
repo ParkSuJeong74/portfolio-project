@@ -1,6 +1,6 @@
 const { Comment, User } = require('../db')
 const { v4: uuidv4 } = require('uuid')
-const { setUtil } = require('../common/setUtil')
+const { SetUtil } = require('../common/setUtil')
 
 const CommentService = {
     addComment : async ({ userId, writerId, articleId, comment, hidden }) => {
@@ -31,7 +31,7 @@ const CommentService = {
         }
 
         console.log(toUpdate)
-        const updateObject = setUtil.compareValues(toUpdate, comment)
+        const updateObject = SetUtil.compareValues(toUpdate, comment)
         console.log(updateObject)
         comment = await Comment.update({ commentId, updateObject })
         return comment
@@ -48,7 +48,7 @@ const CommentService = {
         }
 
         toUpdate.comment = "삭제된 댓글입니다."
-        const updateObject = setUtil.compareValues(toUpdate, comment)
+        const updateObject = SetUtil.compareValues(toUpdate, comment)
         comment = await Comment.delete({ commentId, updateObject })
         return comment
     }

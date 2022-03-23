@@ -31,6 +31,7 @@ userAuthRouter.post("/emailAuth", async (req, res, next) => {
 userAuthRouter.post("/register", async (req, res, next) => {
     try {
         const { name, nickname, email, password } = req.body
+        await userAuthService.isExistUser({ email })
         const newUser = await userAuthService.addUser({
             name,
             nickname,

@@ -2,7 +2,7 @@ const { User } = require("../db")
 const bcrypt = require("bcrypt")
 const { v4: uuidv4 } = require("uuid")
 const jwt = require("jsonwebtoken")
-const { setUtil } = require('../common/setUtil')
+const { SetUtil } = require('../common/setUtil')
 
 const userAuthService = {
     isExistUser: async ({ email }) => {
@@ -65,7 +65,7 @@ const userAuthService = {
     if (!user) {
       throw new Error("가입 내역이 없습니다. 다시 한 번 확인해 주세요.")
     }
-    const updateObject = setUtil.compareValues(toUpdate, user)
+    const updateObject = SetUtil.compareValues(toUpdate, user)
     user = await User.update({ userId, updateObject })
 
     return user

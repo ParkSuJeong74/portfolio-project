@@ -1,6 +1,6 @@
 const { Education } = require("../db/models/Education")
 const { v4: uuidv4 } = require("uuid")
-const { setUtil } = require('../common/setUtil')
+const { SetUtil } = require('../common/setUtil')
 
 const EducationService = {
     addEducation: async ({ userId, school, major, position }) => {
@@ -35,7 +35,7 @@ const EducationService = {
             throw new Error("해당 id를 가진 교육 데이터는 없습니다. 다시 한 번 확인해 주세요.")
         }
 
-        const updateObject = setUtil.compareValues(toUpdate, education)
+        const updateObject = SetUtil.compareValues(toUpdate, education)
         education = await Education.update({ educationId, updateObject })
 
         return education

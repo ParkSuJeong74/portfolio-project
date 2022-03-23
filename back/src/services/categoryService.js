@@ -1,6 +1,6 @@
 const { Category } = require("../db")
 const { v4: uuidv4 } = require("uuid")
-const { setUtil } = require('../common/setUtil')
+const { SetUtil } = require('../common/setUtil')
 
 const CategoryService = {
     addCategory : async ({ userId, name, description }) => {
@@ -40,7 +40,7 @@ const CategoryService = {
             throw new Error("같은 이름의 게시판이 이미 존재합니다.")
         }
 
-        const updateObject = setUtil.compareValues(toUpdate, category)
+        const updateObject = SetUtil.compareValues(toUpdate, category)
         category = await Category.update({ categoryName, updateObject })
         
         return category
