@@ -4889,6 +4889,11 @@
   "resolved" "https://registry.npmjs.org/nwsapi/-/nwsapi-2.2.0.tgz"
   "version" "2.2.0"
 
+"oauth@0.9.x":
+  "integrity" "sha1-vR/vr2hslrdUda7VGWQS/2DPucE="
+  "resolved" "https://registry.npmjs.org/oauth/-/oauth-0.9.15.tgz"
+  "version" "0.9.15"
+
 "object-assign@^4", "object-assign@^4.1.0", "object-assign@^4.1.1":
   "integrity" "sha1-IQmtx5ZYh8/AXLvUQsrIv7s2CGM="
   "resolved" "https://registry.npmjs.org/object-assign/-/object-assign-4.1.1.tgz"
@@ -5077,6 +5082,36 @@
   "resolved" "https://registry.npmjs.org/pascalcase/-/pascalcase-0.1.1.tgz"
   "version" "0.1.1"
 
+"passport-kakao@^1.0.1":
+  "integrity" "sha512-uItaYRVrTHL6iGPMnMZvPa/O1GrAdh/V6EMjOHcFlQcVroZ9wgG7BZ5PonMNJCxfHQ3L2QVNRnzhKWUzSsumbw=="
+  "resolved" "https://registry.npmjs.org/passport-kakao/-/passport-kakao-1.0.1.tgz"
+  "version" "1.0.1"
+  dependencies:
+    "passport-oauth2" "~1.1.2"
+    "pkginfo" "~0.3.0"
+
+"passport-oauth2@~1.1.2":
+  "integrity" "sha1-vXFjsbYJA3GGjcTvb58uHkzEuUg="
+  "resolved" "https://registry.npmjs.org/passport-oauth2/-/passport-oauth2-1.1.2.tgz"
+  "version" "1.1.2"
+  dependencies:
+    "oauth" "0.9.x"
+    "passport-strategy" "1.x.x"
+    "uid2" "0.0.x"
+
+"passport-strategy@1.x.x":
+  "integrity" "sha1-tVOaqPwiWj0a0XlHbd8ja0QPUuQ="
+  "resolved" "https://registry.npmjs.org/passport-strategy/-/passport-strategy-1.0.0.tgz"
+  "version" "1.0.0"
+
+"passport@^0.5.2":
+  "integrity" "sha512-w9n/Ot5I7orGD4y+7V3EFJCQEznE5RxHamUxcqLT2QoJY0f2JdN8GyHonYFvN0Vz+L6lUJfVhrk2aZz2LbuREw=="
+  "resolved" "https://registry.npmjs.org/passport/-/passport-0.5.2.tgz"
+  "version" "0.5.2"
+  dependencies:
+    "passport-strategy" "1.x.x"
+    "pause" "0.0.1"
+
 "path-exists@^3.0.0":
   "integrity" "sha1-zg6+ql94yxiSXqfYENe1mwEP1RU="
   "resolved" "https://registry.npmjs.org/path-exists/-/path-exists-3.0.0.tgz"
@@ -5106,6 +5141,11 @@
   "integrity" "sha1-32BBeABfUi8V60SQ5yR6G/qmf4w="
   "resolved" "https://registry.npmjs.org/path-to-regexp/-/path-to-regexp-0.1.7.tgz"
   "version" "0.1.7"
+
+"pause@0.0.1":
+  "integrity" "sha1-HUCLP9t2kjuVQ9lvtMnf1TXZy10="
+  "resolved" "https://registry.npmjs.org/pause/-/pause-0.0.1.tgz"
+  "version" "0.0.1"
 
 "picocolors@^1.0.0":
   "integrity" "sha512-1fygroTLlHu66zi26VoTDv8yRgm0Fccecssto+MhsZ0D/DGW2sm8E8AjW7NU5VVTRt5GxbeZ5qBuJr+HyLYkjQ=="
@@ -5140,6 +5180,11 @@
   "version" "4.2.0"
   dependencies:
     "find-up" "^4.0.0"
+
+"pkginfo@~0.3.0":
+  "integrity" "sha1-Wyn2qB9wcXFC4J52W76rl7T4HiE="
+  "resolved" "https://registry.npmjs.org/pkginfo/-/pkginfo-0.3.1.tgz"
+  "version" "0.3.1"
 
 "posix-character-classes@^0.1.0":
   "integrity" "sha1-AerA/jta9xoqbAL+q7jB/vfgDqs="
@@ -6193,6 +6238,10 @@
   dependencies:
     "is-typedarray" "^1.0.0"
 
+"uid2@0.0.x":
+  "integrity" "sha512-IevTus0SbGwQzYh3+fRsAMTVVPOoIVufzacXcHPmdlle1jUpq7BRL+mw3dgeLanvGZdwwbWhRV6XrcFNdBmjWA=="
+  "resolved" "https://registry.npmjs.org/uid2/-/uid2-0.0.4.tgz"
+  "version" "0.0.4"
 "typedarray@^0.0.6":
   "integrity" "sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c="
   "resolved" "https://registry.npmjs.org/typedarray/-/typedarray-0.0.6.tgz"
