@@ -4,7 +4,6 @@ const { Router } = require("express")
 const { login_required } = require("../middlewares/login_required")
 const { emailUtil } = require("../common/emailUtil")
 const { userAuthService } = require("../services/userService")
-const { passports } = require('../passport/kakaoStrategy')
 
 const userAuthRouter = Router()
 

@@ -1,6 +1,6 @@
 const passport = require('passport')
 const KakaoStrategy = require('passport-kakao').Strategy
-const { User } = require("../db/models/User")
+const { User } = require("../../db/models/User")
 
 const passports = passport.use(
     new KakaoStrategy ({

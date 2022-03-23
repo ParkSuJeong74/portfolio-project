@@ -1,5 +1,9 @@
 const cors = require("cors")
 const express = require("express")
+const express = require("express-session")
+const passport = require("passport")
+const passportConfig = require("./passport")
+const { oAuthRouter } = require("./routers/oAuthRouter")
 const { userAuthRouter } = require("./routers/userRouter")
 const { passwordRouter } = require("./routers/passwordRouter")
 const { awardRouter } = require("./routers/awardRouter")
@@ -16,6 +20,8 @@ const app = express()
 
 // CORS 에러 방지
 app.use(cors())
+
+passportConfig()
 
 // express 기본 제공 middleware
 // express.json(): POST 등의 요청과 함께 오는 json형태의 데이터를 인식하고 핸들링할 수 있게 함.
@@ -34,6 +40,7 @@ app.use((req, res, next) => {
 })
 
 // router, service 구현 (userAuthRouter는 맨 위에 있어야 함.)
+app.use('/sns', oAuthRouter)
 app.use('/user', userAuthRouter)
 app.use("/password", passwordRouter)
 app.use('/award', awardRouter)
