@@ -1,5 +1,5 @@
-const AWS = require("aws-sdk")
 const dotenv = require('dotenv').config()
+const AWS = require("aws-sdk")
 const multer = require('multer')
 const multerS3 = require("multer-s3")
 const { timeUtil } = require("../common/timeUtil")
@@ -15,25 +15,25 @@ const s3 = new AWS.S3({
 })
 
 const s3Upload = () => {
-    const storage = multerS3({
-        s3: s3,
-        bucket: process.env.AWS_S3_BUCKET,
-        acl: "public-read",
-        key: (req, file, cb) => {
-            let ext = file.mimetype.split('/')[1]
-            if (!["png", "jpg", "jpeg", "gif", "bmp"].includes(ext)) {
-                return cb(new Error("이미지 파일만 업로드 해주세요."))
-            }
-            const time = timeUtil.getTime()
-            let newTime = time.toISOString().split("T")[0].replace(/-/gi, "")
-            cb(null, `${newTime}_${Math.floor(Math.random() * 100000000).toString()}.${ext}`)
-        }
-    })
     const limits = {
         fileSize: 5242880
     }
     const upload = multer({
-        storage,
+        storage: multerS3({
+            s3: s3,
+            bucket: process.env.AWS_S3_BUCKET,
+            contentType: multerS3.AUTO_CONTENT_TYPE,
+            acl: "public-read",
+            key: (req, file, cb) => {
+                let ext = file.mimetype.split('/')[1]
+                if (!["png", "jpg", "jpeg", "gif", "bmp"].includes(ext)) {
+                    return cb(new Error("이미지 파일만 업로드 해주세요."))
+                }
+                const time = timeUtil.getTime()
+                let newTime = time.toISOString().split("T")[0].replace(/-/gi, "")
+                cb(null, `${newTime}_${Math.floor(Math.random() * 100000000).toString()}.${ext}`)
+            }
+        }),
         limits
     }).single("file")
 
@@ -41,8 +41,8 @@ const s3Upload = () => {
 }
 
 const s3Delete = (imageName) => {
-    const defaultImage = "user_default_image.png"
-    if (imageName === defaultImage) {
+    const defaultImage = "user_default_image"
+    if (imageName.split(".")[0] === defaultImage) {
         return
     }
 
@@ -51,9 +51,9 @@ const s3Delete = (imageName) => {
         Key: imageName,
     }
 
-    s3.deleteObject(params, (err, data) => {
-        if (err) {
-            console.log("Error ", err.stack)
+    s3.deleteObject(params, (error, data) => {
+        if (error) {
+            throw new Error(error)
         } else {
             console.log("Successfully deleted ", params.Key)
         }
