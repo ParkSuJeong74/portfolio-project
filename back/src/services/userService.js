@@ -111,13 +111,12 @@ const userAuthService = {
             followingCount: followingCountMy,
             following: followingMy
         }
-        
+
         const updateObjectYour = setUtil.compareValues(toUpdateYour, userYour)
         userYour = await User.update({
             userId: userIdYour,
             updateObject: updateObjectYour
         })
-        
         const updateObjectMy = setUtil.compareValues(toUpdateMy, userMy)
         userMy = await User.update({
             userId: userIdMy,

@@ -41,11 +41,6 @@ const s3Upload = () => {
 }
 
 const s3Delete = (imageName) => {
-    const defaultImage = "user_default_image"
-    if (imageName.split(".")[0] === defaultImage) {
-        return
-    }
-
     const params = {
         Bucket: process.env.AWS_S3_BUCKET,
         Key: imageName,

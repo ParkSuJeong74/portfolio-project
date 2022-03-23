@@ -77,8 +77,7 @@ userAuthRouter.put("/:id", login_required, async (req, res, next) => {
     } catch (error) {
         next(error)
     }
-}
-)
+})
 
 // get user info
 userAuthRouter.get("/:id", login_required, async (req, res, next) => {
@@ -90,8 +89,7 @@ userAuthRouter.get("/:id", login_required, async (req, res, next) => {
     } catch (error) {
         next(error)
     }
-}
-)
+})
 
 // My -> 내 id로 db에서 가져온 데이터, Your -> 상대 id로 db에서 가져온 데이터
 // follower -> 나를 follow하는 .. / following -> 내가 follow하는 ..
@@ -107,7 +105,7 @@ userAuthRouter.put("/follow/:id", login_required, async (req, res, next) => {
             userIdMy
         })
 
-        res.status(200).json( updatedUsers )
+        res.status(200).json(updatedUsers)
     } catch (error) {
         next(error)
     }
@@ -119,15 +117,15 @@ userAuthRouter.put("/:id/img",
     async (req, res, next) => {
         try {
             const userId = req.params.id
-
             const userInfo = await userAuthService.getUserInfo({ userId })
-            s3Delete(userInfo.imageName)
+
+            if (userInfo.imageName !== "none") {
+                s3Delete(userInfo.imageName)
+            }
 
             const { location } = req.file
-
             const imageName = location.split("amazonaws.com/")[1]
-
-            let updatedUser = await userAuthService.setUserImage({ userId, imageName })
+            const updatedUser = await userAuthService.setUserImage({ userId, imageName })
 
             res.status(200).json({ updatedUser })
         } catch (error) {
@@ -140,12 +138,13 @@ userAuthRouter.put("/:id/img/delete",
     async (req, res, next) => {
         try {
             const userId = req.params.id
-            const imageName = "user_default_image.png"
-
             const userInfo = await userAuthService.getUserInfo({ userId })
-            s3Delete(userInfo.imageName)
 
-            let updatedUser = await userAuthService.setUserImage({ userId, imageName })
+            if (userInfo.imageName !== "none") {
+                s3Delete(userInfo.imageName)
+            }
+
+            const updatedUser = await userAuthService.setUserImage({ userId, imageName: "none" })
 
             res.status(200).json({ updatedUser })
         } catch (error) {
