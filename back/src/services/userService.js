@@ -5,20 +5,21 @@ const jwt = require("jsonwebtoken")
 const { setUtil } = require('../common/setUtil')
 
 const userAuthService = {
-  addUser: async ({ name, nickname, email, password }) => {
+    isExistUser: async ({ email }) => {
+        const user = await User.findByEmail({ email })
+        if (user) { // 이메일 중복 검사
+            throw new Error("이 이메일은 현재 사용중입니다. 다른 이메일을 입력해 주세요.")
+        }
+    },
     
-    const user = await User.findByEmail({ email })
-    if (user) { // 이메일 중복 검사
-      throw new Error("이 이메일은 현재 사용중입니다. 다른 이메일을 입력해 주세요.")
-    }
-
-    // 비밀번호 해쉬화
-    const hashedPassword = await bcrypt.hash(password, 10)
-    const id = uuidv4()
-    const newUser = { id, name, nickname, email, password: hashedPassword }
-    const createdNewUser = await User.create({ newUser })
-    return createdNewUser
-  },
+    addUser: async ({ name, nickname, email, password }) => {
+      // 비밀번호 해쉬화
+      const hashedPassword = await bcrypt.hash(password, 10)
+      const id = uuidv4()
+      const newUser = { id, name, nickname, email, password: hashedPassword }
+      const createdNewUser = await User.create({ newUser })
+      return createdNewUser
+    },
 
   getUser: async ({ email, password }) => {
     const user = await User.findByEmail({ email })
