@@ -17,10 +17,9 @@ commentRouter.post('/create', async (req, res, next) => {
             )
         }
 
-        const userId = req.body.userId
+        const userId = req.currentUserId
         const writerId = userId // 작성자 = 현재 로그인한 사용자 
         const { articleId, comment, hidden } = req.body
-        console.log(userId)
         const newComment = await CommentService.addComment ({
             userId,
             writerId,
@@ -67,9 +66,9 @@ commentRouter.put('/:id', async (req, res, next) => {
 // DELETE : 댓글 삭제(soft delete)
 commentRouter.put('/:id/delete', async (req, res, next) => {
     try {
-        const userId = req.currentUserId
+        const userId = req.body.userId
         const commentId = req.params.id
-        const { comment} = req.body
+        const { comment } = req.body
         const isDeleted = true
 
         const toUpdate = { isDeleted, comment }

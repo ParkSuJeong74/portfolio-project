@@ -30,7 +30,9 @@ const CommentService = {
             throw new Error("당신은 이 댓글의 작성자가 아닙니다.")
         }
 
-        const updateObject = setUtil.compareValues({ toUpdate, comment })
+        console.log(toUpdate)
+        const updateObject = setUtil.compareValues(toUpdate, comment)
+        console.log(updateObject)
         comment = await Comment.update({ commentId, updateObject })
         return comment
     },
@@ -45,9 +47,8 @@ const CommentService = {
             throw new Error("당신은 댓글 작성자가 아닙니다. 댓글을 삭제할 수 없습니다!")
         }
 
-        comment.comment = "삭제된 댓글입니다."
+        toUpdate.comment = "삭제된 댓글입니다."
         const updateObject = setUtil.compareValues(toUpdate, comment)
-
         comment = await Comment.delete({ commentId, updateObject })
         return comment
     }
