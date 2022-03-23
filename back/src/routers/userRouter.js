@@ -162,12 +162,12 @@ userAuthRouter.put("/:id/img",
     async (req, res, next) => {
         try {
             const userId = req.params.id
-            
+
             const userInfo = await userAuthService.getUserInfo({ userId })
             s3Delete(userInfo.imageName)
 
             const { location } = req.file
-            console.log(req.file)
+
             const imageName = location.split("amazonaws.com/")[1]
 
             let updatedUser = await userAuthService.setUserImage({ userId, imageName })
