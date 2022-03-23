@@ -46,7 +46,6 @@ const CommentService = {
         }
 
         comment.comment = "삭제된 댓글입니다."
-
         const updateObject = setUtil.compareValues(toUpdate, comment)
 
         comment = await Comment.delete({ commentId, updateObject })

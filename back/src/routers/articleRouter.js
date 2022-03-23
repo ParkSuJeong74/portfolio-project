@@ -53,10 +53,9 @@ articleRouter.put("/:id", async (req, res, next) => {
         const userId = req.currentUserId // jwt토큰에서 추출된 로그인 사용자 id
         const articleId = req.params.id
         const { author, hidden, title, description } = req.body
-        const updatedAt = timeUtil.getTime()
 
         if (userId == author) { // 로그인 사용자 = 게시글 작성자이면
-            const toUpdate = { hidden, title, description, updatedAt }
+            const toUpdate = { hidden, title, description }
             const article = await ArticleService.setArticle({ userId, articleId, toUpdate })
 
             res.status(200).send(article)
@@ -71,7 +70,6 @@ articleRouter.put("/:id", async (req, res, next) => {
 articleRouter.delete("/:id", async (req, res, next) => {
     try {
         const articleId = req.params.id
-
         const result = await ArticleService.deleteArticle({ articleId })
 
         res.status(200).send(result)
