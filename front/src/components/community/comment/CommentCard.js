@@ -1,7 +1,7 @@
 import {Card, Row, Col, Button} from 'react-bootstrap'
 
 
-function CommentCard({comment, isEditable, setIsEditing}){
+function CommentCard({comment, isEditable, setIsEditing, ownerId}){
     const user_id = ownerId
 
     return (

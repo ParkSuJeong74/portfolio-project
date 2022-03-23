@@ -6,7 +6,7 @@ const EducationSchema = new Schema(
             type: String,
             required: true
         },
-        user_id: {
+        userId: {
             type: String,
             required: true
         },
@@ -21,15 +21,10 @@ const EducationSchema = new Schema(
         position: {
             type: String,
             required: true
-        },
-        created_at: {
-            type: Date,
-            required: true,
-        },
-        updated_at: {
-            type: Date,
-            required: true,
         }
+    },
+    {
+        timestamps: true
     }
 )
 

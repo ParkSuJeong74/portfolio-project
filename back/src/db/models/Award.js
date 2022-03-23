@@ -11,20 +11,14 @@ const Award = {
         return award
     },
 
-    findByUserId: async ({ user_id }) => {
-        const awards = await AwardModel.find({ user_id })
+    findByUserId: async ({ userId }) => {
+        const awards = await AwardModel.find({ userId })
         return awards
     },
 
-    update: async ({ awardId, fieldToUpdate, newValue }) => {
+    update: async ({ awardId, updateObject }) => {
         const filter = { id: awardId }
-        const update = {
-            $set: {
-                [fieldToUpdate[0]]: newValue[0],
-                [fieldToUpdate[1]]: newValue[1],
-                [fieldToUpdate[2]]: newValue[2]
-            }
-        }
+        const update = { $set: updateObject }
         const option = { returnOriginal: false }
 
         const updatedAward = await AwardModel.findOneAndUpdate(

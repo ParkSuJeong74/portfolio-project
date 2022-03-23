@@ -2,7 +2,6 @@ const is = require('@sindresorhus/is')
 const { Router } = require('express')
 const { login_required } = require('../middlewares/login_required')
 const { CategoryService } = require('../services/categoryService')
-const { timeUtil } = require("../common/timeUtil")
 
 const categoryRouter = Router()
 
@@ -14,23 +13,12 @@ categoryRouter.post('/create', login_required, async (req, res, next) => {
                 "headers의 Content-Type을 application/json으로 설정해주세요."
             )
         }
-
-        const { user_id, name, description} = req.body
-        const created_at = timeUtil()
-        const updated_at = timeUtil()
-        
-        // 이름 중복 검사
-        if(CategoryService.getCategoryByName({ categoryName })){
-            throw new Error("이미 존재하는 게시판 이름 입니다!!!")
-        }
-
-        // 데이터 DB 추가
+        const { name, description} = req.body
+        const userId = req.currentUserId
         const newCategory = await CategoryService.addCategory({
-            user_id,
+            userId,
             name,
             description,
-            created_at,
-            updated_at
         })
 
         res.status(201).json(newCategory)
@@ -44,10 +32,6 @@ categoryRouter.get('/list', async (req, res, next) => {
     try {
         const category = await CategoryService.getCategory()
 
-        if (category.errorMessage){
-            throw new Error(category.errorMessage)
-        }
-
         res.status(200).send(category)
     } catch(err) {
         next(err)
@@ -57,14 +41,8 @@ categoryRouter.get('/list', async (req, res, next) => {
 // GET
 categoryRouter.get('/:name', async (req, res, next) =>{
     try {
-        const categoryName = req.params.name
-        const category = await CategoryService.getCategoryByName({ categoryName })
-
-        // Todo : 내부 게시물 전부 출력
-
-        if (category.errorMessage) {
-            throw new Error(category.errorMessage)
-        }
+        const name = req.params.name
+        const category = await CategoryService.getCategoryByName({ name })
 
         res.status(200).send(category)
     } catch(err) {
@@ -75,19 +53,9 @@ categoryRouter.get('/:name', async (req, res, next) =>{
 // PUT
 categoryRouter.put('/:name', login_required, async (req, res, next) => {
     try {
-      
         const categoryName = req.params.name
-
-        const name = req.body.name ?? null
-        const description = req.body.description ??  null
-        const updated_at = timeUtil()
-        const toUpdate = { name, description, updated_at }
-
-        // 이름 중복 검사
-        if(CategoryService.getCategoryByName({ categoryName })){
-            throw new Error("이미 존재하는 게시판 이름 입니다!!!")
-        }
-
+        const { description, name } = req.body
+        const toUpdate = { description, name }
         const category = await CategoryService.setCategory({ categoryName, toUpdate })
 
         if (category.errorMessage) {

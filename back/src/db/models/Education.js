@@ -2,8 +2,8 @@ const { EducationModel } = require("../schemas/education")
 
 const Education = {
     create: async ({ newEducation }) => {
-        const createNewEducation = await EducationModel.create(newEducation)
-        return createNewEducation
+        const education = await EducationModel.create(newEducation)
+        return education
     },
 
     findById: async ({ educationId }) => {
@@ -11,23 +11,14 @@ const Education = {
         return education
     },
 
-    findByUserId: async ({ user_id }) => {
-        const education = await EducationModel.find({ user_id })
+    findByUserId: async ({ userId }) => {
+        const education = await EducationModel.find({ userId })
         return education
     },
 
-    update: async ({ educationId, fieldToUpdate, newValue }) => {
+    update: async ({ educationId, updateObject }) => {
         const filter = { id: educationId }
-        // String을 key값으로 쓸 땐 배열로 감싸줌
-        // $set : { key0: value0, key1: value1, ... } -> aggregation stage
-        const update = {
-            $set: {
-                [fieldToUpdate[0]]: newValue[0],
-                [fieldToUpdate[1]]: newValue[1],
-                [fieldToUpdate[2]]: newValue[2],
-                [fieldToUpdate[3]]: newValue[3]
-            }
-        }
+        const update = { $set: updateObject }
         const option = { returnOriginal: false }
 
         const updatedEducation = await EducationModel.findOneAndUpdate(

@@ -6,6 +6,7 @@ const { Project } = require("./models/Project")
 const { Education } = require("./models/Education")
 const { Certificate } = require("./models/Certificate")
 const { Category } = require('./models/Category')
+const { Article } = require("./models/Article")
 const { Comment } = require('./models/Comment')
 
 const DB_URL =
@@ -21,4 +22,4 @@ db.on("error", (error) =>
   console.error("MongoDB 연결에 실패하였습니다...\n" + DB_URL + "\n" + error)
 )
 
-module.exports = { User, Award, Project, Education, Certificate, Category, Comment }
+module.exports = { User, Award, Project, Education, Certificate, Category, Article, Comment }

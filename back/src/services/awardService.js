@@ -1,11 +1,12 @@
 const { Award } = require("../db")
 const { v4: uuidv4 } = require("uuid")
+const { setUtil } = require('../common/setUtil')
 
 const AwardService = {
-    addAward: async ({ user_id, title, description, created_at, updated_at }) => {
+    addAward: async ({ userId, title, description }) => {
         const id = uuidv4()
 
-        const newAward = { id, user_id, title, description, created_at, updated_at }
+        const newAward = { id, userId, title, description }
         const createdNewAward = await Award.create({ newAward })
 
         return createdNewAward
@@ -14,16 +15,14 @@ const AwardService = {
     getAward: async ({ awardId }) => {
         const award = await Award.findById({ awardId })
         if (!award) {
-            const errorMessage =
-                "해당 id를 가진 수상 데이터는 없습니다. 다시 한 번 확인해 주세요."
-            return { errorMessage }
+            throw new Error("해당 id를 가진 수상 데이터는 없습니다. 다시 한 번 확인해 주세요.")
         }
 
         return award
     },
 
-    getAwardList: async ({ user_id }) => {
-        const awards = await Award.findByUserId({ user_id })
+    getAwardList: async ({ userId }) => {
+        const awards = await Award.findByUserId({ userId })
         return awards
     },
 
@@ -31,15 +30,11 @@ const AwardService = {
         let award = await Award.findById({ awardId })
 
         if (!award) {
-            const errorMessage =
-                "해당 id를 가진 수상 데이터는 없습니다. 다시 한 번 확인해 주세요."
-            return { errorMessage }
+            throw new Error("해당 id를 가진 수상 데이터는 없습니다. 다시 한 번 확인해 주세요.")
         }
 
-        const fieldToUpdate = Object.keys(toUpdate)
-        const newValue = Object.values(toUpdate)
-
-        award = await Award.update({ awardId, fieldToUpdate, newValue })
+        const updateObject = setUtil.compareValues(toUpdate, award)
+        award = await Award.update({ awardId, updateObject })
 
         return award
     },
@@ -48,9 +43,7 @@ const AwardService = {
         const isDataDeleted = await Award.deleteById({ awardId })
 
         if (!isDataDeleted) {
-            const errorMessage =
-                "해당 id를 가진 수상 데이터는 없습니다. 다시 한 번 확인해 주세요."
-            return { errorMessage }
+            throw new Error("해당 id를 가진 수상 데이터는 없습니다. 다시 한 번 확인해 주세요.")
         }
 
         return { status: "ok" }

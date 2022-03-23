@@ -1,8 +1,10 @@
 const { CategoryModel } = require('../schemas/category')
+const { ArticleModel } = require("../schemas/article")
 
 const Category = {
     create : async ({ newCategory }) => {
         const createNewCategory = await CategoryModel.create(newCategory)
+        
         return createNewCategory
     },
 
@@ -11,18 +13,18 @@ const Category = {
         return categorys
     },
 
-    findByName : async ({ categoryName }) => {
-        const category = await CategoryModel.findOne({ name : categoryName })
+    findByName : async ({ name }) => {
+        const category = await CategoryModel.findOne({ name })
         return category
     },
-
-    update : async ({ categoryName, fieldToUpdate, newValue }) => {
+    findAllByName : async ({ name }) => {
+        const category = await CategoryModel.findOne({ name })
+        const article = await ArticleModel.find({ categoryName: name })
+        return { category, article }
+    },
+    update : async ({ categoryName, updateObject }) => {
         const filter = { name : categoryName }
-        const update = { $set : {
-            [fieldToUpdate[0]]: newValue[0],
-            [fieldToUpdate[1]]: newValue[1],
-            [fieldToUpdate[2]]: newValue[2],
-        }}
+        const update = { $set : updateObject }
         const option = { returnOriginal: false }
         const updatedCategory = await CategoryModel.findOneAndUpdate(
             filter,
@@ -30,12 +32,6 @@ const Category = {
             option,
         )
         return updatedCategory
-    },
-
-    deleteByName : async ({ categoryName }) => {
-        const deleteResult = await CategoryModel.deleteOne({ name : categoryName })
-        const isDataDeleted = deleteResult.deletedCount === 1
-        return isDataDeleted
     }
 }
 

@@ -74,7 +74,7 @@ function App() {
                             <Route path="/users/:userId" element={<Portfolio />} />
                             <Route path="/network" element={<Network />} />
                             <Route path="*" element={<Portfolio />} />
-                            {/*<Route path="/category" element={<Category />} />*/}
+                            <Route path="/home" element={<Home />} />
                         </Routes>
                     </Router>
                 </CategoryContext.Provider>
