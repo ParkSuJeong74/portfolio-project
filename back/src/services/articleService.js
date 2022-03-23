@@ -4,20 +4,20 @@ const { v4: uuidv4 } = require("uuid")
 
 const ArticleService = {
     // 게시글 등록하기
-    addArticle: async function({ userId, categoryName, author, hidden, title, description, createdAt,
-        updatedAt }) {
+    addArticle: async ({ userId, categoryName, author, hidden, title, description }) => {
         const id = uuidv4()
         let authorName
+        console.log(userId)
         // 익명에 체크되어 있으면
         if (hidden == true) {
             authorName = "익명"
         } else {
             const user = await User.findById({ userId })
-            authorName = user.name
+            console.log(user)
+            authorName = user.nickname
         }
 
-        const newArticle = { id, userId, categoryName, author, authorName, hidden, title, description, createdAt,
-            updatedAt }
+        const newArticle = { id, userId, categoryName, author, authorName, hidden, title, description }
         const createdNewArticle = await Article.create({ newArticle })
 
         return createdNewArticle

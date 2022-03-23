@@ -19,7 +19,7 @@ const Category = {
     },
     findAllByName : async ({ name }) => {
         const category = await CategoryModel.findOne({ name })
-        const article = await ArticleModel.findOne({ categoryName: name })
+        const article = await ArticleModel.find({ categoryName: name })
         return { category, article }
     },
     update : async ({ name, updateObject }) => {

@@ -32,6 +32,10 @@ const User = {
       option
     )
     return updatedUser
+  },
+
+  deleteById : async ({ userId }) => {
+    
   }
 }
 

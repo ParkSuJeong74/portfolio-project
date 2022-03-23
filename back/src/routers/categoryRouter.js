@@ -73,6 +73,7 @@ categoryRouter.put('/:name', login_required, async (req, res, next) => {
 // categoryRouter.delete('/:name', login_required, async (req, res, next) => {
 //     try {
 //         const categoryName = req.params.name
+
 //         const result = await CategoryService.deleteCategory({ categoryName })
 
 //         if(result.errorMessage){

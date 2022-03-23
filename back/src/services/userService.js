@@ -76,6 +76,16 @@ const userAuthService = {
       throw new Error("해당 이메일은 가입 내역이 없습니다. 다시 한 번 확인해 주세요.")
     }
     return user
+  },
+
+  deleteUser: async({ userId }) => {
+    const isDataDeleted = await User.deleteById({ userId })
+    
+    if(!isDataDeleted){
+      throw new Error("해당 id를 가진 수상 데이터는 없습니다. 다시 한 번 확인해 주세요.")
+  }
+
+  return { status : "ok" }
   }
 }
 

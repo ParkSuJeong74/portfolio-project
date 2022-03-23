@@ -2,7 +2,6 @@ const is = require("@sindresorhus/is")
 const { Router } = require("express")
 const { login_required } = require("../middlewares/login_required")
 const { ArticleService } = require("../services/articleService")
-const { timeUtil } = require("../common/timeUtil")
 
 const articleRouter = Router()
 articleRouter.use(login_required)
@@ -17,22 +16,18 @@ articleRouter.post("/create", async (req, res, next) => {
                 "headers의 Content-Type을 application/json으로 설정해주세요"
             )
         }
-
+        
         const userId = req.currentUserId // jwt토큰에서 추출된 로그인 사용자 id
         const author = userId // 지금 로그인 한 사용자 = 게시글 작성자
         const { categoryName, hidden, title, description } = req.body
-        const createdAt = timeUtil().getTime()
-        const updatedAt = timeUtil().getTime()
-        
+        console.log(categoryName, hidden, title, description)
         const newArticle = await ArticleService.addArticle({
             userId,
             categoryName,
             author,
             hidden,
             title,
-            description,
-            createdAt,
-            updatedAt
+            description
         })
 
         res.status(201).json(newArticle)
