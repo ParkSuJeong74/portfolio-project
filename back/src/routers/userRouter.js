@@ -101,56 +101,13 @@ userAuthRouter.put("/follow/:id", login_required, async (req, res, next) => {
     try {
         const userIdMy = req.params.id
         const { userIdYour } = req.body
-        const userInfoYour = await userAuthService.getUserInfo({
-            userId: userIdYour
-        })
-        const userInfoMy = await userAuthService.getUserInfo({
-            userId: userIdMy
-        })
 
-        let followerYour = Object.values(userInfoYour.follower)
-        let followingMy = Object.values(userInfoMy.following)
-
-        // 값이 존재하는 경우 index를, 존재하지 않는 경우 -1 반환
-        const indexFollowerYour = followerYour.indexOf(userIdMy)
-        const indexFollowingMy = followingMy.indexOf(userIdYour)
-
-        // follow
-        if (indexFollowingMy === -1 && indexFollowerYour === -1) {
-            followerCountYour = userInfoYour.followerCount + 1
-            followerYour = [...followerYour, userIdMy]
-            followingCountMy = userInfoMy.followingCount + 1
-            followingMy = [...followingMy, userIdYour]
-        } else {
-            // unfollow
-            followerCountYour = userInfoYour.followerCount - 1
-            followerYour.splice(indexFollowerYour, 1)
-            followingCountMy = userInfoMy.followingCount - 1
-            followingMy.splice(indexFollowingMy, 1)
-        }
-
-        const toUpdate_your = {
-            followerCount: followerCountYour,
-            follower: followerYour
-        }
-        const updatedYour = await userAuthService.setUser({
-            user_id: userIdYour,
-            toUpdate: toUpdate_your
-        })
-        if (updatedYour.errorMessage) {
-            throw new Error(updatedYour.errorMessage)
-        }
-
-        const toUpdateMy = {
-            followingCount: followingCountMy,
-            following: followingMy
-        }
-        const updatedMy = await userAuthService.setUser({
-            user_id: userIdMy,
-            toUpdate: toUpdateMy
+        const updatedUsers = await userAuthService.setUserFollow({
+            userIdYour,
+            userIdMy
         })
 
-        res.status(200).json({ updatedYour, updatedMy })
+        res.status(200).json(updatedUsers)
     } catch (error) {
         next(error)
     }

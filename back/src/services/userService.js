@@ -78,6 +78,49 @@ const userAuthService = {
         return user
     },
 
+    setUserFollow: async ({ userIdYour, userIdMy }) => {
+        let userYour = await User.findById({ userIdYour })
+        let userMy = await User.findById({ userIdMy })
+
+        let followerYour = Object.values(userYour.follower)
+        let followingMy = Object.values(userMy.following)
+
+        // 값이 존재하는 경우 index를, 존재하지 않는 경우 -1 반환
+        const indexFollowerYour = followerYour.indexOf(userIdMy)
+        const indexFollowingMy = followingMy.indexOf(userIdYour)
+
+        // follow
+        if (indexFollowingMy === -1 && indexFollowerYour === -1) {
+            followerCountYour = userYour.followerCount + 1
+            followerYour = [...followerYour, userIdMy]
+            followingCountMy = userMy.followingCount + 1
+            followingMy = [...followingMy, userIdYour]
+        } else {
+            // unfollow
+            followerCountYour = userYour.followerCount - 1
+            followerYour.splice(indexFollowerYour, 1)
+            followingCountMy = userMy.followingCount - 1
+            followingMy.splice(indexFollowingMy, 1)
+        }
+
+        const toUpdateYour = {
+            followerCount: followerCountYour,
+            follower: followerYour
+        }
+        const toUpdateMy = {
+            followingCount: followingCountMy,
+            following: followingMy
+        }
+
+        const updateObjectYour = setUtil.compareValues(toUpdateYour, userYour)
+        userYour = await User.update({ userIdYour, updateObjectMy })
+
+        const updateObjectMy = setUtil.compareValues(toUpdateMy, userMy)
+        userMy = await User.update({ userIdMy, updateObjectYour })
+
+        return { userMy, userYour }
+    },
+
     // TODO : 받은 image정보를 가공, update로 db안 imageInfo에 날려줌
     setUserImage: async ({ userId, imageName }) => {
         const updateObject = { imageName }
