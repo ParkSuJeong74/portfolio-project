@@ -1,9 +1,9 @@
 const is = require("@sindresorhus/is")
-const multer = require("multer")
 const { Router } = require("express")
 const { login_required } = require("../middlewares/login_required")
 const { emailUtil } = require("../common/emailUtil")
 const { userAuthService } = require("../services/userService")
+const { s3Upload, s3Delete } = require("../middlewares/multerS3")
 
 const userAuthRouter = Router()
 
@@ -13,14 +13,14 @@ userAuthRouter.post("/emailAuth", async (req, res, next) => {
         if (is.emptyObject(req.body)) {
             throw new Error("headers의 Content-Type을 application/json으로 설정해주세요")
         }
-        
+
         const { email } = req.body
         // 이메일 중복검사
         await userAuthService.isExistUser({ email })
         const message = `<p>회원가입을 위한 인증번호입니다.</p>`
 
         const authCode = await emailUtil.sendEmail(email, message)
-        
+
         res.status(200).send(`${authCode}`)
     } catch (error) {
         next(error)
@@ -109,129 +109,65 @@ userAuthRouter.get("/:id", login_required, async (req, res, next) => {
     }
 })
 
-userAuthRouter.delete('/:id', login_required, async (req, res, next) => {
-    try {
-        const userId = req.params.id
-        const result = await userAuthService.deleteUser({ userId })
-
-        res.status(200).send(result)
-    } catch (error) {
-        next(error)
-    }
-})
-
 // My -> 내 id로 db에서 가져온 데이터, Your -> 상대 id로 db에서 가져온 데이터
 // follower -> 나를 follow하는 .. / following -> 내가 follow하는 ..
 // follow : count 증가, 내 following과 상대 follower에 서로의 id를 add
 // unfollow : count 감소, 내 following과 상대 follower에 서로의 id를 remove
 userAuthRouter.put("/follow/:id", login_required, async (req, res, next) => {
-  try {
-    const userIdMy = req.params.id
-    const { userIdYour } = req.body
-    const userInfoYour = await userAuthService.getUserInfo({
-      userId: userIdYour
-    })
-    const userInfoMy = await userAuthService.getUserInfo({
-      userId: userIdMy
-    })
+    try {
+        const userIdMy = req.params.id
+        const { userIdYour } = req.body
 
-        let followerYour = Object.values(userInfoYour.follower)
-        let followingMy = Object.values(userInfoMy.following)
-
-        // 값이 존재하는 경우 index를, 존재하지 않는 경우 -1 반환
-        const indexFollowerYour = followerYour.indexOf(userIdMy)
-        const indexFollowingMy = followingMy.indexOf(userIdYour)
-
-        // follow
-        if (indexFollowingMy === -1 && indexFollowerYour === -1) {
-            followerCountYour = userInfoYour.followerCount + 1
-            followerYour = [...followerYour, userIdMy]
-            followingCountMy = userInfoMy.followingCount + 1
-            followingMy = [...followingMy, userIdYour]
-        } else {
-            // unfollow
-            followerCountYour = userInfoYour.followerCount - 1
-            followerYour.splice(indexFollowerYour, 1)
-            followingCountMy = userInfoMy.followingCount - 1
-            followingMy.splice(indexFollowingMy, 1)
-        }
-
-        const toUpdate_your = {
-            followerCount: followerCountYour,
-            follower: followerYour
-        }
-        const updatedYour = await userAuthService.setUser({
-            user_id: userIdYour,
-            toUpdate: toUpdate_your
-        })
-        if (updatedYour.errorMessage) {
-            throw new Error(updatedYour.errorMessage)
-        }
-
-        const toUpdateMy = {
-            followingCount: followingCountMy,
-            following: followingMy
-        }
-        const updatedMy = await userAuthService.setUser({
-            user_id: userIdMy,
-            toUpdate: toUpdateMy
+        const updatedUsers = await userAuthService.setUserFollow({
+            userIdYour,
+            userIdMy
         })
 
-        res.status(200).json({ updatedYour, updatedMy })
+        res.status(200).json(updatedUsers)
     } catch (error) {
         next(error)
     }
 })
 
-// TODO : user_id와 multer로 처리한 image정보를 setUserImage에 뿌려주기
-// (get은 usercard에 기본으로 포함할 예정이니 구현x)
-// Client에서 HTTP Header에 multipart/form-data 라고 지정해야 함
-// upload.single("file")은 req.file안에 파일 정보를 얻을 수 있게 함
-const limits = {
-    fieldNameSize: 200,
-    fileSize: 5242880,
-}
-const upload = multer({
-    dest: "src/imgStorage/"
-})
-userAuthRouter.put("/user/:id/img",
+userAuthRouter.put("/:id/img",
     login_required,
+    s3Upload(),
     async (req, res, next) => {
         try {
-            const user_id = req.params.id
-            console.log(req.file)
-            const {
-                fieldname, originalname, mimetype, destination, path, size } = req.file
-            // 중간에 필터링하려면 여기서 하면 됨
-            //
+            const userId = req.params.id
+            const userInfo = await userAuthService.getUserInfo({ userId })
 
-            const updateObject = {
-                imageInfo: {
-                    fieldname,
-                    originalname,
-                    mimetype,
-                    destination,
-                    path,
-                    size
-                }
+            if (userInfo.imageName !== "none") {
+                s3Delete(userInfo.imageName)
             }
-            const updatedUser = await userAuthService.setUserImage({ user_id, updateObject })
 
-            console.log(updatedUser)
+            const { location } = req.file
+            const imageName = location.split("amazonaws.com/")[1]
+            const updatedUser = await userAuthService.setUserImage({ userId, imageName })
 
-            res.status(200).json({  })
+            res.status(200).json({ updatedUser })
         } catch (error) {
             next(error)
         }
     })
 
-// jwt 토큰 기능 확인용, 삭제해도 되는 라우터임.
-userAuthRouter.get("/afterlogin", login_required, (req, res, next) => {
-    res
-        .status(200)
-        .send(
-            `안녕하세요 ${req.currentUserId}님, jwt 웹 토큰 기능 정상 작동 중입니다.`
-        )
-})
+userAuthRouter.put("/:id/img/delete",
+    login_required,
+    async (req, res, next) => {
+        try {
+            const userId = req.params.id
+            const userInfo = await userAuthService.getUserInfo({ userId })
+
+            if (userInfo.imageName !== "none") {
+                s3Delete(userInfo.imageName)
+            }
+
+            const updatedUser = await userAuthService.setUserImage({ userId, imageName: "none" })
+
+            res.status(200).json({ updatedUser })
+        } catch (error) {
+            next(error)
+        }
+    })
 
 module.exports = { userAuthRouter }
