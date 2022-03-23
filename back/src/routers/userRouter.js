@@ -107,7 +107,7 @@ userAuthRouter.put("/follow/:id", login_required, async (req, res, next) => {
             userIdMy
         })
 
-        res.status(200).json(updatedUsers)
+        res.status(200).json( updatedUsers )
     } catch (error) {
         next(error)
     }

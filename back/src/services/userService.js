@@ -79,9 +79,9 @@ const userAuthService = {
     },
 
     setUserFollow: async ({ userIdYour, userIdMy }) => {
-        let userYour = await User.findById({ userIdYour })
-        let userMy = await User.findById({ userIdMy })
-
+        let userYour = await User.findById({ userId: userIdYour })
+        let userMy = await User.findById({ userId: userIdMy })
+        console.log(userMy)
         let followerYour = Object.values(userYour.follower)
         let followingMy = Object.values(userMy.following)
 
@@ -111,12 +111,18 @@ const userAuthService = {
             followingCount: followingCountMy,
             following: followingMy
         }
-
+        
         const updateObjectYour = setUtil.compareValues(toUpdateYour, userYour)
-        userYour = await User.update({ userIdYour, updateObjectMy })
-
+        userYour = await User.update({
+            userId: userIdYour,
+            updateObject: updateObjectYour
+        })
+        
         const updateObjectMy = setUtil.compareValues(toUpdateMy, userMy)
-        userMy = await User.update({ userIdMy, updateObjectYour })
+        userMy = await User.update({
+            userId: userIdMy,
+            updateObject: updateObjectMy
+        })
 
         return { userMy, userYour }
     },
