@@ -10,4 +10,4 @@ class timeUtil {
     }
 }
 
-module.exports = { timeUtil }
+module.exports = { TimeUtil }

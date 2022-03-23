@@ -29,18 +29,6 @@ projectRouter.post('/create', async (req, res, next) => {
     }
 })
 
-// GET : 프로젝트 조회
-projectRouter.get('/:id', async (req, res, next) => {
-    try{
-        const projectId = req.params.id
-        const project = await ProjectService.getProject({ projectId })
-
-        res.status(200).send(project)
-    } catch(err) {
-        next(err)
-    }
-})
-
 // GET : 한 사용자의 프로젝트 목록 조회
 projectRouter.get('/list/:userId', async (req, res, next) => {
     try{

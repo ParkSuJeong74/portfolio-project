@@ -1,19 +1,37 @@
 const is = require("@sindresorhus/is")
 const { Router } = require("express")
 const { login_required } = require("../middlewares/login_required")
+const { emailUtil } = require("../common/emailUtil")
 const { userAuthService } = require("../services/userService")
 const { s3Upload, s3Delete } = require("../middlewares/multerS3")
 
 const userAuthRouter = Router()
 
-// 회원가입
-userAuthRouter.post("/register", async (req, res, next) => {
+// 이메일 입력 -> 인증코드 발송하고 front로 인증코드 send
+userAuthRouter.post("/emailAuth", async (req, res, next) => {
     try {
         if (is.emptyObject(req.body)) {
             throw new Error("headers의 Content-Type을 application/json으로 설정해주세요")
         }
 
+        const { email } = req.body
+        // 이메일 중복검사
+        await userAuthService.isExistUser({ email })
+        const message = `<p>회원가입을 위한 인증번호입니다.</p>`
+
+        const authCode = await emailUtil.sendEmail(email, message)
+
+        res.status(200).send(`${authCode}`)
+    } catch (error) {
+        next(error)
+    }
+})
+
+// 회원가입
+userAuthRouter.post("/register", async (req, res, next) => {
+    try {
         const { name, nickname, email, password } = req.body
+        await userAuthService.isExistUser({ email })
         const newUser = await userAuthService.addUser({
             name,
             nickname,

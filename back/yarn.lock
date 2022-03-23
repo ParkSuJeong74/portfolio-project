@@ -1374,11 +1374,6 @@
   dependencies:
     "debug" "4"
 
-"alea@0.0.9":
-  "integrity" "sha1-9zjLRfg0MAafRc9pzL8xLdV6nho="
-  "resolved" "https://registry.npmjs.org/alea/-/alea-0.0.9.tgz"
-  "version" "0.0.9"
-
 "ansi-align@^3.0.0":
   "integrity" "sha512-IOfwwBF5iczOjp/WeY4YxyjqAFMQoZufdQWDd19SEExbVLNXqvpzSJ/M7Za4/sCPmQ0+GRquoA7bGcINcxew6w=="
   "resolved" "https://registry.npmjs.org/ansi-align/-/ansi-align-3.0.1.tgz"
@@ -4815,17 +4810,15 @@
   "resolved" "https://registry.npmjs.org/node-int64/-/node-int64-0.4.0.tgz"
   "version" "0.4.0"
 
-"node-random-name@^1.0.1":
-  "integrity" "sha1-niQEx6AeCQWi92Fogh7bLc0U91g="
-  "resolved" "https://registry.npmjs.org/node-random-name/-/node-random-name-1.0.1.tgz"
-  "version" "1.0.1"
-  dependencies:
-    "alea" "0.0.9"
-
 "node-releases@^2.0.1":
   "integrity" "sha512-CqyzN6z7Q6aMeF/ktcMVTzhAHCEpf8SOarwpzpf8pNBY2k5/oM34UHldUwp8VKI7uxct2HxSRdJjBaZeESzcxA=="
   "resolved" "https://registry.npmjs.org/node-releases/-/node-releases-2.0.1.tgz"
   "version" "2.0.1"
+
+"nodemailer@^6.7.3":
+  "integrity" "sha512-KUdDsspqx89sD4UUyUKzdlUOper3hRkDVkrKh/89G+d9WKsU5ox51NWS4tB1XR5dPUdR4SP0E3molyEfOvSa3g=="
+  "resolved" "https://registry.npmjs.org/nodemailer/-/nodemailer-6.7.3.tgz"
+  "version" "6.7.3"
 
 "nodemon@^2.0.15":
   "integrity" "sha512-gdHMNx47Gw7b3kWxJV64NI+Q5nfl0y5DgDbiVtShiwa7Z0IZ07Ll4RLFo6AjrhzMtoEZn5PDE3/c2AbVsiCkpA=="

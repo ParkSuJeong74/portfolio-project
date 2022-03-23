@@ -1,14 +1,14 @@
 const { Project } = require('../db')
 const { v4: uuidv4 } = require('uuid')
-const { timeUtil } = require("../common/timeUtil")
-const { setUtil } = require('../common/setUtil')
+const { TimeUtil } = require("../common/timeUtil")
+const { SetUtil } = require('../common/setUtil')
 
 const ProjectService = {
     // POST
     addProject : async ({ userId, title, description, fromDate, toDate }) => {
         const id = uuidv4()
-        fromDate = timeUtil.getDay(fromDate)
-        toDate = timeUtil.getDay(toDate)
+        fromDate = TimeUtil.getDay(fromDate)
+        toDate = TimeUtil.getDay(toDate)
 
         const newProject = { id, userId, title, description, fromDate, toDate }
         const createNewProject = await Project.create({ newProject })
@@ -38,7 +38,7 @@ const ProjectService = {
             throw new Error("해당 id를 가진 수상 데이터는 없습니다. 다시 한 번 확인해 주세요.")
         }
 
-        const updateObject = setUtil.compareValues(toUpdate, project)
+        const updateObject = SetUtil.compareValues(toUpdate, project)
         project = await Project.update({ projectId, updateObject })
 
         return project

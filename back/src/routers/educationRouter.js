@@ -31,18 +31,6 @@ educationRouter.post("/create", async (req, res, next) => {
     }
 })
 
-// request에서 id를 받은 후 나머지 데이터를 받아와 응답으로 전송
-educationRouter.get("/:id", async (req, res, next) => {
-    try {
-        const educationId = req.params.id
-        const education = await EducationService.getEducation({ educationId })
-
-        res.status(200).send(education)
-    } catch (error) {
-        next(error)
-    }
-})
-
 // 사용자(userId)의 전체 교육 데이터 조회
 educationRouter.get("/list/:userId", async (req, res, next) => {
     try {

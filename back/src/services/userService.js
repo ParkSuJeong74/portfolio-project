@@ -2,16 +2,17 @@ const { User } = require("../db")
 const bcrypt = require("bcrypt")
 const { v4: uuidv4 } = require("uuid")
 const jwt = require("jsonwebtoken")
-const { setUtil } = require('../common/setUtil')
+const { SetUtil } = require('../common/setUtil')
 
 const userAuthService = {
-    addUser: async ({ name, nickname, email, password }) => {
-
+    isExistUser: async ({ email }) => {
         const user = await User.findByEmail({ email })
         if (user) { // 이메일 중복 검사
             throw new Error("이 이메일은 현재 사용중입니다. 다른 이메일을 입력해 주세요.")
         }
+    },
 
+    addUser: async ({ name, nickname, email, password }) => {
         // 비밀번호 해쉬화
         const hashedPassword = await bcrypt.hash(password, 10)
         const id = uuidv4()
@@ -64,7 +65,7 @@ const userAuthService = {
         if (!user) {
             throw new Error("가입 내역이 없습니다. 다시 한 번 확인해 주세요.")
         }
-        const updateObject = setUtil.compareValues(toUpdate, user)
+        const updateObject = SetUtil.compareValues(toUpdate, user)
         user = await User.update({ userId, updateObject })
 
         return user
@@ -76,6 +77,16 @@ const userAuthService = {
             throw new Error("해당 이메일은 가입 내역이 없습니다. 다시 한 번 확인해 주세요.")
         }
         return user
+    },
+
+    deleteUser: async ({ userId }) => {
+        const isDataDeleted = await User.deleteById({ userId })
+
+        if (!isDataDeleted) {
+            throw new Error("해당 id를 가진 수상 데이터는 없습니다. 다시 한 번 확인해 주세요.")
+        }
+
+        return { status: "ok" }
     },
 
     setUserFollow: async ({ userIdYour, userIdMy }) => {
@@ -131,7 +142,6 @@ const userAuthService = {
         const updateObject = { imageName }
 
         const user = await User.update({ userId, updateObject })
-
         return user
     }
 }

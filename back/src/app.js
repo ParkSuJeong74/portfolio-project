@@ -1,6 +1,7 @@
 const cors = require("cors")
 const express = require("express")
 const { userAuthRouter } = require("./routers/userRouter")
+const { passwordRouter } = require("./routers/passwordRouter")
 const { awardRouter } = require("./routers/awardRouter")
 const { projectRouter } = require("./routers/projectRouter")
 const { educationRouter } = require("./routers/educationRouter")
@@ -21,6 +22,10 @@ app.use(cors())
 // express.urlencoded: 주로 Form submit 에 의해 만들어지는 URL-Encoded 형태의 데이터를 인식하고 핸들링할 수 있게 함.
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
+app.use((req, res, next) => {
+  req.accepts('application/json')
+  next()
+})
 
 // 기본 페이지
 app.get("/", (req, res) => {
@@ -29,6 +34,7 @@ app.get("/", (req, res) => {
 
 // router, service 구현 (userAuthRouter는 맨 위에 있어야 함.)
 app.use('/user', userAuthRouter)
+app.use("/password", passwordRouter)
 app.use('/award', awardRouter)
 app.use('/project', projectRouter)
 app.use('/education', educationRouter)
