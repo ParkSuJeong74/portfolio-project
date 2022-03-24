@@ -64,6 +64,10 @@ const ArticleService = {
     },
     // 게시글 좋아요
     setLike: async ({ userId, articleId }) => {
+        const user = await User.findById({ userId })
+        if (!user) {
+            throw new Error("당신은 회원이 아닙니다.")
+        }
         let article = await Article.findById({ articleId }) // 좋아요 할 게시글 객체 찾기
         if (!article) {
             throw new Error("해당 id를 가진 게시글 데이터는 없습니다. 다시 한 번 확인해주세요.")

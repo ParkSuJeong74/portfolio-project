@@ -23,8 +23,8 @@ app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 app.use((req, res, next) => {
-  req.accepts('application/json')
-  next()
+    req.accepts('application/json')
+    next()
 })
 
 // 기본 페이지
@@ -34,7 +34,7 @@ app.get("/", (req, res) => {
 
 // router, service 구현 (userAuthRouter는 맨 위에 있어야 함.)
 app.use('/user', userAuthRouter)
-app.use("/password", passwordRouter)
+app.use('/password', passwordRouter)
 app.use('/award', awardRouter)
 app.use('/project', projectRouter)
 app.use('/education', educationRouter)

@@ -16,7 +16,7 @@ const Article = {
     // id로 게시글+댓글 찾기
     findById: async ({ articleId }) => {
         const article = await ArticleModel.findOne({ id: articleId })
-        const comment = await CommentModel.find({ articleId })
+        const comment = await CommentModel.find({ articleId }).sort({ createdAt : 1 }) // 댓글 오래된 것부터
         return { article, comment }
     },
     // 본인 게시글 확인 후 수정하기
