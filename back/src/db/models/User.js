@@ -16,6 +16,11 @@ const User = {
         return user
     },
 
+    findByNickname: async ({ nickname }) => {
+        const user = await UserModel.findOne({ nickname })
+        return user
+    },
+
     findAll: async () => {
         const users = await UserModel.find({}).sort({ nickname: 1 }) // 사용자들 오름차순 정렬
         return users
