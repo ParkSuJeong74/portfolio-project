@@ -42,7 +42,7 @@ const ArticleService = {
             toUpdate.authorName = "익명"
         } else {
             const user = await User.findById({ userId })
-            toUpdate.authorName = user.name
+            toUpdate.authorName = user.nickname
         }
 
         const originalArticle = article.article
