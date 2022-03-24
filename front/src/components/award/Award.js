@@ -11,7 +11,7 @@ function Award({award, setAwards, isEditable}) {
 
     const removeAward = async() => {
         try{
-            await Api.delete(`awards/${award.id}`)
+            await Api.delete(`award/${award.id}`)
             setAwards(prev => prev.filter(item => item.id !== award.id))
             
         } catch(err) {

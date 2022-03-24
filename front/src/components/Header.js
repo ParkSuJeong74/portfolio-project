@@ -23,9 +23,8 @@ function Header() {
     };
 
     async function withdraw(){
-        const user_id = userState.user?.id
-        console.log('user_id는', user_id)
-        await Api.delete(`users/${user_id}`)
+
+        await Api.delete(`user/${userState.user?.id}`)
 
         console.log('회원이 탈퇴되었습니다.')
 

@@ -3,10 +3,12 @@ import { Button, Form, Card, Col, Row } from "react-bootstrap";
 import * as Api from "../../api";
 
 function UserEditForm({ user, setIsEditing, setUser }) {
-    //useState로 name 상태를 생성함.
-    const [name, setName] = useState(user.name);
-    //useState로 email 상태를 생성함.
-    const [email, setEmail] = useState(user.email);
+    
+    const {name, email} = user
+
+    //useState로 nickname 상태를 생성함.
+    const [nickname, setNickname] = useState(user.nickname);
+
     //useState로 description 상태를 생성함.
     const [description, setDescription] = useState(user.description);
 
@@ -15,8 +17,7 @@ function UserEditForm({ user, setIsEditing, setUser }) {
 
         // "users/유저id" 엔드포인트로 PUT 요청함.
         const res = await Api.put(`user/${user.id}`, {
-            name,
-            email,
+            nickname,
             description,
         });
         // 유저 정보는 response의 data임.
@@ -34,20 +35,30 @@ function UserEditForm({ user, setIsEditing, setUser }) {
             <Form onSubmit={handleSubmit}>
                 <Form.Group controlId="useEditName" className="mb-3">
                     <Form.Control
+                        disabled
                         type="text"
                         placeholder="이름"
                         value={name}
-                        onChange={(e) => setName(e.target.value)}
                         style={{border: 'solid 2px #e5d6ff'}}
                     />
                 </Form.Group>
 
                 <Form.Group controlId="userEditEmail" className="mb-3">
                     <Form.Control
+                        disabled
                         type="email"
                         placeholder="이메일"
                         value={email}
-                        onChange={(e) => setEmail(e.target.value)}
+                        style={{border: 'solid 2px #e5d6ff'}}
+                    />
+                </Form.Group>
+
+                <Form.Group controlId="userEditDescription" className="mb-3">
+                    <Form.Control
+                        type="text"
+                        placeholder="정보, 인사말"
+                        value={description}
+                        onChange={(e) => setDescription(e.target.value)}
                         style={{border: 'solid 2px #e5d6ff'}}
                     />
                 </Form.Group>
@@ -55,9 +66,9 @@ function UserEditForm({ user, setIsEditing, setUser }) {
                 <Form.Group controlId="userEditDescription">
                     <Form.Control
                         type="text"
-                        placeholder="정보, 인사말"
-                        value={description}
-                        onChange={(e) => setDescription(e.target.value)}
+                        placeholder="닉네임"
+                        value={nickname}
+                        onChange={(e) => setNickname(e.target.value)}
                         style={{border: 'solid 2px #e5d6ff'}}
                     />
                 </Form.Group>

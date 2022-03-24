@@ -1,7 +1,5 @@
 import { useNavigate } from "react-router-dom";
 import { Card, Row, Button, Col } from "react-bootstrap";
- 
-
 
 function UserCard({ user, setIsEditing, isEditable, isNetwork }) {
     const navigate = useNavigate();
@@ -18,11 +16,10 @@ function UserCard({ user, setIsEditing, isEditable, isNetwork }) {
                     />
                 </Row>
 
-                    <Card.Title>{user?.name} <button>팔로우</button></Card.Title>
+                    <Card.Title>{user?.name} ({user?.nickname}) </Card.Title>
                     
                     <Card.Subtitle className="mb-2 text-muted">{user?.email}</Card.Subtitle>
                     <Card.Text>{user?.description}</Card.Text>
-
 
                     {isEditable && (
                         <Col className="mt-auto">
@@ -32,8 +29,6 @@ function UserCard({ user, setIsEditing, isEditable, isNetwork }) {
                                     border:"solid 2px",
                                     borderRadius: '5px', 
                                     backgroundColor: '#e5d6ff'}} 
-                                        
-                                        
                                         onClick={() => setIsEditing(true)}
                                     >
                                         편집
@@ -43,21 +38,17 @@ function UserCard({ user, setIsEditing, isEditable, isNetwork }) {
                         </Col>
                     )}
 
-                
-
-                    
                 </Card.Body>
                 {isNetwork && (
                     <Button
                         className="mt-auto mb-2"
                         href="#"
-                        onClick={() => navigate(`/users/${user.id}`)}
+                        onClick={() => navigate(`/user/${user.id}`)}
                         style={{
                             margin: 'auto',  
                             border:"solid 2px",
                             borderRadius: '5px', 
                             backgroundColor: '#e5d6ff'
-                                    
                             }}
                     >
                     포트폴리오

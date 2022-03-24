@@ -9,7 +9,7 @@ function Certificate({setCertificates, certificate, isEditable}){
 
     const removeCertificate = async () => {
         try{
-            await Api.delete(`certificates/${certificate.id}`)
+            await Api.delete(`certificate/${certificate.id}`)
             setCertificates(prev => prev.filter(item => item.id !== certificate.id))
         } catch(err) {
             console.log(err)
