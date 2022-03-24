@@ -39,8 +39,9 @@ articleRouter.post("/create", async (req, res, next) => {
 // 게시글 상세 페이지 보여주기
 articleRouter.get("/:id", async (req, res, next) => {
     try {
+        const userId = req.currentUserId
         const articleId = req.params.id
-        const article = await ArticleService.getArticle({ articleId })
+        const article = await ArticleService.getArticle({ userId, articleId })
 
         res.status(200).send(article)
 
@@ -86,7 +87,7 @@ articleRouter.put("/:id/like", async (req, res, next) => {
         const userId = req.currentUserId // 로그인 한 사용자
         const articleId = req.params.id // 게시글 Id
         const author = req.body.author // 게시글 작성자의 userId
-        console.log(userId, author)
+
         if (userId == author) { // 로그인 사용자 = 게시글 작성자이면
             throw new Error("본인 글에는 좋아요 할 수 없습니다.")
         } else { // 본인 게시글이 아니면
