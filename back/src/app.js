@@ -23,6 +23,14 @@ app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 
+app.use(function(req, res, next){
+    if(!req.secure){
+        res.redirect("https://" + "elice-kdt-ai-4th-team21.elicecoding.com" + req.url)
+    }else{
+        next()
+    }
+})
+
 // 기본 페이지
 app.get("/", (req, res) => {
   res.send("안녕하세요, 레이서 프로젝트 API 입니다.")
