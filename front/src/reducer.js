@@ -1,19 +1,27 @@
-export function loginReducer(userState, action) {
+export function userReducer(userState, action) {
     switch (action.type) {
-      case "LOGIN_SUCCESS":
-        console.log("%c로그인!", "color: #d93d1a;");
-        return {
-          ...userState,
-          user: action.payload,
-        };
-      case "LOGOUT":
-        console.log("%c로그아웃!", "color: #d93d1a;");
-        return {
-          ...userState,
-          user: null,
-        };
-      default:
-        return userState;
+        case "LOGIN_SUCCESS":
+            console.log("%c로그인!", "color: #d93d1a;");
+            return {
+                ...userState,
+                user: action.payload,
+            };
+        case "LOGOUT":
+            console.log("%c로그아웃!", "color: #d93d1a;");
+            return {
+                ...userState,
+                user: null,
+            };
+        default:
+            return userState;
     }
-  }
-  
+}
+
+export function categoryReducer(categoryState, action){
+    if(action.type === 'SET_CATEGORY'){
+        return {
+            ...categoryState,
+            category: action.payload,
+        }
+    }
+}
