@@ -5,7 +5,7 @@ import Style from '../../../App.module.css'
 
 function CategoryAddForm({setIsAdding, dispatch}){
     const userState = useContext(UserStateContext)
-    const user_id = userState.id
+    const userId = userState.id
 
     const [name, setName] = useState('')
 
@@ -15,7 +15,7 @@ function CategoryAddForm({setIsAdding, dispatch}){
         //TODO: Api post 요청하기!
         /* await Api.post("category/create", {
             name,
-            user_id
+            userId
         } 
         const res = await Api.get("category/list");
         setCategories(res.data);
@@ -23,7 +23,7 @@ function CategoryAddForm({setIsAdding, dispatch}){
 
         dispatch({
             type: 'ADD',
-            payload: {user_id, name}
+            payload: {userId, name}
         })
         setIsAdding(false)
     }

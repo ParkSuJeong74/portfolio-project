@@ -8,7 +8,7 @@ function Education({education, isEditable, setEducations}){
 
     const removeEducation = async () => {
         try{
-            await Api.delete(`educations/${education.id}`)
+            await Api.delete(`education/${education.id}`)
             setEducations(prev => prev.filter(item => item.id !== education.id))
         } catch (err){
             console.log(err)

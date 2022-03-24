@@ -9,7 +9,7 @@ function Project({ project, setProjects, isEditable }) {
   
   const removeProject = async() => {
     try{
-      await Api.delete(`projects/${project.id}`)
+      await Api.delete(`project/${project.id}`)
       setProjects(prev => prev.filter(item => item.id !== project.id))
     } catch(err){
       console.log(err)

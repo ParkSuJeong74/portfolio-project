@@ -12,18 +12,18 @@ function EducationEditForm({setEducations, currentEducation, setIsEditing}){
         e.preventDefault()
         e.stopPropagation()
 
-        const user_id = currentEducation.user_id
+        const userId = currentEducation.userId
         console.log(school ? currentEducation.school : school)
 
         try{
             await Api.put(`educations/${currentEducation.id}`, {
-                user_id,
+                userId,
                 school,
                 major,
                 position
             })
 
-            const res = await Api.get("educationlist", user_id)
+            const res = await Api.get("educationlist", userId)
             console.log(res.data)
             setEducations(res.data)
 

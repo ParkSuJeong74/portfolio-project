@@ -8,24 +8,24 @@ import Style from '../../App.module.css'
 function CertificateEditForm({setCertificates, currentCertificate,setIsEditing}){
     const [title, setTitle] = useState(currentCertificate.title)
     const [description, setDescription] = useState(currentCertificate.description)
-    const [when_date, setWhen_date] = useState(
-        new Date(currentCertificate.when_date)
+    const [whenDate, setWhenDate] = useState(
+        new Date(currentCertificate.whenDate)
     )
 
     async function submitHandler(e){
         e.preventDefault()
         e.stopPropagation()
 
-        const user_id = currentCertificate.user_id
+        const userId = currentCertificate.userId
 
-        await Api.put(`certificates/${currentCertificate.id}`,{
-            user_id,
+        await Api.put(`certificate/${currentCertificate.id}`,{
+            userId,
             title,
             description,
-            when_date
+            whenDate
         })
 
-        const res = await Api.get("certificatelist", user_id)
+        const res = await Api.get("certificate/list", userId)
         setCertificates(res.data)
         setIsEditing(false)
     }
@@ -63,10 +63,10 @@ function CertificateEditForm({setCertificates, currentCertificate,setIsEditing})
             
             <Form.Group as={Col} xs="auto" xxl={3} controlId="formBasicDate" className="mt-3">
                 <DatePicker 
-                    selected={when_date}
+                    selected={whenDate}
                     placeholderText="취득날짜"
                     dateFormat = "yyyy.MM.dd(eee)"
-                    onChange={(when_date) => setWhen_date(when_date)}/>
+                    onChange={(whenDate) => setWhenDate(whenDate)}/>
             </Form.Group>
 
             <Form.Group as={Row} className="mt-3 text-center">
