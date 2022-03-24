@@ -27,7 +27,7 @@ app.use((req, res, next) => {
   next()
 })
 
-app.use(function(req, res, next){
+app.use((req, res, next) => {
     if(!req.secure){
         res.redirect("https://" + "elice-kdt-ai-4th-team21.elicecoding.com" + req.url)
     }else{
