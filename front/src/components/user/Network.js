@@ -29,7 +29,7 @@ function Network() {
                     marginTop: '30px'
                 }}>
             {users.map((user) => (
-                <UserCard key={user.id} user={user} isNetwork />
+                <UserCard key={user.id} user={user} basic={basic} fileName={fileName} isNetwork />
             ))}
             </Row>
         </Container>

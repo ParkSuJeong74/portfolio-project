@@ -7,9 +7,13 @@ function UserEditForm({ user, setIsEditing, setUser }) {
     const name = user.name;
     //useState로 email 상태를 생성함.
     const email = user.email;
+
+    const nickname = user.nickname
     //useState로 description 상태를 생성함.
     const [description, setDescription] = useState(user.description);
     const [image, setImage] = useState(user.image);
+    const [basic, setBasic] = useState(false)
+    
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -17,6 +21,7 @@ function UserEditForm({ user, setIsEditing, setUser }) {
         // "users/유저id" 엔드포인트로 PUT 요청함.
         const res = await Api.put(`users/${user.id}`, {
             name,
+            nickname,
             email,
             description,
             image
@@ -46,6 +51,17 @@ function UserEditForm({ user, setIsEditing, setUser }) {
                     />
                 </Form.Group>
 
+                <Form.Group controlId="useEditNickname" className="mb-3">
+                    <Form.Control
+                        
+                        type="text"
+                        placeholder="닉네임"
+                        value={nickname}
+                        
+                        style={{border: 'solid 2px #e5d6ff'}}
+                    />
+                </Form.Group>
+
                 <Form.Group controlId="userEditEmail" className="mb-3">
                     <Form.Control
                         disabled
@@ -67,18 +83,28 @@ function UserEditForm({ user, setIsEditing, setUser }) {
                     />
                 </Form.Group>
 
-                <input 
-                  style={{marginTop: 5}} 
-                  type="file" 
-                  name="attachment"
-                  
-                  onChange={(e) => {
-                    console.log(e.target.files)
-                    setImage(e.target.files[0])
-                }}>
-                  
-
-                  </input>
+                <Row>
+                    <Col>
+                        <input 
+                        style={{marginTop: 5}} 
+                        type="file" 
+                        name="attachment"
+                        
+                        onChange={(e) => {
+                            console.log(e.target.files)
+                            setImage(e.target.files[0])
+                        }}></input>
+                    </Col>
+                    <Col>
+                        <Button 
+                        className="mt-2" 
+                        style={{backgroundColor: "#e5d6ff", border:"solid 2px"}}
+                        onClick={()=> setBasic(true)}
+                        >기본이미지</Button>
+                    </Col>    
+                </Row>
+                
+                
                 
 
                 <Form.Group as={Row} className="mt-3 text-center">

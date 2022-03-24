@@ -72,7 +72,7 @@ function App() {
                             <Route path="/login" element={<LoginForm />} />
                             <Route path="/register" element={<RegisterForm />} />
                             <Route path="/users/:userId" element={<Portfolio />} />
-                            <Route path="/network" element={<Network />} />
+                            <Route path="/userlist" element={<Network />} />
                             <Route path="*" element={<Portfolio />} />
                             <Route path="/home" element={<Home />} />
                         </Routes>

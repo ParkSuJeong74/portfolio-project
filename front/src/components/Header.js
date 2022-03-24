@@ -35,7 +35,7 @@ function Header() {
 
     const naviagationInformations = [
         {title: '마이페이지', link: '/'},
-        {title: '네트워크', link: '/network'},
+        {title: '유저리스트', link: '/userlist'},
     ]
 
     return (
