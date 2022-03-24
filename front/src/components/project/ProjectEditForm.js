@@ -10,11 +10,11 @@ function ProjectEditForm({ currentProject, setProjects, setIsEditing }) {
   //useState로 description 상태를 생성함.
   const [description, setDescription] = useState(currentProject.description);
 
-  const [from_date, setFrom_date] = useState(
-    new Date(currentProject.from_date)
+  const [fromDate, setFromDate] = useState(
+    new Date(currentProject.fromDate)
   )
-  const [to_date, setTo_date] = useState(
-    new Date(currentProject.to_date)
+  const [toDate, setToDate] = useState(
+    new Date(currentProject.toDate)
   )
 
   const handleSubmit = async (e) => {
@@ -22,19 +22,19 @@ function ProjectEditForm({ currentProject, setProjects, setIsEditing }) {
     e.stopPropagation()
 
     // currentAward의 user_id를 user_id 변수에 할당함.
-    const user_id = currentProject.user_id;
+    const userId = currentProject.userId;
 
     // "awards/수상 id" 엔드포인트로 PUT 요청함.
-    await Api.put(`projects/${currentProject.id}`, {
-      user_id,
+    await Api.put(`project/${currentProject.id}`, {
+      userId,
       title,
       description,
-      from_date,
-      to_date
+      fromDate,
+      toDate
     })
 
     // "awardlist/유저id" 엔드포인트로 GET 요청함.
-    const res = await Api.get("projectlist", user_id);
+    const res = await Api.get("project/list", userId);
     // awards를 response의 data로 세팅함.
     setProjects(res.data)
     // 편집 과정이 끝났으므로, isEditing을 false로 세팅함.
@@ -75,8 +75,8 @@ function ProjectEditForm({ currentProject, setProjects, setIsEditing }) {
             type="text"
             wrapperClassName="datePicker"
             dateFormat="yyyy.MM.dd(eee)"
-            selected={from_date}
-            onChange={(from_date) => setFrom_date(from_date)}
+            selected={fromDate}
+            onChange={(fromDate) => setFromDate(fromDate)}
           />
         </Col>
         <Col xs={'auto'} sm={'auto'}>
@@ -85,8 +85,8 @@ function ProjectEditForm({ currentProject, setProjects, setIsEditing }) {
               type="text"
               wrapperClassName="datePicker"
               dateFormat="yyyy.MM.dd(eee)"
-              selected={to_date}
-              onChange={(to_date) => setTo_date(to_date)}
+              selected={toDate}
+              onChange={(toDate) => setToDate(toDate)}
             />
         </Col>
       </Row>

@@ -23,7 +23,6 @@ function Header() {
     };
 
     async function withdraw(){
-
         await Api.delete(`user/${userState.user?.id}`)
 
         console.log('회원이 탈퇴되었습니다.')

@@ -3,13 +3,14 @@ import {Form,Col,Button,Row} from 'react-bootstrap'
 import DatePicker from 'react-datepicker'
 import * as Api from '../../api'
 import Style from '../../App.module.css'
+import {TimeUtil} from '../../common/timeUtil'
 
 
 function CertificateEditForm({setCertificates, currentCertificate,setIsEditing}){
     const [title, setTitle] = useState(currentCertificate.title)
     const [description, setDescription] = useState(currentCertificate.description)
     const [whenDate, setWhenDate] = useState(
-        new Date(currentCertificate.when_date)
+        new Date(currentCertificate.whenDate)
     )
 
     async function submitHandler(e){
@@ -18,11 +19,13 @@ function CertificateEditForm({setCertificates, currentCertificate,setIsEditing})
 
         const userId = currentCertificate.userId
 
-        await Api.put(`certificates/${currentCertificate.id}`,{
+        const when_date = (TimeUtil.getTime(whenDate)).toISOString().split('T')[0]
+
+        await Api.put(`certificate/${currentCertificate.id}`,{
             userId,
             title,
             description,
-            whenDate
+            whenDate: when_date
         })
 
         const res = await Api.get("certificate/list", userId)
@@ -66,7 +69,7 @@ function CertificateEditForm({setCertificates, currentCertificate,setIsEditing})
                     selected={whenDate}
                     placeholderText="취득날짜"
                     dateFormat = "yyyy.MM.dd(eee)"
-                    onChange={(when_date) => setWhenDate(when_date)}/>
+                    onChange={(whenDate) => setWhenDate(whenDate)}/>
             </Form.Group>
 
             <Form.Group as={Row} className="mt-3 text-center">
