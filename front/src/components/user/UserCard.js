@@ -7,7 +7,7 @@ import * as Api from "../../api";
  
 
 
-function UserCard({ user, setIsEditing, isEditable, isNetwork, basic, fileName}) {
+function UserCard({ user, setIsEditing, isEditable, isNetwork, basic, image}) {
     const navigate = useNavigate();
     const [isSelected, setIsSelected] = useState(false)
     const userState = useContext(UserStateContext)
@@ -28,15 +28,16 @@ function UserCard({ user, setIsEditing, isEditable, isNetwork, basic, fileName})
                         style={{ width: "10rem", height: "8rem" }}
                         className="mb-3"
                         src={basic ? "https://21c-devs-bucket.s3.ap-northeast-2.amazonaws.com/20220324_85770005.png"
-                        : `https://${process.env.AWS_S3_BUCKET}.s3.ap-northeast-2.amazonaws.com/${fileName}`}
+                        : `https://${process.env.AWS_S3_BUCKET}.s3.ap-northeast-2.amazonaws.com/${image}`}
 
-                        alt="기본이미지 (https://21c-devs-bucket.s3.ap-northeast-2.amazonaws.com/20220324_85770005.png 사용)"
+                        
                     />
                 </Row>
                     
 
                     <Card.Title>{user?.name}({user?.nickname}) <span className="ms-3" onClick={() =>{followFollowing()
                     setIsSelected((prev)=>(!prev))}}>
+                     {/* {userState.user === user.id ? } */}
                     {isSelected ? <BsFillPersonXFill/>: <BsFillPersonPlusFill/>}
                         
                     </span ></Card.Title>

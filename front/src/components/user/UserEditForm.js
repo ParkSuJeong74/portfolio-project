@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Button, Form, Card, Col, Row } from "react-bootstrap";
 import * as Api from "../../api";
 
-function UserEditForm({ user, setIsEditing, setUser }) {
+function UserEditForm({ user, setIsEditing, setUser, setImage, setBasic, image }) {
     //useState로 name 상태를 생성함.
     const name = user.name;
     //useState로 email 상태를 생성함.
@@ -11,8 +11,7 @@ function UserEditForm({ user, setIsEditing, setUser }) {
     const nickname = user.nickname
     //useState로 description 상태를 생성함.
     const [description, setDescription] = useState(user.description);
-    const [image, setImage] = useState(user.image);
-    const [basic, setBasic] = useState(false)
+    
     
 
     const handleSubmit = async (e) => {
@@ -93,6 +92,7 @@ function UserEditForm({ user, setIsEditing, setUser }) {
                         onChange={(e) => {
                             console.log(e.target.files)
                             setImage(e.target.files[0])
+                            setBasic(false)
                         }}></input>
                     </Col>
                     <Col>
