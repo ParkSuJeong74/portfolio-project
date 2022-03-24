@@ -2,7 +2,7 @@ import { useState } from "react"
 import {Form,Col,Button,Row} from 'react-bootstrap'
 import DatePicker from 'react-datepicker'
 import * as Api from '../../api'
-import '../../App.css'
+import Style from '../../App.module.css'
 
 
 function CertificateEditForm({setCertificates, currentCertificate,setIsEditing}){
@@ -74,13 +74,13 @@ function CertificateEditForm({setCertificates, currentCertificate,setIsEditing})
 
                 <button
                     type="submit"
-                    className="mvpConfirmButton me-3">
+                    className={Style.mvpConfirmButton}>
                     확인
                 </button>
 
                 <button
                     onClick={() => setIsEditing(false)}
-                    className="mvpCancelButton">
+                    className={Style.mvpCancelButton}>
                     취소
                 </button>
                 

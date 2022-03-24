@@ -11,7 +11,7 @@ import Certificates from "./certificate/Certificates";
 import Awards from "./award/Awards";
 import Projects from "./project/Projects";
 
-import '../App.css'
+import Style from '../App.module.css'
 
 function Portfolio() {
 	const navigate = useNavigate();
@@ -68,12 +68,7 @@ function Portfolio() {
 				/>
 			</Col>
 				
-			<Col xxl={9} style={{
-				backgroundColor: '#E5D6FF',
-				padding: '20px',
-				borderRadius: '15px',
-				marginTop: '20px'
-			}} className="mvpBackground">
+			<Col xxl={9} className={Style.mvpBackground}>
 			
 				<Educations 
 					portfolioOwnerId={portfolioOwner.id}

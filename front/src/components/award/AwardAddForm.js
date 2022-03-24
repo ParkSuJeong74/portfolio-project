@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Button, Form, Col, Row } from "react-bootstrap";
 import * as Api from "../../api";
-import '../../App.css'
+import Style from '../../App.module.css'
 
 function AwardAddForm({ portfolioOwnerId, setAwards, setIsAdding }) {
     //useState로 title 상태를 생성함.
@@ -21,14 +21,14 @@ function AwardAddForm({ portfolioOwnerId, setAwards, setIsAdding }) {
             user_id: portfolioOwnerId,
             title,
             description,
-    });
+        });
 
-    // "awardlist/유저id" 엔드포인트로 get요청함.
-    const res = await Api.get("awardlist", user_id);
-    // awards를 response의 data로 세팅함.
-    setAwards(res.data);
-    // award를 추가하는 과정이 끝났으므로, isAdding을 false로 세팅함.
-    setIsAdding(false);
+        // "awardlist/유저id" 엔드포인트로 get요청함.
+        const res = await Api.get("awardlist", user_id);
+        // awards를 response의 data로 세팅함.
+        setAwards(res.data);
+        // award를 추가하는 과정이 끝났으므로, isAdding을 false로 세팅함.
+        setIsAdding(false);
     };
 
     return (
@@ -42,7 +42,9 @@ function AwardAddForm({ portfolioOwnerId, setAwards, setIsAdding }) {
                 width: 'auto',
                 border: 'solid 2px #DBC7FF'
             }}
-            onChange={(e) => setTitle(e.target.value)}
+            onChange={(e) => {
+                setTitle(e.target.value)
+            }}
         />
         </Form.Group>
 
@@ -63,13 +65,13 @@ function AwardAddForm({ portfolioOwnerId, setAwards, setIsAdding }) {
 
             <button
                 type="submit"
-                className="mvpConfirmButton me-3">
+                className={Style.mvpConfirmButton}>
                 확인
             </button>
 
             <button
                 onClick={() => setIsAdding(false)}
-                className="mvpCancelButton">
+                className={Style.mvpCancelButton}>
                 취소
             </button>
         </Col>

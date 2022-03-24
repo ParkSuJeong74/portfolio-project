@@ -8,27 +8,16 @@ import * as Api from '../../api'
 //편집버튼을 눌렀으면 setIsEditing(false)로 편집폼을 열어줘야 한다.
 function Award({award, setAwards, isEditable}) {
     const [isEditing, setIsEditing] = useState(false)
-    const [isRemoving, setIsRemoving] = useState(false)
 
-    useEffect(() => {
-        if(isRemoving){
-            async function awardRemove(){
-                
-                //currentAward의 user_id를 user_id 변수에 할당함
-                const user_id = award.user_id
-                
-                await Api.delete(`awards/${award.id}`)
-
-                //삭제를 해놨으니까, 다시 get 요청함. 엔드포인트: "awardlist/유저아이디"
-                const res = await Api.get("awardlist", user_id)
-                setAwards(res.data)
-
-                //추가하는 과정이 끝났으니까 isRemoving을 false로 설정하기
-                setIsRemoving(false)
-            }
-            awardRemove()
+    const removeAward = async() => {
+        try{
+            await Api.delete(`awards/${award.id}`)
+            setAwards(prev => prev.filter(item => item.id !== award.id))
+            
+        } catch(err) {
+            console.log(err)
         }
-    }, [isRemoving])
+    }
 
     return (
         <>
@@ -41,7 +30,7 @@ function Award({award, setAwards, isEditable}) {
             ) : (
                 <AwardCard 
                     setIsEditing={setIsEditing}
-                    setIsRemoving={setIsRemoving}
+                    removeAward={removeAward}
                     award={award}
                     isEditable={isEditable}/>
             )}
@@ -50,4 +39,3 @@ function Award({award, setAwards, isEditable}) {
 }
 
 export default Award
-

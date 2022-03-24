@@ -1,7 +1,7 @@
 import { Card, Row, Col } from "react-bootstrap";
-import '../../App.css'
+import Style from '../../App.module.css'
 
-function ProjectCard({ project, isEditable, setIsEditing, setIsRemoving }) {
+function ProjectCard({ project, isEditable, setIsEditing, removeProject }) {
 
   return (
     <Card.Text>
@@ -22,13 +22,13 @@ function ProjectCard({ project, isEditable, setIsEditing, setIsRemoving }) {
           <Col xs={2}>
             <button
               onClick={() => setIsEditing((prev) => !prev)}
-              className="mvpEditButton">
+              className={Style.mvpEditButton}>
                 수정
             </button>
 
             <button
-              onClick={() => setIsRemoving((prev) => !prev)}
-              className="mvpRemoveButton">
+              onClick={() => removeProject()}
+              className={Style.mvpRemoveButton}>
                 삭제
             </button>
           </Col>

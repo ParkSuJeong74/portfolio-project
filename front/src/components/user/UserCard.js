@@ -6,7 +6,8 @@ import { Card, Row, Button, Col } from "react-bootstrap";
 function UserCard({ user, setIsEditing, isEditable, isNetwork }) {
     const navigate = useNavigate();
     return (
-        <Card className="mt-4 mb-2 ms-3 mr-5" style={{ width: "18rem", margin: '0 auto', backgroundColor: '#FCFAFA' }}>
+
+        <Card className="mt-4 mb-2 ms-3 mr-5" style={{ width: "18rem", margin: '0 auto' }}>
             <Card.Body>
                 <Row className="justify-content-md-center">
                     <Card.Img
@@ -17,8 +18,8 @@ function UserCard({ user, setIsEditing, isEditable, isNetwork }) {
                     />
                 </Row>
 
-
-                    <Card.Title>{user?.name}</Card.Title>
+                    <Card.Title>{user?.name} <button>팔로우</button></Card.Title>
+                    
                     <Card.Subtitle className="mb-2 text-muted">{user?.email}</Card.Subtitle>
                     <Card.Text>{user?.description}</Card.Text>
 
@@ -62,14 +63,8 @@ function UserCard({ user, setIsEditing, isEditable, isNetwork }) {
                     포트폴리오
                     </Button>
                 )}
-
-
-
             </Card>
             
-        
-
-
     );
 }
 

@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import {Form, Button, Row,Col} from 'react-bootstrap'
 import * as Api from '../../api'
-import '../../App.css'
+import Style from '../../App.module.css'
 
 
 //현재 award(currentAward)의 title, description을 상태로 설정해야 함
@@ -25,6 +25,7 @@ function AwardEditForm({currentAward, setAwards, setIsEditing}){
 
         //수정을 해놨으니까, 다시 get 요청함. 엔드포인트: "awardlist/유저아이디"
         const res = await Api.get("awardlist", user_id)
+        console.log(res.data)
         setAwards(res.data)
 
         //추가하는 과정이 끝났으니까 isAdding을 false로 설정해서 수정폼을 안보이게 함
@@ -66,13 +67,13 @@ function AwardEditForm({currentAward, setAwards, setIsEditing}){
 
                 <button
                     type="submit"
-                    className="mvpConfirmButton me-3">
+                    className={Style.mvpConfirmButton}>
                     확인
                 </button>
 
                 <button
                     onClick={() => setIsEditing(false)}
-                    className="mvpCancelButton">
+                    className={Style.mvpCancelButton}>
                     취소
                 </button>
                 
@@ -83,4 +84,3 @@ function AwardEditForm({currentAward, setAwards, setIsEditing}){
 }
 
 export default AwardEditForm
-

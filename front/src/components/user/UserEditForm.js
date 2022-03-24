@@ -14,7 +14,7 @@ function UserEditForm({ user, setIsEditing, setUser }) {
         e.preventDefault();
 
         // "users/유저id" 엔드포인트로 PUT 요청함.
-        const res = await Api.put(`users/${user.id}`, {
+        const res = await Api.put(`user/${user.id}`, {
             name,
             email,
             description,

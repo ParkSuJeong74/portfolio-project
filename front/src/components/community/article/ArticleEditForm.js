@@ -1,60 +1,77 @@
 import { useState } from "react"
-import {Form, Row, Col, Button} from 'react-bootstrap'
+import {Form, Row, Col} from 'react-bootstrap'
+import { useNavigate } from "react-router"
+import Style from '../../../App.module.css'
 import * as Api from '../../../api'
 
-function ArticleEditForm({ setArticles, currentArticle, setIsEditing}){
+function ArticleEditForm({ currentArticle, dispatch, setIsEditing}){
+    const {id, author} = currentArticle
+
     const [title, setTitle] = useState(currentArticle.title)
-    const [body, setBody] = useState(currentArticle.body)
+    const [description, setDescription] = useState(currentArticle.description)
+    const [hidden, setHidden] = useState(currentArticle.hidden)
+
+    const navigate = useNavigate()
 
     async function submitHandler(e){
         e.preventDefault()
 
-        const user_id = currentArticle.user_id
+        //TODO: Api put 요청하기!
+        //await Api.put(`articles/${currentArticle.id}`, {
+        //    author,
+        //    title,
+        //    description
+        //})
 
-        await Api.put(`articles/${currentArticle.id}`, {
-            user_id,
-            title,
-            body
+        dispatch({
+            type: 'EDIT',
+            payload: { id, author, title, description, hidden }
         })
-
-        //게시글 수정 후에 다시 게시글리스트 get 요청함
-        const res = await Api.get("articlelist")
-
-        setArticles(res.data)
+        
         setIsEditing(false)
+        navigate('/')
     }
 
     return (
         <Form onSubmit={submitHandler}>
+
+            <Form.Check 
+                type="checkbox"
+                label= "익명"
+                checked = {hidden}
+                onChange={() => setHidden((prev) => !prev)} />
+
             <Form.Group controlId="formBasicTitle">
-                
                 <Form.Control 
                     type="text"
-                    placeholder="수상내역" 
+                    placeholder="제목" 
                     value={title} 
-                    onChange={(e) => setTitle(e.target.value)}
-                />
-                
+                    onChange={(e) => setTitle(e.target.value)} />
             </Form.Group>
 
             <Form.Group controlId="formBasicDescription" className="mt-3">
-                
-                <Form.Control 
-                    type="text" 
-                    placeholder="상세내역"
-                    value={body} 
-                    onChange={(e) => setBody(e.target.value)}
-                />
+                <textarea 
+                    class="form-control"
+                    placeholder="본문"
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)} />
             </Form.Group>
             
-            <Form.Group as={Row} className="text-center mt-3">
+            <Form.Group as={Row} className="text-center mt-3 mb-3">
                 <Col sm={{ span: 20 }}>
-                    <Button className="me-3" variant="primary" type="submit">
+
+                    <button
+                        type="submit"
+                        className={[Style.confirmButton, Style.communityAddButton].join(' ')}>
                         확인
-                    </Button>
-                    <Button variant="secondary" onClick={() => setIsEditing(false)}> 
+                    </button>
+
+                    <button
+                        onClick={() => setIsEditing((prev) => !prev)}
+                        className={Style.cancelButton}>
                         취소
-                    </Button>
+                    </button>
+                    
                 </Col>
             </Form.Group>
         </Form>

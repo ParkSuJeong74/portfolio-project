@@ -15,6 +15,8 @@ function RegisterForm() {
     const [confirmPassword, setConfirmPassword] = useState("");
     //useState로 name 상태를 생성함.
     const [name, setName] = useState("");
+    //useState로 nickname 상태를 생성함.
+    const [nickname, setNickname] = useState("");
 
     //이메일이 abc@example.com 형태인지 regex를 이용해 확인함.
     const validateEmail = (email) => {
@@ -47,6 +49,7 @@ function RegisterForm() {
                 email,
                 password,
                 name,
+                nickname
             });
 
             // 로그인 페이지로 이동함.
@@ -129,6 +132,24 @@ function RegisterForm() {
                             {!isNameValid && (
                             <Form.Text className="text-success">
                                 이름은 2글자 이상으로 설정해 주세요.
+                            </Form.Text>
+                            )}
+                        </Form.Group>
+
+                        <Form.Group controlId="registerName" className="mt-3">
+                            <Form.Label>닉네임</Form.Label>
+                            <Form.Control
+                                type="text"
+                                autoComplete="off"
+                                value={nickname}
+                                style={{
+                                    border: 'solid 2px #DBC7FF'
+                                }}
+                                onChange={(e) => setNickname(e.target.value)}
+                            />
+                            {!isNameValid && (
+                            <Form.Text className="text-success">
+                                닉네임도 2글자 이상으로 설정해 주세요.
                             </Form.Text>
                             )}
                         </Form.Group>

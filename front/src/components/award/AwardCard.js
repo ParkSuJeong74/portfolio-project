@@ -1,10 +1,10 @@
 import {Card, Row, Col, Button} from 'react-bootstrap'
-import '../../App.css'
+import Style from '../../App.module.css'
 
 //등록된 award들
 //AwardCard에서 편집버튼은 isEditable이 true여야 가능함
 //편집 버튼을 클릭하면 isEditing이 true가 되도록 설정
-function AwardCard({award, isEditable, setIsEditing, setIsRemoving}){
+function AwardCard({award, isEditable, setIsEditing, removeAward}){
 
     return (
         <Card.Text>
@@ -22,13 +22,13 @@ function AwardCard({award, isEditable, setIsEditing, setIsRemoving}){
                     <Col xs={2}>
                         <button
                             onClick={() => setIsEditing((prev) => !prev)}
-                            className="mvpEditButton">
+                            className={Style.mvpEditButton}>
                                 수정
                         </button>
 
                         <button
-                            onClick={() => setIsRemoving((prev) => !prev)}
-                            className="mvpRemoveButton">
+                            onClick={() => removeAward()}
+                            className={Style.mvpRemoveButton}>
                                 삭제
                         </button>
                     </Col>
@@ -39,4 +39,3 @@ function AwardCard({award, isEditable, setIsEditing, setIsRemoving}){
 }
 
 export default AwardCard
-

@@ -1,27 +1,33 @@
-import { useContext } from 'react'
+import { useState } from 'react'
 import {ListGroup} from 'react-bootstrap'
-import { CategoryContext, UserStateContext } from '../../../App'
+import { Link } from 'react-router-dom';
+import CategoryCard from './CategoryCard';
+import CategoryEditForm from './CategoryEditForm';
+import Style from '../../../App.module.css'
 
-function Category({category, setIsArticleOpen}){
+function Category({category, setIsArticleOpen, setSelectedCategory, dispatch}){
 
-    const {categoryState, categoryDispatch} = useContext(CategoryContext)
-    
+    // 편집중인지 여부
+    const [isEditing, setIsEditing] = useState(false)
+
     return (
     <>
-        <ListGroup variant="flush">
-            <ListGroup.Item onClick={() => {
-                setIsArticleOpen(true)
-                alert("카테고리를 클릭하면 해당 카테고리에 들어있는 article들을 보여줘야 함.")
+        <ListGroup >
+            {isEditing ? (
+                <CategoryEditForm 
+                    dispatch={dispatch}
+                    setIsEditing={setIsEditing}
+                    currentCategory={category} />
+            ) : (
+                <Link to={`/${category.id}`} className={Style.cateLink}>
+                    <CategoryCard 
+                        setIsArticleOpen={setIsArticleOpen}
+                        setSelectedCategory={setSelectedCategory}
+                        setIsEditing={setIsEditing}
+                        category={category} />
+                </Link>
+            )}
 
-                categoryDispatch({
-                    type: "SET_CATEGORY",
-                    payload: category
-                })
-                {/*클릭된 category정보 하나가 categoryState로 저장될까요..? */}
-                console.log('categoryState? ',categoryState)
-            }}>
-                {category}
-            </ListGroup.Item>
         </ListGroup>
         
     </>

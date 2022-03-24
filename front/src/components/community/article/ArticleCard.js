@@ -1,26 +1,54 @@
-import { Col, Row,Card,Button } from "react-bootstrap";
+import { useState } from "react";
+import { Col, Row,Card } from "react-bootstrap";
+import Style from '../../../App.module.css'
+import RemoveModal from "./RemoveModal";
 
-function ArticleCard({article, isEditable, setIsEditing, owner}){
-    {/*상세내용*/}
+function ArticleCard({article, owner, isLogin, removeArticle, setIsEditing, setIsDetail, setSelectedArticle}){
+
+    //* isEditable은 작성자 = 로그인한 사용자일 때만 가능함
+    const isEditable = isLogin && article.author === owner.name
+
+    const [show, setShow] = useState(false);
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+
     return(
-        
+        <>
         <Card.Text>
-            <Row className="align-items-center">
-                <Col>
-                    <span>{article.title}</span>
+            <Row className={['align-items-center', Style.articleCardText].join(' ')}>
+                
+                <Col onClick = {() => { setIsDetail(true); setSelectedArticle(article) }}>
+                    <span class={Style.articleTitle}>{article.title}</span>
                     <br />
-                    <span className="text-muted">{article.body}</span>
-                    <br />
-                    <span className="text-muted">작성자: {owner.name}</span>
+                    <span className="text-muted">{article.description}</span>
                 </Col>
-                {isEditable && (
-                    <Col>
-                        <Button onClick={() => setIsEditing(true)}>수정</Button>
-                        <Button>삭제</Button>
-                    </Col>
-                )}
+
+                <Col xs={2}>
+                    <span className="ms-2 text-muted">작성자: {article.hidden ? '익명' : article.author}</span>
+                    <br />
+
+                    {isEditable && (
+                        <>
+                            <button
+                                onClick={() => setIsEditing((prev) => !prev)}
+                                className={Style.mvpEditButton}>
+                                    수정
+                            </button>
+
+                            <button
+                                onClick={() => { handleShow() }}
+                                className={Style.mvpRemoveButton}>
+                                    삭제
+                            </button>
+                        </>
+                    )}
+                </Col>
+
             </Row>
         </Card.Text>
+        <RemoveModal show={show} handleClose={handleClose} removeArticle={removeArticle}/>
+        </>
     )
 }
 

@@ -1,25 +1,51 @@
 import { useState } from "react"
 import ArticleCard from "./ArticleCard"
 import ArticleEditForm from "./ArticleEditForm"
+import { Link } from 'react-router-dom'
+import Style from '../../../App.module.css'
 
-function Article({article, setArticles, isEditable, owner}) {
+function Article({category, article, dispatch, owner, isLogin, setIsDetail, setSelectedArticle}) {
+
+    // 편집중 여부
     const [isEditing, setIsEditing] = useState(false)
+
+    function removeArticle(){
+
+        //TODO: Api delete 요청
+        // category정보, article정보 필요
+        //async function removeArticle(){
+        //    try{
+        //      await Api.delete('category이름/article/article아이디')
+        //    } catch(err) {
+        //      console.log(err)
+        //    }
+        //}
+        
+        dispatch({
+            type: 'DELETE',
+            payload: article
+        })
+    }
 
     return (
         <>
             {isEditing ? (
                 <ArticleEditForm 
-                    setArticles={setArticles}
                     currentArticle={article}
-                    setIsEditing={setIsEditing}
-                />
+                    dispatch={dispatch}
+                    setIsEditing={setIsEditing} />
             ) : (
-                <ArticleCard
-                    article={article}
-                    isEditable={isEditable}
-                    setIsEditing={setIsEditing}
-                    owner={owner}
-                />
+                <Link to = {`/${category.id}/${article.title}`} className={Style.articleLink}>
+                    <ArticleCard
+                        className={Style.articleCard}
+                        article={article}
+                        owner={owner}
+                        isLogin={isLogin}
+                        removeArticle={removeArticle}
+                        setIsEditing={setIsEditing}
+                        setIsDetail={setIsDetail}
+                        setSelectedArticle={setSelectedArticle} />
+                </Link>
             )}
         </>
     )

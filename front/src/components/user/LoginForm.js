@@ -59,67 +59,64 @@ function LoginForm() {
     }
     };
 
-    {/*원래 코드
-    <Container>
-        <Row className="justify-content-md-center mt-5">
-        <Col lg={8}> */}
     return (
     
     <Container>
         <Row className="justify-content-md-center mt-5">
         <Col lg={12}>
             <Form onSubmit={handleSubmit}>
-            <Form.Group controlId="loginEmail">
-                <Form.Label>이메일 주소</Form.Label>
-                <Form.Control
-                    type="email"
-                    autoComplete="on"
-                    value={email}
-                    style={{
-                        border: 'solid 2px #DBC7FF'
-                    }}
-                    onChange={(e) => setEmail(e.target.value)}
-                />
-                {!isEmailValid && (
-                <Form.Text className="text-success">
-                    이메일 형식이 올바르지 않습니다.
-                </Form.Text>
-                )}
-            </Form.Group>
+                <Form.Group controlId="loginEmail">
+                    <Form.Label>이메일 주소</Form.Label>
+                    <Form.Control
+                        type="email"
+                        autoComplete="on"
+                        value={email}
+                        style={{
+                            border: 'solid 2px #DBC7FF'
+                        }}
+                        onChange={(e) => setEmail(e.target.value)}
+                    />
+                    {!isEmailValid && (
+                    <Form.Text className="text-success">
+                        이메일 형식이 올바르지 않습니다.
+                    </Form.Text>
+                    )}
+                </Form.Group>
 
-            <Form.Group controlId="loginPassword" className="mt-3">
-                <Form.Label>비밀번호</Form.Label>
-                <Form.Control
-                    type="password"
-                    autoComplete="on"
-                    value={password}
-                    style={{
-                        border: 'solid 2px #DBC7FF'
-                    }}
-                    onChange={(e) => setPassword(e.target.value)}
-                />
-                {!isPasswordValid && (
-                <Form.Text className="text-success">
-                    비밀번호는 4글자 이상입니다.
-                </Form.Text>
-                )}
-            </Form.Group>
+                <Form.Group controlId="loginPassword" className="mt-3">
+                    <Form.Label>비밀번호</Form.Label>
+                    <Form.Control
+                        type="password"
+                        autoComplete="on"
+                        value={password}
+                        style={{
+                            border: 'solid 2px #DBC7FF'
+                        }}
+                        onChange={(e) => setPassword(e.target.value)}
+                    />
+                    {!isPasswordValid && (
+                    <Form.Text className="text-success">
+                        비밀번호는 4글자 이상입니다.
+                    </Form.Text>
+                    )}
+                </Form.Group>
 
-            <Form.Group as={Row} className="mt-3 text-center">
-                <Col sm={{ span: 20 }}>
-                <Button variant="primary" type="submit" disabled={!isFormValid}>
-                    로그인
-                </Button>
-                </Col>
-            </Form.Group>
+                <Form.Group as={Row} className="mt-3 text-center">
+                    <Col sm={{ span: 20 }}>
+                    <Button variant="primary" type="submit" disabled={!isFormValid}>
+                        로그인
+                    </Button>
+                    </Col>
+                </Form.Group>
 
-            <Form.Group as={Row} className="mt-3 text-center">
-                <Col sm={{ span: 20 }}>
-                <Button variant="light" onClick={() => navigate("/register")}>
-                    회원가입하기
-                </Button>
-                </Col>
-            </Form.Group>
+                <Form.Group as={Row} className="mt-3 text-center">
+                    <Col sm={{ span: 20 }}>
+                    <Button variant="light" onClick={() => navigate("/register")}>
+                        회원가입하기
+                    </Button>
+                    </Col>
+                </Form.Group>
+
             </Form>
         </Col>
         </Row>

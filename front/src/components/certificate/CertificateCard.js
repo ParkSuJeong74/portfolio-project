@@ -1,7 +1,7 @@
 import {Card, Button, Col,Row } from 'react-bootstrap'
-import '../../App.css'
+import Style from '../../App.module.css'
 
-function CertificateCard({isEditable, setIsEditing, certificate, setIsRemoving}){
+function CertificateCard({isEditable, setIsEditing, certificate, removeCertificate}){
     return (
         <Card.Text>
             <Row className="align-items-center"
@@ -21,13 +21,13 @@ function CertificateCard({isEditable, setIsEditing, certificate, setIsRemoving})
 
                         <button
                             onClick={() => setIsEditing((prev) => !prev)}
-                            className="mvpEditButton">
+                            className={Style.mvpEditButton}>
                             수정
                         </button>
 
                         <button
-                            onClick={() => setIsRemoving((prev) => !prev)}
-                            className="mvpRemoveButton">
+                            onClick={() => removeCertificate()}
+                            className={Style.mvpRemoveButton}>
                             삭제
                         </button>
 

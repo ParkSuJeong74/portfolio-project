@@ -2,7 +2,7 @@ import { useState } from "react"
 import {Form,Row,Col, Button} from 'react-bootstrap'
 import DatePicker from "react-datepicker";
 import * as Api from '../../api'
-import '../../App.css'
+import Style from '../../App.module.css'
 
 function CertificateAddForm({setCertificates, setIsAdding,portfolioOwnerId }){
     const [title, setTitle] = useState('')
@@ -71,13 +71,13 @@ function CertificateAddForm({setCertificates, setIsAdding,portfolioOwnerId }){
 
                 <button
                     type="submit"
-                    className="mvpConfirmButton me-3">
+                    className={Style.mvpConfirmButton}>
                     확인
                 </button>
 
                 <button
                     onClick={() => setIsAdding(false)}
-                    className="mvpCancelButton">
+                    className={Style.mvpCancelButton}>
                     취소
                 </button>
                 
