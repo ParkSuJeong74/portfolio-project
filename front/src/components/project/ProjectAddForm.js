@@ -3,6 +3,8 @@ import { Form, Col, Row } from "react-bootstrap"
 import * as Api from "../../api"
 import DatePicker from "react-datepicker"
 import Style from '../../App.module.css'
+import {TimeUtil} from '../../common/timeUtil'
+
 
 function ProjectAddForm({ portfolioOwnerId, setProjects, setIsAdding }) {
   //useState로 title 상태를 생성함.
@@ -15,18 +17,20 @@ function ProjectAddForm({ portfolioOwnerId, setProjects, setIsAdding }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    e.stopPropagation()
 
     // portfolioOwnerId를 user_id 변수에 할당함.
     const userId = portfolioOwnerId
+
+    const from_date = (TimeUtil.getTime(fromDate)).toISOString().split('T')[0]
+    const to_date = (TimeUtil.getTime(toDate)).toISOString().split('T')[0]
 
     // "award/create" 엔드포인트로 post요청함.
     await Api.post("project/create", {
       userId: portfolioOwnerId,
       title,
       description,
-      fromDate,
-      toDate,
+      fromDate: from_date,
+      toDate: to_date,
     })
 
     // "awardlist/유저id" 엔드포인트로 get요청함.

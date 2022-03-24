@@ -3,6 +3,8 @@ import { Form, Col, Row } from "react-bootstrap"
 import * as Api from "../../api"
 import DatePicker from "react-datepicker"
 import Style from '../../App.module.css'
+import {TimeUtil} from '../../common/timeUtil'
+
 
 function ProjectEditForm({ currentProject, setProjects, setIsEditing }) {
   //useState로 title 상태를 생성함.
@@ -24,13 +26,16 @@ function ProjectEditForm({ currentProject, setProjects, setIsEditing }) {
     // currentAward의 user_id를 user_id 변수에 할당함.
     const userId = currentProject.userId;
 
+    const from_date = (TimeUtil.getTime(fromDate)).toISOString().split('T')[0]
+    const to_date = (TimeUtil.getTime(toDate)).toISOString().split('T')[0]
+
     // "awards/수상 id" 엔드포인트로 PUT 요청함.
     await Api.put(`project/${currentProject.id}`, {
       userId,
       title,
       description,
-      fromDate,
-      toDate
+      fromDate: from_date,
+      toDate: to_date
     })
 
     // "awardlist/유저id" 엔드포인트로 GET 요청함.
