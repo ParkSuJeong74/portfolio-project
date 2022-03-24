@@ -23,7 +23,7 @@ const emailUtil = {
         await transporter.sendMail({   
             from: process.env.GMAIL_ID, // 보내는 주소 입력
             to: email, // 위에서 선언해준 받는사람 이메일
-            subject: '안녕하세요, 포트폴리오 서비스입니다.', // 메일 제목
+            subject: `안녕하세요, 포트폴리오 서비스입니다.`, // 메일 제목
             html: // 내용
                 message + 
                 `<p>아래의 인증번호를 입력하여 인증을 완료해주세요.</p>` +

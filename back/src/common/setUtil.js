@@ -1,4 +1,4 @@
-class setUtil {
+class SetUtil {
     static compareValues(toUpdate, model) {
         let updateObject = {}
 
@@ -12,4 +12,4 @@ class setUtil {
     }
 }
 
-module.exports = { setUtil }
+module.exports = { SetUtil }

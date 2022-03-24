@@ -22,6 +22,10 @@ app.use(cors())
 // express.urlencoded: 주로 Form submit 에 의해 만들어지는 URL-Encoded 형태의 데이터를 인식하고 핸들링할 수 있게 함.
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
+app.use((req, res, next) => {
+  req.accepts('application/json')
+  next()
+})
 
 app.use(function(req, res, next){
     if(!req.secure){

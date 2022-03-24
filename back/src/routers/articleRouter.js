@@ -2,7 +2,6 @@ const is = require("@sindresorhus/is")
 const { Router } = require("express")
 const { login_required } = require("../middlewares/login_required")
 const { ArticleService } = require("../services/articleService")
-const { timeUtil } = require("../common/timeUtil")
 
 const articleRouter = Router()
 articleRouter.use(login_required)
@@ -17,22 +16,17 @@ articleRouter.post("/create", async (req, res, next) => {
                 "headers의 Content-Type을 application/json으로 설정해주세요"
             )
         }
-
+        
         const userId = req.currentUserId // jwt토큰에서 추출된 로그인 사용자 id
         const author = userId // 지금 로그인 한 사용자 = 게시글 작성자
         const { categoryName, hidden, title, description } = req.body
-        const createdAt = timeUtil.getTime()
-        const updatedAt = timeUtil.getTime()
-        
         const newArticle = await ArticleService.addArticle({
             userId,
             categoryName,
             author,
             hidden,
             title,
-            description,
-            createdAt,
-            updatedAt
+            description
         })
 
         res.status(201).json(newArticle)
@@ -45,7 +39,6 @@ articleRouter.post("/create", async (req, res, next) => {
 articleRouter.get("/:id", async (req, res, next) => {
     try {
         const articleId = req.params.id
-
         const article = await ArticleService.getArticle({ articleId })
 
         res.status(200).send(article)
@@ -60,10 +53,9 @@ articleRouter.put("/:id", async (req, res, next) => {
         const userId = req.currentUserId // jwt토큰에서 추출된 로그인 사용자 id
         const articleId = req.params.id
         const { author, hidden, title, description } = req.body
-        const updatedAt = timeUtil.getTime()
 
         if (userId == author) { // 로그인 사용자 = 게시글 작성자이면
-            const toUpdate = { hidden, title, description, updatedAt }
+            const toUpdate = { hidden, title, description }
             const article = await ArticleService.setArticle({ userId, articleId, toUpdate })
 
             res.status(200).send(article)
@@ -78,7 +70,6 @@ articleRouter.put("/:id", async (req, res, next) => {
 articleRouter.delete("/:id", async (req, res, next) => {
     try {
         const articleId = req.params.id
-
         const result = await ArticleService.deleteArticle({ articleId })
 
         res.status(200).send(result)

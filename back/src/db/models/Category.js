@@ -22,8 +22,8 @@ const Category = {
         const article = await ArticleModel.find({ categoryName: name })
         return { category, article }
     },
-    update : async ({ name, updateObject }) => {
-        const filter = { name : name }
+    update : async ({ categoryName, updateObject }) => {
+        const filter = { name : categoryName }
         const update = { $set : updateObject }
         const option = { returnOriginal: false }
         const updatedCategory = await CategoryModel.findOneAndUpdate(
