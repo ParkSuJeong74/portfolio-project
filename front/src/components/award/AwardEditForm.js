@@ -14,17 +14,17 @@ function AwardEditForm({currentAward, setAwards, setIsEditing}){
         e.stopPropagation()
 
         //currentAward의 user_id를 user_id 변수에 할당함
-        const user_id = currentAward.user_id
+        const userId = currentAward.userId
 
         //수정한 내용들을 put 요청함. 엔드포인트: 'awards/유저아이디'
-        await Api.put(`awards/${currentAward.id}`, {
-            user_id,
+        await Api.put(`award/${currentAward.id}`, {
+            userId,
             title,
             description
         })
 
         //수정을 해놨으니까, 다시 get 요청함. 엔드포인트: "awardlist/유저아이디"
-        const res = await Api.get("awardlist", user_id)
+        const res = await Api.get("award/list", userId)
         console.log(res.data)
         setAwards(res.data)
 
