@@ -170,27 +170,4 @@ userAuthRouter.put("/:id/img/delete",
         }
     })
 
-// userAuthRouter.get('/user/kakao', passports.authenticate('kakao'))
-
-// userAuthRouter.get(process.env.KAKAO_REDIRECT_URL, 
-//   passports.authenticate('kakao', {
-//     failureRedirect: '/user/login',
-//   }),
-//   (req, res) => {
-//     console.log("여긴 들어오나?????")
-//     // 회원가입 이메일, 이름 입력
-//     // 자동 비번 생성.....?
-//     res.redirect('/')
-//   }
-// )
-
-// jwt 토큰 기능 확인용, 삭제해도 되는 라우터임.
-userAuthRouter.get("/afterlogin", login_required, (req, res, next) => {
-    res
-        .status(200)
-        .send(
-            `안녕하세요 ${req.currentUserId}님, jwt 웹 토큰 기능 정상 작동 중입니다.`
-        )
-})
-
 module.exports = { userAuthRouter }
