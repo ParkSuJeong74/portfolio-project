@@ -18,10 +18,10 @@ const ArticleEditForm = ({ currentArticle, dispatch, setIsEditing }) => {
         try {
             //TODO: Api put 요청하기!
             await Api.put(`article/${id}`, {
-                author: author,
-                hidden: hidden,
-                title: title,
-                description: description
+                author,
+                hidden,
+                title,
+                description
             })
 
             dispatch({

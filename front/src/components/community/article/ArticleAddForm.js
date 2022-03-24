@@ -19,9 +19,9 @@ const ArticleAddForm = ({ owner, category, articles, dispatch, setIsAdding }) =>
             //TODO: Api post 요청!
             await Api.post(`article/create`, {
                 categoryName: category.name,
-                hidden: articles.hidden,
-                title: articles.title,
-                description: articles.description
+                hidden,
+                title,
+                description
             })
 
             dispatch({

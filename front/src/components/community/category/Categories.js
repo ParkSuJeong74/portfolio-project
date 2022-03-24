@@ -1,33 +1,26 @@
 import { useState } from 'react'
-import {Card, Row, Col} from 'react-bootstrap'
+import { Card, Row, Col } from 'react-bootstrap'
 import Category from './Category'
 import CategoryAddForm from './CategoryAddForm'
 import * as Api from '../../../api'
 
 import Style from '../../../App.module.css'
+import { useEffect } from 'react/cjs/react.production.min'
 
-function Categories({categories, isLogin, dispatch, setIsArticleOpen, setSelectedCategory}){
-
-    //TODO: Api get 요청하기!
-     // "category/list"로 GET 요청하고, response의 data로 categories를 세팅함.
-    //try ~ catch문 사용하기
-    /*   useEffect(() => {
-        Api.get("category/list").then((res) => setCategories(res.data));
-    }, []); */
-
+const Categories = ({ categories, isLogin, dispatch, setIsArticleOpen, setSelectedCategory }) => {
     // 추가중인지 여부
     const [isAdding, setIsAdding] = useState(false)
 
     return (
         <Card className="mt-4 text-center">
-            <Card.Header 
-                className={Style.cateHeader} 
-                style={{backgroundColor: '#D9DDFF'}}>
-                    전체 게시판
+            <Card.Header
+                className={Style.cateHeader}
+                style={{ backgroundColor: '#D9DDFF' }}>
+                전체 게시판
             </Card.Header>
 
             {categories.map((category) => (
-                <Category 
+                <Category
                     key={category.id}
                     category={category}
                     setIsArticleOpen={setIsArticleOpen}
@@ -42,13 +35,13 @@ function Categories({categories, isLogin, dispatch, setIsArticleOpen, setSelecte
                         <button
                             onClick={() => setIsAdding(true)}
                             className={[Style.formAddButton, Style.communityAddButton].join(' ')}>
-                        </button>                    
+                        </button>
                     </Col>
                 </Row>
             )}
 
             {isAdding && (
-                <CategoryAddForm 
+                <CategoryAddForm
                     setIsAdding={setIsAdding}
                     dispatch={dispatch} />
             )}
