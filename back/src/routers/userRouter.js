@@ -86,12 +86,17 @@ userAuthRouter.get("/current", login_required, async (req, res, next) => {
 userAuthRouter.put("/:id", login_required, async (req, res, next) => {
     try {
         const userId = req.params.id
-        const { nickname, description } = req.body
-        const toUpdate = { nickname, description }
+        if (userId != req.currentUserId) {
+            throw new Error("본인이 아니면 사용자 정보를 편집할 수 없습니다.")
+        } else {
+            const { nickname, description } = req.body
+            const toUpdate = { nickname, description }
 
-        const updatedUser = await userAuthService.setUser({ userId, toUpdate })
+            const updatedUser = await userAuthService.setUser({ userId, toUpdate })
 
-        res.status(200).json(updatedUser)
+            res.status(200).json(updatedUser)
+        }
+        
     } catch (error) {
         next(error)
     }

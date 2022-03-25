@@ -38,8 +38,9 @@ articleRouter.post("/create", async (req, res, next) => {
 // 게시글 상세 페이지 보여주기
 articleRouter.get("/:id", async (req, res, next) => {
     try {
+        const userId = req.currentUserId
         const articleId = req.params.id
-        const article = await ArticleService.getArticle({ articleId })
+        const article = await ArticleService.getArticle({ userId, articleId })
 
         res.status(200).send(article)
 
