@@ -26,8 +26,8 @@ function UserCard({ user, setIsEditing, isEditable, isNetwork, basic, image}) {
                         style={{ width: "10rem", height: "8rem" }}
                         className="mb-3"
                         src={basic ? "https://21c-devs-bucket.s3.ap-northeast-2.amazonaws.com/20220324_85770005.png"
-                        : `https://${process.env.AWS_S3_BUCKET}.s3.ap-northeast-2.amazonaws.com/${image}`}
-
+                        : `https://21c-devs-bucket.s3.ap-northeast-2.amazonaws.com/20220325_19195426.png`}
+                        
                         
                     />
                 </Row>
@@ -44,8 +44,6 @@ function UserCard({ user, setIsEditing, isEditable, isNetwork, basic, image}) {
                     
                     <Card.Subtitle className="mb-2 text-muted">{user?.email}</Card.Subtitle>
                     <Card.Text>{user?.description}</Card.Text>
-
-
 
                     {isEditable && (
                         <Col className="mt-auto">
@@ -66,26 +64,6 @@ function UserCard({ user, setIsEditing, isEditable, isNetwork, basic, image}) {
                         </Col>
                     )}
 
-                
-                <Card.Subtitle className="mb-2 text-muted">{user?.email}</Card.Subtitle>
-                <Card.Text>{user?.description}</Card.Text>
-
-                {isEditable && (
-                    <Col className="mt-auto">
-                        <Row className="mt-3 text-center text-info">
-                            <Col sm={{ span: 20 }}>
-                                <Button style={{ 
-                                border:"solid 2px",
-                                borderRadius: '5px', 
-                                backgroundColor: '#e5d6ff'}} 
-                                    onClick={() => setIsEditing(true)}
-                                >
-                                    편집
-                                </Button>
-                            </Col>
-                        </Row>
-                    </Col>
-                )}
 
                 </Card.Body>
                 {isNetwork && (

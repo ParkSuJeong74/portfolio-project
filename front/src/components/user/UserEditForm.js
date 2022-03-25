@@ -11,22 +11,20 @@ function UserEditForm({ user, setIsEditing, setUser, setImage, setBasic, image }
     const [nickname, setNickname] = useState(user.nickname)
     //useState로 description 상태를 생성함.
     const [description, setDescription] = useState(user.description);
-    
-    
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         // "users/유저id" 엔드포인트로 PUT 요청함.
-        const res = await Api.put(`users/${user.id}`, {
-            name,
+        const res = await Api.put(`user/${user.id}`, {
             nickname,
-            email,
-            description,
-            image
+            description
         });
+
         // 유저 정보는 response의 data임.
         const updatedUser = res.data;
+        console.log('???')
+        console.log(res.data)
         // 해당 유저 정보로 user을 세팅함.
         setUser(updatedUser);
 
@@ -42,7 +40,7 @@ function UserEditForm({ user, setIsEditing, setUser, setImage, setBasic, image }
                 <Form.Group controlId="useEditName" className="mb-3">
                     <Form.Control
                         disabled
-                        type="text"
+                        type="button"
                         placeholder="이름"
                         value={name}
                         
@@ -53,7 +51,7 @@ function UserEditForm({ user, setIsEditing, setUser, setImage, setBasic, image }
                 <Form.Group controlId="userEditEmail" className="mb-3">
                     <Form.Control
                         disabled
-                        type="email"
+                        type="button"
                         placeholder="이메일"
                         value={email}
                         
@@ -96,16 +94,16 @@ function UserEditForm({ user, setIsEditing, setUser, setImage, setBasic, image }
                     </Col>
                     <Col>
                         <Button 
-                        className="mt-2" 
-                        style={{backgroundColor: "#e5d6ff", border:"solid 2px"}}
-                        onClick={()=> setBasic(true)}
+                            className="mt-2" 
+                            style={{backgroundColor: "#e5d6ff", border:"solid 2px"}}
+                            onClick={()=> setBasic(true)}
                         >기본이미지</Button>
                     </Col>    
                 </Row>
                 
                 <Form.Group as={Row} className="mt-3 text-center">
                     <Col sm={{ span: 20 }}>
-                        <Button variant="primary" type="submit" className="me-3" style={{backgroundColor: "#e5d6ff", border:"solid 2px"}}>
+                        <Button onClick={() => setIsEditing(false)}variant="primary" type="submit" className="me-3" style={{backgroundColor: "#e5d6ff", border:"solid 2px"}}>
                         확인
                         </Button>
                         <Button variant="secondary" onClick={() => setIsEditing(false)}>
