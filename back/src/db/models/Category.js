@@ -9,7 +9,7 @@ const Category = {
     },
 
     findAll : async ({}) => {
-        const categorys = await CategoryModel.find({})
+        const categorys = await CategoryModel.find({}).sort({ name: 1 }) // 카테고리명 오름차순
         return categorys
     },
 
@@ -17,11 +17,13 @@ const Category = {
         const category = await CategoryModel.findOne({ name })
         return category
     },
+
     findAllByName : async ({ name }) => {
         const category = await CategoryModel.findOne({ name })
-        const article = await ArticleModel.find({ categoryName: name })
+        const article = await ArticleModel.find({ categoryName: name }).sort({ createdAt: -1 }) // 게시글 최신것부터
         return { category, article }
     },
+    
     update : async ({ categoryName, updateObject }) => {
         const filter = { name : categoryName }
         const update = { $set : updateObject }

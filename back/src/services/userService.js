@@ -65,6 +65,12 @@ const userAuthService = {
         if (!user) {
             throw new Error("가입 내역이 없습니다. 다시 한 번 확인해 주세요.")
         }
+        // 닉네임 중복 검사
+        const findByNicknameUser = await User.findByNickname({ nickname: toUpdate.nickname })
+        if (findByNicknameUser) {
+            throw new Error("이 닉네임은 현재 사용중입니다. 다른 닉네임을 입력해 주세요.")
+        }
+
         const updateObject = SetUtil.compareValues(toUpdate, user)
         user = await User.update({ userId, updateObject })
 

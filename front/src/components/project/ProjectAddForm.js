@@ -4,6 +4,7 @@ import * as Api from "../../api"
 import DatePicker from "react-datepicker"
 import Style from '../../App.module.css'
 import {TimeUtil} from '../../common/timeUtil'
+import dayjs from "dayjs"
 
 
 function ProjectAddForm({ portfolioOwnerId, setProjects, setIsAdding }) {
@@ -14,6 +15,7 @@ function ProjectAddForm({ portfolioOwnerId, setProjects, setIsAdding }) {
 
   const [fromDate, setFromDate] = useState(new Date())
   const [toDate, setToDate] = useState(new Date())
+  const [period, setPeriod] = useState('')
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -21,6 +23,23 @@ function ProjectAddForm({ portfolioOwnerId, setProjects, setIsAdding }) {
     // portfolioOwnerId를 user_id 변수에 할당함.
     const userId = portfolioOwnerId
 
+    
+    const date2 = dayjs(fromDate).format()
+    const date1 = dayjs(toDate).format()
+    console.log(date2, date1)
+    console.log(date1.diff(date2, "year"))
+    
+    if (date1.diff(date2, "year") === 0){
+      if (date1.diff(date2, "month")=== 0){
+        setPeriod(date1.diff(date2, "day"))
+      }
+      else {
+        setPeriod(date1.diff(date2, "month"))
+      }
+    }else{
+      setPeriod(date1.diff(date2,"year"))
+    }
+    console.log(period)
     const from_date = (TimeUtil.getTime(fromDate)).toISOString().split('T')[0]
     const to_date = (TimeUtil.getTime(toDate)).toISOString().split('T')[0]
 
@@ -30,7 +49,7 @@ function ProjectAddForm({ portfolioOwnerId, setProjects, setIsAdding }) {
       title,
       description,
       fromDate: from_date,
-      toDate: to_date,
+      toDate: to_date
     })
 
     // "awardlist/유저id" 엔드포인트로 get요청함.
@@ -90,7 +109,12 @@ function ProjectAddForm({ portfolioOwnerId, setProjects, setIsAdding }) {
               onChange={(toDate) => setToDate(toDate)}
             />
         </Col>
+        <div>{period}</div>
       </Row>
+
+      
+
+
 
       <Form.Group as={Row} className="mt-3 text-center">
         <Col sm={{ span: 20 }}>
