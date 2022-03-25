@@ -5,21 +5,21 @@ import { useState, useContext } from 'react'
 import * as Api from "../../api";
 import UnfollowModal from "./UnfollowModal";
 import { UserStateContext } from '../../App'
+// import * as userDefaultImage from "./user_Default_Image.png"
 
-function UserCard({ user, setIsEditing, isEditable, myID, isNetwork, basic, image }) {
-    const navigate = useNavigate();
-
+function UserCard({ user, setIsEditing, isEditable, myID, isNetwork }) {
+    const navigate = useNavigate()
     const userState = useContext(UserStateContext);
     //Home이랑 Mypage 상에서는 팔로우 버튼 안보이게 하기
     const isNotMyProfileinHome_Mypage = userState.user?.id !== user?.id
     //Network 상에서 자신의 프로필이라면 팔로우 버튼 안보이게 하기
     const isNotMyProfileinNetwork = myID !== user?.id
-
+    
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
-
+    // console.log("user: ", user)
     const followFollowing = async (myID, yourID) => {
         try {
             const check = await Api.get('user', yourID)
@@ -41,7 +41,6 @@ function UserCard({ user, setIsEditing, isEditable, myID, isNetwork, basic, imag
         }
     }
 
-
     return (
         <>
             <Card className="mt-4 mb-2 ms-3 mr-5" style={{ width: "18rem", margin: '0 auto' }}>
@@ -50,8 +49,8 @@ function UserCard({ user, setIsEditing, isEditable, myID, isNetwork, basic, imag
                         <Card.Img
                             style={{ width: "10rem", height: "8rem" }}
                             className="mb-3"
-                            src={basic ? "https://21c-devs-bucket.s3.ap-northeast-2.amazonaws.com/20220324_85770005.png"
-                                : `https://21c-devs-bucket.s3.ap-northeast-2.amazonaws.com/20220325_19195426.png`} />
+                            src={user?.imageName==="none" ? "https://21c-devs-bucket.s3.ap-northeast-2.amazonaws.com/20220324_85770005.png"
+                                : `https://21c-devs-bucket.s3.ap-northeast-2.amazonaws.com/${user?.imageName}`} />
                     </Row>
 
                     <Card.Title>{user?.name}({user?.nickname})
