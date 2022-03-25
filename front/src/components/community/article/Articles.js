@@ -21,7 +21,6 @@ const Articles = ({ isLogin, category, owner }) => {
             try {
                 await Api.get(`category/${category.name}`)
                     .then((res) => {
-                        console.log('res',res.data)
                         articleDispatch({
                             type: 'SET',
                             payload: res.data.article
@@ -32,8 +31,8 @@ const Articles = ({ isLogin, category, owner }) => {
             }
         }
         getData()
-    }, [])
-    console.log(articles)
+    }, [articles])
+
     //* ArticleDetail 컴포넌트로 선택된 게시글을 가져가는 상태값
     const [selectedArticle, setSelectedArticle] = useState(null)
 

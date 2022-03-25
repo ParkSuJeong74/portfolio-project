@@ -14,18 +14,29 @@ function Comments({ isLogin, category, article, owner}) {
 
     //TODO: dummy data로 시연 -> 초기값 []로 바꿔줘야 됨
     //CRUD할 댓글 상태값
-    const [comments, commentDispatch] = useReducer(commentReducer, [{
-        id: 1,
-        writer: '휘인',
-        content: '뭐지',
-        hidden: false
-    }])
+    const [comments, commentDispatch] = useReducer(commentReducer, [])
 
     useEffect(() => {
-        commentDispatch({
-            type: 'SET',
-            payload: comments
-        })
+        //TODO: Api get 요청하기!
+        const getData = async () => {
+            try {
+                await Api.get(`article/${article.id}`)
+                    .then((res) => {
+                        //해당 게시글의 댓글 목록 불러오기
+                        console.log('res전체', res.data)
+                        console.log('res_comment',res.data.comment)
+                        console.log('res_article', res.data.article)
+                        commentDispatch({
+                            type: 'SET',
+                            payload: res.data.comment
+                        })
+                    })
+            } catch (err) {
+                console.log(err)
+            }
+        }
+        getData()
+        
     }, [comments])
 
     // 추가중 여부
@@ -34,17 +45,11 @@ function Comments({ isLogin, category, article, owner}) {
     // * 좋아요 여부
     const [isFine, setIsFine] = useState(false)
 
-    useEffect(() => {
-        //TODO: Api get 요청하기!
-        //해당 게시글의 댓글 목록 불러오기
-        //Api.get("comment/list", owner.id).then((res) => setComments(res.data));
-    }, [owner]);
-
     return (
         <>
             <div class={Style.articleDetails}>
                 <span class={Style.articleDetailTitle}>{article.title}</span>
-                <span class={Style.articleDetailAuthor}>작성자: {article.author}</span>
+                <span class={Style.articleDetailAuthor}>작성자: {article.authorName}</span>
             </div>
 
             <div style={{padding: '30px'}}>
@@ -61,12 +66,14 @@ function Comments({ isLogin, category, article, owner}) {
                         {/* 로그인했을 때만 댓글 추가할 수 있음 */}
                         {isLogin && <FontAwesomeIcon className={Style.commentIcon} onClick={() => setIsAdding((prev) => !prev)} icon={faCommentDots} />}
                     </Card.Title>
+                    
                     {isAdding && (
                         <CommentAddForm 
                             owner={owner}
                             comments={comments}
                             dispatch={commentDispatch}
-                            setIsAdding={setIsAdding} />
+                            setIsAdding={setIsAdding}
+                            article={article} />
                     )}
 
                     {comments.map((comment) => (

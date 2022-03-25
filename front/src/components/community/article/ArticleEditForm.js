@@ -1,13 +1,17 @@
-import { useState } from "react"
+import { useContext, useState } from "react"
 import { Form, Row, Col } from 'react-bootstrap'
 import { useNavigate } from "react-router"
 import Style from '../../../App.module.css'
 import * as Api from '../../../api'
+import { UserStateContext } from "../../../App"
 
 const ArticleEditForm = ({ currentArticle, dispatch, setIsEditing }) => {
     const { id, author } = currentArticle
-    console.log(currentArticle)
 
+    const userState = useContext(UserStateContext)
+    const userId = userState.user?.id
+    console.log(userId)
+    
     const [hidden, setHidden] = useState(currentArticle.hidden)
     const [title, setTitle] = useState(currentArticle.title)
     const [description, setDescription] = useState(currentArticle.description)
@@ -19,6 +23,7 @@ const ArticleEditForm = ({ currentArticle, dispatch, setIsEditing }) => {
         try {
             //TODO: Api put 요청하기!
             await Api.put(`article/${id}`, {
+                userId,
                 author,
                 hidden,
                 title,
