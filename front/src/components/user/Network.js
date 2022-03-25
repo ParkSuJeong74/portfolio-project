@@ -12,8 +12,6 @@ function Network() {
     // useState 훅을 통해 users 상태를 생성함.
     const [users, setUsers] = useState([]);
 
-
-
     //현재 로그인한 자기 아이디
     const myID = userState.user?.id
 
