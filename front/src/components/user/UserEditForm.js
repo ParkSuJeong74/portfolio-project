@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { useState } from "react";
 import { Button, Form, Card, Col, Row } from "react-bootstrap";
 import * as Api from "../../api";
@@ -23,10 +24,27 @@ function UserEditForm({ user, setIsEditing, setUser, setImage, setBasic, image }
 
         // 유저 정보는 response의 data임.
         const updatedUser = res.data;
-        
         // 해당 유저 정보로 user을 세팅함.
         setUser(updatedUser);
 
+        //* 이미지 put 요청하기
+        async function sender(){
+            const formData = new FormData()
+
+            formData.set("image", image)
+            console.log(formData)
+
+            return await axios({
+                method: 'PUT',
+                data: formData,
+                url: `http://localhost:5001/user/${user.id}/img`,
+                headers: {
+                    "Content-Type": "multipart/form-data"
+                }
+            })
+        }   
+        sender().then(console.log)
+    
         // isEditing을 false로 세팅함.
         setIsEditing(false);
     };
@@ -82,6 +100,7 @@ function UserEditForm({ user, setIsEditing, setUser, setImage, setBasic, image }
                             style={{marginTop: 5}} 
                             type="file" 
                             name="attachment"
+                            accept='image/*'
                             
                             onChange={(e) => {
                                 console.log(e.target.files)
