@@ -20,11 +20,11 @@ const Articles = ({ isLogin, category, owner }) => {
         const getData = async () => {
             try {
                 await Api.get(`category/${category.name}`)
-                    .then((req, res) => {
-                        console.log('res',res)
+                    .then((res) => {
+                        console.log('res',res.data)
                         articleDispatch({
                             type: 'SET',
-                            payload: res.data
+                            payload: res.data.article
                         })
                     })
             } catch (err) {

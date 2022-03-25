@@ -33,8 +33,6 @@ const ArticleAddForm = ({ owner, category, articles, dispatch, setIsAdding }) =>
                 }
             })
 
-            console.log()
-
             setIsAdding(false)
         } catch (err) {
             console.log(err)
