@@ -7,7 +7,7 @@ import UnfollowModal from "./UnfollowModal";
 
 function UserCard({ user, setIsEditing, isEditable, myID, isNetwork, basic, image}) {
     const navigate = useNavigate();
-
+    
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
