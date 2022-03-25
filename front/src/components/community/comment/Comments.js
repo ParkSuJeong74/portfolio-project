@@ -23,9 +23,7 @@ function Comments({ isLogin, category, article, owner}) {
                 await Api.get(`article/${article.id}`)
                     .then((res) => {
                         //해당 게시글의 댓글 목록 불러오기
-                        console.log('res전체', res.data)
-                        console.log('res_comment',res.data.comment)
-                        console.log('res_article', res.data.article)
+
                         commentDispatch({
                             type: 'SET',
                             payload: res.data.comment
@@ -42,8 +40,45 @@ function Comments({ isLogin, category, article, owner}) {
     // 추가중 여부
     const [isAdding, setIsAdding] = useState(false);
 
-    // * 좋아요 여부
+     // 좋아요 여부
     const [isFine, setIsFine] = useState(false)
+    
+    async function liking(){
+        const res = await Api.put(`article/${article.id}/like`, {
+            userId: owner.id,
+            author: article.author
+        })
+        
+        console.log(res.data)
+    } 
+
+    /* const [likedUser, setLikedUser] = useState([])
+
+    if(isFine){
+        let isExist = likedUser.find((id) => id === owner.id)
+        //likedUser에 존재하면 
+        if(isExist){
+            let filtered = likedUser.filter((person) => person !== owner.id)
+            //likedUser = filtered
+            setLikedUser(filtered)
+        }
+        else{
+            likedUser.push(owner.id)
+            setLikedUser((prev) => [...prev, owner.id])
+        }
+    } 
+    
+    // lkedUser(좋아요한 사람 목록)에 현재 로그인한 사용자가 있다면 true가 됨 -> 버튼 클릭한 스타일로 만들기!!
+    const isButtonColoring = likedUser.find((id) => id === owner.id)
+    console.log('likedUser', likedUser)
+    console.log('isButtonColoring', isButtonColoring)   */  
+
+    console.log('li',article.likeUserIdList)
+
+    const likeUserIdList = article.likeUserIdList
+
+    //좋아요한 user 리스트에 현재 owner id가 있으면 값이 true, 없으면 값이 false
+    const isButtonColoring = likeUserIdList.find((id) => id === owner.id)
 
     return (
         <>
@@ -52,11 +87,19 @@ function Comments({ isLogin, category, article, owner}) {
                 <span class={Style.articleDetailAuthor}>작성자: {article.authorName}</span>
             </div>
 
+            
             <div style={{padding: '30px'}}>
                 <div class={Style.articleDetailDesc}>{article.description}</div>
-                <button onClick={() => setIsFine((prev) => !prev)}
-                        style={{ color: isFine ? 'white' : '#5960c0', backgroundColor: isFine ? '#5960c0' : 'white' }}
+
+                <button onClick={() => {
+                                    setIsFine((prev) => !prev)
+                                    liking()
+                                }}
+                        style={{ color: isButtonColoring ? 'white' : '#5960c0', 
+                                backgroundColor: isButtonColoring ? '#5960c0' : 'white' }}
                         class={Style.fineIcon}><FontAwesomeIcon icon={faThumbsUp} /></button>
+
+                <div>좋아요 {article.likeCount}</div>
             </div>
 
             <Card>
@@ -66,7 +109,7 @@ function Comments({ isLogin, category, article, owner}) {
                         {/* 로그인했을 때만 댓글 추가할 수 있음 */}
                         {isLogin && <FontAwesomeIcon className={Style.commentIcon} onClick={() => setIsAdding((prev) => !prev)} icon={faCommentDots} />}
                     </Card.Title>
-                    
+
                     {isAdding && (
                         <CommentAddForm 
                             owner={owner}

@@ -4,14 +4,14 @@ import { Col, Row, Form, Modal } from 'react-bootstrap';
 
 const PasswordChangeModal = ({ onConfirm, onCancel }) => {
   const [email, setEmail] = useState('');
-  const [resonseCode, setResponseCode] = useState(null);
+  const [responseCode, setResponseCode] = useState(null);
   const [inputCode, setInputCode] = useState('');
   const [isCodeMatched, setIsCodeMatched] = useState(false);
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
   const onCheckCodeMatch = () => {
-    if (resonseCode === inputCode) setIsCodeMatched(true);
+    if (responseCode.data === Number(inputCode)) setIsCodeMatched(true);
   };
 
   const onClickPasswordAuthentication = async () => {
@@ -26,11 +26,7 @@ const PasswordChangeModal = ({ onConfirm, onCancel }) => {
     }
   };
 
-  const onClickPasswordAuthenticationConfirm = async (
-    email,
-    newPassword,
-    confirmPassword
-  ) => {
+  const onClickPasswordAuthenticationConfirm = async () => {
     try {
       console.log('email 확인');
       await Api.put('password/change', {
@@ -42,9 +38,6 @@ const PasswordChangeModal = ({ onConfirm, onCancel }) => {
     } catch (error) {
       console.log(error);
     }
-  };
-  const validation = (newPassword, confirmPassword) => {
-    return newPassword !== confirmPassword;
   };
 
   return (
@@ -121,8 +114,8 @@ const PasswordChangeModal = ({ onConfirm, onCancel }) => {
               <Col sm={{ span: 20 }}>
                 <button
                   onClick={() => {
-                    if (validation(newPassword, confirmPassword))
-                      onClickPasswordAuthenticationConfirm();
+                    if (newPassword === confirmPassword)
+                        onClickPasswordAuthenticationConfirm();
                   }}
                   type="submit"
                   className="mvpConfirmButton me-3"

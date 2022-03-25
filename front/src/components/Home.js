@@ -54,24 +54,22 @@ function Home(){
 	// CRU할 카테고리 상태값
 	const [categories, categoryDispatch] = useReducer(categoryReducer,[])
 
-	/* useEffect(() => {
-		async function getData(){
-			try{
-				await Api.get('category/list').then((req, res) => {
-					categoryDispatch({
-						type: 'SET',
-						payload: res.data
-					})
-				})
-			} catch(err){
-				console.log(err)
-			}
-		}
-		getData()
-    }, [categories]) */
-
 	//* category 컴포넌트 내에서 선택된 카테고리를 가져오는 상태값
 	const [selectedCategory, setSelectedCategory] = useState({})
+
+	// 초기화면에서 공지사항 게시판이 바로 보이도록 하는 상태
+	const [IsinitialCategory, setIsinitialCategory] = useState(true)
+
+	//초기화면에 나올 카테고리 가져오기
+	const [initialCategory, setInitialCategory] = useState({})
+
+	useEffect(() => {
+		const categoryName = '*공지사항*'
+		Api.get(`category/${categoryName}`).then((res) => {
+
+		setInitialCategory(res.data.category)
+		})
+	}, [])
 
     //로그인하지 않아도 게시글은 볼 수 있음 
     //로그인했을 때만 글작성할 수 있음
@@ -94,10 +92,19 @@ function Home(){
 						isLogin={isLogin}
 						dispatch={categoryDispatch}
 						setIsArticleOpen={setIsArticleOpen}
-						setSelectedCategory={setSelectedCategory} />	
+						setSelectedCategory={setSelectedCategory}
+						setIsinitialCategory={setIsinitialCategory}/>	
 				</Col>
 
 				<Col xxl={9} className="mb-4">
+					{IsinitialCategory && (
+						<Articles
+							isLogin={isLogin}
+							owner={owner} 
+							//initialCategory 넣어야됨
+							category={initialCategory} />
+					)}
+
 					{IsArticleOpen && (
 						<Articles
 							isLogin={isLogin}

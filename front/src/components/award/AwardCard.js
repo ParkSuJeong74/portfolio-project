@@ -10,7 +10,7 @@ function AwardCard({award, isEditable, setIsEditing, removeAward}){
         <Card.Text>
             <Row className="align-items-center"
                 style={{paddingLeft: '28px'}}>
-                <Col>
+                <Col className="mb-3">
                     <span style={{
                         fontWeight: 'bold',
                         fontSize: '1.2rem',

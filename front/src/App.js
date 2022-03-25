@@ -10,6 +10,7 @@ import Network from "./components/user/Network"
 import RegisterForm from "./components/user/RegisterForm"
 import Portfolio from "./components/Portfolio"
 import Home from './components/Home'
+import Footer from "./components/Footer"
 export const UserStateContext = createContext(null)
 export const DispatchContext = createContext(null)
 
@@ -69,6 +70,7 @@ function App() {
                         <Route path="/userlist" element={<Network />} />
                         <Route path="*" element={<Home />} />
                     </Routes>
+                    <Footer />
                 </Router>
 
             </UserStateContext.Provider>

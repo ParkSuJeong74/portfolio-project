@@ -1,34 +1,34 @@
 import { useEffect, useState } from 'react'
-import {Card, Row, Col} from 'react-bootstrap'
+import { Card, Row, Col } from 'react-bootstrap'
 import Category from './Category'
 import CategoryAddForm from './CategoryAddForm'
 import * as Api from '../../../api'
 
 import Style from '../../../App.module.css'
 
-function Categories({categories, isLogin, dispatch, setIsArticleOpen, setSelectedCategory}){
+function Categories({ categories, isLogin, dispatch, setIsArticleOpen, setSelectedCategory, setIsinitialCategory }) {
     useEffect(() => {
-        async function getData(){
-			try{
-				await Api.get('category/list').then((res) => {
-					dispatch({
-						type: 'SET',
-						payload: res.data
-					})
-				})
-			} catch(err){
-				console.log(err)
-			}
-		}
-		getData()
+        async function getData() {
+            try {
+                await Api.get('category/list').then((res) => {
+                    dispatch({
+                        type: 'SET',
+                        payload: res.data
+                    })
+                })
+            } catch (err) {
+                console.log(err)
+            }
+        }
+        getData()
     }, [categories])
-		
+
 
     // 추가중인지 여부
     const [isAdding, setIsAdding] = useState(false)
 
     return (
-        <Card className="mt-4 text-center">
+        <Card className="mt-4 mb-4 text-center">
             <Card.Header
                 className={Style.cateHeader}
                 style={{ backgroundColor: '#D9DDFF' }}>
@@ -41,6 +41,7 @@ function Categories({categories, isLogin, dispatch, setIsArticleOpen, setSelecte
                     category={category}
                     setIsArticleOpen={setIsArticleOpen}
                     setSelectedCategory={setSelectedCategory}
+                    setIsinitialCategory={setIsinitialCategory}
                     dispatch={dispatch} />
             ))}
 

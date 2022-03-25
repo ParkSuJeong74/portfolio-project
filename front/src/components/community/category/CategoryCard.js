@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPencil } from "@fortawesome/free-solid-svg-icons"
 import Style from '../../../App.module.css'
 
-function CategoryCard({setIsArticleOpen, setSelectedCategory, setIsEditing, category}){
+function CategoryCard({setIsArticleOpen, setSelectedCategory, setIsEditing, category, setIsinitialCategory}){
 
     return (
         <ListGroup.Item 
@@ -12,6 +12,7 @@ function CategoryCard({setIsArticleOpen, setSelectedCategory, setIsEditing, cate
             onClick={() => {
                 setIsArticleOpen(true)
                 setSelectedCategory(category)
+                setIsinitialCategory(false)
             }}>
 
             <OverlayTrigger
