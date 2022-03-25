@@ -129,7 +129,7 @@ userAuthRouter.put("/follow/:id", login_required, async (req, res, next) => {
     }
 })
 
-userAuthRouter.put("/:id/img",
+userAuthRouter.post("/:id/img",
     login_required,
     s3Upload(),
     async (req, res, next) => {
@@ -151,7 +151,7 @@ userAuthRouter.put("/:id/img",
         }
     })
 
-userAuthRouter.put("/:id/img/delete",
+userAuthRouter.post("/:id/img/delete",
     login_required,
     async (req, res, next) => {
         try {
