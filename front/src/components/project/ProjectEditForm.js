@@ -6,6 +6,7 @@ import Style from '../../App.module.css'
 import {TimeUtil} from '../../common/timeUtil'
 
 
+
 function ProjectEditForm({ currentProject, setProjects, setIsEditing }) {
   //useState로 title 상태를 생성함.
   const [title, setTitle] = useState(currentProject.title)
@@ -19,6 +20,10 @@ function ProjectEditForm({ currentProject, setProjects, setIsEditing }) {
     new Date(currentProject.toDate)
   )
 
+  
+
+  
+
   const handleSubmit = async (e) => {
     e.preventDefault()
     e.stopPropagation()
@@ -28,6 +33,13 @@ function ProjectEditForm({ currentProject, setProjects, setIsEditing }) {
 
     const from_date = (TimeUtil.getTime(fromDate)).toISOString().split('T')[0]
     const to_date = (TimeUtil.getTime(toDate)).toISOString().split('T')[0]
+    console.log(from_date)
+    console.log(to_date)
+
+    
+
+
+
 
     // "awards/수상 id" 엔드포인트로 PUT 요청함.
     await Api.put(`project/${currentProject.id}`, {
