@@ -9,6 +9,7 @@ function UserCard({ user, setIsEditing, isEditable, myID, isNetwork, basic, imag
     const navigate = useNavigate();
 
     const [show, setShow] = useState(false);
+    
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
@@ -54,6 +55,7 @@ function UserCard({ user, setIsEditing, isEditable, myID, isNetwork, basic, imag
                         followFollowing(myID, user?.id)
                         //isfollowYou ? 'unFollow' : 'handleFollow'
                     }}/>
+                    {/* {isfollowed ? <BsFillPersonPlusFill/> : <BsFillPersonXFill/>} */}
                     
                     
                     </span >
