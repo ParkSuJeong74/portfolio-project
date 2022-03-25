@@ -32,8 +32,8 @@ const Articles = ({ isLogin, category, owner }) => {
             }
         }
         getData()
-    }, [articles])
-    
+    }, [])
+    console.log(articles)
     //* ArticleDetail 컴포넌트로 선택된 게시글을 가져가는 상태값
     const [selectedArticle, setSelectedArticle] = useState(null)
 

@@ -6,7 +6,8 @@ import { faCheck } from "@fortawesome/free-solid-svg-icons"
 import * as Api from '../../../api'
 
 function CategoryEditForm({ dispatch, setIsEditing, currentCategory}){
-    const {userId, id} = currentCategory
+
+    console.log(currentCategory)
     const [name, setName] = useState(currentCategory.name)
     const [description, setDescription] = useState(currentCategory.description)
     
@@ -19,7 +20,7 @@ function CategoryEditForm({ dispatch, setIsEditing, currentCategory}){
 
             dispatch({
                 type: 'EDIT',
-                payload: {id, userId, name}
+                payload: {name, description}
             })
 
             setIsEditing(false)

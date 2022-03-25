@@ -23,11 +23,11 @@ export const categoryReducer = (state, action) => {
         case 'SET':
             return action.payload
         case 'ADD':
-            return [...state, { userId, name, description}]
+            return [...state, { name, description}]
         case 'EDIT':
             return state.map((category) =>
                 category.id === action.payload.id
-                ? {userId, name}
+                ? { name, description}
                 : category
             )
         case 'DELETE':
@@ -38,16 +38,16 @@ export const categoryReducer = (state, action) => {
 }
 
 export const articleReducer = (state, action) => {
-    const {categoryName, author, title, description, hidden} = action.payload
+    const {categoryName, author, title, description, hidden, authorName} = action.payload
     switch(action.type){
         case 'SET':
             return action.payload
         case 'ADD':
-            return [...state, {categoryName, author, title, description, hidden}]
+            return [...state, {categoryName, author, title, description, hidden, authorName}]
         case 'EDIT':
             return state.map((article) => 
                 article.id === action.payload.id
-                ? {categoryName, author, title, description, hidden}
+                ? {categoryName, author, title, description, hidden, authorName}
                 : article
             )
         case 'DELETE':

@@ -6,6 +6,7 @@ import * as Api from '../../../api'
 
 const ArticleEditForm = ({ currentArticle, dispatch, setIsEditing }) => {
     const { id, author } = currentArticle
+    console.log(currentArticle)
 
     const [hidden, setHidden] = useState(currentArticle.hidden)
     const [title, setTitle] = useState(currentArticle.title)

@@ -4,9 +4,8 @@ import Style from '../../../App.module.css'
 import RemoveModal from "./RemoveModal";
 
 function ArticleCard({article, owner, isLogin, removeArticle, setIsEditing, setIsDetail, setSelectedArticle}){
-
     //* isEditable은 작성자 = 로그인한 사용자일 때만 가능함
-    const isEditable = isLogin && article.author === owner.name
+    const isEditable = isLogin && article.author === owner.id
 
     const [show, setShow] = useState(false);
 
@@ -25,7 +24,7 @@ function ArticleCard({article, owner, isLogin, removeArticle, setIsEditing, setI
                 </Col>
 
                 <Col xs={2}>
-                    <span className="ms-2 text-muted">작성자: {article.hidden ? '익명' : article.author}</span>
+                    <span className="ms-2 text-muted">작성자: {article.hidden ? '익명' : article.authorName}</span>
                     <br />
 
                     {isEditable && (

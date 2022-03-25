@@ -1,24 +1,42 @@
 import { useNavigate } from "react-router-dom";
 import { Card, Row, Button, Col } from "react-bootstrap";
 import { BsFillPersonPlusFill, BsFillPersonXFill } from "react-icons/bs";
-import {useState, useContext} from 'react'
-import {UserStateContext} from '../../App'
+import {useState} from 'react'
 import * as Api from "../../api";
+import UnfollowModal from "./UnfollowModal";
 
-function UserCard({ user, setIsEditing, isEditable, isNetwork, basic, image}) {
+function UserCard({ user, setIsEditing, isEditable, myID, isNetwork, basic, image}) {
     const navigate = useNavigate();
-    const [isSelected, setIsSelected] = useState(false)
-    const userState = useContext(UserStateContext)
-    const followFollowing = async (userId, userId2) => {
 
-        try {
-            await Api.post(`/following/${userState.id}/${user.id}`) 
-        }  catch (err) {
-            console.error(err)
+    const [show, setShow] = useState(false);
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+
+    const followFollowing = async (myID, yourID) => {
+        try{
+            const check = await Api.get('user', yourID)
+            //선택한 유저가 내가 이미 팔로우한 사람인지 여부, true -> '팔로우한 상태', false -> '팔로우 안한 상태'
+            const isfollowed = check.data.follower.find((follower) => follower === myID)
+            const currentFollow = isfollowed ? ('팔로우한 상태입니다.') : ('팔로우한 상태가 아닙니다.')
+            console.log(currentFollow)
+            //팔로우 안한 상태가 맞으면 팔로우 시작하기!
+            if(!isfollowed){
+                const res = await Api.put(`user/follow/${myID}`, {userIdYour: yourID})
+                alert("팔로우되었습니다!")
+                console.log(res)
+            }
+            else{
+                handleShow()
+            }
+        } catch(err){
+            console.log(err)
         }
-        
     }
+    
+
     return (
+        <>
         <Card className="mt-4 mb-2 ms-3 mr-5" style={{ width: "18rem", margin: '0 auto' }}>
             <Card.Body>
                 <Row className="justify-content-md-center">
@@ -29,15 +47,21 @@ function UserCard({ user, setIsEditing, isEditable, isNetwork, basic, image}) {
                         : `https://21c-devs-bucket.s3.ap-northeast-2.amazonaws.com/20220325_19195426.png`} />
                 </Row>
                     
-                <Card.Title>{user?.name}({user?.nickname}) <span className="ms-3" onClick={() =>{followFollowing()
-                setIsSelected((prev)=>(!prev))}}>
-                    {/* {userState.user === user.id ? } */}
-                {isSelected ? <BsFillPersonXFill/>: <BsFillPersonPlusFill/>}
+                <Card.Title>{user?.name}({user?.nickname}) 
+                    <span className="ms-3">
+
+                    <BsFillPersonPlusFill onClick={() => {
+                        followFollowing(myID, user?.id)
+                        //isfollowYou ? 'unFollow' : 'handleFollow'
+                    }}/>
                     
-                </span ></Card.Title>
+                    
+                    </span >
+                </Card.Title>
 
                 <Card.Subtitle className="mb-2 text-muted">{user?.email}</Card.Subtitle>
                 <Card.Text>{user?.description}</Card.Text>
+
 
                 {isEditable && (
                     <Col className="mt-auto">
@@ -59,22 +83,26 @@ function UserCard({ user, setIsEditing, isEditable, isNetwork, basic, image}) {
                 )}
 
                 </Card.Body>
-                {isNetwork && (
-                    <Button
-                        className="mt-auto mb-2"
-                        href="#"
-                        onClick={() => navigate(`/user/${user.id}`)}
-                        style={{
-                            margin: 'auto',  
-                            border:"solid 2px",
-                            borderRadius: '5px', 
-                            backgroundColor: '#e5d6ff'
-                            }}
-                    >
-                    포트폴리오
-                    </Button>
-                )}
-            </Card>
+            {isNetwork && (
+                <Button
+                    className="mt-auto mb-2"
+                    href="#"
+                    onClick={() => navigate(`/user/${user.id}`)}
+                    style={{
+                        margin: 'auto',  
+                        border:"solid 2px",
+                        borderRadius: '5px', 
+                        backgroundColor: '#e5d6ff'
+                        }}
+                >
+                포트폴리오
+                </Button>
+            )}
+        </Card>
+
+        <UnfollowModal handleClose={handleClose} show={show}
+            myID = {myID} yourID={user?.id}/>
+        </>
             
     );
 }

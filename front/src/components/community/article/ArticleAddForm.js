@@ -19,6 +19,7 @@ const ArticleAddForm = ({ owner, category, articles, dispatch, setIsAdding }) =>
         try {
             //TODO: Api post 요청!
             await Api.post(`article/create`, {
+                author: owner.id,
                 categoryName,
                 hidden,
                 title,
@@ -28,9 +29,11 @@ const ArticleAddForm = ({ owner, category, articles, dispatch, setIsAdding }) =>
             dispatch({
                 type: 'ADD',
                 payload: {
-                    categoryName, author: owner.name, title, description, hidden
+                    categoryName, author: owner.id, title, description, hidden, authorName: owner.name
                 }
             })
+
+            console.log()
 
             setIsAdding(false)
         } catch (err) {

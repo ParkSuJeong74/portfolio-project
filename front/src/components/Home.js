@@ -54,7 +54,7 @@ function Home(){
 	// CRU할 카테고리 상태값
 	const [categories, categoryDispatch] = useReducer(categoryReducer,[])
 
-	useEffect(() => {
+	/* useEffect(() => {
 		async function getData(){
 			try{
 				await Api.get('category/list').then((req, res) => {
@@ -68,7 +68,7 @@ function Home(){
 			}
 		}
 		getData()
-    }, [categories])
+    }, [categories]) */
 
 	//* category 컴포넌트 내에서 선택된 카테고리를 가져오는 상태값
 	const [selectedCategory, setSelectedCategory] = useState({})

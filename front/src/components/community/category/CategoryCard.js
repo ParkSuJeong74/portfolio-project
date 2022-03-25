@@ -1,10 +1,10 @@
-import {ListGroup} from 'react-bootstrap'
+import {Button, ListGroup, OverlayTrigger, Tooltip} from 'react-bootstrap'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPencil } from "@fortawesome/free-solid-svg-icons"
 import Style from '../../../App.module.css'
 
 function CategoryCard({setIsArticleOpen, setSelectedCategory, setIsEditing, category}){
-    
+
     return (
         <ListGroup.Item 
             className={Style.categoryItem} 
@@ -14,7 +14,18 @@ function CategoryCard({setIsArticleOpen, setSelectedCategory, setIsEditing, cate
                 setSelectedCategory(category)
             }}>
 
-            {category.name}
+            <OverlayTrigger
+                key='right'
+                placement='right'
+                overlay={
+                    <Tooltip id={`tooltip-right`}>
+                    {category.description}
+                    </Tooltip>
+                }
+                >
+                <span>{category.name}</span>
+            </OverlayTrigger>
+            
             
             <FontAwesomeIcon 
                 className="ms-1" 

@@ -4,10 +4,8 @@ import { Button, Form, Card, Col, Row } from "react-bootstrap";
 import * as Api from "../../api";
 
 function UserEditForm({ user, setIsEditing, setUser, setImage, setBasic, image }) {
-    //useState로 name 상태를 생성함.
-    const name = user.name;
-    //useState로 email 상태를 생성함.
-    const email = user.email;
+
+    const {name, email} = user
 
     const [nickname, setNickname] = useState(user.nickname)
     //useState로 description 상태를 생성함.

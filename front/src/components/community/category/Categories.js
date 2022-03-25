@@ -7,6 +7,22 @@ import * as Api from '../../../api'
 import Style from '../../../App.module.css'
 
 function Categories({categories, isLogin, dispatch, setIsArticleOpen, setSelectedCategory}){
+    useEffect(() => {
+        async function getData(){
+			try{
+				await Api.get('category/list').then((res) => {
+					dispatch({
+						type: 'SET',
+						payload: res.data
+					})
+				})
+			} catch(err){
+				console.log(err)
+			}
+		}
+		getData()
+    }, [])
+		
 
     // 추가중인지 여부
     const [isAdding, setIsAdding] = useState(false)
