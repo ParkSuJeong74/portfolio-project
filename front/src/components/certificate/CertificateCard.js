@@ -6,7 +6,7 @@ function CertificateCard({isEditable, setIsEditing, certificate, removeCertifica
         <Card.Text>
             <Row className="align-items-center"
                 style={{paddingLeft: '28px'}}>
-                <Col>
+                <Col className="mb-3">
                     <span style={{
                         fontWeight: 'bold',
                         fontSize: '1.2rem',

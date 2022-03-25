@@ -7,7 +7,7 @@ import Style from '../../../App.module.css'
 function ArticleDetail({category, setIsDetail, selectedArticle, isLogin, owner}){
 
     const navigate = useNavigate()
-console.log(selectedArticle)
+
     return(
         <>
             <span class={Style.backButton} onClick={() => {

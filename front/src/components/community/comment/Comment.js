@@ -6,8 +6,6 @@ import * as Api from '../../../api'
 function Comment({owner, comment, dispatch, isLogin}) {
     const [isEditing, setIsEditing] = useState(false)
 
-    console.log('comment', comment)
-    console.log('owner', owner)
     //* 댓글 작성자 = 로그인한 사용자 일 때만 수정, 삭제 가능함
     const isEditable = isLogin && comment.userId === owner.id
 
