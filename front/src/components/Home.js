@@ -78,13 +78,14 @@ function Home(){
 
     //owner: 로그인한 사용자
     //owner.id: 로그인한 사용자 아이디
-
+console.log(owner)
     return (
 		<Container>
 			<Row xs={1} xxl={2}>
 				<Col md="3" lg="3" xxl={3}>
 					{isLogin ? (
-						<User />
+						<User 
+							portfolioOwnerId={userState.user?.id}/>
 					) : (
 						<LoginForm />
 					)}
