@@ -12,6 +12,7 @@ const PasswordChangeModal = ({ onConfirm, onCancel }) => {
 
   const onCheckCodeMatch = () => {
     if (responseCode.data === Number(inputCode)) setIsCodeMatched(true);
+    else alert("인증번호가 일치하지 않습니다.")
   };
 
   const onClickPasswordAuthentication = async () => {
@@ -35,6 +36,7 @@ const PasswordChangeModal = ({ onConfirm, onCancel }) => {
         confirmPassword,
       });
       onConfirm();
+      alert("비밀번호가 성공적으로 변경되었습니다.")
     } catch (error) {
       console.log(error);
     }
