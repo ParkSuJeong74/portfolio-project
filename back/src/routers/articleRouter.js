@@ -17,13 +17,13 @@ articleRouter.post("/create", async (req, res, next) => {
             )
         }
         
-        const userId = req.currentUserId // jwt토큰에서 추출된 로그인 사용자 id
-        const author = userId // 지금 로그인 한 사용자 = 게시글 작성자
-        const { categoryName, hidden, title, description } = req.body
+        //const userId = req.currentUserId // jwt토큰에서 추출된 로그인 사용자 id
+        //const author = userId // 지금 로그인 한 사용자 = 게시글 작성자
+        const { categoryName, hidden, title, description, author } = req.body
         const newArticle = await ArticleService.addArticle({
-            userId,
             categoryName,
             author,
+            userId: author,
             hidden,
             title,
             description

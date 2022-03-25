@@ -6,6 +6,7 @@ import * as Api from '../../../api'
 
 const ArticleEditForm = ({ currentArticle, dispatch, setIsEditing }) => {
     const { id, author } = currentArticle
+    console.log(currentArticle)
 
     const [hidden, setHidden] = useState(currentArticle.hidden)
     const [title, setTitle] = useState(currentArticle.title)
@@ -26,7 +27,7 @@ const ArticleEditForm = ({ currentArticle, dispatch, setIsEditing }) => {
 
             dispatch({
                 type: 'EDIT',
-                payload: { id, author, title, description, hidden }
+                payload: { author, title, description, hidden }
             })
 
             setIsEditing(false)

@@ -1,13 +1,29 @@
-import { useState } from 'react'
-import { Card, Row, Col } from 'react-bootstrap'
+import { useEffect, useState } from 'react'
+import {Card, Row, Col} from 'react-bootstrap'
 import Category from './Category'
 import CategoryAddForm from './CategoryAddForm'
 import * as Api from '../../../api'
 
 import Style from '../../../App.module.css'
-import { useEffect } from 'react/cjs/react.production.min'
 
-const Categories = ({ categories, isLogin, dispatch, setIsArticleOpen, setSelectedCategory }) => {
+function Categories({categories, isLogin, dispatch, setIsArticleOpen, setSelectedCategory}){
+    useEffect(() => {
+        async function getData(){
+			try{
+				await Api.get('category/list').then((res) => {
+					dispatch({
+						type: 'SET',
+						payload: res.data
+					})
+				})
+			} catch(err){
+				console.log(err)
+			}
+		}
+		getData()
+    }, [])
+		
+
     // 추가중인지 여부
     const [isAdding, setIsAdding] = useState(false)
 

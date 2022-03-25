@@ -11,7 +11,7 @@ function Certificates({portfolioOwnerId, isEditable}){
     const [isAdding, setIsAdding] = useState(false)
 
     useEffect(() => {
-        Api.get("certificatelist", portfolioOwnerId).then((res) => setCertificates(res.data))
+        Api.get("certificate/list", portfolioOwnerId).then((res) => setCertificates(res.data))
     }, [portfolioOwnerId])
 
     return (

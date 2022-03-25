@@ -23,9 +23,7 @@ function Header() {
     };
 
     async function withdraw(){
-        const user_id = userState.user?.id
-        console.log('user_id는', user_id)
-        await Api.delete(`users/${user_id}`)
+        await Api.delete(`user/${userState.user?.id}`)
 
         console.log('회원이 탈퇴되었습니다.')
 
@@ -36,8 +34,7 @@ function Header() {
     const naviagationInformations = [
         {title: 'HOME', link: '/'},
         {title: '마이페이지', link: '/portfolio'},
-        {title: '네트워크', link: '/network'},
-        
+        {title: '유저리스트', link: '/userlist'},
     ]
 
     return (

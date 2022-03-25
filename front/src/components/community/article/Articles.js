@@ -12,7 +12,6 @@ import { articleReducer } from '../../../reducer'
 //category(객체)에는 현재 카테고리 정보
 const Articles = ({ isLogin, category, owner }) => {
 
-    //TODO: dummy data로 UI 시연 -> 초기값 []로 바꿔야 됨!
     //CRUD할 게시글 상태값
     const [articles, articleDispatch] = useReducer(articleReducer, [])
 
@@ -22,18 +21,19 @@ const Articles = ({ isLogin, category, owner }) => {
             try {
                 await Api.get(`category/${category.name}`)
                     .then((req, res) => {
+                        console.log('res',res)
                         articleDispatch({
                             type: 'SET',
                             payload: res.data
                         })
-                    }, [articles])
+                    })
             } catch (err) {
                 console.log(err)
             }
         }
         getData()
-    })
-    
+    }, [])
+    console.log(articles)
     //* ArticleDetail 컴포넌트로 선택된 게시글을 가져가는 상태값
     const [selectedArticle, setSelectedArticle] = useState(null)
 

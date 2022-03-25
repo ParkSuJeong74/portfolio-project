@@ -13,7 +13,7 @@ function Projects({ portfolioOwnerId, isEditable }) {
 
   useEffect(() => {
     // "projectlist/유저id"로 GET 요청하고, response의 data로 projects를 세팅함.
-    Api.get("projectlist", portfolioOwnerId).then((res) => setProjects(res.data));
+    Api.get("project/list", portfolioOwnerId).then((res) => setProjects(res.data));
   }, [portfolioOwnerId]);
 
   return (

@@ -51,20 +51,24 @@ function Home(){
 	//* 특정 카데고리를 클릭하면 해당하는 article들을 이제 보여줌
 	const [IsArticleOpen, setIsArticleOpen] = useState(false)
 
-	//TODO: dummy data로 UI 시연 -> 나중엔 []로 바꿔야 됨
 	// CRU할 카테고리 상태값
-	const [categories, categoryDispatch] = useReducer(categoryReducer,[{
-		id: 1,
-		userId: '정미예요',
-		name: '저녁메뉴'
-	}])
+	const [categories, categoryDispatch] = useReducer(categoryReducer,[])
 
-	useEffect(() => {
-        categoryDispatch({
-            type: 'SET',
-            payload: categories
-        })
-    }, [categories])
+	/* useEffect(() => {
+		async function getData(){
+			try{
+				await Api.get('category/list').then((req, res) => {
+					categoryDispatch({
+						type: 'SET',
+						payload: res.data
+					})
+				})
+			} catch(err){
+				console.log(err)
+			}
+		}
+		getData()
+    }, [categories]) */
 
 	//* category 컴포넌트 내에서 선택된 카테고리를 가져오는 상태값
 	const [selectedCategory, setSelectedCategory] = useState({})

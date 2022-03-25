@@ -18,7 +18,7 @@ function CommentAddForm({ owner, comments, dispatch, setIsAdding }) {
         //const user_id = owner.id
         // "comment/create" 엔드포인트로 post요청함.
         /* await Api.post("comment/create", {
-            user_id,
+            userId,
             content,
             hidden
         }); */

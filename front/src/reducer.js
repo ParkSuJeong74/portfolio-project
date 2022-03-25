@@ -18,16 +18,16 @@ export function userReducer(userState, action) {
 }
 
 export const categoryReducer = (state, action) => {
-    const {id, userId, name} = action.payload
+    const {userId, name, description} = action.payload
     switch(action.type){
         case 'SET':
             return action.payload
         case 'ADD':
-            return [...state, {id: state.length+1, userId, name}]
+            return [...state, { name, description}]
         case 'EDIT':
             return state.map((category) =>
                 category.id === action.payload.id
-                ? {id, userId, name}
+                ? { name, description}
                 : category
             )
         case 'DELETE':
@@ -38,16 +38,16 @@ export const categoryReducer = (state, action) => {
 }
 
 export const articleReducer = (state, action) => {
-    const {id, author, title, description, hidden} = action.payload
+    const {categoryName, author, title, description, hidden, authorName} = action.payload
     switch(action.type){
         case 'SET':
             return action.payload
         case 'ADD':
-            return [...state, {id: state.length+1, author, title, description, hidden}]
+            return [...state, {categoryName, author, title, description, hidden, authorName}]
         case 'EDIT':
             return state.map((article) => 
                 article.id === action.payload.id
-                ? {id, author, title, description, hidden}
+                ? {categoryName, author, title, description, hidden, authorName}
                 : article
             )
         case 'DELETE':
@@ -58,16 +58,16 @@ export const articleReducer = (state, action) => {
 }
 
 export const commentReducer = (state, action) => {
-    const {id, writer, content, hidden} = action.payload
+    const {writer, content, hidden} = action.payload
     switch(action.type){
         case 'SET':
             return action.payload
         case 'ADD':
-            return [...state, {id: state.length+1, writer, content, hidden}]
+            return [...state, { writer, content, hidden}]
         case 'EDIT':
             return state.map((comment) => 
-                comment.id === id
-                ? {id, writer, content, hidden}
+                comment.id === action.payload.id
+                ? { writer, content, hidden}
                 : comment
             )
         case 'DELETE':

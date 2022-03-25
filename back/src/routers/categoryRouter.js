@@ -13,8 +13,7 @@ categoryRouter.post('/create', login_required, async (req, res, next) => {
                 "headers의 Content-Type을 application/json으로 설정해주세요."
             )
         }
-        const { name, description} = req.body
-        const userId = req.currentUserId
+        const { name, description, userId} = req.body
         const newCategory = await CategoryService.addCategory({
             userId,
             name,

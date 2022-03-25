@@ -28,8 +28,6 @@ function Comments({ isLogin, category, article, owner}) {
         })
     }, [comments])
 
-    //const [selectedComment, setSelectedComment] = useState(null)
-
     // 추가중 여부
     const [isAdding, setIsAdding] = useState(false);
 

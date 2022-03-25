@@ -63,12 +63,13 @@ function App() {
                         <Route path="/:categoryId/:articleName" element={<Home />} />
                         <Route path="/login" element={<LoginForm />} />
                         <Route path="/register" element={<RegisterForm />} />
-                        <Route path="/users/:userId" element={<Portfolio />} />
+                        <Route path="/user/:userId" element={<Portfolio />} />
                         <Route path="/portfolio" element={<Portfolio />} />
-                        <Route path="/network" element={<Network />} />
+                        <Route path="/userlist" element={<Network />} />
                         <Route path="*" element={<Home />} />
                     </Routes>
                 </Router>
+
             </UserStateContext.Provider>
         </DispatchContext.Provider>
     );

@@ -9,8 +9,8 @@ const Article = {
         return createdNewArticle
     },
     // userId로 회원 정보 찾기
-    findByUserId: async ({ user_id }) => {
-        const user = await UserModel.findOne({ id: user_id })
+    findByUserId: async ({ userId }) => {
+        const user = await UserModel.findOne({ id: userId })
         return user
     },
     // id로 게시글+댓글 찾기

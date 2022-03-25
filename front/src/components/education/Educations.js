@@ -11,8 +11,14 @@ function Educations({ portfolioOwnerId, isEditable }) {
     const [isAdding, setIsAdding] = useState(false)
 
     useEffect(() => {
-        Api.get("educationlist", portfolioOwnerId).then((res) => setEducations(res.data))
-        
+        async function getData(){
+            try{
+                await Api.get("education/list", portfolioOwnerId).then((res) => setEducations(res.data))
+            } catch(err) {
+                console.log(err)
+            }
+        }
+        getData()
     }, [portfolioOwnerId])
 
     return (
