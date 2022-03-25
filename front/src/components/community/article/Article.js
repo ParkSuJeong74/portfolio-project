@@ -3,7 +3,7 @@ import ArticleCard from "./ArticleCard"
 import ArticleEditForm from "./ArticleEditForm"
 import { Link } from 'react-router-dom'
 import Style from '../../../App.module.css'
-import * as Api from '../../api'
+import * as Api from '../../../api'
 
 const Article = ({ category, article, dispatch, owner, isLogin, setIsDetail, setSelectedArticle }) => {
     // 편집중 여부

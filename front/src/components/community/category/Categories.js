@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import {Card, Row, Col} from 'react-bootstrap'
 import Category from './Category'
 import CategoryAddForm from './CategoryAddForm'
@@ -7,13 +7,6 @@ import * as Api from '../../../api'
 import Style from '../../../App.module.css'
 
 function Categories({categories, isLogin, dispatch, setIsArticleOpen, setSelectedCategory}){
-
-    //TODO: Api get 요청하기!
-     // "category/list"로 GET 요청하고, response의 data로 categories를 세팅함.
-    //try ~ catch문 사용하기
-    /*   useEffect(() => {
-        Api.get("category/list").then((res) => setCategories(res.data));
-    }, []); */
 
     // 추가중인지 여부
     const [isAdding, setIsAdding] = useState(false)

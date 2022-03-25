@@ -1,10 +1,12 @@
 import { useNavigate } from "react-router-dom";
 import { Card, Row, Button, Col } from "react-bootstrap";
+import { useEffect, useState } from "react";
+import * as Api from '../../api'
 
-function UserCard({ user, setIsEditing, isEditable, isNetwork }) {
+function UserCard({ user, setIsEditing, isEditable, isfollowing, setYourID, isNetwork }) {
     const navigate = useNavigate();
-    return (
 
+    return (
         <Card className="mt-4 mb-2 ms-3 mr-5" style={{ width: "18rem", margin: '0 auto' }}>
             <Card.Body>
                 <Row className="justify-content-md-center">
@@ -16,27 +18,36 @@ function UserCard({ user, setIsEditing, isEditable, isNetwork }) {
                     />
                 </Row>
 
-                    <Card.Title>{user?.name} ({user?.nickname}) </Card.Title>
-                    
-                    <Card.Subtitle className="mb-2 text-muted">{user?.email}</Card.Subtitle>
-                    <Card.Text>{user?.description}</Card.Text>
+                <Card.Title>
+                    {user?.name} ({user?.nickname}) 
+                    <button 
+                        onClick={() => {
+                            setYourID(user?.id)
+                        }}
+                        style={{backgroundColor: isfollowing ? 'blue': 'white',
+                                color: isfollowing ? 'white' : 'blue'}}>팔로우</button>
+                    {isfollowing && (<span>팔로우완료상태</span>)}
+                </Card.Title>
+                
+                <Card.Subtitle className="mb-2 text-muted">{user?.email}</Card.Subtitle>
+                <Card.Text>{user?.description}</Card.Text>
 
-                    {isEditable && (
-                        <Col className="mt-auto">
-                            <Row className="mt-3 text-center text-info">
-                                <Col sm={{ span: 20 }}>
-                                    <Button style={{ 
-                                    border:"solid 2px",
-                                    borderRadius: '5px', 
-                                    backgroundColor: '#e5d6ff'}} 
-                                        onClick={() => setIsEditing(true)}
-                                    >
-                                        편집
-                                    </Button>
-                                </Col>
-                            </Row>
-                        </Col>
-                    )}
+                {isEditable && (
+                    <Col className="mt-auto">
+                        <Row className="mt-3 text-center text-info">
+                            <Col sm={{ span: 20 }}>
+                                <Button style={{ 
+                                border:"solid 2px",
+                                borderRadius: '5px', 
+                                backgroundColor: '#e5d6ff'}} 
+                                    onClick={() => setIsEditing(true)}
+                                >
+                                    편집
+                                </Button>
+                            </Col>
+                        </Row>
+                    </Col>
+                )}
 
                 </Card.Body>
                 {isNetwork && (

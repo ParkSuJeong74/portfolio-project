@@ -9,6 +9,7 @@ import Style from '../../../App.module.css'
 const ArticleAddForm = ({ owner, category, articles, dispatch, setIsAdding }) => {
     const [title, setTitle] = useState('')
     const [description, setDescription] = useState('')
+    const categoryName = category.name
 
     //* 익명버튼 상태
     const [hidden, setHidden] = useState(false)
@@ -18,16 +19,16 @@ const ArticleAddForm = ({ owner, category, articles, dispatch, setIsAdding }) =>
         try {
             //TODO: Api post 요청!
             await Api.post(`article/create`, {
-                categoryName: category.name,
-                hidden: articles.hidden,
-                title: articles.title,
-                description: articles.description
+                categoryName,
+                hidden,
+                title,
+                description
             })
 
             dispatch({
                 type: 'ADD',
                 payload: {
-                    author: owner.name, title, description, hidden
+                    categoryName, author: owner.name, title, description, hidden
                 }
             })
 

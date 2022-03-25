@@ -26,7 +26,7 @@ const ArticleEditForm = ({ currentArticle, dispatch, setIsEditing }) => {
 
             dispatch({
                 type: 'EDIT',
-                payload: { id, author, title, description, hidden }
+                payload: { author, title, description, hidden }
             })
 
             setIsEditing(false)
