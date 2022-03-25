@@ -17,6 +17,7 @@ articleRouter.post("/create", async (req, res, next) => {
             )
         }
         
+
         //const userId = req.currentUserId // jwt토큰에서 추출된 로그인 사용자 id
         //const author = userId // 지금 로그인 한 사용자 = 게시글 작성자
         const { categoryName, hidden, title, description, author } = req.body
@@ -38,8 +39,9 @@ articleRouter.post("/create", async (req, res, next) => {
 // 게시글 상세 페이지 보여주기
 articleRouter.get("/:id", async (req, res, next) => {
     try {
+        const userId = req.currentUserId
         const articleId = req.params.id
-        const article = await ArticleService.getArticle({ articleId })
+        const article = await ArticleService.getArticle({ userId, articleId })
 
         res.status(200).send(article)
 
