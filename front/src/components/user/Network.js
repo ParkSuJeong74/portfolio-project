@@ -24,14 +24,8 @@ function Network() {
         }
 
         // "userlist" 엔드포인트로 GET 요청을 하고, users를 response의 data로 세팅함.
-        // * 유저 리스트에서 자신은 빼도록 했음
-        Api.get("user/list").then((res) => {
-            const userArray = res.data
+        Api.get("user/list").then((res) => setUsers(res.data));
 
-            const notMYuserArray = userArray.filter((user) => user.id !== myID)
-
-            setUsers(notMYuserArray)
-        });
     }, [userState, navigate]);
 
     return (

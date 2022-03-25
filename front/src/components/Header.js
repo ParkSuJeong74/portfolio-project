@@ -23,10 +23,10 @@ function Header() {
     };
 
     async function withdraw(){
+        console.log(userState.user?.id)
         await Api.delete(`user/${userState.user?.id}`)
 
         console.log('회원이 탈퇴되었습니다.')
-
         // 로그인 페이지로 이동함.
         navigate("/login");
     }
@@ -40,7 +40,7 @@ function Header() {
     return (
 
         <div className={Style.navBar}>
-            <div style= {{fontSize: '2.5em', fontFamily: 'Rosarivo'}}>MY PORTFOLIO</div>
+            <div style= {{fontSize: '2.5em'}}>MY PORTFOLIO</div>
             <ul style={{ gap: 30 }} className={Style.navItems}>
                 {naviagationInformations.map((navigationItem) => (
                     <li

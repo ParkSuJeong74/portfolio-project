@@ -1,12 +1,19 @@
 import { useNavigate } from "react-router-dom";
 import { Card, Row, Button, Col } from "react-bootstrap";
 import { BsFillPersonPlusFill, BsFillPersonXFill } from "react-icons/bs";
-import {useState} from 'react'
+import {useState, useContext} from 'react'
 import * as Api from "../../api";
 import UnfollowModal from "./UnfollowModal";
+import {UserStateContext} from '../../App'
 
 function UserCard({ user, setIsEditing, isEditable, myID, isNetwork, basic, image}) {
     const navigate = useNavigate();
+
+    const userState = useContext(UserStateContext);
+    //Home이랑 Mypage 상에서는 팔로우 버튼 안보이게 하기
+    const isNotMyProfileinHome_Mypage = userState.user?.id !== user?.id
+    //Network 상에서 자신의 프로필이라면 팔로우 버튼 안보이게 하기
+    const isNotMyProfileinNetwork = myID !== user?.id
 
     const [show, setShow] = useState(false);
 
@@ -50,17 +57,18 @@ function UserCard({ user, setIsEditing, isEditable, myID, isNetwork, basic, imag
                 <Card.Title>{user?.name}({user?.nickname}) 
                     <span className="ms-3">
 
-                    <BsFillPersonPlusFill onClick={() => {
-                        followFollowing(myID, user?.id)
-                        //isfollowYou ? 'unFollow' : 'handleFollow'
-                    }}/>
-                    
-                    
+                    {isNotMyProfileinHome_Mypage && isNotMyProfileinNetwork && (
+                        <BsFillPersonPlusFill onClick={() => {
+                            followFollowing(myID, user?.id)
+                        }}/>
+                    )}
+
                     </span >
                 </Card.Title>
 
                 <Card.Subtitle className="mb-2 text-muted">{user?.email}</Card.Subtitle>
                 <Card.Text>{user?.description}</Card.Text>
+                <Card.Text>following {user?.followerCount} / follower {user?.followingCount}</Card.Text>
 
 
                 {isEditable && (
@@ -71,8 +79,6 @@ function UserCard({ user, setIsEditing, isEditable, myID, isNetwork, basic, imag
                                 border:"solid 2px",
                                 borderRadius: '5px', 
                                 backgroundColor: '#e5d6ff'}} 
-                                    
-                                    
                                     onClick={() => setIsEditing(true)}
                                 >
                                     편집

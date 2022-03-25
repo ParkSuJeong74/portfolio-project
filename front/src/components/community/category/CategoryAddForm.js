@@ -7,7 +7,7 @@ import * as Api from '../../../api'
 function CategoryAddForm({setIsAdding, dispatch}){
     const userState = useContext(UserStateContext)
     const userId = userState.user.id
-console.log(userId)
+
     const [name, setName] = useState('')
     const [description, setDescription] = useState('')
 

@@ -32,6 +32,7 @@ function CategoryEditForm({ dispatch, setIsEditing, currentCategory}){
     return (
         <ListGroup.Item className={Style.categoryItem}>
             <input 
+                style={{marginRight: '25px'}}
                 type="text" 
                 value={name} 
                 onChange={(e) => setName(e.target.value)}/>
@@ -41,7 +42,7 @@ function CategoryEditForm({ dispatch, setIsEditing, currentCategory}){
                 value={description} 
                 onChange={(e) => setDescription(e.target.value)}/>
 
-            <span style={{marginLeft: '1rem'}} onClick={() => editCategory()}>
+            <span style={{marginLeft: '10px'}} onClick={() => editCategory()}>
                     <FontAwesomeIcon icon={faCheck} />
             </span>
         </ListGroup.Item>
