@@ -4,6 +4,7 @@ import * as Api from "../../api"
 import DatePicker from "react-datepicker"
 import Style from '../../App.module.css'
 import {TimeUtil} from '../../common/timeUtil'
+import dayjs from "dayjs"
 
 
 function ProjectAddForm({ portfolioOwnerId, setProjects, setIsAdding }) {
@@ -14,15 +15,28 @@ function ProjectAddForm({ portfolioOwnerId, setProjects, setIsAdding }) {
 
   const [fromDate, setFromDate] = useState(new Date())
   const [toDate, setToDate] = useState(new Date())
+  const [period, setPeriod] = useState('')
 
   const handleSubmit = async (e) => {
     e.preventDefault()
 
     // portfolioOwnerId를 user_id 변수에 할당함.
     const userId = portfolioOwnerId
+    //.format("YYYY-MM-DD")
+    let from_date = dayjs(fromDate)
+    let to_date = dayjs(toDate)
 
-    const from_date = (TimeUtil.getTime(fromDate)).toISOString().split('T')[0]
-    const to_date = (TimeUtil.getTime(toDate)).toISOString().split('T')[0]
+    // if (to_date.diff(from_date, "year") > 0){
+    //   setPeriod(`${to_date.diff(from_date, "year")}년 동안`)
+    // } else if (to_date.diff(from_date, "month") > 0){
+    //   setPeriod(`${to_date.diff(from_date, "month")}개월 동안`)
+    //   console.log(to_date.diff(from_date, "month"))
+    // } else {
+    //   setPeriod(`${to_date.diff(from_date, "day")}일 동안`)
+    // }
+    
+    from_date = dayjs(fromDate).format("YYYY-MM-DD")
+    to_date = dayjs(toDate).format("YYYY-MM-DD")
 
     // "award/create" 엔드포인트로 post요청함.
     await Api.post("project/create", {
@@ -30,7 +44,7 @@ function ProjectAddForm({ portfolioOwnerId, setProjects, setIsAdding }) {
       title,
       description,
       fromDate: from_date,
-      toDate: to_date,
+      toDate: to_date
     })
 
     // "awardlist/유저id" 엔드포인트로 get요청함.
@@ -90,8 +104,9 @@ function ProjectAddForm({ portfolioOwnerId, setProjects, setIsAdding }) {
               onChange={(toDate) => setToDate(toDate)}
             />
         </Col>
-      </Row>
 
+        
+      </Row>
       <Form.Group as={Row} className="mt-3 text-center">
         <Col sm={{ span: 20 }}>
           

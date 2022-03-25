@@ -16,6 +16,7 @@ function UserCard({ user, setIsEditing, isEditable, myID, isNetwork, basic, imag
     const isNotMyProfileinNetwork = myID !== user?.id
 
     const [show, setShow] = useState(false);
+    
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
