@@ -30,7 +30,6 @@ function UserEditForm({ user, setIsEditing, setUser, setBasic }) {
             //* 이미지 put 요청하기
             if (isNone) {
                 Api.post(`user/${user.id}/img/delete`).then((res) => {
-                    console.log("none 설정한 유저정보 : ", res.data.updatedUser)
                     setUser(res.data.updatedUser)
                 })
             } else {
@@ -48,16 +47,8 @@ function UserEditForm({ user, setIsEditing, setUser, setBasic }) {
                     formData,
                     config
                 ).then((res) => {
-                    console.log("이미지 업로드한 유저정보 : ", res.data.updatedUser)
                     setUser(res.data.updatedUser)
                 })
-
-
-
-
-
-
-
             }
             // isEditing을 false로 세팅함.
             setIsEditing(false)
