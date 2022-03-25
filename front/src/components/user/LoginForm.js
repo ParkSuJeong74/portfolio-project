@@ -1,9 +1,10 @@
 import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { Container, Col, Row, Form, Button } from "react-bootstrap";
+import { Container, Col, Row, Form, Button, Modal } from "react-bootstrap";
 
 import * as Api from "../../api";
 import { DispatchContext } from "../../App";
+import findPassword from './findPassword'
 
 function LoginForm() {
     const navigate = useNavigate();
@@ -59,12 +60,22 @@ function LoginForm() {
         }
     };
 
-    return (
-    
+    const [show, setShow] = useState(false);
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+
+    {/*원래 코드
     <Container>
         <Row className="justify-content-md-center mt-5">
-        <Col lg={12}>
-            <Form onSubmit={handleSubmit}>
+        <Col lg={8}> */}
+    return (
+    
+    <>
+        <Container>
+            <Row className="justify-content-md-center mt-5">
+            <Col lg={12}>
+                <Form onSubmit={handleSubmit}>
                 <Form.Group controlId="loginEmail">
                     <Form.Label>이메일 주소</Form.Label>
                     <Form.Control
@@ -103,24 +114,72 @@ function LoginForm() {
 
                 <Form.Group as={Row} className="mt-3 text-center">
                     <Col sm={{ span: 20 }}>
-                    <Button variant="primary" type="submit" disabled={!isFormValid}>
+                    <Button className="me-5" variant="primary" type="submit" disabled={!isFormValid}>
                         로그인
+                    </Button>
+                    <Button  variant="light" onClick={() => navigate("/register")}>
+                        회원가입
                     </Button>
                     </Col>
                 </Form.Group>
 
                 <Form.Group as={Row} className="mt-3 text-center">
                     <Col sm={{ span: 20 }}>
-                    <Button variant="light" onClick={() => navigate("/register")}>
-                        회원가입하기
+                    <Button style={{backgroundColor: "#FF87D2" , border: 'solid 2px'}} onClick={() => {
+                        handleShow()
+                        
+                        }}>
+                        비밀번호 찾기
                     </Button>
                     </Col>
                 </Form.Group>
+                </Form>
+            </Col>
+            </Row>
+        </Container>
+        <Modal show={show} onHide={handleClose}>
+            <Modal.Header closeButton>
+                <Modal.Title>비밀번호 찾기</Modal.Title>
+            </Modal.Header>
 
-            </Form>
-        </Col>
-        </Row>
-    </Container>
+            <Modal.Body>
+                <Form.Group controlId="inputEmail">
+                    <Row>
+                        <Col>
+                            <Form.Control
+                                type="text"
+                                placeholder="이메일 입력"
+                            />
+                        </Col>    
+                        <Col>
+                            <button className="mt-2">인증번호 요청</button>
+                        </Col>
+                    </Row>
+                </Form.Group>
+                <Form.Group controlId="certificationNumber">
+                    <Row>
+                        <Col>
+                            <Form.Control
+                                type="text"
+                                placeholder="인증번호 입력"
+                                className="mt-3"
+                            />
+                        </Col> 
+                        <Col>   
+                            <button className="mt-4">확인</button>
+                        </Col>
+                    </Row>
+                </Form.Group>
+
+
+            </Modal.Body>
+
+            
+        </Modal>
+    </>
+
+
+
     );
 }
 

@@ -36,9 +36,11 @@ function RegisterForm() {
     // 이름이 2글자 이상인지 여부를 확인함.
     const isNameValid = name.length >= 2;
 
+    const isNicknameValid = nickname.length >= 2
+
     // 위 4개 조건이 모두 동시에 만족되는지 여부를 확인함.
     const isFormValid =
-    isEmailValid && isPasswordValid && isPasswordSame && isNameValid;
+    isEmailValid && isPasswordValid && isPasswordSame && isNameValid && isNicknameValid;
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -147,16 +149,16 @@ function RegisterForm() {
                                 }}
                                 onChange={(e) => setNickname(e.target.value)}
                             />
-                            {!isNameValid && (
+                            {!isNicknameValid && (
                             <Form.Text className="text-success">
-                                닉네임도 2글자 이상으로 설정해 주세요.
+                                닉네임은 2글자 이상으로 설정해 주세요.
                             </Form.Text>
                             )}
                         </Form.Group>
 
                         <Form.Group as={Row} className="mt-3 text-center">
                             <Col sm={{ span: 20 }}>
-                                <Button variant="primary" type="submit" disabled={!isFormValid}>
+                                <Button  variant="primary" type="submit" disabled={!isFormValid}>
                                     회원가입
                                 </Button>
                             </Col>

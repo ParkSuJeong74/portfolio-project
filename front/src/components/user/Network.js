@@ -80,6 +80,8 @@ function Network() {
                     yourID={yourID}
                     setYourID={setYourID}
                     isfollowing={isfollowing}
+                    /* basic={basic} 
+                    fileName={fileName} */
                     isNetwork />
             ))}
             </Row>
