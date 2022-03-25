@@ -6,26 +6,32 @@ import * as Api from '../../../api'
 function CommentEditForm({owner, currentComment, dispatch, setIsEditing}){
     
     const {id, writer} = currentComment
-    const [content, setContent] = useState(currentComment.content)
+    const [content, setContent] = useState(currentComment.comment)
     const [hidden, setHidden] = useState(currentComment.hidden)
 
     async function submitHandler(e){
         e.preventDefault()
         
         //TODO: Api put 요청함!
-        //수정한 내용들을 put 요청함. 
-        /* await Api.put(`comments/${currentComment.id}`, {
-            writer,
-            content,
-            hidden
-        })*/
+        try {
+            //TODO: Api put 요청하기!
+            await Api.put(`comment/${id}`, {
+                userId: owner.id,
+                comment: content,
+                hidden: hidden,
+                writerName: owner.nickname
+            })
 
-        dispatch({
-            type: 'EDIT',
-            payload: {id, content, writer, hidden}
-        })
-
-        setIsEditing(false)
+            dispatch({
+                type: 'EDIT',
+                payload: {id, content, writer, hidden}
+            })
+    
+            setIsEditing(false)
+        } catch (err) {
+            console.log(err)
+        }
+        
     }
 
     return (

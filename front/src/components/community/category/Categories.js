@@ -21,7 +21,7 @@ function Categories({categories, isLogin, dispatch, setIsArticleOpen, setSelecte
 			}
 		}
 		getData()
-    }, [])
+    }, [categories])
 		
 
     // 추가중인지 여부

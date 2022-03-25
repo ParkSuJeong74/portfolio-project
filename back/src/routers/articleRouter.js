@@ -50,9 +50,9 @@ articleRouter.get("/:id", async (req, res, next) => {
 // 게시글 수정하기
 articleRouter.put("/:id", async (req, res, next) => {
     try {
-        const userId = req.currentUserId // jwt토큰에서 추출된 로그인 사용자 id
+        //const userId = req.currentUserId // jwt토큰에서 추출된 로그인 사용자 id
         const articleId = req.params.id
-        const { author, hidden, title, description } = req.body
+        const { userId, author, hidden, title, description } = req.body
 
         if (userId == author) { // 로그인 사용자 = 게시글 작성자이면
             const toUpdate = { hidden, title, description }
