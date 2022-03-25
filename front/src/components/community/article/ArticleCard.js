@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Col, Row,Card } from "react-bootstrap";
+import { Col, Row, Card } from "react-bootstrap";
 import Style from '../../../App.module.css'
 import RemoveModal from "./RemoveModal";
 
@@ -18,9 +18,9 @@ function ArticleCard({article, owner, isLogin, removeArticle, setIsEditing, setI
             <Row className={['align-items-center', Style.articleCardText].join(' ')}>
                 
                 <Col onClick = {() => { setIsDetail(true); setSelectedArticle(article) }}>
-                    <span class={Style.articleTitle}>{article.title}</span>
-                    <br />
-                    <span className="text-muted">{article.description}</span>
+                    <span class={Style.articleTitle}>{article.title.length > 20 ? article.title.substring(0,20)+" ..." : article.title}</span>
+                    <br /><br />
+                    <span className="text-muted">{article.description.length > 55 ? article.description.substring(0, 55)+" ..." : article.description}</span>
                 </Col>
 
                 <Col xs={2}>
