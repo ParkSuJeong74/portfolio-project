@@ -4,14 +4,14 @@ import { Col, Row, Form, Modal } from 'react-bootstrap';
 
 const PasswordChangeModal = ({ onConfirm, onCancel }) => {
   const [email, setEmail] = useState('');
-  const [resonseCode, setResponseCode] = useState(null);
+  const [responseCode, setResponseCode] = useState(null);
   const [inputCode, setInputCode] = useState('');
   const [isCodeMatched, setIsCodeMatched] = useState(false);
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
   const onCheckCodeMatch = () => {
-    if (resonseCode === inputCode) setIsCodeMatched(true);
+    if (responseCode === inputCode) setIsCodeMatched(true);
   };
 
   const onClickPasswordAuthentication = async () => {
