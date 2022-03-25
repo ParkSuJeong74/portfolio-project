@@ -23,8 +23,7 @@ function UserEditForm({ user, setIsEditing, setUser, setImage, setBasic, image }
 
         // 유저 정보는 response의 data임.
         const updatedUser = res.data;
-        console.log('???')
-        console.log(res.data)
+        
         // 해당 유저 정보로 user을 세팅함.
         setUser(updatedUser);
 
@@ -37,24 +36,22 @@ function UserEditForm({ user, setIsEditing, setUser, setImage, setBasic, image }
     <Card className="mb-2" style={{backgroundColor:'#FCFAFA'}}>
         <Card.Body>
             <Form onSubmit={handleSubmit}>
-                <Form.Group controlId="useEditName" className="mb-3">
+                <Form.Group controlId="userEditName">
                     <Form.Control
                         disabled
-                        type="button"
+                        type="text"
                         placeholder="이름"
                         value={name}
-                        
                         style={{border: 'solid 2px #e5d6ff'}}
                     />
                 </Form.Group>
 
-                <Form.Group controlId="userEditEmail" className="mb-3">
+                <Form.Group controlId="userEditEmail">
                     <Form.Control
                         disabled
-                        type="button"
+                        type="email"
                         placeholder="이메일"
                         value={email}
-                        
                         style={{border: 'solid 2px #e5d6ff'}}
                     />
                 </Form.Group>
@@ -82,14 +79,14 @@ function UserEditForm({ user, setIsEditing, setUser, setImage, setBasic, image }
                 <Row>
                     <Col>
                         <input 
-                        style={{marginTop: 5}} 
-                        type="file" 
-                        name="attachment"
-                        
-                        onChange={(e) => {
-                            console.log(e.target.files)
-                            setImage(e.target.files[0])
-                            setBasic(false)
+                            style={{marginTop: 5}} 
+                            type="file" 
+                            name="attachment"
+                            
+                            onChange={(e) => {
+                                console.log(e.target.files)
+                                setImage(e.target.files[0])
+                                setBasic(false)
                         }}></input>
                     </Col>
                     <Col>
@@ -103,7 +100,7 @@ function UserEditForm({ user, setIsEditing, setUser, setImage, setBasic, image }
                 
                 <Form.Group as={Row} className="mt-3 text-center">
                     <Col sm={{ span: 20 }}>
-                        <Button onClick={() => setIsEditing(false)}variant="primary" type="submit" className="me-3" style={{backgroundColor: "#e5d6ff", border:"solid 2px"}}>
+                        <Button variant="primary" type="submit" className="me-3" style={{backgroundColor: "#e5d6ff", border:"solid 2px"}}>
                         확인
                         </Button>
                         <Button variant="secondary" onClick={() => setIsEditing(false)}>
