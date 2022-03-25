@@ -1,14 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { Container, Col, Row, Form, Button } from "react-bootstrap";
 
 import * as Api from "../../api";
+
+import EmailAuthModal from './EmailAuthModal';
 
 function RegisterForm() {
     const navigate = useNavigate();
 
     //useState로 email 상태를 생성함.
     const [email, setEmail] = useState("");
+    //useState로 인증코드 상태를 생성함.
+    const [responseCode, setResponseCode] = useState(null);
+    //useState로 인증된 email 상태를 생성함.
+    const [isCheckedEmail, setIsCheckedEmail] = useState(false);
     //useState로 password 상태를 생성함.
     const [password, setPassword] = useState("");
     //useState로 confirmPassword 상태를 생성함.
@@ -46,22 +52,50 @@ function RegisterForm() {
         e.preventDefault();
 
         try {
-            // "user/register" 엔드포인트로 post요청함.
-            await Api.post("user/register", {
-                email,
-                password,
-                name,
-                nickname
-            });
+            // 이메일 인증한 상태일때만 post 요청
+            if (isCheckedEmail) {
+                // "user/register" 엔드포인트로 post요청함.
+                await Api.post("user/register", {
+                    email,
+                    password,
+                    name,
+                    nickname
+                });
+                // 로그인 페이지로 이동함.
+                navigate("/login");
+            } else {
+                alert("이메일 인증을 진행해주세요.");
+                window.location.reload();
+            }
 
-            // 로그인 페이지로 이동함.
-            navigate("/login");
         } catch (err) {
             console.log("회원가입에 실패하였습니다.", err);
         }
     };
 
+    const onClickEmailAuthentication = async () => {
+        try {
+          console.log('email 전송');
+          const res = await Api.post('user/emailAuth', {
+            email,
+          });
+          setResponseCode(res);
+        } catch (error) {
+          console.log(error);
+        }
+    };
+
+    const isCheckedEmailCallback = useCallback(() => {
+        setIsCheckedEmail(true)
+    });
+
+    const [isModalActive, setIsModalActive] = useState(false);
+
+    const handleModalClose = () => setIsModalActive(false);
+    const handleModalShow = () => setIsModalActive(true);
+
     return (
+        <>
         <Container>
             <Row className="justify-content-md-center mt-5">
                 <Col lg={8}>
@@ -82,6 +116,15 @@ function RegisterForm() {
                                 이메일 형식이 올바르지 않습니다.
                             </Form.Text>
                             )}
+                            <Button
+                                style={{ backgroundColor: '#FF87D2', border: 'solid 2px' }}
+                                onClick={() => {
+                                    handleModalShow();
+                                    onClickEmailAuthentication();
+                                }}
+                            >
+                                이메일 인증
+                            </Button>
                         </Form.Group>
 
                         <Form.Group controlId="registerPassword" className="mt-3">
@@ -175,6 +218,15 @@ function RegisterForm() {
                 </Col>
             </Row>
         </Container>
+        {isModalActive && (
+            <EmailAuthModal
+              onConfirm={handleModalClose}
+              onCancel={handleModalClose}
+              responseCode = {responseCode}
+              isCheckedEmailCallback = {isCheckedEmailCallback}
+            />
+        )}
+        </>
     );
 }
 
