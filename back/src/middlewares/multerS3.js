@@ -2,7 +2,7 @@ const dotenv = require('dotenv').config()
 const AWS = require("aws-sdk")
 const multer = require('multer')
 const multerS3 = require("multer-s3")
-const { timeUtil } = require("../common/timeUtil")
+const { TimeUtil } = require("../common/timeUtil")
 
 // TODO : user_id와 multer로 처리한 image정보를 setUserImage에 뿌려주기
 // (get은 구현x)
@@ -29,7 +29,7 @@ const s3Upload = () => {
                 if (!["png", "jpg", "jpeg", "gif", "bmp"].includes(ext)) {
                     return cb(new Error("이미지 파일만 업로드 해주세요."))
                 }
-                const time = timeUtil.getTime()
+                const time = TimeUtil.getTime()
                 let newTime = time.toISOString().split("T")[0].replace(/-/gi, "")
                 cb(null, `${newTime}_${Math.floor(Math.random() * 100000000).toString()}.${ext}`)
             }
