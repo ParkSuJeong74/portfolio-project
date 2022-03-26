@@ -65,30 +65,6 @@ function UserCard({ user, setIsEditing, isEditable, myID, isNetwork }) {
 
                         </span >
                     </Card.Title>
-
-                    <Card.Subtitle className="mb-2 text-muted">{user?.email}</Card.Subtitle>
-                    <Card.Text>{user?.description}</Card.Text>
-                    <Card.Text>following {user?.followerCount} / follower {user?.followingCount}</Card.Text>
-
-
-                    {isEditable && (
-                        <Col className="mt-auto">
-                            <Row className="mt-3 text-center text-info">
-                                <Col sm={{ span: 20 }}>
-                                    <Button style={{
-                                        border: "solid 2px",
-                                        borderRadius: '5px',
-                                        backgroundColor: '#e5d6ff'
-                                    }}
-                                        onClick={() => setIsEditing(true)}
-                                    >
-                                        편집
-                                    </Button>
-                                </Col>
-                            </Row>
-                        </Col>
-                    )}
-
                     
 
                 <Card.Subtitle className="mb-2 text-muted">{user?.email}</Card.Subtitle>

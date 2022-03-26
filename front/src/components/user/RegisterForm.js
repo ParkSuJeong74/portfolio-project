@@ -100,31 +100,42 @@ function RegisterForm() {
             <Row className="justify-content-md-center mt-5">
                 <Col lg={8}>
                     <Form onSubmit={handleSubmit}>
-                        <Form.Group controlId="registerEmail">
+                        <Form.Group controlId="registerEmail" class="me-3">
                             <Form.Label>이메일 주소</Form.Label>
-                            <Form.Control
-                                type="email"
-                                autoComplete="off"
-                                value={email}
-                                style={{
-                                    border: 'solid 2px #DBC7FF'
-                                }}
-                                onChange={(e) => setEmail(e.target.value)}
-                            />
+
+                            <Row>
+                                <Col>
+                                    <Form.Control
+                                        type="email"
+                                        autoComplete="off"
+                                        value={email}
+                                        style={{
+                                            border: 'solid 2px #DBC7FF'
+                                        }}
+                                        onChange={(e) => setEmail(e.target.value)}
+                                    />
+                                </Col>
+                                
+                                <Col>
+                                    <Button
+                                        style={{ backgroundColor: '#FF87D2', border: 'solid 2px' }}
+                                        onClick={() => {
+                                            handleModalShow();
+                                            onClickEmailAuthentication();
+                                        }}>
+                                        이메일 인증
+                                    </Button>
+                                </Col>
+                            </Row>
+
+
                             {!isEmailValid && (
                             <Form.Text className="text-success">
                                 이메일 형식이 올바르지 않습니다.
                             </Form.Text>
                             )}
-                            <Button
-                                style={{ backgroundColor: '#FF87D2', border: 'solid 2px' }}
-                                onClick={() => {
-                                    handleModalShow();
-                                    onClickEmailAuthentication();
-                                }}
-                            >
-                                이메일 인증
-                            </Button>
+                            
+                            
                         </Form.Group>
 
                         <Form.Group controlId="registerPassword" className="mt-3">

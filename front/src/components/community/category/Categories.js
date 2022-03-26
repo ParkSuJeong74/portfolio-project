@@ -15,6 +15,7 @@ function Categories({ categories, isLogin, dispatch, setIsArticleOpen, setSelect
                         type: 'SET',
                         payload: res.data
                     })
+                    console.log('카테고리 리스트 불러왔어요')
                 })
             } catch (err) {
                 console.log(err)
@@ -22,7 +23,6 @@ function Categories({ categories, isLogin, dispatch, setIsArticleOpen, setSelect
         }
         getData()
     }, [categories])
-
 
     // 추가중인지 여부
     const [isAdding, setIsAdding] = useState(false)
@@ -38,7 +38,7 @@ function Categories({ categories, isLogin, dispatch, setIsArticleOpen, setSelect
             {categories.map((category) => (
                 <Category
                     key={category.id}
-                    category={category}
+                    category={category}                   
                     setIsArticleOpen={setIsArticleOpen}
                     setSelectedCategory={setSelectedCategory}
                     setIsinitialCategory={setIsinitialCategory}
