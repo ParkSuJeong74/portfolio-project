@@ -1,6 +1,5 @@
 const cors = require("cors")
 const express = require("express")
-const session = require("express-session")
 const { userAuthRouter } = require("./routers/userRouter")
 const { passwordRouter } = require("./routers/passwordRouter")
 const { awardRouter } = require("./routers/awardRouter")
