@@ -3,7 +3,7 @@ import { Form, Col, Row } from "react-bootstrap"
 import * as Api from "../../api"
 import DatePicker from "react-datepicker"
 import Style from '../../App.module.css'
-import {TimeUtil} from '../../common/timeUtil'
+import {TimeUtil} from '../../common/TimeUtil'
 
 function ProjectEditForm({ currentProject, setProjects, setIsEditing }) {
 
