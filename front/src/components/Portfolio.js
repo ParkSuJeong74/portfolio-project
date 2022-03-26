@@ -68,7 +68,7 @@ function Portfolio() {
 				/>
 			</Col>
 				
-			<Col xxl={9} className={Style.mvpBackground}>
+			<Col xxl={9} className={[Style.mvpBackground, 'mt-4'].join(' ')}>
 			
 				<Educations 
 					portfolioOwnerId={portfolioOwner.id}

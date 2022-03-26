@@ -22,26 +22,21 @@ function ProjectAddForm({ portfolioOwnerId, setProjects, setIsAdding }) {
 
     // portfolioOwnerId를 user_id 변수에 할당함.
     const userId = portfolioOwnerId
+    //.format("YYYY-MM-DD")
+    let from_date = dayjs(fromDate)
+    let to_date = dayjs(toDate)
 
+    // if (to_date.diff(from_date, "year") > 0){
+    //   setPeriod(`${to_date.diff(from_date, "year")}년 동안`)
+    // } else if (to_date.diff(from_date, "month") > 0){
+    //   setPeriod(`${to_date.diff(from_date, "month")}개월 동안`)
+    //   console.log(to_date.diff(from_date, "month"))
+    // } else {
+    //   setPeriod(`${to_date.diff(from_date, "day")}일 동안`)
+    // }
     
-    const date2 = dayjs(fromDate).format()
-    const date1 = dayjs(toDate).format()
-    console.log(date2, date1)
-    console.log(date1.diff(date2, "year"))
-    
-    if (date1.diff(date2, "year") === 0){
-      if (date1.diff(date2, "month")=== 0){
-        setPeriod(date1.diff(date2, "day"))
-      }
-      else {
-        setPeriod(date1.diff(date2, "month"))
-      }
-    }else{
-      setPeriod(date1.diff(date2,"year"))
-    }
-    console.log(period)
-    const from_date = (TimeUtil.getTime(fromDate)).toISOString().split('T')[0]
-    const to_date = (TimeUtil.getTime(toDate)).toISOString().split('T')[0]
+    from_date = dayjs(fromDate).format("YYYY-MM-DD")
+    to_date = dayjs(toDate).format("YYYY-MM-DD")
 
     // "award/create" 엔드포인트로 post요청함.
     await Api.post("project/create", {
@@ -109,13 +104,10 @@ function ProjectAddForm({ portfolioOwnerId, setProjects, setIsAdding }) {
               onChange={(toDate) => setToDate(toDate)}
             />
         </Col>
+
+
         
       </Row>
-
-      
-
-
-
       <Form.Group as={Row} className="mt-3 text-center">
         <Col sm={{ span: 20 }}>
           

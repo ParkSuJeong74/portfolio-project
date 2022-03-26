@@ -7,9 +7,9 @@ function CommentCard({comment, isEditable, setIsEditing, removeComment}){
         <Card.Text>
             <Row className="align-items-center">
                 <Col>
-                    <span>{comment.hidden ? '익명' : comment.writer}</span>
+                    <span>{comment.hidden ? '익명' : comment.writerName}</span>
                     <br />
-                    <span className="text-muted">{comment.content}</span>
+                    <span className="text-muted">{comment.comment}</span>
                 </Col>
 
                 <Col xs={2}>

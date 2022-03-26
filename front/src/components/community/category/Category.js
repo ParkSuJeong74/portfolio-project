@@ -5,7 +5,7 @@ import CategoryCard from './CategoryCard';
 import CategoryEditForm from './CategoryEditForm';
 import Style from '../../../App.module.css'
 
-function Category({category, setIsArticleOpen, setSelectedCategory, dispatch}){
+function Category({category, setIsArticleOpen, setSelectedCategory, dispatch, setIsinitialCategory}){
 
     // 편집중인지 여부
     const [isEditing, setIsEditing] = useState(false)
@@ -24,7 +24,8 @@ function Category({category, setIsArticleOpen, setSelectedCategory, dispatch}){
                         setIsArticleOpen={setIsArticleOpen}
                         setSelectedCategory={setSelectedCategory}
                         setIsEditing={setIsEditing}
-                        category={category} />
+                        category={category} 
+                        setIsinitialCategory={setIsinitialCategory}/>
                 </Link>
             )}
 

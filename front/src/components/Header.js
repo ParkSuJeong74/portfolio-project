@@ -1,8 +1,9 @@
-import React, { useContext } from "react"
+import React, { useContext, useState } from "react"
 import { useNavigate, useLocation } from "react-router-dom"
 import { UserStateContext, DispatchContext } from "../App"
 import * as Api from '../api.js'
 import Style from '../App.module.css'
+import WithdrawModal from "./WithdrawModal"
 
 function Header() {
     const navigate = useNavigate()
@@ -22,14 +23,12 @@ function Header() {
         userDispatch({ type: "LOGOUT" });
     };
 
-    async function withdraw(){
-        await Api.delete(`user/${userState.user?.id}`)
+    
 
-        console.log('회원이 탈퇴되었습니다.')
+    const [show, setShow] = useState(false);
 
-        // 로그인 페이지로 이동함.
-        navigate("/login");
-    }
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
 
     const naviagationInformations = [
         {title: 'HOME', link: '/'},
@@ -38,9 +37,9 @@ function Header() {
     ]
 
     return (
-
+    <>
         <div className={Style.navBar}>
-            <div style= {{fontSize: '2.5em', fontFamily: 'Rosarivo'}}>MY PORTFOLIO</div>
+            <div style= {{fontSize: '2.5em'}}>MY PORTFOLIO</div>
             <ul style={{ gap: 30 }} className={Style.navItems}>
                 {naviagationInformations.map((navigationItem) => (
                     <li
@@ -58,11 +57,13 @@ function Header() {
                     
                 )}
                 {isLogin && (
-                    <li onClick={withdraw}
+                    <li onClick={handleShow}
                         className = {Style.navWithdraw}>탈퇴</li>
                 )}
             </ul>
         </div>
+        <WithdrawModal show={show} handleClose={handleClose}/>
+    </>
 
     );
 

@@ -11,7 +11,7 @@ import { articleReducer } from '../../../reducer'
 //owner(객체)에는 로그인한 사용자의 정보,
 //category(객체)에는 현재 카테고리 정보
 const Articles = ({ isLogin, category, owner }) => {
-
+console.log(category)
     //CRUD할 게시글 상태값
     const [articles, articleDispatch] = useReducer(articleReducer, [])
 
@@ -20,11 +20,10 @@ const Articles = ({ isLogin, category, owner }) => {
         const getData = async () => {
             try {
                 await Api.get(`category/${category.name}`)
-                    .then((req, res) => {
-                        console.log('res',res)
+                    .then((res) => {
                         articleDispatch({
                             type: 'SET',
-                            payload: res.data
+                            payload: res.data.article
                         })
                     })
             } catch (err) {
@@ -32,8 +31,8 @@ const Articles = ({ isLogin, category, owner }) => {
             }
         }
         getData()
-    }, [])
-    console.log(articles)
+    }, [articles])
+
     //* ArticleDetail 컴포넌트로 선택된 게시글을 가져가는 상태값
     const [selectedArticle, setSelectedArticle] = useState(null)
 
@@ -44,7 +43,7 @@ const Articles = ({ isLogin, category, owner }) => {
     const [isDetail, setIsDetail] = useState(false)
 
     return (
-        <Card className={'mt-4'}>
+        <Card className={['mt-4', 'mb-4'].join(' ')}>
             <div class={Style.articleItem}>
                 <Card.Title style={{ fontWeight: 'bolder' }}>{category.name}</Card.Title>
             </div>

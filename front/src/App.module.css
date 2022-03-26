@@ -4,6 +4,12 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Rosarivo&display=swap');
 
+@import url(//font.elice.io/EliceDigitalBaeum.css);
+
+html, body {
+  font-family: "Elice Digital Baeum",sans-serif;
+}
+
 /* MVP form 버튼 스타일 */
 .formAddButton {
 background-color: #B041E3;
