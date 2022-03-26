@@ -58,7 +58,7 @@ function UserEditForm({ user, setIsEditing, setUser, setBasic }) {
     return (
         <Card className="mb-2" style={{ backgroundColor: '#FCFAFA' }}>
             <Card.Body>
-                <Form onSubmit={handleSubmit}>
+                <Form onSubmit={handleSubmit} method="GET">
                     <Form.Group controlId="userEditName">
                         <Form.Control
                             disabled
