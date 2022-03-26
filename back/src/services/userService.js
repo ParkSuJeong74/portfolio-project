@@ -97,6 +97,9 @@ const userAuthService = {
 
     setUserFollow: async ({ userIdYour, userIdMy }) => {
         let userYour = await User.findById({ userId: userIdYour })
+        if(!userYour) {
+            throw new Error("사용자 정보를 불러올 수 없습니다.")
+        }
         let userMy = await User.findById({ userId: userIdMy })
         let followerYour = Object.values(userYour.follower)
         let followingMy = Object.values(userMy.following)
