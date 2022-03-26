@@ -17,11 +17,62 @@ export function userReducer(userState, action) {
     }
 }
 
-export function categoryReducer(categoryState, action){
-    if(action.type === 'SET_CATEGORY'){
-        return {
-            ...categoryState,
-            category: action.payload,
-        }
+export const categoryReducer = (state, action) => {
+    const {userId, name, description} = action.payload
+    switch(action.type){
+        case 'SET':
+            return action.payload
+        case 'ADD':
+            return [...state, { name, description}]
+        case 'EDIT':
+            return state.map((category) =>
+                category.id === action.payload.id
+                ? { name, description}
+                : category
+            )
+        case 'DELETE':
+            return state.filter((category) => category !== action.payload)
+        default:
+            return state
+    }
+}
+
+export const articleReducer = (state, action) => {
+    const {categoryName, author, title, description, hidden, authorName} = action.payload
+    switch(action.type){
+        case 'SET':
+            return action.payload
+        case 'ADD':
+            return [...state, {categoryName, author, title, description, hidden, authorName}]
+        case 'EDIT':
+            return state.map((article) => 
+                article.id === action.payload.id
+                ? {categoryName, author, title, description, hidden, authorName}
+                : article
+            )
+        case 'DELETE':
+            return state.filter((article) => article !== action.payload)
+        default:
+            return state
+    }
+}
+
+export const commentReducer = (state, action) => {
+    const {writer, content, hidden} = action.payload
+    switch(action.type){
+        case 'SET':
+            return action.payload
+        case 'ADD':
+            return [...state, { writer, content, hidden}]
+        case 'EDIT':
+            return state.map((comment) => 
+                comment.id === action.payload.id
+                ? { writer, content, hidden}
+                : comment
+            )
+        case 'DELETE':
+            return state.filter((comment) => comment !== action.payload)
+        default:
+            return state
     }
 }

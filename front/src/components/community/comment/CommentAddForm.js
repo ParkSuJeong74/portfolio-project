@@ -1,64 +1,74 @@
 import React, { useState } from "react";
-import { Button, Form, Col, Row } from "react-bootstrap";
+import { Form, Col, Row } from "react-bootstrap";
 import * as Api from "../../../api";
+import Style from '../../../App.module.css'
 
-function CommentAddForm({ ownerId, setComments, setIsAdding }) {
+function CommentAddForm({ owner, comments, dispatch, setIsAdding, article }) {
     
-    //useState로 description 상태를 생성함.
-    const [description, setDescription] = useState("");
+    const [content, setContent] = useState("");
+
+    const [hidden, setHidden] = useState(false)
 
     const handleSubmit = async (e) => {
-    e.preventDefault();
-    e.stopPropagation();
+        e.preventDefault();
 
-    // ownerId를 user_id 변수에 할당함.
-    const user_id = ownerId;
+        // TODO: Api post 요청하기!
+        try {
+            await Api.post(`comment/create`, {
+                userId: owner.id,
+                articleId: article.id,
+                writerId: owner.id,
+                comment: content,
+                hidden: hidden
+            })
 
-    // "comment/create" 엔드포인트로 post요청함.
-    await Api.post("comment/create", {
-        user_id: ownerId,
-        description
-    });
-
-    // "commentlist/유저id" 엔드포인트로 get요청함.
-    const res = await Api.get("commentlist", user_id);
-    // comments를 response의 data로 세팅함.
-    setComments(res.data);
-    // comment를 추가하는 과정이 끝났으므로, isAdding을 false로 세팅함.
-    setIsAdding(false);
+            dispatch({
+                type: 'ADD',
+                payload: { 
+                    writer: owner.name, content, hidden 
+                }
+            })
+    
+            setIsAdding(false);
+        } catch (error) {
+            alert(error.response.data)
+        }
     };
 
     return (
-    
-    <>
-        <div>{ownerId}</div>
-    
-    
-    
         <Form onSubmit={handleSubmit}>
-        
 
-            <Form.Group controlId="formBasicDescription" className="mt-3">
-            <Form.Control
-                type="text"
-                placeholder="댓글 내용"
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-            />
+            <Form.Check 
+                type="checkbox"
+                label= "익명"
+                checked = {hidden}
+                onChange={() => setHidden((prev) => !prev)} />
+        
+            <Form.Group controlId="formBasicContent" className="mt-3">
+                <Form.Control
+                    type="text"
+                    placeholder="댓글 내용"
+                    value={content}
+                    onChange={(e) => setContent(e.target.value)} />
             </Form.Group>
 
             <Form.Group as={Row} className="mt-3 text-center">
-            <Col sm={{ span: 20 }}>
-                <Button variant="primary" type="submit" className="me-3">
-                등록
-                </Button>
-                <Button variant="secondary" onClick={() => setIsAdding(false)}>
-                취소
-                </Button>
-            </Col>
+                <Col sm={{ span: 20 }}>
+                    <button
+                        type="submit"
+                        className={[Style.confirmButton, Style.communityAddButton].join(' ')}>
+                        확인
+                    </button>
+
+                    <button
+                        onClick={() => setIsAdding(false)}
+                        className={Style.cancelButton}>
+                        취소
+                    </button>
+                </Col>
             </Form.Group>
+
         </Form>
-    </>
     );
 }
 

@@ -1,13 +1,12 @@
 import { Card, Col, Row} from 'react-bootstrap'
-import '../../App.css'
+import Style from '../../App.module.css'
 
-
-function AwardCard({education, setIsEditing, isEditable, setIsRemoving}) {
+function EducationCard({removeEducation, education, setIsEditing, isEditable}) {
     return (
         <Card.Text>
                 <Row className="align-items-center"
                     style={{paddingLeft: '28px'}}>
-                    <Col>
+                    <Col className="mb-3">
                         <span style={{
                             fontWeight: 'bold',
                             fontSize: '1.2rem',
@@ -20,13 +19,13 @@ function AwardCard({education, setIsEditing, isEditable, setIsRemoving}) {
                         <Col xs={2}>
                             <button
                             onClick={() => setIsEditing((prev) => !prev)}
-                            className="mvpEditButton">
+                            className={Style.mvpEditButton}>
                                 수정
                             </button>
 
                             <button
-                            onClick={() => setIsRemoving((prev) => !prev)}
-                            className="mvpRemoveButton">
+                            onClick={() => removeEducation()}
+                            className={Style.mvpRemoveButton}>
                                 삭제
                             </button>
                         </Col>
@@ -36,4 +35,4 @@ function AwardCard({education, setIsEditing, isEditable, setIsRemoving}) {
     )
 }
 
-export default AwardCard
+export default EducationCard

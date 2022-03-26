@@ -8,15 +8,16 @@ const ArticleService = {
     addArticle: async ({ userId, categoryName, author, hidden, title, description }) => {
         const id = uuidv4()
         let authorName
+        
         // 익명에 체크되어 있으면
         if (hidden == true) {
             authorName = "익명"
         } else {
-            const user = await User.findById({ userId })
+            const user = await User.findById({ userId: author })
             authorName = user.nickname
         }
 
-        const newArticle = { id, userId, categoryName, author, authorName, hidden, title, description }
+        const newArticle = { userId, id, categoryName, author, authorName, hidden, title, description }
         const createdNewArticle = await Article.create({ newArticle })
 
         return createdNewArticle
@@ -30,9 +31,9 @@ const ArticleService = {
         const likeUserIdList = article.article.likeUserIdList // 좋아요 누른 사용자들의 목록
         let likeState
         if (likeUserIdList.includes(userId)) { // 좋아요 한 상태이면
-            likeState = 1
+            likeState = true
         } else { // 좋아요 안 한 상태이면
-            likeState = 0
+            likeState = false
         }
         article["likeState"] = likeState
 

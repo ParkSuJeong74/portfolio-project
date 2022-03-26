@@ -67,7 +67,7 @@ const userAuthService = {
         }
         // 닉네임 중복 검사
         const findByNicknameUser = await User.findByNickname({ nickname: toUpdate.nickname })
-        if (findByNicknameUser) {
+        if (findByNicknameUser && findByNicknameUser.id != userId) {
             throw new Error("이 닉네임은 현재 사용중입니다. 다른 닉네임을 입력해 주세요.")
         }
 
@@ -97,6 +97,9 @@ const userAuthService = {
 
     setUserFollow: async ({ userIdYour, userIdMy }) => {
         let userYour = await User.findById({ userId: userIdYour })
+        if(!userYour) {
+            throw new Error("사용자 정보를 불러올 수 없습니다.")
+        }
         let userMy = await User.findById({ userId: userIdMy })
         let followerYour = Object.values(userYour.follower)
         let followingMy = Object.values(userMy.following)
