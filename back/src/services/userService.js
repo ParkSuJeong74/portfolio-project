@@ -151,7 +151,7 @@ const userAuthService = {
     // TODO : 받은 image정보를 가공, update로 db안 imageInfo에 날려줌
     setUserImage: async ({ userId, imageName }) => {
         const updateObject = { imageName }
-
+	console.log(updateObject)
         const user = await User.update({ userId, updateObject })
         return user
     }

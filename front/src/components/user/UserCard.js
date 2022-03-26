@@ -48,8 +48,8 @@ function UserCard({ user, setIsEditing, isEditable, myID, isNetwork }) {
                         <Card.Img
                             style={{ width: "10rem", height: "8rem" }}
                             className="mb-3"
-                            src={user?.imageName === "none" ? "https://21c-devs-bucket.s3.ap-northeast-2.amazonaws.com/20220324_85770005.png"
-                                : `https://21c-devs-bucket.s3.ap-northeast-2.amazonaws.com/${user?.imageName}`} />
+                            src={user?.imageName === "none" ? "https://d3szqwtre4twv0.cloudfront.net/20220324_85770005.png"
+                                : `https://d3szqwtre4twv0.cloudfront.net/${user?.imageName}`} />
                     </Row>
 
                     <Card.Title>{user?.name}({user?.nickname})
