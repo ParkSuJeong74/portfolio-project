@@ -61,8 +61,8 @@ function RegisterForm() {
         try {
             console.log('email 전송');
             const res = await Api.post('user/emailAuth', {
-                email: null
-            });
+                email
+            })
             alert("인증번호가 발송되었습니다. 메일을 확인해주세요.")
             setResponseCode(res);
         } catch (error) {
