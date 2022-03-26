@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer, useState } from "react";
+import React, { useLayoutEffect, useReducer, useState } from "react";
 import { Card } from "react-bootstrap";
 import * as Api from "../../../api";
 import Comment from "./Comment";
@@ -19,39 +19,45 @@ function Comments({ isLogin, category, article, owner}) {
     const [currentLikeState, setCurrentLikeState] = useState(false)
     const [currentLikeCount, setCurrentLikeCount] = useState(0)
 
-    useEffect(() => {
-        //TODO: Api get 요청하기!
-        const getData = async () => {
-            try {
-                await Api.get(`article/${article.id}`)
-                    .then((res) => {
-                        //해당 게시글의 댓글 목록 불러오기
-                        commentDispatch({
-                            type: 'SET',
-                            payload: res.data.comment
-                        })
-                        setCurrentLikeState(res.data.likeState)
-                        setCurrentLikeCount(res.data.article.likeCount)
+    //TODO: Api get 요청하기!
+    const getData = async () => {
+        try {
+            await Api.get(`article/${article.id}`)
+                .then((res) => {
+                    //해당 게시글의 댓글 목록 불러오기
+                    commentDispatch({
+                        type: 'SET',
+                        payload: res.data.comment
                     })
-            } catch (err) {
-                console.log(err)
-            }
+                    setCurrentLikeState(res.data.likeState)
+                    setCurrentLikeCount(res.data.article.likeCount)
+                })
+        } catch (err) {
+            console.log(err)
         }
-        getData()
+    }
+
+    // 좋아요 여부
+    const [isLike, setIsLike] = useState()
         
+    // 좋아요 개수
+    const [likeNumber, setLikeNumber] = useState()
+
+    useLayoutEffect(() => {
+        getData();
+        setIsLike(likeState);
+        setLikeNumber(likeCount);
     }, [comments])
 
     const likeState = currentLikeState
     const likeCount = currentLikeCount
+
+    console.log("likeState:", likeState, "likeCount:", likeCount)
     // 추가중 여부
     const [isAdding, setIsAdding] = useState(false);
     
-    // 좋아요 여부
-    const [isLike, setIsLike] = useState(likeState)
-    
-    // 좋아요 개수
-    const [likeNumber, setLikeNumber] = useState(likeCount)
-    
+    console.log("isLike:", isLike, "likeCount:", likeNumber)
+
     async function liking() {
         await Api.put(`article/${article.id}/like`, {
             author: article.author
