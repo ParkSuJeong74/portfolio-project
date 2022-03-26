@@ -22,7 +22,7 @@ const ArticleEditForm = ({ currentArticle, dispatch, setIsEditing }) => {
         e.preventDefault()
         try {
             //TODO: Api put 요청하기!
-            await Api.put(`article/${id}`, {
+            const editedArticle = await Api.put(`article/${id}`, {
                 userId,
                 author,
                 hidden,
@@ -32,7 +32,7 @@ const ArticleEditForm = ({ currentArticle, dispatch, setIsEditing }) => {
 
             dispatch({
                 type: 'EDIT',
-                payload: { id, author, title, description, hidden }
+                payload: editedArticle.data
             })
 
             setIsEditing(false)

@@ -13,7 +13,7 @@ function CommentAddForm({ owner, comments, dispatch, setIsAdding, article }) {
         e.preventDefault();
         // TODO: Api post 요청하기!
         try {
-            await Api.post(`comment/create`, {
+            const newComment = await Api.post(`comment/create`, {
                 userId: owner.id,
                 articleId: article.id,
                 writerId: owner.id,
@@ -23,9 +23,8 @@ function CommentAddForm({ owner, comments, dispatch, setIsAdding, article }) {
 
             dispatch({
                 type: 'ADD',
-                payload: { 
-                    writerId: owner.id, writerName: owner.name, comment, hidden 
-                }
+                payload: newComment.data
+                
             })
     
             setIsAdding(false);

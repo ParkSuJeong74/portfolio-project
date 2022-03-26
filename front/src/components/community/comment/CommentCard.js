@@ -2,7 +2,6 @@ import {Card, Row, Col } from 'react-bootstrap'
 import Style from '../../../App.module.css'
 
 function CommentCard({comment, isEditable, setIsEditing, removeComment}){
-
     return (
         <Card.Text>
             <Row className="align-items-center">

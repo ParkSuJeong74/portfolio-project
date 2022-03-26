@@ -14,16 +14,16 @@ function CommentEditForm({owner, currentComment, dispatch, setIsEditing}){
         
         //TODO: Api put 요청함!
         try {
-            await Api.put(`comment/${id}`, {
+            const editedComment = await Api.put(`comment/${id}`, {
                 userId: owner.id,
                 comment: comment,
                 hidden: hidden,
                 writerName: owner.nickname
             })
-
+            
             dispatch({
                 type: 'EDIT',
-                payload: {id, comment, writerName: owner.nickname, hidden}
+                payload: editedComment.data
             })
     
             setIsEditing(false)

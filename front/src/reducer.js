@@ -67,7 +67,7 @@ export const commentReducer = (state, action) => {
         case 'EDIT':
             return state.map((comment) => 
                 comment.id === action.payload.id
-                ? { writerName, comment, hidden}
+                ? action.payload
                 : comment
             )
         case 'DELETE':
