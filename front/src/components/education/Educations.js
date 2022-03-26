@@ -1,10 +1,9 @@
-import { Card, Row, Col, Button } from 'react-bootstrap'
+import { Card, Row, Col } from 'react-bootstrap'
 import React, { useEffect, useState } from 'react'
 import * as Api from '../../api'
 import Education from './Education'
 import EducationAddForm from './EducationAddForm'
 import Style from '../../App.module.css'
-
 
 function Educations({ portfolioOwnerId, isEditable }) {
     const [educations, setEducations] = useState([])
@@ -35,6 +34,7 @@ function Educations({ portfolioOwnerId, isEditable }) {
                         setEducations={setEducations}
                     />
                 ))}
+
                 {isEditable && (
                     <Row className="text-center mt-3 mb-4">
                         <Col sm={{ span: 20 }}>
@@ -47,6 +47,7 @@ function Educations({ portfolioOwnerId, isEditable }) {
                         </Col>
                     </Row>
                 )}
+                
                 {isAdding && (
                     <EducationAddForm
                         setIsAdding={setIsAdding}

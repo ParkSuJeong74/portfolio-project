@@ -1,4 +1,4 @@
-import {Card, Button, Col,Row } from 'react-bootstrap'
+import {Card, Col,Row } from 'react-bootstrap'
 import Style from '../../App.module.css'
 
 function CertificateCard({isEditable, setIsEditing, certificate, removeCertificate}){
@@ -16,6 +16,7 @@ function CertificateCard({isEditable, setIsEditing, certificate, removeCertifica
                     <br />
                     <span className="text-muted">{certificate.whenDate}</span>
                 </Col>
+
                 {isEditable && (
                     <Col xs={2}>
 
@@ -33,6 +34,7 @@ function CertificateCard({isEditable, setIsEditing, certificate, removeCertifica
 
                     </Col>
                 )}
+                
             </Row>
         </Card.Text>
     )

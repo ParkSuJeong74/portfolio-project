@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
 import * as Api from '../../api'
-import {Row, Col, Card, Button} from 'react-bootstrap'
+import {Row, Col, Card} from 'react-bootstrap'
 import Certificate from "./Certificate";
 import CertificateAddForm from "./CertificateAddForm";
 import Style from '../../App.module.css'
-
 
 function Certificates({portfolioOwnerId, isEditable}){
     const [certificates, setCertificates] = useState([])
@@ -19,6 +18,7 @@ function Certificates({portfolioOwnerId, isEditable}){
             style={{backgroundColor: '#FFF5F5', borderRadius: '15px'}}>
             <Card.Body>
                 <Card.Title class={Style.mvpType}>자격증</Card.Title>
+
                 {certificates.map((certificate) => (
                     <Certificate 
                         key={certificate.id}
@@ -27,6 +27,7 @@ function Certificates({portfolioOwnerId, isEditable}){
                         isEditable={isEditable}
                     />
                 ))}
+
                 {isEditable && (
                     <Row className="mt-3 text-center mb-4">
                         <Col sm={{ span: 20 }}>
@@ -39,6 +40,7 @@ function Certificates({portfolioOwnerId, isEditable}){
                         </Col>
                     </Row>
                 )}
+                
                 {isAdding && (
                     <CertificateAddForm 
                         portfolioOwnerId={portfolioOwnerId}

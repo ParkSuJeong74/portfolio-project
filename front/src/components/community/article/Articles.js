@@ -7,12 +7,8 @@ import Style from '../../../App.module.css'
 import ArticleDetail from './ArticleDetail'
 import { articleReducer } from '../../../reducer'
 
-//props에 owner와 category를 가져옴
-//owner(객체)에는 로그인한 사용자의 정보,
-//category(객체)에는 현재 카테고리 정보
 const Articles = ({ isLogin, category, owner }) => {
 
-    //CRUD할 게시글 상태값
     const [articles, articleDispatch] = useReducer(articleReducer, [])
 
     //TODO: API get 요청해서 set하기!
@@ -37,7 +33,6 @@ const Articles = ({ isLogin, category, owner }) => {
     //* ArticleDetail 컴포넌트로 선택된 게시글을 가져가는 상태값
     const [selectedArticle, setSelectedArticle] = useState(null)
 
-    // 추가 중인지 여부
     const [isAdding, setIsAdding] = useState(false)
 
     //* 게시글 상세 페이지로 이동하는 상태값, true: 상세페이지, false: 게시글 목록

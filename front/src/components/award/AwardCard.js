@@ -1,9 +1,6 @@
-import {Card, Row, Col, Button} from 'react-bootstrap'
+import {Card, Row, Col} from 'react-bootstrap'
 import Style from '../../App.module.css'
 
-//등록된 award들
-//AwardCard에서 편집버튼은 isEditable이 true여야 가능함
-//편집 버튼을 클릭하면 isEditing이 true가 되도록 설정
 function AwardCard({award, isEditable, setIsEditing, removeAward}){
 
     return (
@@ -18,6 +15,7 @@ function AwardCard({award, isEditable, setIsEditing, removeAward}){
                     <br />
                     <span className="text-muted">{award.description}</span>
                 </Col>
+
                 {isEditable && (
                     <Col xs={2}>
                         <button
@@ -33,6 +31,7 @@ function AwardCard({award, isEditable, setIsEditing, removeAward}){
                         </button>
                     </Col>
                 )}
+                
             </Row>
         </Card.Text>
     )

@@ -1,26 +1,25 @@
-import * as Api from '../../api';
-import { useState } from 'react';
-import { Col, Row, Form, Modal } from 'react-bootstrap';
+import { useState } from 'react'
+import { Col, Row, Form, Modal } from 'react-bootstrap'
 
 const EmailAuthModal = ({ onConfirm, onCancel, responseCode, isCheckedEmailCallback }) => {
-    const [inputCode, setInputCode] = useState('');
+    const [inputCode, setInputCode] = useState('')
 
     const onCheckCodeMatch = () => {
         if (responseCode.data === Number(inputCode)) {
             onClickEmailAuthenticationConfirm()
         }
         else alert("인증번호가 일치하지 않습니다.")
-    };
+    }
 
     const onClickEmailAuthenticationConfirm = async () => {
         try {
-            console.log('email 인증 완료');
-            isCheckedEmailCallback();
-            onConfirm();
+            console.log('email 인증 완료')
+            isCheckedEmailCallback()
+            onConfirm()
         } catch (error) {
             alert(error.response.data)
         }
-    };
+    }
 
     return (
         <Modal show={true} onHide={onCancel}>
@@ -42,7 +41,7 @@ const EmailAuthModal = ({ onConfirm, onCancel, responseCode, isCheckedEmailCallb
                         </Col>
                         <Col>
                             <button onClick={() => {
-                                onCheckCodeMatch();
+                                onCheckCodeMatch()
                             }} type="submit" className="mt-4">
                                 확인
                             </button>
@@ -51,7 +50,7 @@ const EmailAuthModal = ({ onConfirm, onCancel, responseCode, isCheckedEmailCallb
                 </Form.Group>
             </Modal.Body>
         </Modal>
-    );
-};
+    )
+}
 
-export default EmailAuthModal;
+export default EmailAuthModal

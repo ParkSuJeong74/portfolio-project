@@ -1,39 +1,32 @@
-import { useNavigate } from "react-router-dom";
-import { Card, Row, Button, Col } from "react-bootstrap";
-import { BsFillPersonPlusFill, BsFillPersonXFill } from "react-icons/bs";
+import { useNavigate } from "react-router-dom"
+import { Card, Row, Button, Col } from "react-bootstrap"
+import { BsFillPersonPlusFill } from "react-icons/bs"
 import { useState, useContext } from 'react'
-import * as Api from "../../api";
-import UnfollowModal from "./UnfollowModal";
+import * as Api from "../../api"
+import UnfollowModal from "./UnfollowModal"
 import { UserStateContext } from '../../App'
-// import * as userDefaultImage from "./user_Default_Image.png"
 
 function UserCard({ user, setIsEditing, isEditable, myID, isNetwork }) {
     const navigate = useNavigate()
-    const userState = useContext(UserStateContext);
-    //Home이랑 Mypage 상에서는 팔로우 버튼 안보이게 하기
+    const userState = useContext(UserStateContext)
+
     const isNotMyProfileinHome_Mypage = userState.user?.id !== user?.id
-    //Network 상에서 자신의 프로필이라면 팔로우 버튼 안보이게 하기
+
     const isNotMyProfileinNetwork = myID !== user?.id
+    
+    const [show, setShow] = useState(false)
 
-    const [show, setShow] = useState(false);
-
-
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
-    // console.log("user: ", user)
-
-    // useEffect(() => {
-
-    // }, [])
+    const handleClose = () => setShow(false)
+    const handleShow = () => setShow(true)
 
     const followFollowing = async (myID, yourID) => {
         try {
             const check = await Api.get('user', yourID)
-            //선택한 유저가 내가 이미 팔로우한 사람인지 여부, true -> '팔로우한 상태', false -> '팔로우 안한 상태'
+
             const isfollowed = check.data.follower.find((follower) => follower === myID)
             const currentFollow = isfollowed ? ('팔로우한 상태입니다.') : ('팔로우한 상태가 아닙니다.')
             console.log(currentFollow)
-            //팔로우 안한 상태가 맞으면 팔로우 시작하기!
+
             if (!isfollowed) {
                 const res = await Api.put(`user/follow/${myID}`, { userIdYour: yourID })
                 alert("팔로우되었습니다!")
@@ -71,20 +64,18 @@ function UserCard({ user, setIsEditing, isEditable, myID, isNetwork }) {
                         </span >
                     </Card.Title>
 
-                <Card.Subtitle className="mb-2 text-muted">{user?.email}</Card.Subtitle>
-                <Card.Text>{user?.description}</Card.Text>
-                <Card.Text>following {user?.followingCount} / follower {user?.followerCount}</Card.Text>
-
+                    <Card.Subtitle className="mb-2 text-muted">{user?.email}</Card.Subtitle>
+                    <Card.Text>{user?.description}</Card.Text>
+                    <Card.Text>following {user?.followingCount} / follower {user?.followerCount}</Card.Text>
 
                     {isEditable && (
                         <Col className="mt-auto">
                             <Row className="mt-3 text-center text-info">
                                 <Col sm={{ span: 20 }}>
-                                    <Button style={{
-                                        border: "solid 2px",
-                                        borderRadius: '5px',
-                                        backgroundColor: '#e5d6ff'
-                                    }}
+                                    <Button style={{ 
+                                    border:"solid 2px",
+                                    borderRadius: '5px', 
+                                    backgroundColor: '#e5d6ff'}} 
                                         onClick={() => setIsEditing(true)}
                                     >
                                         편집
@@ -93,8 +84,8 @@ function UserCard({ user, setIsEditing, isEditable, myID, isNetwork }) {
                             </Row>
                         </Col>
                     )}
-
                 </Card.Body>
+                
                 {isNetwork && (
                     <Button
                         className="mt-auto mb-2"
@@ -105,8 +96,7 @@ function UserCard({ user, setIsEditing, isEditable, myID, isNetwork }) {
                             border: "solid 2px",
                             borderRadius: '5px',
                             backgroundColor: '#e5d6ff'
-                        }}
-                    >
+                        }}>
                         포트폴리오
                     </Button>
                 )}
@@ -115,8 +105,7 @@ function UserCard({ user, setIsEditing, isEditable, myID, isNetwork }) {
             <UnfollowModal handleClose={handleClose} show={show}
                 myID={myID} yourID={user?.id} />
         </>
-
-    );
+    )
 }
 
-export default UserCard;
+export default UserCard

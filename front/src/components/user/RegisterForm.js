@@ -9,22 +9,14 @@ import EmailAuthModal from './EmailAuthModal';
 function RegisterForm() {
     const navigate = useNavigate();
 
-    //useState로 email 상태를 생성함.
     const [email, setEmail] = useState("");
-    //useState로 인증코드 상태를 생성함.
     const [responseCode, setResponseCode] = useState(null);
-    //useState로 인증된 email 상태를 생성함.
     const [isCheckedEmail, setIsCheckedEmail] = useState(false);
-    //useState로 password 상태를 생성함.
     const [password, setPassword] = useState("");
-    //useState로 confirmPassword 상태를 생성함.
     const [confirmPassword, setConfirmPassword] = useState("");
-    //useState로 name 상태를 생성함.
     const [name, setName] = useState("");
-    //useState로 nickname 상태를 생성함.
     const [nickname, setNickname] = useState("");
 
-    //이메일이 abc@example.com 형태인지 regex를 이용해 확인함.
     const validateEmail = (email) => {
         return email
             .toLowerCase()
@@ -33,18 +25,13 @@ function RegisterForm() {
             );
     };
 
-    //위 validateEmail 함수를 통해 이메일 형태 적합 여부를 확인함.
     const isEmailValid = validateEmail(email);
-    // 비밀번호가 4글자 이상인지 여부를 확인함.
     const isPasswordValid = password.length >= 4;
-    // 비밀번호와 확인용 비밀번호가 일치하는지 여부를 확인함.
     const isPasswordSame = password === confirmPassword;
-    // 이름이 2글자 이상인지 여부를 확인함.
     const isNameValid = name.length >= 2;
 
     const isNicknameValid = nickname.length >= 2
 
-    // 위 4개 조건이 모두 동시에 만족되는지 여부를 확인함.
     const isFormValid =
         isEmailValid && isPasswordValid && isPasswordSame && isNameValid && isNicknameValid;
 
@@ -52,16 +39,13 @@ function RegisterForm() {
         e.preventDefault();
 
         try {
-            // 이메일 인증한 상태일때만 post 요청
             if (isCheckedEmail) {
-                // "user/register" 엔드포인트로 post요청함.
                 await Api.post("user/register", {
                     email,
                     password,
                     name,
                     nickname
                 });
-                // 로그인 페이지로 이동함.
                 navigate("/login");
             } else {
                 alert("이메일 인증을 진행해주세요.");
@@ -69,7 +53,7 @@ function RegisterForm() {
             }
 
         } catch (error) {
-            alert(error.response.data);
+            alert(error.response.data)
         }
     };
 
@@ -77,7 +61,7 @@ function RegisterForm() {
         try {
             console.log('email 전송');
             const res = await Api.post('user/emailAuth', {
-                email,
+                email: null
             });
             alert("인증번호가 발송되었습니다. 메일을 확인해주세요.")
             setResponseCode(res);
@@ -231,6 +215,7 @@ function RegisterForm() {
                     </Col>
                 </Row>
             </Container>
+
             {isModalActive && (
                 <EmailAuthModal
                     onConfirm={handleModalClose}

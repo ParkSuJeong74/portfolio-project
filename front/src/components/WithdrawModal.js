@@ -14,7 +14,6 @@ function WithdrawModal({show, handleClose}){
 
         console.log('회원이 탈퇴되었습니다.')
         handleClose()
-        // 로그인 페이지로 이동함.
         navigate("/login");
     }
 

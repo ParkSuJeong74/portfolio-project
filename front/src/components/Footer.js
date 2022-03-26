@@ -3,7 +3,7 @@ import Style from '../App.module.css'
 function Footer(){
     return (
         <div class={Style.footer}style={{backgroundColor: '#D9DDFF', padding: '10px'}}>
-            푸터
+            <p>Copyright © 2022 21C developers. All rights reserved.</p>
         </div>
     )
 }

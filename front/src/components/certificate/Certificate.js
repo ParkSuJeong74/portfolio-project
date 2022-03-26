@@ -1,8 +1,7 @@
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import CertificateCard from "./CertificateCard"
 import CertificateEditForm from "./CertificateEditForm"
 import * as Api from '../../api'
-
 
 function Certificate({setCertificates, certificate, isEditable}){
     const [isEditing, setIsEditing] = useState(false)

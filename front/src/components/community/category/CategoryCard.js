@@ -2,11 +2,9 @@ import { ListGroup, OverlayTrigger, Tooltip } from 'react-bootstrap'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPencil } from "@fortawesome/free-solid-svg-icons"
 import Style from '../../../App.module.css'
-import { useNavigate } from 'react-router';
 
 function CategoryCard({ setIsArticleOpen, setSelectedCategory, setIsEditing, category, setIsinitialCategory }) {
 
-    const navigate = useNavigate()
     return (
         <ListGroup.Item
             className={Style.categoryItem}
