@@ -10,7 +10,7 @@ import Style from '../../../App.module.css'
 
 //owner(객체)에는 로그인한 사용자의 정보,
 //category(객체)에는 현재 카테고리 정보
-function Comments({ isLogin, category, article, owner}) {
+function Comments({ isLogin, category, article, owner }) {
 
     //TODO: dummy data로 시연 -> 초기값 []로 바꿔줘야 됨
     //CRUD할 댓글 상태값
@@ -65,8 +65,8 @@ function Comments({ isLogin, category, article, owner}) {
                 <span class={Style.articleDetailAuthor}>작성자: {article.authorName}</span>
             </div>
 
-            
-            <div style={{padding: '30px'}}>
+
+            <div style={{ padding: '30px' }}>
                 <div class={Style.articleDetailDesc}>{article.description}</div>
 
                 <button onClick={() => {
@@ -88,7 +88,7 @@ function Comments({ isLogin, category, article, owner}) {
                     </Card.Title>
 
                     {isAdding && (
-                        <CommentAddForm 
+                        <CommentAddForm
                             owner={owner}
                             comments={comments}
                             dispatch={commentDispatch}

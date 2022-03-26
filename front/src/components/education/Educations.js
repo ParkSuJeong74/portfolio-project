@@ -14,8 +14,8 @@ function Educations({ portfolioOwnerId, isEditable }) {
         async function getData(){
             try{
                 await Api.get("education/list", portfolioOwnerId).then((res) => setEducations(res.data))
-            } catch(err) {
-                console.log(err)
+            } catch(error) {
+                alert(error.response.data)
             }
         }
         getData()

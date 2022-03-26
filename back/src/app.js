@@ -1,6 +1,5 @@
 const cors = require("cors")
 const express = require("express")
-const { oAuthRouter } = require("./routers/oAuthRouter")
 const { userAuthRouter } = require("./routers/userRouter")
 const { passwordRouter } = require("./routers/passwordRouter")
 const { awardRouter } = require("./routers/awardRouter")
@@ -31,7 +30,6 @@ app.get("/", (req, res) => {
 })
 
 // router, service 구현 (userAuthRouter는 맨 위에 있어야 함.)
-app.use('/sns', oAuthRouter)
 app.use('/user', userAuthRouter)
 app.use('/password', passwordRouter)
 app.use('/award', awardRouter)

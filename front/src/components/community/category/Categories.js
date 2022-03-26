@@ -17,8 +17,8 @@ function Categories({ categories, isLogin, dispatch, setIsArticleOpen, setSelect
                     })
                     console.log('카테고리 리스트 불러왔어요')
                 })
-            } catch (err) {
-                console.log(err)
+            } catch (error) {
+                alert(error.response.data)
             }
         }
         getData()

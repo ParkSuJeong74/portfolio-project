@@ -33,8 +33,8 @@ function CommentAddForm({ owner, comments, dispatch, setIsAdding, article }) {
             })
     
             setIsAdding(false);
-        } catch (err) {
-            console.log(err)
+        } catch (error) {
+            alert(error.response.data)
         }
         // owner(로그인한 사용자)의 id를 user_id 변수에 할당함.
         //const user_id = owner.id

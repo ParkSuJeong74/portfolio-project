@@ -37,8 +37,8 @@ const ArticleEditForm = ({ currentArticle, dispatch, setIsEditing }) => {
 
             setIsEditing(false)
             navigate('/')
-        } catch (err) {
-            console.log(err)
+        } catch (error) {
+            alert(error.response.data)
         }
     }
 

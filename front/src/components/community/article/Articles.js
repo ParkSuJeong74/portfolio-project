@@ -27,8 +27,8 @@ const Articles = ({ isLogin, category, owner }) => {
                         })
                         console.log('게시글 목록을 불러왔어요.')
                     })
-            } catch (err) {
-                console.log(err)
+            } catch (error) {
+                alert(error.response.data)
             }
         }
         getData()
