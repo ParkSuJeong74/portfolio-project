@@ -33,7 +33,22 @@ const Category = {
             update,
             option,
         )
-        return updatedCategory
+
+        let result = updatedCategory
+
+        if(updateObject.name){
+            const filter = { categoryName : categoryName }
+            const update = { categoryName: updateObject.name }
+            const option = { returnOriginal: false }
+            const updatedArticle = await ArticleModel.findOneAndUpdate(
+                filter,
+                update,
+                option,
+            )
+            result = `{${result} , ${updatedArticle}}`
+        }
+
+        return result
     }
 }
 
