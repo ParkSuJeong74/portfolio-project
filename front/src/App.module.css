@@ -2,13 +2,21 @@
   width: 100%;
 }
 
-@import url('https://fonts.googleapis.com/css2?family=Rosarivo&display=swap');
 
 @import url(//font.elice.io/EliceDigitalBaeum.css);
+
+@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Permanent+Marker&display=swap%27');
+
 
 * {
   font-family: "Elice Digital Baeum",sans-serif;
 }
+
+.Title{
+  font-family: 'Fredoka One', cursive;
+}
+
+
 
 /* MVP form 버튼 스타일 */
 .formAddButton {
@@ -234,4 +242,19 @@ margin-left: auto;
   font-size: 2rem;
   margin-left: 0.7rem;
   cursor: pointer;
+}
+
+html{
+  position: relative;
+  height: auto;
+  min-height: 100%;
+}
+
+.footer {
+  background-color: #D9DDFF;
+  width: 100%;
+  height: 50px; /* footer의 높이 */
+  position: absolute;
+  bottom: 0;
+  left: 0;
 }
