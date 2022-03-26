@@ -18,8 +18,8 @@ const Article = ({ category, article, dispatch, owner, isLogin, setIsDetail, set
                 type: 'DELETE',
                 payload: article
             })
-        } catch (err) {
-            console.log(err)
+        } catch (error) {
+            alert(error.response.data)
         }
     }
 

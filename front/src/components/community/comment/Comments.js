@@ -10,7 +10,7 @@ import Style from '../../../App.module.css'
 
 //owner(객체)에는 로그인한 사용자의 정보,
 //category(객체)에는 현재 카테고리 정보
-function Comments({ isLogin, category, article, owner}) {
+function Comments({ isLogin, category, article, owner }) {
 
     //TODO: dummy data로 시연 -> 초기값 []로 바꿔줘야 됨
     //CRUD할 댓글 상태값
@@ -33,30 +33,30 @@ function Comments({ isLogin, category, article, owner}) {
                         setCurrentLikeState(res.data.likeState)
                         setCurrentLikeCount(res.data.article.likeCount)
                     })
-            } catch (err) {
-                console.log(err)
+            } catch (error) {
+                alert(error.response.data)
             }
         }
         getData()
-        
+
     }, [comments])
 
     const likeState = currentLikeState
     const likeCount = currentLikeCount
     // 추가중 여부
     const [isAdding, setIsAdding] = useState(false);
-    
+
     // 좋아요 여부
     const [isLike, setIsLike] = useState(likeState)
-    
+
     // 좋아요 개수
     const [likeNumber, setLikeNumber] = useState(likeCount)
-    
+
     async function liking() {
         await Api.put(`article/${article.id}/like`, {
             author: article.author
         }).then((res) => {
-        // 누를 때마다 좋아요 <-> 좋아요 취소
+            // 누를 때마다 좋아요 <-> 좋아요 취소
             setIsLike((prev) => !prev)
             setLikeNumber(res.data.likeUserIdList.length)
         })
@@ -69,16 +69,18 @@ function Comments({ isLogin, category, article, owner}) {
                 <span class={Style.articleDetailAuthor}>작성자: {article.authorName}</span>
             </div>
 
-            
-            <div style={{padding: '30px'}}>
+
+            <div style={{ padding: '30px' }}>
                 <div class={Style.articleDetailDesc}>{article.description}</div>
 
                 <button onClick={() => {
-                                    liking()
-                                }}
-                        style={{ color: isLike ? 'white' : '#5960c0', 
-                                backgroundColor: isLike ? '#5960c0' : 'white' }}
-                        class={Style.fineIcon}><FontAwesomeIcon icon={faThumbsUp} /></button>
+                    liking()
+                }}
+                    style={{
+                        color: isLike ? 'white' : '#5960c0',
+                        backgroundColor: isLike ? '#5960c0' : 'white'
+                    }}
+                    class={Style.fineIcon}><FontAwesomeIcon icon={faThumbsUp} /></button>
 
                 <div>좋아요 {likeNumber}</div>
             </div>
@@ -92,7 +94,7 @@ function Comments({ isLogin, category, article, owner}) {
                     </Card.Title>
 
                     {isAdding && (
-                        <CommentAddForm 
+                        <CommentAddForm
                             owner={owner}
                             comments={comments}
                             dispatch={commentDispatch}

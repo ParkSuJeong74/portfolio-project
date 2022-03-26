@@ -26,8 +26,8 @@ console.log(category)
                             payload: res.data.article
                         })
                     })
-            } catch (err) {
-                console.log(err)
+            } catch (error) {
+                alert(error.response.data)
             }
         }
         getData()
