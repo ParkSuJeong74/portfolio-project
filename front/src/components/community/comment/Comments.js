@@ -36,8 +36,8 @@ function Comments({ isLogin, category, article, owner }) {
                     setCurrentLikeState(res.data.likeState)
                     setCurrentLikeCount(res.data.article.likeCount)
                 })
-        } catch (err) {
-            console.log(err)
+        } catch (error) {
+            alert(error.response.data)
         }
     }
 
@@ -47,15 +47,18 @@ function Comments({ isLogin, category, article, owner }) {
 
     // 추가중 여부
     const [isAdding, setIsAdding] = useState(false);
-
     async function liking() {
-        await Api.put(`article/${article.id}/like`, {
-            author: article.author
-        }).then((res) => {
-            // 누를 때마다 좋아요 <-> 좋아요 취소
-            setCurrentLikeState((prev) => !prev)
-            setCurrentLikeCount(res.data.likeUserIdList.length)
-        })
+        try {
+            await Api.put(`article/${article.id}/like`, {
+                author: article.author
+            }).then((res) => {
+                // 누를 때마다 좋아요 <-> 좋아요 취소
+                setCurrentLikeState((prev) => !prev)
+                setCurrentLikeCount(res.data.likeUserIdList.length)
+            })
+        } catch (error) {
+            alert(error.response.data)
+        }
     }
 
     return (
