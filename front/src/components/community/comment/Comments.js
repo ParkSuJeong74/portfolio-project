@@ -1,4 +1,4 @@
-import React, { useRef, useLayoutEffect, useEffect, useReducer, useState } from "react";
+import React, { useLayoutEffect, useReducer, useState } from "react";
 import { Card } from "react-bootstrap";
 import * as Api from "../../../api";
 import Comment from "./Comment";
@@ -18,9 +18,6 @@ function Comments({ isLogin, category, article, owner }) {
 
     const [currentLikeState, setCurrentLikeState] = useState(false)
     const [currentLikeCount, setCurrentLikeCount] = useState(0)
-
-    // 최초 실행 여부
-    const mounted = useRef(true);
 
     //TODO: Api get 요청하기!
     //!!!!async-await 일부러 뺀 거임!!!! 추가하지 말것!!!!
