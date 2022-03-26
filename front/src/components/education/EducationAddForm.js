@@ -1,8 +1,7 @@
-import { Form, Row, Col, Button } from 'react-bootstrap'
+import { Form, Row, Col } from 'react-bootstrap'
 import React, { useState } from 'react'
 import * as Api from '../../api'
 import Style from '../../App.module.css'
-
 
 function EducationAddForm({ setIsAdding, portfolioOwnerId, setEducations }) {
     const [school, setSchool] = useState('')
@@ -62,17 +61,21 @@ function EducationAddForm({ setIsAdding, portfolioOwnerId, setEducations }) {
             <Form.Group controlId="formBasicPosition" className="mt-3">
 
                 {positionInformations.map((Info, index) => (
-                    <Form.Check 
-                        key={index}
-                        inline
-                        type="radio"
-                        name={Info}
-                        label={Info}
-                        checked={position === Info}
-                        onChange={(e) => setPosition(e.target.name)}
-                    />
+                    <label style={{ margin: '7px' }}>
+                        <input
+                            style={{ marginRight: '7px' }}
+                            type="radio"
+                            key={index}
+                            inline
+                            name={Info}
+                            id={Info}
+                            checked={position === Info}
+                            onChange={(e) => setPosition(e.target.name)}
+                        />
+                        {Info}
+                    </label>
                 ))}
-            
+                
             </Form.Group>
 
             <Form.Group as={Row} className="mt-3 text-center">

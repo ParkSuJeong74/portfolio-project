@@ -1,7 +1,6 @@
 import { Card, Col, Row} from 'react-bootstrap'
 import Style from '../../App.module.css'
 
-
 function EducationCard({removeEducation, education, setIsEditing, isEditable}) {
     return (
         <Card.Text>

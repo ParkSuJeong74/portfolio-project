@@ -1,5 +1,5 @@
 .datePicker > div > input {
-  width: 100%;
+    width: 100%;
 }
 
 
@@ -8,252 +8,254 @@
 @import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Permanent+Marker&display=swap%27');
 
 * {
-  font-family: "Elice Digital Baeum",sans-serif;
+    font-family: "Elice Digital Baeum",sans-serif;
 }
 
 .Title{
-  font-family: 'Fredoka One', cursive;
+    font-family: 'Fredoka One', cursive;
 }
 
 
 
 /* MVP form 버튼 스타일 */
 .formAddButton {
-background-color: #B041E3;
-color: white;
-border: #B041E3;
-width: 50px;
-height: 50px;
-font-size: 2rem;
-text-align: center;
-border-radius: 15px;
-padding: 0;
+    background-color: #B041E3;
+    color: white;
+    border: #B041E3;
+    width: 50px;
+    height: 50px;
+    font-size: 2rem;
+    text-align: center;
+    border-radius: 15px;
+    padding: 0;
 }
 
 .formAddButton:before{
-content: '+';
-display: block;
-margin-top: -0.2rem
+    content: '+';
+    display: block;
+    margin-top: -0.2rem
 }
 
 .formAddButton:after{
-content: '-';
-display: block;
-margin-top: 0.5rem
+    content: '-';
+    display: block;
+    margin-top: 0.5rem
 }
 
 .mvpEditButton, .mvpRemoveButton{
-color: white;
-border: #B041E3;
-width: 50px;
-height: 40px;
-font-size: 1rem;
-text-align: center;
-border-radius: 5px;
-margin: 0 10px 10px 0
+    color: white;
+    border: #B041E3;
+    width: 50px;
+    height: 40px;
+    font-size: 1rem;
+    text-align: center;
+    border-radius: 5px;
+    margin: 0 10px 10px 0
 }
 
 .mvpEditButton {
-background-color: #B041E3;
-margin: 0 10px 10px 0
+    background-color: #B041E3;
+    margin: 0 10px 10px 0
 }
 
 .mvpRemoveButton {
-background-color: rgb(218, 50, 50);
+    background-color: rgb(218, 50, 50);
 }
 
 .mvpConfirmButton, .mvpCancelButton, .confirmButton, .cancelButton {
-color: white;
-border-radius: 5px;
-width: 60px;
-height: 40px;
-margin-right: 10px
+    color: white;
+    border-radius: 5px;
+    width: 60px;
+    height: 40px;
+    margin-right: 10px
 }
 
 .confirmButton {
-background-color: #4048F9;
-border: #4048F9;
+    background-color: #4048F9;
+    border: #4048F9;
 }
 
 .mvpConfirmButton {
-background-color: #B041E3;
-border: #B041E3;
-margin: 0 10px 0 10px;
+    background-color: #B041E3;
+    border: #B041E3;
+    margin: 0 10px 0 10px;
 }
 .mvpCancelButton, .cancelButton {
-background-color: gray;
-border: gray
+    background-color: gray;
+    border: gray
 }
 
 /* MVP 타입 항목 스타일 */
 .mvpType {
-font-weight: bold;
-font-size: 2em;
-margin-bottom: 20px;
-padding: 20px 0 20px 28px;
+    font-weight: bold;
+    font-size: 2em;
+    margin-bottom: 20px;
+    padding: 20px 0 20px 28px;
 }
 
 .mvpBackground {
-background-color: #E5D6FF;
-padding: 20px;
-border-radius: 15px;
-margin-top: 20px;
+    background-color: #E5D6FF;
+    padding: 20px;
+    border-radius: 15px;
+    margin-top: 20px;
 }
 
 /* input창 border 스타일 */
 .inputStyle {
-border: solid 2px #DBC7FF;
+    border: solid 2px #DBC7FF;
 }
 
 /* header 스타일 */
 .navBar {
-background-color: #D9DDFF;
-display: flex;
-align-items: center;
-padding: 10px 56px;
+    background-color: #D9DDFF;
+    display: flex;
+    align-items: center;
+    padding: 10px 56px;
 }
 
 .navItems {
-margin: 0 0 0 auto;
-list-style-type: none;
-padding: 0;
-display:flex;
-gap: 30;
+    margin: 0 0 0 auto;
+    list-style-type: none;
+    padding: 0;
+    display:flex;
+    gap: 30;
 }
 
 .navItem {
-border-radius: 10px;
-background-color: #989CFD;
-color: white;
-padding: 6px 14px;
-cursor: pointer;
-margin-left: auto;
+    border-radius: 10px;
+    background-color: #989CFD;
+    color: white;
+    padding: 6px 14px;
+    cursor: pointer;
+    margin-left: auto;
 }
 
 .navItem:hover {
-background-color: #5c60e7;
+    background-color: #5c60e7;
 }
 
 .navWithdraw {
-border-radius: 10px;
-background-color: #4A414E;
-color: white;
-padding: 6px 14px;
-cursor: pointer;
-margin-left: auto;
+    border-radius: 10px;
+    background-color: #4A414E;
+    color: white;
+    padding: 6px 14px;
+    cursor: pointer;
+    margin-left: auto;
 }
 
 .cateHeader {
-  font-weight: bold;
-  font-size: larger;
+    font-weight: bold;
+    font-size: larger;
 }
 
 .cateLink {
-  text-decoration: none; 
-  border: none;
+    text-decoration: none; 
+    border: none;
 }
 
 .categoryItem {
-  font-size:medium;
-  font-weight: bold;
+    font-size:medium;
+    font-weight: bold;
 }
 
 .communityAddButton {
-  background-color: #6F6EC6;
+    background-color: #6F6EC6;
 }
 
 .articleHeader{
-  background-color:#D9DDFF;
-  padding: 15px;
-  text-align: center;
+    background-color:#D9DDFF;
+    padding: 15px;
+    text-align: center;
 }
 
 .articleItem {
-  background-color: #D9DDFF;
-  padding: 15px;
-  text-align: center;
+    background-color: #D9DDFF;
+    padding: 15px;
+    text-align: center;
 }
 
 .articleLink{
-  color: black;
-  text-decoration: none;
+    color: black;
+    text-decoration: none;
 }
 
 .articleLink:hover{
-  color: #6F6EC6;
-  text-decoration: none;
+    color: #6F6EC6;
+    text-decoration: none;
 }
 
 .articleCard {
-  background-color: #fff;
+    background-color: #fff;
 }
 
 .articleCardText {
-  background-color: #fff;
-  border-radius: 10px;
-  margin-bottom: 1rem;
-  padding: 1rem;
+    background-color: #fff;
+    border-radius: 10px;
+    margin-bottom: 1rem;
+    padding: 1rem;
 }
 
 .articleTitle{
-  font-weight: bold;
-  font-size: 1.4rem;
+    font-weight: bold;
+    font-size: 1.4rem;
 }
 
 .articleDetails{
-  display: flex;
-  justify-content: space-between;
-  padding: 30px;
+    display: flex;
+    justify-content: space-between;
+    padding: 30px;
 }
 
 .articleDetailTitle{
-  font-size: 2.5rem;
-  font-weight: bolder;
+    font-size: 2.5rem;
+    font-weight: bolder;
 }
 
 .articleDetailAuthor{
-  color: #AD9191;
+    color: #AD9191;
 }
 
 .articleDetailDesc{
-  font-size: 1.4rem; 
-  margin-bottom: 1rem;
+    font-size: 1.4rem; 
+    margin-bottom: 1rem;
 }
 
 .commentIcon{
-  color:#6e70b3;
-  font-size: 2rem;
-  margin: 0 0 0 0.5rem;
-  cursor: pointer;
+    color:#6e70b3;
+    font-size: 2rem;
+    margin: 0 0 0 0.5rem;
+    cursor: pointer;
 }
 
 .fineIcon {
-  border-radius: 20px;
-  border: 1px solid #5960c0;
-  font-size: 1.4rem;
+    border-radius: 20px;
+    border: 1px solid #5960c0;
+    font-size: 1.4rem;
 }
 
 .commentBackground{
-  background-color: #F6F7FF;
+    background-color: #F6F7FF;
 }
 
 .backButton{
-  font-size: 2rem;
-  margin-left: 0.7rem;
-  cursor: pointer;
+    font-size: 2rem;
+    margin-left: 0.7rem;
+    cursor: pointer;
 }
 
 html{
-  position: relative;
-  height: auto;
-  min-height: 100%;
+    position: relative;
+    height: auto;
+    min-height: 100%;
 }
 
 .footer {
-  background-color: #D9DDFF;
-  width: 100%;
-  height: 50px; /* footer의 높이 */
-  position: absolute;
-  bottom: 0;
-  left: 0;
+    text-align: center;
+    margin-top: 100px;
+    background-color: #D9DDFF;
+    width: 100%;
+    height: 50px; /* footer의 높이 */
+    position: absolute;
+    bottom: 0;
+    left: 0;
 }

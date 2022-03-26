@@ -7,10 +7,8 @@ import Style from '../../../App.module.css'
 
 function Category({category, setIsArticleOpen, setSelectedCategory, dispatch, setIsinitialCategory}){
 
-    // 편집중인지 여부
     const [isEditing, setIsEditing] = useState(false)
     
-
     return (
     <>
         <ListGroup >

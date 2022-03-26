@@ -4,7 +4,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons"
 import Style from '../../../App.module.css'
 
-// 게시글 클릭시 상세 화면
 function ArticleDetail({category, setIsDetail, selectedArticle, isLogin, owner}){
 
     const navigate = useNavigate()

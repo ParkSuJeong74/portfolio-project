@@ -6,7 +6,6 @@ import Style from '../../../App.module.css'
 import * as Api from '../../../api'
 
 const Article = ({ category, article, dispatch, owner, isLogin, setIsDetail, setSelectedArticle }) => {
-    // 편집중 여부
     const [isEditing, setIsEditing] = useState(false)
 
     const removeArticle = async () => {

@@ -7,8 +7,6 @@ function CommentAddForm({ owner, comments, dispatch, setIsAdding, article }) {
     
     const [content, setContent] = useState("");
 
-    
-    //* 익명버튼 상태
     const [hidden, setHidden] = useState(false)
 
     const handleSubmit = async (e) => {
@@ -16,7 +14,6 @@ function CommentAddForm({ owner, comments, dispatch, setIsAdding, article }) {
 
         // TODO: Api post 요청하기!
         try {
-            //TODO: Api post 요청!
             await Api.post(`comment/create`, {
                 userId: owner.id,
                 articleId: article.id,
@@ -36,16 +33,6 @@ function CommentAddForm({ owner, comments, dispatch, setIsAdding, article }) {
         } catch (error) {
             alert(error.response.data)
         }
-        // owner(로그인한 사용자)의 id를 user_id 변수에 할당함.
-        //const user_id = owner.id
-        // "comment/create" 엔드포인트로 post요청함.
-        /* await Api.post("comment/create", {
-            userId,
-            content,
-            hidden
-        }); */
-
-        
     };
 
     return (

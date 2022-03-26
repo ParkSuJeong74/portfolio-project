@@ -14,7 +14,6 @@ function CommentEditForm({owner, currentComment, dispatch, setIsEditing}){
         
         //TODO: Api put 요청함!
         try {
-            //TODO: Api put 요청하기!
             await Api.put(`comment/${id}`, {
                 userId: owner.id,
                 comment: content,

@@ -8,12 +8,8 @@ import { faCommentDots, faThumbsUp } from "@fortawesome/free-solid-svg-icons"
 import { commentReducer } from "../../../reducer";
 import Style from '../../../App.module.css'
 
-//owner(객체)에는 로그인한 사용자의 정보,
-//category(객체)에는 현재 카테고리 정보
 function Comments({ isLogin, category, article, owner }) {
 
-    //TODO: dummy data로 시연 -> 초기값 []로 바꿔줘야 됨
-    //CRUD할 댓글 상태값
     const [comments, commentDispatch] = useReducer(commentReducer, [])
 
     const [currentLikeState, setCurrentLikeState] = useState(false)
@@ -33,6 +29,7 @@ function Comments({ isLogin, category, article, owner }) {
                     type: 'SET',
                     payload: res.data.comment
                 })
+                console.log('댓글 목록을 불러왔어요')
                 setCurrentLikeState(res.data.likeState)
                 setCurrentLikeCount(res.data.article.likeCount)
             })
@@ -45,7 +42,6 @@ function Comments({ isLogin, category, article, owner }) {
         getData();
     }, [comments])
     
-    // 추가중 여부
     const [isAdding, setIsAdding] = useState(false);
     
     async function liking() {

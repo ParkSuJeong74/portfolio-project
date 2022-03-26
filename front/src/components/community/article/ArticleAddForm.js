@@ -3,15 +3,11 @@ import { Form, Col, Row } from 'react-bootstrap'
 import * as Api from '../../../api'
 import Style from '../../../App.module.css'
 
-//articles(객체)에는  전체 게시글 정보,
-//owner(객체)에는 로그인한 사용자의 정보,
-//category(객체)에는 현재 카테고리 정보
 const ArticleAddForm = ({ owner, category, articles, dispatch, setIsAdding }) => {
     const [title, setTitle] = useState('')
     const [description, setDescription] = useState('')
     const categoryName = category.name
 
-    //* 익명버튼 상태
     const [hidden, setHidden] = useState(false)
 
     const handleSubmit = async (e) => {
