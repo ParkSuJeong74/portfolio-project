@@ -69,7 +69,7 @@ function UserCard({ user, setIsEditing, isEditable, myID, isNetwork, basic, imag
 
                 <Card.Subtitle className="mb-2 text-muted">{user?.email}</Card.Subtitle>
                 <Card.Text>{user?.description}</Card.Text>
-                <Card.Text>following {user?.followerCount} / follower {user?.followingCount}</Card.Text>
+                <Card.Text>following {user?.followingCount} / follower {user?.followerCount}</Card.Text>
 
 
                 {isEditable && (

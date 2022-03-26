@@ -70,7 +70,6 @@ function App() {
                         <Route path="/userlist" element={<Network />} />
                         <Route path="*" element={<Home />} />
                     </Routes>
-                    <Footer />
                 </Router>
 
             </UserStateContext.Provider>
