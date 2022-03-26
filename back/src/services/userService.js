@@ -97,6 +97,7 @@ const userAuthService = {
 
     setUserFollow: async ({ userIdYour, userIdMy }) => {
         let userYour = await User.findById({ userId: userIdYour })
+        console.log(userYour)
         if(!userYour) {
             throw new Error("사용자 정보를 불러올 수 없습니다.")
         }
@@ -107,7 +108,9 @@ const userAuthService = {
         // 값이 존재하는 경우 index를, 존재하지 않는 경우 -1 반환
         const indexFollowerYour = followerYour.indexOf(userIdMy)
         const indexFollowingMy = followingMy.indexOf(userIdYour)
-
+        let followerCountYour
+        let followingCountMy
+        
         // follow
         if (indexFollowingMy === -1 && indexFollowerYour === -1) {
             followerCountYour = userYour.followerCount + 1
@@ -116,9 +119,9 @@ const userAuthService = {
             followingMy = [...followingMy, userIdYour]
         } else {
             // unfollow
-            followerCountYour = userYour.followerCount - 1
+            followerCountYour = userYour.followerCount - 1 >= 0 ? userYour.followerCount - 1 : 0
             followerYour.splice(indexFollowerYour, 1)
-            followingCountMy = userMy.followingCount - 1
+            followingCountMy = userMy.followingCount - 1 >= 0  ? userMy.followingCount - 1 : 0
             followingMy.splice(indexFollowingMy, 1)
         }
 

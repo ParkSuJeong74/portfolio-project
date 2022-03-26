@@ -20,8 +20,7 @@ function Network() {
         }
 
         Api.get("user/list").then((res) => setUsers(res.data));
-
-    }, [userState, navigate]);
+    }, [users]);
 
     return (
         <Container fluid>

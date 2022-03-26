@@ -22,6 +22,7 @@ function UserEditForm({ user, setIsEditing, setUser, setBasic }) {
 
             const updatedUser = res.data;
             setUser(updatedUser)
+            
 
             //* 이미지 put 요청하기
             if (isNone) {
@@ -39,7 +40,7 @@ function UserEditForm({ user, setIsEditing, setUser, setBasic }) {
                 formData.set("file", imageInfo)
 
                 axios.post(
-                    `http://localhost:5001/user/${user.id}/img`,
+                    `http://elice-kdt-ai-4th-team21.elicecoding.com/user/${user.id}/img`,
                     formData,
                     config
                 ).then((res) => {
