@@ -21,6 +21,11 @@ function UserCard({ user, setIsEditing, isEditable, myID, isNetwork }) {
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
     // console.log("user: ", user)
+
+    // useEffect(() => {
+
+    // }, [])
+
     const followFollowing = async (myID, yourID) => {
         try {
             const check = await Api.get('user', yourID)
@@ -68,7 +73,7 @@ function UserCard({ user, setIsEditing, isEditable, myID, isNetwork }) {
 
                     <Card.Subtitle className="mb-2 text-muted">{user?.email}</Card.Subtitle>
                     <Card.Text>{user?.description}</Card.Text>
-                    <Card.Text>following {user?.followerCount} / follower {user?.followingCount}</Card.Text>
+                    <Card.Text>following {user?.followingCount} / follower {user?.followerCount}</Card.Text>
 
 
                     {isEditable && (
