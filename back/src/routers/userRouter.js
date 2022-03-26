@@ -125,11 +125,6 @@ userAuthRouter.delete('/:id', login_required, async (req, res, next) => {
     }
 })
 
-
-// My -> 내 id로 db에서 가져온 데이터, Your -> 상대 id로 db에서 가져온 데이터
-// follower -> 나를 follow하는 .. / following -> 내가 follow하는 ..
-// follow : count 증가, 내 following과 상대 follower에 서로의 id를 add
-// unfollow : count 감소, 내 following과 상대 follower에 서로의 id를 remove
 userAuthRouter.put("/follow/:id", login_required, async (req, res, next) => {
     try {
         const userIdMy = req.params.id

@@ -24,9 +24,9 @@ function Network() {
         }
 
         // "userlist" 엔드포인트로 GET 요청을 하고, users를 response의 data로 세팅함.
-        Api.get("user/list").then((res) => setUsers(res.data));
-
-    }, [userState, navigate]);
+        Api.get("user/list")
+        .then((res) => setUsers(res.data));
+    }, [users]);
 
     return (
         <Container fluid>

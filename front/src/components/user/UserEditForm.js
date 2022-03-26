@@ -52,8 +52,8 @@ function UserEditForm({ user, setIsEditing, setUser, setBasic }) {
             }
             // isEditing을 false로 세팅함.
             setIsEditing(false)
-        } catch (err) {
-            console.log(err)
+        } catch (error) {
+            alert(error.response.data)
         }
     };
 
@@ -118,7 +118,10 @@ function UserEditForm({ user, setIsEditing, setUser, setBasic }) {
                             <Button
                                 className="mt-2"
                                 style={{ backgroundColor: "#e5d6ff", border: "solid 2px" }}
-                                onClick={() => setIsNone(true)}
+                                onClick={() => {
+                                   setIsNone(true)
+                                   alert('기본이미지로 변경됐습니다.')}}
+
                             >기본이미지</Button>
                         </Col>
                     </Row>

@@ -22,8 +22,8 @@ function Comment({owner, comment, dispatch, isLogin}) {
                 payload: comment
             })
 
-        } catch (err) {
-            console.log(err)
+        } catch (error) {
+            alert(error.response.data)
         }
         
     }

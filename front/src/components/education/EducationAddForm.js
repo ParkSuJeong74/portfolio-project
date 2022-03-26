@@ -25,8 +25,8 @@ function EducationAddForm({ setIsAdding, portfolioOwnerId, setEducations }) {
             const res = await Api.get("education/list", userId)
             setEducations(res.data)
             setIsAdding(false)
-        } catch(err) {
-            console.log(err)
+        } catch(error) {
+            alert(error.response.data)
         }
     }
 
