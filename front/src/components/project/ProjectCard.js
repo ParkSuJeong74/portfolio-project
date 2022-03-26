@@ -33,7 +33,7 @@ function ProjectCard({ project, isEditable, setIsEditing, removeProject }) {
           <br />
           <span className="text-muted">{project.description}</span>
           <br />
-          <span className="text-muted">{project.fromDate} ~ {project.toDate} <span style={{ marginLeft: "10px" }}>{period}</span></span>
+          <span className="text-muted">{project.fromDate} ~ {project.toDate} <span style={{ marginLeft: "10px" }}>({period})</span></span>
 
         </Col>
 
