@@ -10,11 +10,11 @@ const ArticleEditForm = ({ currentArticle, dispatch, setIsEditing }) => {
 
     const userState = useContext(UserStateContext)
     const userId = userState.user?.id
-    console.log(userId)
+
     
-    const [hidden, setHidden] = useState(currentArticle.hidden)
-    const [title, setTitle] = useState(currentArticle.title)
-    const [description, setDescription] = useState(currentArticle.description)
+    const [hidden, setHidden] = useState(currentArticle?.hidden)
+    const [title, setTitle] = useState(currentArticle?.title)
+    const [description, setDescription] = useState(currentArticle?.description)
 
     const navigate = useNavigate()
 
@@ -32,7 +32,7 @@ const ArticleEditForm = ({ currentArticle, dispatch, setIsEditing }) => {
 
             dispatch({
                 type: 'EDIT',
-                payload: { author, title, description, hidden }
+                payload: { id, author, title, description, hidden }
             })
 
             setIsEditing(false)

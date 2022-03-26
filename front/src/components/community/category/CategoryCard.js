@@ -4,7 +4,6 @@ import { faPencil } from "@fortawesome/free-solid-svg-icons"
 import Style from '../../../App.module.css'
 
 function CategoryCard({ setIsArticleOpen, setSelectedCategory, setIsEditing, category, setIsinitialCategory}){
-
     return (
         <ListGroup.Item 
             className={Style.categoryItem} 

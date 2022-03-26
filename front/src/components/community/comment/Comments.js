@@ -37,10 +37,9 @@ function Comments({ isLogin, category, article, owner }) {
             console.log(err)
         }
     }
-
     useLayoutEffect(() => {
         getData();
-    }, [comments])
+    }, [article.id])
     
     const [isAdding, setIsAdding] = useState(false);
     
