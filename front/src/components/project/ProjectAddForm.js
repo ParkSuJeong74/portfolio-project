@@ -109,7 +109,7 @@ function ProjectAddForm({ portfolioOwnerId, setProjects, setIsAdding }) {
               onChange={(toDate) => setToDate(toDate)}
             />
         </Col>
-        <div>{period}</div>
+        
       </Row>
 
       
