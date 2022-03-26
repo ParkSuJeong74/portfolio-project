@@ -69,7 +69,7 @@ function RegisterForm() {
             }
 
         } catch (error) {
-            alert(error.response.data)
+            alert(error.response.data);
         }
     };
 
@@ -77,8 +77,7 @@ function RegisterForm() {
         try {
             console.log('email 전송');
             const res = await Api.post('user/emailAuth', {
-                email: null
-                // email,
+                email,
             });
             setResponseCode(res);
         } catch (error) {
