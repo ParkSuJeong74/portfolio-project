@@ -11,8 +11,10 @@ import RegisterForm from "./components/user/RegisterForm"
 import Portfolio from "./components/Portfolio"
 import Home from './components/Home'
 import Footer from "./components/Footer"
+
 export const UserStateContext = createContext(null)
 export const DispatchContext = createContext(null)
+
 
 function App() {
     // userReducer 훅을 통해 userState 상태와 userDispatch함수를 생성함.
@@ -57,9 +59,9 @@ function App() {
     return (
         <DispatchContext.Provider value={userDispatch}>
             <UserStateContext.Provider value={userState}>
-                <Router>
+                <Router >
                     <Header />
-                    <Routes>
+                    <Routes >
                         <Route path="/" exact element={<Home />} />
                         <Route path="/:categoryId" exact element={<Home />} />
                         <Route path="/:categoryId/:articleName" element={<Home />} />

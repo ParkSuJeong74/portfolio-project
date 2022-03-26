@@ -28,34 +28,37 @@ function Comments({ isLogin, category, article, owner }) {
         try {
             Api.get(`article/${article.id}`)
                 .then((res) => {
-                //해당 게시글의 댓글 목록 불러오기
-                commentDispatch({
-                    type: 'SET',
-                    payload: res.data.comment
+                    //해당 게시글의 댓글 목록 불러오기
+                    commentDispatch({
+                        type: 'SET',
+                        payload: res.data.comment
+                    })
+                    setCurrentLikeState(res.data.likeState)
+                    setCurrentLikeCount(res.data.article.likeCount)
                 })
-                setCurrentLikeState(res.data.likeState)
-                setCurrentLikeCount(res.data.article.likeCount)
-            })
-        } catch (err) {
-            console.log(err)
+        } catch (error) {
+            alert(error.response.data)
         }
     }
 
     useLayoutEffect(() => {
         getData();
     }, [comments])
-    
+
     // 추가중 여부
     const [isAdding, setIsAdding] = useState(false);
-    
     async function liking() {
-        await Api.put(`article/${article.id}/like`, {
-            author: article.author
-        }).then((res) => {
-        // 누를 때마다 좋아요 <-> 좋아요 취소
-            setCurrentLikeState((prev) => !prev)
-            setCurrentLikeCount(res.data.likeUserIdList.length)
-        })
+        try {
+            await Api.put(`article/${article.id}/like`, {
+                author: article.author
+            }).then((res) => {
+                // 누를 때마다 좋아요 <-> 좋아요 취소
+                setCurrentLikeState((prev) => !prev)
+                setCurrentLikeCount(res.data.likeUserIdList.length)
+            })
+        } catch (error) {
+            alert(error.response.data)
+        }
     }
 
     return (

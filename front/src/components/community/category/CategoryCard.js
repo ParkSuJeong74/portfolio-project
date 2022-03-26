@@ -1,18 +1,20 @@
-import {Button, ListGroup, OverlayTrigger, Tooltip} from 'react-bootstrap'
+import { ListGroup, OverlayTrigger, Tooltip } from 'react-bootstrap'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPencil } from "@fortawesome/free-solid-svg-icons"
 import Style from '../../../App.module.css'
+import { useNavigate } from 'react-router';
 
-function CategoryCard({setIsArticleOpen, setSelectedCategory, setIsEditing, category, setIsinitialCategory}){
-    console.log("category",category)
+function CategoryCard({ setIsArticleOpen, setSelectedCategory, setIsEditing, category, setIsinitialCategory }) {
+
+    const navigate = useNavigate()
     return (
-        <ListGroup.Item 
-            className={Style.categoryItem} 
-            value = {category.name}
+        <ListGroup.Item
+            className={Style.categoryItem}
+            value={category.name}
             onClick={() => {
-                setIsArticleOpen(true)
                 setSelectedCategory(category)
                 setIsinitialCategory(false)
+                setIsArticleOpen(true)
             }}>
 
             <OverlayTrigger
@@ -20,20 +22,19 @@ function CategoryCard({setIsArticleOpen, setSelectedCategory, setIsEditing, cate
                 placement='right'
                 overlay={
                     <Tooltip id={`tooltip-right`}>
-                    {category.description}
+                        {category.description}
                     </Tooltip>
-                }
-                >
+                }>
                 <span>{category.name}</span>
             </OverlayTrigger>
-            
-            
-            <FontAwesomeIcon 
-                className="ms-1" 
-                style={{color: 'brown'}} 
-                onClick={() => setIsEditing(true)} 
+
+
+            <FontAwesomeIcon
+                className="ms-1"
+                style={{ color: 'brown' }}
+                onClick={() => setIsEditing(true)}
                 icon={faPencil} />
-            
+
         </ListGroup.Item>
     )
 }

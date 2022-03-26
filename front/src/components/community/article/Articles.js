@@ -11,7 +11,7 @@ import { articleReducer } from '../../../reducer'
 //owner(객체)에는 로그인한 사용자의 정보,
 //category(객체)에는 현재 카테고리 정보
 const Articles = ({ isLogin, category, owner }) => {
-console.log(category)
+
     //CRUD할 게시글 상태값
     const [articles, articleDispatch] = useReducer(articleReducer, [])
 
@@ -25,6 +25,7 @@ console.log(category)
                             type: 'SET',
                             payload: res.data.article
                         })
+                        console.log('게시글 목록을 불러왔어요.')
                     })
             } catch (error) {
                 alert(error.response.data)
