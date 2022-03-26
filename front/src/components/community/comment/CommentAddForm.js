@@ -5,28 +5,26 @@ import Style from '../../../App.module.css'
 
 function CommentAddForm({ owner, comments, dispatch, setIsAdding, article }) {
     
-    const [content, setContent] = useState("");
+    const [comment, setComment] = useState("");
 
     const [hidden, setHidden] = useState(false)
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
         // TODO: Api post 요청하기!
         try {
-            await Api.post(`comment/create`, {
+            const newComment = await Api.post(`comment/create`, {
                 userId: owner.id,
                 articleId: article.id,
                 writerId: owner.id,
-                comment: content,
+                comment: comment,
                 hidden: hidden
             })
 
             dispatch({
                 type: 'ADD',
-                payload: { 
-                    writer: owner.name, content, hidden 
-                }
+                payload: newComment.data
+                
             })
     
             setIsAdding(false);
@@ -48,8 +46,8 @@ function CommentAddForm({ owner, comments, dispatch, setIsAdding, article }) {
                 <Form.Control
                     type="text"
                     placeholder="댓글 내용"
-                    value={content}
-                    onChange={(e) => setContent(e.target.value)} />
+                    value={comment}
+                    onChange={(e) => setComment(e.target.value)} />
             </Form.Group>
 
             <Form.Group as={Row} className="mt-3 text-center">

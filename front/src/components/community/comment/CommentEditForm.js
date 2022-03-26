@@ -5,30 +5,31 @@ import * as Api from '../../../api'
 
 function CommentEditForm({owner, currentComment, dispatch, setIsEditing}){
     
-    const {id, writer} = currentComment
-    const [content, setContent] = useState(currentComment.comment)
+    const {id, writerName} = currentComment
+    const [comment, setComment] = useState(currentComment.comment)
     const [hidden, setHidden] = useState(currentComment.hidden)
-
+console.log(currentComment)
     async function submitHandler(e){
         e.preventDefault()
         
         //TODO: Api put 요청함!
         try {
-            await Api.put(`comment/${id}`, {
+            const editedComment = await Api.put(`comment/${id}`, {
                 userId: owner.id,
-                comment: content,
+                comment: comment,
                 hidden: hidden,
                 writerName: owner.nickname
             })
-
+            console.log(editedComment.data)
             dispatch({
                 type: 'EDIT',
-                payload: {id, content, writer, hidden}
+                payload: editedComment.data
             })
     
             setIsEditing(false)
         } catch (error) {
-            alert(error.response.data)
+            console.log(error.response)
+            //alert(error.response.data)
         }
         
     }
@@ -45,8 +46,8 @@ function CommentEditForm({owner, currentComment, dispatch, setIsEditing}){
             <Form.Group controlId="formBasicContent" className="mt-3">
                 <Form.Control 
                     type="text" 
-                    value={content} 
-                    onChange={(e) => setContent(e.target.value)} />
+                    value={comment} 
+                    onChange={(e) => setComment(e.target.value)} />
             </Form.Group>
         
             <Form.Group as={Row} className="text-center mt-3">

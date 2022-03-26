@@ -26,7 +26,7 @@ function Network() {
         <Container fluid>
             <Row xs="auto" className="jusify-content-center"
                 style={{
-                    marginTop: '30px'
+                    marginTop: '30px', marginBottom: '20px'
                 }}>
             {users.map((user) => (
                 <UserCard 
