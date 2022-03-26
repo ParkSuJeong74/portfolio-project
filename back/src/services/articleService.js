@@ -31,9 +31,9 @@ const ArticleService = {
         const likeUserIdList = article.article.likeUserIdList // 좋아요 누른 사용자들의 목록
         let likeState
         if (likeUserIdList.includes(userId)) { // 좋아요 한 상태이면
-            likeState = 1
+            likeState = true
         } else { // 좋아요 안 한 상태이면
-            likeState = 0
+            likeState = false
         }
         article["likeState"] = likeState
 
