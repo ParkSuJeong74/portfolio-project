@@ -37,8 +37,8 @@ function UserCard({ user, setIsEditing, isEditable, myID, isNetwork }) {
             else {
                 handleShow()
             }
-        } catch (err) {
-            console.log(err)
+        } catch (error) {
+            alert(error.response.data)
         }
     }
 

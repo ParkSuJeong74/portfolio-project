@@ -33,8 +33,8 @@ function Comments({ isLogin, category, article, owner }) {
                         setCurrentLikeState(res.data.likeState)
                         setCurrentLikeCount(res.data.article.likeCount)
                     })
-            } catch (err) {
-                console.log(err)
+            } catch (error) {
+                alert(error.response.data)
             }
         }
         getData()

@@ -28,8 +28,8 @@ function CommentEditForm({owner, currentComment, dispatch, setIsEditing}){
             })
     
             setIsEditing(false)
-        } catch (err) {
-            console.log(err)
+        } catch (error) {
+            alert(error.response.data)
         }
         
     }

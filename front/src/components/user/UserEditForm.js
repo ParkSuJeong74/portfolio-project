@@ -52,8 +52,8 @@ function UserEditForm({ user, setIsEditing, setUser, setBasic }) {
             }
             // isEditing을 false로 세팅함.
             setIsEditing(false)
-        } catch (err) {
-            console.log(err)
+        } catch (error) {
+            alert(error.response.data)
         }
     };
 

@@ -16,8 +16,8 @@ function Categories({ categories, isLogin, dispatch, setIsArticleOpen, setSelect
                         payload: res.data
                     })
                 })
-            } catch (err) {
-                console.log(err)
+            } catch (error) {
+                alert(error.response.data)
             }
         }
         getData()
