@@ -1,8 +1,7 @@
-import { Form, Row, Col, Button } from 'react-bootstrap'
+import { Form, Row, Col } from 'react-bootstrap'
 import React, { useState } from 'react'
 import * as Api from '../../api'
-import '../../App.css'
-
+import Style from '../../App.module.css'
 
 function EducationAddForm({ setIsAdding, portfolioOwnerId, setEducations }) {
     const [school, setSchool] = useState('')
@@ -11,21 +10,26 @@ function EducationAddForm({ setIsAdding, portfolioOwnerId, setEducations }) {
 
     async function handleSubmit(e) {
         e.preventDefault()
-        e.stopPropagation()
 
-        const user_id = portfolioOwnerId
+        const userId = portfolioOwnerId
 
-        await Api.post('education/create', {
-            user_id: portfolioOwnerId,
-            school,
-            major,
-            position
-        })
+        try{
+            await Api.post('education/create', {
+                userId: portfolioOwnerId,
+                school,
+                major,
+                position
+            })
 
-        const res = await Api.get("educationlist", user_id)
-        setEducations(res.data)
-        setIsAdding(false)
+            const res = await Api.get("education/list", userId)
+            setEducations(res.data)
+            setIsAdding(false)
+        } catch(error) {
+            alert(error.response.data)
+        }
     }
+
+    const positionInformations = ['재학중', '학사졸업', '석사졸업', '박사졸업']
 
     return (
         <Form onSubmit={handleSubmit}>
@@ -55,56 +59,36 @@ function EducationAddForm({ setIsAdding, portfolioOwnerId, setEducations }) {
             </Form.Group>
 
             <Form.Group controlId="formBasicPosition" className="mt-3">
-                <Form.Check
-                    inline
-                    type="radio"
-                    name="재학중"
-                    id="재학중"
-                    label="재학중"
-                    checked={position === '재학중'}
-                    onChange={(e) => setPosition(e.target.name)}
-                />
-                <Form.Check
-                    inline
-                    type="radio"
-                    name="학사졸업"
-                    id="학사졸업"
-                    label="학사졸업"
-                    checked={position === '학사졸업'}
-                    onChange={(e) => setPosition(e.target.name)}
-                />
-                <Form.Check
-                    inline
-                    type="radio"
-                    name="석사졸업"
-                    id="석사졸업"
-                    label="석사졸업"
-                    checked={position === '석사졸업'}
-                    onChange={(e) => setPosition(e.target.name)}
-                />
-                <Form.Check
-                    inline
-                    type="radio"
-                    name="박사졸업"
-                    id="박사졸업"
-                    label="박사졸업"
-                    checked={position === '박사졸업'}
-                    onChange={(e) => setPosition(e.target.name)}
-                />
 
+                {positionInformations.map((Info, index) => (
+                    <label style={{ margin: '7px' }}>
+                        <input
+                            style={{ marginRight: '7px' }}
+                            type="radio"
+                            key={index}
+                            inline
+                            name={Info}
+                            id={Info}
+                            checked={position === Info}
+                            onChange={(e) => setPosition(e.target.name)}
+                        />
+                        {Info}
+                    </label>
+                ))}
+                
             </Form.Group>
 
             <Form.Group as={Row} className="mt-3 text-center">
                 <Col sm={{ span: 20 }}>
                 <button
                     type="submit"
-                    className="mvpConfirmButton me-3">
+                    className={Style.mvpConfirmButton}>
                     확인
                 </button>
 
                 <button
                     onClick={() => setIsAdding(false)}
-                    className="mvpCancelButton">
+                    className={Style.mvpCancelButton}>
                     취소
                 </button>
                 </Col>

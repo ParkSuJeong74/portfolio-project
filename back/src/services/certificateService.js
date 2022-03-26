@@ -7,7 +7,7 @@ const { SetUtil } = require('../common/setUtil')
 const CertificateService = {
     addCertificate: async ({ userId, title, description, whenDate }) => {
         const id = uuidv4()
-        whenDate = TimeUtil.getDay(whenDate)
+        //whenDate = TimeUtil.getDay(whenDate)
         const newCertificate = { id, userId, title, description, whenDate }
         const createdNewCertificate = await Certificate.create({ newCertificate })
 

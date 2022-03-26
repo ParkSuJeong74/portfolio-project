@@ -7,8 +7,8 @@ const ProjectService = {
     // POST
     addProject : async ({ userId, title, description, fromDate, toDate }) => {
         const id = uuidv4()
-        fromDate = TimeUtil.getDay(fromDate)
-        toDate = TimeUtil.getDay(toDate)
+        //fromDate = TimeUtil.getDay(fromDate)
+        //toDate = TimeUtil.getDay(toDate)
 
         const newProject = { id, userId, title, description, fromDate, toDate }
         const createNewProject = await Project.create({ newProject })

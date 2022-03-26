@@ -1,54 +1,65 @@
-import { useState, useEffect } from 'react'
-import {Card, Row, Col} from 'react-bootstrap'
+import { useEffect, useState } from 'react'
+import { Card, Row, Col } from 'react-bootstrap'
 import Category from './Category'
 import CategoryAddForm from './CategoryAddForm'
 import * as Api from '../../../api'
 
-function Categories({isLogin, setIsArticleOpen}){
-    const [categories, setCategories] = useState([
-        '취업꿀팁', '저녁메뉴'
-    ])
-    //원래는 이렇게 선언하는 것!
-    //const [categories, setCategories] = useState([])
+import Style from '../../../App.module.css'
 
-     // "category/list"로 GET 요청하고, response의 data로 categories를 세팅함.
-    /*   useEffect(() => {
-        Api.get("category/list").then((res) => setCategories(res.data));
-    }, []); */
+function Categories({ categories, isLogin, dispatch, setIsArticleOpen, setSelectedCategory, setIsinitialCategory }) {
+    useEffect(() => {
+        async function getData() {
+            try {
+                await Api.get('category/list').then((res) => {
+                    dispatch({
+                        type: 'SET',
+                        payload: res.data
+                    })
+                    console.log('카테고리 리스트 불러왔어요')
+                })
+            } catch (error) {
+                alert(error.response.data)
+            }
+        }
+        getData()
+    }, [categories])
 
     const [isAdding, setIsAdding] = useState(false)
 
     return (
-        <Card>
-            <Card.Header>전체 게시판</Card.Header>
+        <Card className="mt-4 mb-4 text-center">
+            <Card.Header
+                className={Style.cateHeader}
+                style={{ backgroundColor: '#D9DDFF' }}>
+                전체 게시판
+            </Card.Header>
 
             {categories.map((category) => (
-                <Category 
+                <Category
                     key={category.id}
-                    category={category}
+                    category={category}                   
                     setIsArticleOpen={setIsArticleOpen}
-                />
+                    setSelectedCategory={setSelectedCategory}
+                    setIsinitialCategory={setIsinitialCategory}
+                    dispatch={dispatch} />
             ))}
 
             {/*로그인됐을 때만 카테고리 추가 가능 */}
             {isLogin && (
                 <Row className="mt-3 text-center mb-4">
                     <Col sm={{ span: 20 }}>
-
                         <button
                             onClick={() => setIsAdding(true)}
-                            className="formAddButton">
+                            className={[Style.formAddButton, Style.communityAddButton].join(' ')}>
                         </button>
-                        
                     </Col>
                 </Row>
             )}
 
             {isAdding && (
-                <CategoryAddForm 
+                <CategoryAddForm
                     setIsAdding={setIsAdding}
-                    setCategories={setCategories}
-                />
+                    dispatch={dispatch} />
             )}
         </Card>
     )

@@ -1,26 +1,32 @@
-import { Card, Row, Col, Button } from 'react-bootstrap'
+import { Card, Row, Col } from 'react-bootstrap'
 import React, { useEffect, useState } from 'react'
 import * as Api from '../../api'
 import Education from './Education'
 import EducationAddForm from './EducationAddForm'
-import '../../App.css'
-
+import Style from '../../App.module.css'
 
 function Educations({ portfolioOwnerId, isEditable }) {
     const [educations, setEducations] = useState([])
     const [isAdding, setIsAdding] = useState(false)
 
     useEffect(() => {
-        Api.get("educationlist", portfolioOwnerId).then((res) => setEducations(res.data))
+        async function getData(){
+            try{
+                await Api.get("education/list", portfolioOwnerId).then((res) => setEducations(res.data))
+            } catch(error) {
+                alert(error.response.data)
+            }
+        }
+        getData()
     }, [portfolioOwnerId])
 
     return (
         <Card
             style={{backgroundColor: '#FFF5F5' , borderRadius: '15px'}}>
             <Card.Body>
-                <Card.Title class="mvpType">학력</Card.Title>
+                <Card.Title class={Style.mvpType}>학력</Card.Title>
 
-                {educations && educations.map((education) => (
+                {educations.map((education) => (
                     <Education
                         key={education.id}
                         education={education}
@@ -28,18 +34,20 @@ function Educations({ portfolioOwnerId, isEditable }) {
                         setEducations={setEducations}
                     />
                 ))}
+
                 {isEditable && (
                     <Row className="text-center mt-3 mb-4">
                         <Col sm={{ span: 20 }}>
 
                         <button
                             onClick={() => setIsAdding(true)}
-                            className="formAddButton">
+                            className={Style.formAddButton}>
                         </button>
                         
                         </Col>
                     </Row>
                 )}
+                
                 {isAdding && (
                     <EducationAddForm
                         setIsAdding={setIsAdding}

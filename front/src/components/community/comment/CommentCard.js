@@ -1,29 +1,34 @@
-import {Card, Row, Col, Button} from 'react-bootstrap'
+import {Card, Row, Col } from 'react-bootstrap'
+import Style from '../../../App.module.css'
 
-
-function CommentCard({comment, isEditable, setIsEditing, ownerId}){
-    const user_id = ownerId
+function CommentCard({comment, isEditable, setIsEditing, removeComment}){
 
     return (
         <Card.Text>
             <Row className="align-items-center">
                 <Col>
-                    <span>{user_id}</span>
+                    <span>{comment.hidden ? '익명' : comment.writerName}</span>
                     <br />
-                    <span className="text-muted">{comment.description}</span>
+                    <span className="text-muted">{comment.comment}</span>
                 </Col>
-                {isEditable && (
-                    <Col xs lg="1">
-                        <Button
-                            variant="outline-info"
-                            onClick={() => setIsEditing(true)}
-                            size="sm"
-                            className="mr-3"
-                            >
-                            편집
-                        </Button>
-                    </Col>
-                )}
+
+                <Col xs={2}>
+                    {isEditable && (
+                        <>
+                            <button
+                                onClick={() => setIsEditing((prev) => !prev)}
+                                className={Style.mvpEditButton}>
+                                    수정
+                            </button>
+
+                            <button
+                                onClick={() => removeComment()}
+                                className={Style.mvpRemoveButton}>
+                                    삭제
+                            </button>
+                        </>
+                    )}
+                </Col>
             </Row>
         </Card.Text>
     )

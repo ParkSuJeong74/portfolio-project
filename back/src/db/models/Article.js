@@ -9,14 +9,14 @@ const Article = {
         return createdNewArticle
     },
     // userId로 회원 정보 찾기
-    findByUserId: async ({ user_id }) => {
-        const user = await UserModel.findOne({ id: user_id })
+    findByUserId: async ({ userId }) => {
+        const user = await UserModel.findOne({ id: userId })
         return user
     },
-    // id로 게시글+댓글 찾기
+    // id로 게시글 + 댓글 찾기
     findById: async ({ articleId }) => {
         const article = await ArticleModel.findOne({ id: articleId })
-        const comment = await CommentModel.find({ articleId })
+        const comment = await CommentModel.find({ articleId }).sort({ createdAt: 1 }) // 댓글 오래된 것부터
         return { article, comment }
     },
     // 본인 게시글 확인 후 수정하기
@@ -40,29 +40,10 @@ const Article = {
         return isDataDeleted
     },
     // 좋아요 개수, 좋아요 누른 사용자 목록 업데이트
-    updateLike: async ({ userId, articleId, likeUserIdList }) => {
+    updateLike: async ({ articleId, toUpdate }) => {
         //console.log(likeUserIdList.includes(userId))
         const filter = { id: articleId } // 바꿀 게시물
-        let update = {}
-        if (likeUserIdList.includes(userId)) { // 이미 좋아요 한 상태이면
-            update = {
-                $inc: {
-                    likeCount: -1,
-                },
-                $pull: {
-                    likeUserIdList: userId, // 해당 값이 여러 번 있으면 다 없앰
-                }
-            }
-        } else { // 좋아요 안 누른 상태이면
-            update = {
-                $inc: {
-                    likeCount: 1,
-                },
-                $push: {
-                    likeUserIdList: userId,
-                }
-            }
-        }
+        const update = toUpdate
         const option = { returnOriginal: false }
 
         const updateArticle = await ArticleModel.findOneAndUpdate(
