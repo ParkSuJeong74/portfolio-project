@@ -6,7 +6,7 @@
 
 @import url(//font.elice.io/EliceDigitalBaeum.css);
 
-html, body {
+* {
   font-family: "Elice Digital Baeum",sans-serif;
 }
 

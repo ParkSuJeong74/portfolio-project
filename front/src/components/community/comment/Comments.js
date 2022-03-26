@@ -52,27 +52,6 @@ function Comments({ isLogin, category, article, owner}) {
         console.log(res.data)
     } 
 
-    /* const [likedUser, setLikedUser] = useState([])
-
-    if(isFine){
-        let isExist = likedUser.find((id) => id === owner.id)
-        //likedUser에 존재하면 
-        if(isExist){
-            let filtered = likedUser.filter((person) => person !== owner.id)
-            //likedUser = filtered
-            setLikedUser(filtered)
-        }
-        else{
-            likedUser.push(owner.id)
-            setLikedUser((prev) => [...prev, owner.id])
-        }
-    } 
-    
-    // lkedUser(좋아요한 사람 목록)에 현재 로그인한 사용자가 있다면 true가 됨 -> 버튼 클릭한 스타일로 만들기!!
-    const isButtonColoring = likedUser.find((id) => id === owner.id)
-    console.log('likedUser', likedUser)
-    console.log('isButtonColoring', isButtonColoring)   */  
-
     console.log('li',article.likeUserIdList)
 
     const likeUserIdList = article.likeUserIdList

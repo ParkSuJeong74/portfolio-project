@@ -1,9 +1,6 @@
 const cors = require("cors")
 const express = require("express")
 const session = require("express-session")
-const passport = require("passport")
-const passportConfig = require("./passport")
-const { oAuthRouter } = require("./routers/oAuthRouter")
 const { userAuthRouter } = require("./routers/userRouter")
 const { passwordRouter } = require("./routers/passwordRouter")
 const { awardRouter } = require("./routers/awardRouter")
@@ -32,10 +29,8 @@ app.use((req, res, next) => {
 app.get("/", (req, res) => {
     res.send("안녕하세요, 레이서 프로젝트 API 입니다.")
 })
-passportConfig()
-app.use(passport.initialize())
+
 // router, service 구현 (userAuthRouter는 맨 위에 있어야 함.)
-app.use('/sns', oAuthRouter)
 app.use('/user', userAuthRouter)
 app.use('/password', passwordRouter)
 app.use('/award', awardRouter)
