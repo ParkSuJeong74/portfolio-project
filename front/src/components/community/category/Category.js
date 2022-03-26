@@ -9,6 +9,7 @@ function Category({category, setIsArticleOpen, setSelectedCategory, dispatch, se
 
     // 편집중인지 여부
     const [isEditing, setIsEditing] = useState(false)
+    
 
     return (
     <>
@@ -21,6 +22,7 @@ function Category({category, setIsArticleOpen, setSelectedCategory, dispatch, se
             ) : (
                 <Link to={`/${category.id}`} className={Style.cateLink}>
                     <CategoryCard 
+                        
                         setIsArticleOpen={setIsArticleOpen}
                         setSelectedCategory={setSelectedCategory}
                         setIsEditing={setIsEditing}

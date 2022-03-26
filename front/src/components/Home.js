@@ -71,6 +71,8 @@ function Home(){
 		})
 	}, [])
 
+	
+
     //로그인하지 않아도 게시글은 볼 수 있음 
     //로그인했을 때만 글작성할 수 있음
 
@@ -91,6 +93,7 @@ function Home(){
 						categories={categories}
 						isLogin={isLogin}
 						dispatch={categoryDispatch}
+						
 						setIsArticleOpen={setIsArticleOpen}
 						setSelectedCategory={setSelectedCategory}
 						setIsinitialCategory={setIsinitialCategory}/>	
