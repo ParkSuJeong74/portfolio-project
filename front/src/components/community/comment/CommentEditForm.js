@@ -8,7 +8,7 @@ function CommentEditForm({owner, currentComment, dispatch, setIsEditing}){
     const {id, writerName} = currentComment
     const [comment, setComment] = useState(currentComment.comment)
     const [hidden, setHidden] = useState(currentComment.hidden)
-
+console.log(currentComment)
     async function submitHandler(e){
         e.preventDefault()
         
@@ -20,7 +20,7 @@ function CommentEditForm({owner, currentComment, dispatch, setIsEditing}){
                 hidden: hidden,
                 writerName: owner.nickname
             })
-            
+            console.log(editedComment.data)
             dispatch({
                 type: 'EDIT',
                 payload: editedComment.data

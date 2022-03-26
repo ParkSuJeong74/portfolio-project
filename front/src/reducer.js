@@ -42,12 +42,12 @@ export const articleReducer = (state, action) => {
     switch(action.type){
         case 'SET':
             return action.payload
-        case 'ADD':
-            return [...state, {categoryName, author, title, description, hidden, authorName}]
+        case 'ADD':/* {categoryName, author, title, description, hidden, authorName} */
+            return [...state, action.payload]
         case 'EDIT':
             return state.map((article) => 
                 article.id === action.payload.id
-                ? {categoryName, author, title, description, hidden, authorName}
+                ? action.payload/* {categoryName, author, title, description, hidden, authorName} */
                 : article
             )
         case 'DELETE':
@@ -62,8 +62,8 @@ export const commentReducer = (state, action) => {
     switch(action.type){
         case 'SET':
             return action.payload
-        case 'ADD':
-            return [...state, { writerId, writerName, comment, hidden}]
+        case 'ADD': /* { writerId, writerName, comment, hidden} */
+            return [...state, action.payload]
         case 'EDIT':
             return state.map((comment) => 
                 comment.id === action.payload.id
