@@ -22,6 +22,7 @@ const PasswordChangeModal = ({ onConfirm, onCancel }) => {
                 email,
             });
             setResponseCode(res);
+            alert("인증번호가 발송되었습니다. 메일을 확인해주세요.")
         } catch (error) {
             alert(error.response.data)
         }
