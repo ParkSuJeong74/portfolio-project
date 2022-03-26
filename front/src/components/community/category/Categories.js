@@ -1,42 +1,42 @@
 import { useEffect, useState } from 'react'
-import {Card, Row, Col} from 'react-bootstrap'
+import { Card, Row, Col } from 'react-bootstrap'
 import Category from './Category'
 import CategoryAddForm from './CategoryAddForm'
 import * as Api from '../../../api'
 
 import Style from '../../../App.module.css'
 
-function Categories({categories, isLogin, dispatch, setIsArticleOpen, setSelectedCategory, setIsinitialCategory}){
+function Categories({ categories, isLogin, dispatch, setIsArticleOpen, setSelectedCategory, setIsinitialCategory }) {
     useEffect(() => {
-        async function getData(){
-			try{
-				await Api.get('category/list').then((res) => {
-					dispatch({
-						type: 'SET',
-						payload: res.data
-					})
-				})
-			} catch(err){
-				console.log(err)
-			}
-		}
-		getData()
+        async function getData() {
+            try {
+                await Api.get('category/list').then((res) => {
+                    dispatch({
+                        type: 'SET',
+                        payload: res.data
+                    })
+                })
+            } catch (err) {
+                console.log(err)
+            }
+        }
+        getData()
     }, [categories])
-		
+
 
     // 추가중인지 여부
     const [isAdding, setIsAdding] = useState(false)
 
     return (
         <Card className="mt-4 mb-4 text-center">
-            <Card.Header 
-                className={Style.cateHeader} 
-                style={{backgroundColor: '#D9DDFF'}}>
-                    전체 게시판
+            <Card.Header
+                className={Style.cateHeader}
+                style={{ backgroundColor: '#D9DDFF' }}>
+                전체 게시판
             </Card.Header>
 
             {categories.map((category) => (
-                <Category 
+                <Category
                     key={category.id}
                     category={category}
                     setIsArticleOpen={setIsArticleOpen}
@@ -52,13 +52,13 @@ function Categories({categories, isLogin, dispatch, setIsArticleOpen, setSelecte
                         <button
                             onClick={() => setIsAdding(true)}
                             className={[Style.formAddButton, Style.communityAddButton].join(' ')}>
-                        </button>                    
+                        </button>
                     </Col>
                 </Row>
             )}
 
             {isAdding && (
-                <CategoryAddForm 
+                <CategoryAddForm
                     setIsAdding={setIsAdding}
                     dispatch={dispatch} />
             )}

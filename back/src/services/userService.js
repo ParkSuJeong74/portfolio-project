@@ -67,7 +67,7 @@ const userAuthService = {
         }
         // 닉네임 중복 검사
         const findByNicknameUser = await User.findByNickname({ nickname: toUpdate.nickname })
-        if (findByNicknameUser) {
+        if (findByNicknameUser && findByNicknameUser.id != userId) {
             throw new Error("이 닉네임은 현재 사용중입니다. 다른 닉네임을 입력해 주세요.")
         }
 
