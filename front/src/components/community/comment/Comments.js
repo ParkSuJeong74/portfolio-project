@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useReducer, useState } from "react";
+import React, { useRef, useLayoutEffect, useEffect, useReducer, useState } from "react";
 import { Card } from "react-bootstrap";
 import * as Api from "../../../api";
 import Comment from "./Comment";
@@ -19,52 +19,42 @@ function Comments({ isLogin, category, article, owner}) {
     const [currentLikeState, setCurrentLikeState] = useState(false)
     const [currentLikeCount, setCurrentLikeCount] = useState(0)
 
+    // 최초 실행 여부
+    const mounted = useRef(true);
+
     //TODO: Api get 요청하기!
-    const getData = async () => {
+    //!!!!async-await 일부러 뺀 거임!!!! 추가하지 말것!!!!
+    const getData = () => {
         try {
-            await Api.get(`article/${article.id}`)
+            Api.get(`article/${article.id}`)
                 .then((res) => {
-                    //해당 게시글의 댓글 목록 불러오기
-                    commentDispatch({
-                        type: 'SET',
-                        payload: res.data.comment
-                    })
-                    setCurrentLikeState(res.data.likeState)
-                    setCurrentLikeCount(res.data.article.likeCount)
+                //해당 게시글의 댓글 목록 불러오기
+                commentDispatch({
+                    type: 'SET',
+                    payload: res.data.comment
                 })
+                setCurrentLikeState(res.data.likeState)
+                setCurrentLikeCount(res.data.article.likeCount)
+            })
         } catch (err) {
             console.log(err)
         }
     }
 
-    // 좋아요 여부
-    const [isLike, setIsLike] = useState()
-        
-    // 좋아요 개수
-    const [likeNumber, setLikeNumber] = useState()
-
     useLayoutEffect(() => {
         getData();
-        setIsLike(likeState);
-        setLikeNumber(likeCount);
     }, [comments])
-
-    const likeState = currentLikeState
-    const likeCount = currentLikeCount
-
-    console.log("likeState:", likeState, "likeCount:", likeCount)
+    
     // 추가중 여부
     const [isAdding, setIsAdding] = useState(false);
     
-    console.log("isLike:", isLike, "likeCount:", likeNumber)
-
     async function liking() {
         await Api.put(`article/${article.id}/like`, {
             author: article.author
         }).then((res) => {
         // 누를 때마다 좋아요 <-> 좋아요 취소
-            setIsLike((prev) => !prev)
-            setLikeNumber(res.data.likeUserIdList.length)
+            setCurrentLikeState((prev) => !prev)
+            setCurrentLikeCount(res.data.likeUserIdList.length)
         })
     }
 
@@ -82,11 +72,11 @@ function Comments({ isLogin, category, article, owner}) {
                 <button onClick={() => {
                                     liking()
                                 }}
-                        style={{ color: isLike ? 'white' : '#5960c0', 
-                                backgroundColor: isLike ? '#5960c0' : 'white' }}
+                        style={{ color: currentLikeState ? 'white' : '#5960c0', 
+                                backgroundColor: currentLikeState ? '#5960c0' : 'white' }}
                         class={Style.fineIcon}><FontAwesomeIcon icon={faThumbsUp} /></button>
 
-                <div>좋아요 {likeNumber}</div>
+                <div>좋아요 {currentLikeCount}</div>
             </div>
 
             <Card>
