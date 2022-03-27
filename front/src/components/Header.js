@@ -31,7 +31,7 @@ function Header() {
     return (
     <>
         <div className={Style.navBar}>
-            <div className={Style.Title} style= {{fontSize: '2.5em'}}>MY PORTFOLIO</div>
+            <div className={Style.Title} style= {{fontSize: '2.5em'}}>˚｡.⋆｡ MY PORTFOLIO˚｡⋆.˚☽˚｡</div>
             <ul style={{ gap: 30 }} className={Style.navItems}>
                 {naviagationInformations.map((navigationItem) => (
                     <li
