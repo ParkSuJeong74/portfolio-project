@@ -33,7 +33,7 @@ function UserEditForm({ user, setIsEditing, setUser, setBasic }) {
                 let formData = new FormData()
                 const config = {
                     headers: {
-                        "content-type": "multipart/form-data",
+                        "Content-Type": "multipart/form-data",
                         Authorization: `Bearer ${sessionStorage.getItem("userToken")}`
                     }
                 }
@@ -58,7 +58,7 @@ function UserEditForm({ user, setIsEditing, setUser, setBasic }) {
     return (
         <Card className="mb-2" style={{ backgroundColor: '#FCFAFA' }}>
             <Card.Body>
-                <Form onSubmit={handleSubmit} method="GET">
+                <Form onSubmit={handleSubmit}>
                     <Form.Group controlId="userEditName">
                         <Form.Control
                             disabled

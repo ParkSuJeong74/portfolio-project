@@ -61,7 +61,15 @@ function Comments({ isLogin, category, article, owner }) {
 
 
             <div style={{ padding: '30px' }}>
-                <div class={Style.articleDetailDesc}>{article.description}</div>
+                <div class={Style.articleDetailDesc}>{article.description.split("\n").map((line) => {
+                    return (
+                    <span>
+                        {line}
+                        <br />
+                    </span>
+                    );
+                })}
+                </div>
 
                 <button onClick={() => {
                                     liking()

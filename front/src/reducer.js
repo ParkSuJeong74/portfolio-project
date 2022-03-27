@@ -18,16 +18,15 @@ export function userReducer(userState, action) {
 }
 
 export const categoryReducer = (state, action) => {
-    const {userId, name, description} = action.payload
     switch(action.type){
         case 'SET':
             return action.payload
         case 'ADD':
-            return [...state, { name, description}]
+            return [...state, action.payload]
         case 'EDIT':
             return state.map((category) =>
                 category.id === action.payload.id
-                ? { name, description}
+                ? action.payload
                 : category
             )
         case 'DELETE':
@@ -38,7 +37,6 @@ export const categoryReducer = (state, action) => {
 }
 
 export const articleReducer = (state, action) => {
-    const {categoryName, author, title, description, hidden, authorName} = action.payload
     switch(action.type){
         case 'SET':
             return action.payload
@@ -58,7 +56,6 @@ export const articleReducer = (state, action) => {
 }
 
 export const commentReducer = (state, action) => {
-    const {writerId, writerName, comment, hidden} = action.payload
     switch(action.type){
         case 'SET':
             return action.payload

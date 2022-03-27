@@ -15,7 +15,7 @@ const Articles = ({ isLogin, category, owner }) => {
     useEffect(() => {
         const getData = async () => {
             try {
-                await Api.get(`category/${category.name}`)
+                await Api.get(`category/${category?.name}`)
                     .then((res) => {
                         articleDispatch({
                             type: 'SET',
@@ -28,7 +28,7 @@ const Articles = ({ isLogin, category, owner }) => {
             }
         }
         getData()
-    }, [category.name])
+    }, [category?.name])
 
     //* ArticleDetail 컴포넌트로 선택된 게시글을 가져가는 상태값
     const [selectedArticle, setSelectedArticle] = useState(null)
@@ -40,11 +40,11 @@ const Articles = ({ isLogin, category, owner }) => {
 
     useEffect(() => {
         setIsDetail(false)
-    }, [category.name])
+    }, [category?.name])
     return (
         <Card className={['mt-4', 'mb-4'].join(' ')}>
             <div class={Style.articleItem}>
-                <Card.Title style={{ fontWeight: 'bolder' }}>{category.name}</Card.Title>
+                <Card.Title style={{ fontWeight: 'bolder' }}>{category?.name}</Card.Title>
             </div>
 
             {isDetail ? (

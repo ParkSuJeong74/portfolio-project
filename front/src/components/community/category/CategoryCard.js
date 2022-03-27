@@ -7,7 +7,7 @@ function CategoryCard({ setIsArticleOpen, setSelectedCategory, setIsEditing, cat
     return (
         <ListGroup.Item
             className={Style.categoryItem}
-            value={category.name}
+            value={category?.name}
             onClick={() => {
                 setSelectedCategory(category)
                 setIsinitialCategory(false)
@@ -19,10 +19,10 @@ function CategoryCard({ setIsArticleOpen, setSelectedCategory, setIsEditing, cat
                 placement='right'
                 overlay={
                     <Tooltip id={`tooltip-right`}>
-                        {category.description}
+                        {category?.description}
                     </Tooltip>
                 }>
-                <span>{category.name}</span>
+                <span>{category?.name}</span>
             </OverlayTrigger>
 
 
