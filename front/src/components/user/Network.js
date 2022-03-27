@@ -20,7 +20,7 @@ function Network() {
         }
 
         Api.get("user/list").then((res) => setUsers(res.data));
-    }, [users]);
+    }, [navigate]);
 
     return (
         <Container fluid>
@@ -33,7 +33,7 @@ function Network() {
                     key={user.id} 
                     user={user} 
                     myID={myID}
-                    
+                    setUsers={setUsers}
                     isNetwork />
             ))}
             </Row>

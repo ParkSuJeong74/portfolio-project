@@ -14,7 +14,7 @@ function User({ portfolioOwnerId, isEditable }) {
 
     useEffect(() => {
         Api.get("user", portfolioOwnerId).then((res) => setUser(res.data));
-    }, [user]);
+    }, [portfolioOwnerId]);
 
     return (
     <>
