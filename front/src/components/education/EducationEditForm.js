@@ -13,19 +13,19 @@ function EducationEditForm({ setEducations, currentEducation, setIsEditing }) {
         e.stopPropagation()
 
         const userId = currentEducation.userId
-        console.log(school ? currentEducation.school : school)
 
         try {
-            await Api.put(`education/${currentEducation.id}`, {
+            const editedEducation = await Api.put(`education/${currentEducation.id}`, {
                 userId,
                 school,
                 major,
                 position
             })
-
-            const res = await Api.get("education/list", userId)
-            console.log(res.data)
-            setEducations(res.data)
+            setEducations((prev) => prev.map((education) => {
+                return education.id === currentEducation.id 
+                        ? (editedEducation.data)
+                        : (education)
+            }))
 
             setIsEditing(false)
 

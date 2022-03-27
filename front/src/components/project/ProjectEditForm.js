@@ -29,7 +29,7 @@ function ProjectEditForm({ currentProject, setProjects, setIsEditing }) {
         console.log(from_date)
         console.log(to_date)
 
-        await Api.put(`project/${currentProject.id}`, {
+        const editedProject = await Api.put(`project/${currentProject.id}`, {
             userId,
             title,
             description,
@@ -37,8 +37,12 @@ function ProjectEditForm({ currentProject, setProjects, setIsEditing }) {
             toDate: to_date
         })
 
-        const res = await Api.get("project/list", userId);
-        setProjects(res.data)
+        setProjects((prev) => prev.map((project) => {
+            return project.id === currentProject.id
+                ? (editedProject.data)
+                : (project)
+        }))
+
         setIsEditing(false)
     }
 

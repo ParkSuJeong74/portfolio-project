@@ -49,7 +49,7 @@ function Home(){
 	const [selectedCategory, setSelectedCategory] = useState({})
 
 	// 초기화면에서 공지사항 게시판이 바로 보이도록 하는 상태
-	const [IsinitialCategory, setIsinitialCategory] = useState(true)
+	const [IsinitialCategory, setIsinitialCategory] = useState(false)
 
 	//초기화면에 나올 카테고리 가져오기
 	const [initialCategory, setInitialCategory] = useState({})
@@ -58,7 +58,8 @@ function Home(){
 		const categoryName = '*공지사항*'
 		Api.get(`category/${categoryName}`).then((res) => {
 
-		setInitialCategory(res.data.category)
+			setInitialCategory(res.data.category)
+			setIsinitialCategory(true)
 		})
 	}, [])
 

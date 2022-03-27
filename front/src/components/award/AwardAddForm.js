@@ -11,19 +11,14 @@ function AwardAddForm({ portfolioOwnerId, setAwards, setIsAdding }) {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        e.stopPropagation();
 
-        const userId = portfolioOwnerId;
-
-        await Api.post("award/create", {
+        const newAward = await Api.post("award/create", {
             userId: portfolioOwnerId,
             title,
             description,
         });
 
-        const res = await Api.get("award/list", userId);
-
-        setAwards(res.data);
+        setAwards((prev) => [...prev, newAward.data])
 
         setIsAdding(false);
     };

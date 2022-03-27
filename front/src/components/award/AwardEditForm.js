@@ -6,22 +6,24 @@ import Style from '../../App.module.css'
 function AwardEditForm({currentAward, setAwards, setIsEditing}){
     const [title, setTitle] = useState(currentAward.title)
     const [description, setDescription] = useState(currentAward.description)
-
+console.log(currentAward)
     async function submitHandler(e){
         e.preventDefault()
         e.stopPropagation()
 
         const userId = currentAward.userId
 
-        await Api.put(`award/${currentAward.id}`, {
+        const editedAward = await Api.put(`award/${currentAward.id}`, {
             userId,
             title,
             description
         })
 
-        const res = await Api.get("award/list", userId)
-        console.log(res.data)
-        setAwards(res.data)
+        setAwards((prev) => prev.map((award) => {
+            return award.id === currentAward.id 
+            ? ( editedAward.data )
+            : (award)
+        }))
 
         setIsEditing(false)
     }

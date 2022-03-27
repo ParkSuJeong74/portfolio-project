@@ -17,15 +17,13 @@ function ProjectAddForm({ portfolioOwnerId, setProjects, setIsAdding }) {
     const handleSubmit = async (e) => {
         e.preventDefault()
 
-        const userId = portfolioOwnerId
-
         let from_date = dayjs(fromDate)
         let to_date = dayjs(toDate)
 
         from_date = dayjs(fromDate).format("YYYY-MM-DD")
         to_date = dayjs(toDate).format("YYYY-MM-DD")
 
-        await Api.post("project/create", {
+        const newProject = await Api.post("project/create", {
             userId: portfolioOwnerId,
             title,
             description,
@@ -33,8 +31,8 @@ function ProjectAddForm({ portfolioOwnerId, setProjects, setIsAdding }) {
             toDate: to_date
         })
 
-        const res = await Api.get("project/list", userId)
-        setProjects(res.data)
+        setProjects((prev) =>  [...prev, newProject.data])
+
         setIsAdding(false);
     }
 

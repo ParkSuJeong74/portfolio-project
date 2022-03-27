@@ -16,15 +16,15 @@ function CertificateAddForm({setCertificates, setIsAdding,portfolioOwnerId }){
         const userId = portfolioOwnerId
 
         const when_date = (TimeUtil.getTime(whenDate)).toISOString().split('T')[0]
-        await Api.post("certificate/create", {
+
+        const newCertificate = await Api.post("certificate/create", {
             userId,
             title,
             description,
             whenDate: when_date
         })
 
-        const res = await Api.get("certificate/list", userId)
-        setCertificates(res.data)
+        setCertificates((prev) => [...prev, newCertificate.data])
         setIsAdding(false)
     }
 
