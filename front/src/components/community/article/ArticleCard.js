@@ -5,7 +5,7 @@ import RemoveModal from "./RemoveModal";
 
 function ArticleCard({article, owner, isLogin, removeArticle, setIsEditing, setIsDetail, setSelectedArticle}){
     //* isEditable은 작성자 = 로그인한 사용자일 때만 가능함
-    const isEditable = isLogin && article.author === owner.id
+    const isEditable = isLogin && article.author === owner?.id
 
     const [show, setShow] = useState(false);
 

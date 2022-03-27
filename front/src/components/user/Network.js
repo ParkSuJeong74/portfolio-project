@@ -20,21 +20,20 @@ function Network() {
         }
 
         Api.get("user/list").then((res) => setUsers(res.data));
-
-    }, [userState, navigate]);
+    }, [navigate]);
 
     return (
         <Container fluid>
             <Row xs="auto" className="jusify-content-center"
                 style={{
-                    marginTop: '30px'
+                    marginTop: '30px', marginBottom: '20px'
                 }}>
             {users.map((user) => (
                 <UserCard 
                     key={user.id} 
                     user={user} 
                     myID={myID}
-                    
+                    setUsers={setUsers}
                     isNetwork />
             ))}
             </Row>

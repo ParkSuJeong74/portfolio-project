@@ -3,7 +3,7 @@ import {Form,Row,Col} from 'react-bootstrap'
 import DatePicker from "react-datepicker";
 import * as Api from '../../api'
 import Style from '../../App.module.css'
-import {TimeUtil} from '../../common/timeUtil'
+import {TimeUtil} from '../../common/TimeUtil'
 
 function CertificateAddForm({setCertificates, setIsAdding,portfolioOwnerId }){
     const [title, setTitle] = useState('')

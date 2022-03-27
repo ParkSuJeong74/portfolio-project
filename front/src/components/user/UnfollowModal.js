@@ -1,13 +1,14 @@
 import {Modal, Button} from 'react-bootstrap'
 import * as Api from '../../api'
 
-function UnfollowModal({handleClose, show, myID, yourID}){
+function UnfollowModal({handleClose, show, myID, yourID, setUsers}){
 
     async function unFollow(){
         const res = await Api.put(`user/follow/${myID}`, {userIdYour: yourID})
         console.log(res)
         handleClose()
         alert("언팔로우 되었습니다!!")
+        Api.get("user/list").then((res) => setUsers(res.data));
     }
 
     return (

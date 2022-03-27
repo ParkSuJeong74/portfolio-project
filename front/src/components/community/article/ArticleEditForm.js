@@ -10,11 +10,11 @@ const ArticleEditForm = ({ currentArticle, dispatch, setIsEditing }) => {
 
     const userState = useContext(UserStateContext)
     const userId = userState.user?.id
-    console.log(userId)
+
     
-    const [hidden, setHidden] = useState(currentArticle.hidden)
-    const [title, setTitle] = useState(currentArticle.title)
-    const [description, setDescription] = useState(currentArticle.description)
+    const [hidden, setHidden] = useState(currentArticle?.hidden)
+    const [title, setTitle] = useState(currentArticle?.title)
+    const [description, setDescription] = useState(currentArticle?.description)
 
     const navigate = useNavigate()
 
@@ -22,7 +22,7 @@ const ArticleEditForm = ({ currentArticle, dispatch, setIsEditing }) => {
         e.preventDefault()
         try {
             //TODO: Api put 요청하기!
-            await Api.put(`article/${id}`, {
+            const editedArticle = await Api.put(`article/${id}`, {
                 userId,
                 author,
                 hidden,
@@ -32,7 +32,7 @@ const ArticleEditForm = ({ currentArticle, dispatch, setIsEditing }) => {
 
             dispatch({
                 type: 'EDIT',
-                payload: { author, title, description, hidden }
+                payload: editedArticle.data
             })
 
             setIsEditing(false)

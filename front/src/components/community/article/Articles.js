@@ -15,7 +15,7 @@ const Articles = ({ isLogin, category, owner }) => {
     useEffect(() => {
         const getData = async () => {
             try {
-                await Api.get(`category/${category.name}`)
+                await Api.get(`category/${category?.name}`)
                     .then((res) => {
                         articleDispatch({
                             type: 'SET',
@@ -28,7 +28,7 @@ const Articles = ({ isLogin, category, owner }) => {
             }
         }
         getData()
-    }, [articles])
+    }, [category?.name])
 
     //* ArticleDetail 컴포넌트로 선택된 게시글을 가져가는 상태값
     const [selectedArticle, setSelectedArticle] = useState(null)
@@ -38,10 +38,13 @@ const Articles = ({ isLogin, category, owner }) => {
     //* 게시글 상세 페이지로 이동하는 상태값, true: 상세페이지, false: 게시글 목록
     const [isDetail, setIsDetail] = useState(false)
 
+    useEffect(() => {
+        setIsDetail(false)
+    }, [category?.name])
     return (
         <Card className={['mt-4', 'mb-4'].join(' ')}>
             <div class={Style.articleItem}>
-                <Card.Title style={{ fontWeight: 'bolder' }}>{category.name}</Card.Title>
+                <Card.Title style={{ fontWeight: 'bolder' }}>{category?.name}</Card.Title>
             </div>
 
             {isDetail ? (
@@ -89,6 +92,7 @@ const Articles = ({ isLogin, category, owner }) => {
                 </Card.Body>
             )}
         </Card>
+        
     )
 }
 export default Articles

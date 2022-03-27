@@ -22,6 +22,7 @@ function UserEditForm({ user, setIsEditing, setUser, setBasic }) {
 
             const updatedUser = res.data;
             setUser(updatedUser)
+            
 
             //* 이미지 put 요청하기
             if (isNone) {
@@ -32,14 +33,15 @@ function UserEditForm({ user, setIsEditing, setUser, setBasic }) {
                 let formData = new FormData()
                 const config = {
                     headers: {
-                        "content-type": "multipart/form-data",
+                        "Content-Type": "multipart/form-data",
                         Authorization: `Bearer ${sessionStorage.getItem("userToken")}`
                     }
                 }
                 formData.set("file", imageInfo)
+                console.log("imageInfo", imageInfo)
 
                 axios.post(
-                    `http://localhost:5001/user/${user.id}/img`,
+                    `http://elice-kdt-ai-4th-team21.elicecoding.com/user/${user.id}/img`,
                     formData,
                     config
                 ).then((res) => {

@@ -7,13 +7,11 @@ import Style from '../../../App.module.css'
 function ArticleDetail({category, setIsDetail, selectedArticle, isLogin, owner}){
 
     const navigate = useNavigate()
-
     return(
         <>
             <span class={Style.backButton} onClick={() => {
                 setIsDetail(false)
                 navigate(`/${category.id}`)
-                
             }}> <FontAwesomeIcon icon={faArrowLeft} /> </span>
 
             <Comments 
