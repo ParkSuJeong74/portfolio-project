@@ -26,8 +26,6 @@ function ProjectEditForm({ currentProject, setProjects, setIsEditing }) {
 
         const from_date = (TimeUtil.getTime(fromDate)).toISOString().split('T')[0]
         const to_date = (TimeUtil.getTime(toDate)).toISOString().split('T')[0]
-        console.log(from_date)
-        console.log(to_date)
 
         const editedProject = await Api.put(`project/${currentProject.id}`, {
             userId,
