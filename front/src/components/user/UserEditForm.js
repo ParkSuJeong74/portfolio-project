@@ -41,7 +41,7 @@ function UserEditForm({ user, setIsEditing, setUser, setBasic }) {
                 console.log("imageInfo", imageInfo)
 
                 axios.post(
-                    `http://elice-kdt-ai-4th-team21.elicecoding.com/user/${user.id}/img`,
+                    `http://elice-kdt-ai-4th-team21.elicecoding.com:5001/user/${user.id}/img`,
                     formData,
                     config
                 ).then((res) => {
