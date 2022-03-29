@@ -5,14 +5,46 @@
 
 @import url(//font.elice.io/EliceDigitalBaeum.css);
 
-@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Permanent+Marker&display=swap%27');
-
+@font-face {
+    font-family: 'SANGJUDajungdagam';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2112@1.0/SANGJUDajungdagam.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+  
 * {
-    font-family: "Elice Digital Baeum",sans-serif;
+    font-family: "Elice Digital Baeum", sans-serif;
 }
 
-.Title{
-    font-family: 'Fredoka One', cursive;
+
+
+.Title {
+    font-family: 'SANGJUDajungdagam';
+    font-weight: bold;
+    animation: flicker 1.5s infinite alternate;
+    color: #fff;
+  }
+  
+  /* Flickering animation */
+  @keyframes flicker {
+      
+    0%, 18%, 22%, 25%, 53%, 57%, 100% {
+  
+        text-shadow:
+        0 0 4px #fff,
+        0 0 11px #fff,
+        0 0 19px #fff,
+        0 0 40px #580aff,
+        0 0 80px #580aff,
+        0 0 90px #580aff,
+        0 0 100px #580aff,
+        0 0 150px #580aff;
+    
+    }
+    
+    20%, 24%, 55% {        
+        text-shadow: none;
+    }    
 }
 
 
@@ -243,19 +275,13 @@
     cursor: pointer;
 }
 
-html{
-    position: relative;
-    height: auto;
-    min-height: 100%;
-}
-
 .footer {
     text-align: center;
-    margin-top: 100px;
+    margin-top: auto;
     background-color: #D9DDFF;
     width: 100%;
     height: 50px; /* footer의 높이 */
-    position: absolute;
-    bottom: 0;
-    left: 0;
+    /* position: absolute; */
+    /* bottom: 0; */
+    /* left: 0; */
 }

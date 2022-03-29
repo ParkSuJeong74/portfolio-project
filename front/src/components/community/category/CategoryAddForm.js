@@ -6,7 +6,7 @@ import * as Api from '../../../api'
 
 function CategoryAddForm({setIsAdding, dispatch}){
     const userState = useContext(UserStateContext)
-    const userId = userState.user.id
+    const userId = userState.user?.id
 
     const [name, setName] = useState('')
     const [description, setDescription] = useState('')
@@ -16,14 +16,14 @@ function CategoryAddForm({setIsAdding, dispatch}){
 
         //TODO: Api post 요청하기!
         try{
-            await Api.post('category/create', {
+            const newCategory = await Api.post('category/create', {
                 userId,
                 name, description
             })
 
             dispatch({
                 type: 'ADD',
-                payload: {userId, name, description}
+                payload: {id:newCategory.data.id, name, description}
             })
 
             setIsAdding(false)

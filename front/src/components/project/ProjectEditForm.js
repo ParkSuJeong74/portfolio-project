@@ -3,7 +3,7 @@ import { Form, Col, Row } from "react-bootstrap"
 import * as Api from "../../api"
 import DatePicker from "react-datepicker"
 import Style from '../../App.module.css'
-import {TimeUtil} from '../../common/timeUtil'
+import {TimeUtil} from '../../common/TimeUtil'
 
 function ProjectEditForm({ currentProject, setProjects, setIsEditing }) {
 
@@ -26,10 +26,8 @@ function ProjectEditForm({ currentProject, setProjects, setIsEditing }) {
 
         const from_date = (TimeUtil.getTime(fromDate)).toISOString().split('T')[0]
         const to_date = (TimeUtil.getTime(toDate)).toISOString().split('T')[0]
-        console.log(from_date)
-        console.log(to_date)
 
-        await Api.put(`project/${currentProject.id}`, {
+        const editedProject = await Api.put(`project/${currentProject.id}`, {
             userId,
             title,
             description,
@@ -37,8 +35,12 @@ function ProjectEditForm({ currentProject, setProjects, setIsEditing }) {
             toDate: to_date
         })
 
-        const res = await Api.get("project/list", userId);
-        setProjects(res.data)
+        setProjects((prev) => prev.map((project) => {
+            return project.id === currentProject.id
+                ? (editedProject.data)
+                : (project)
+        }))
+
         setIsEditing(false)
     }
 

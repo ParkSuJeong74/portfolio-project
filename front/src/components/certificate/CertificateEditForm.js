@@ -3,7 +3,7 @@ import {Form,Col,Row} from 'react-bootstrap'
 import DatePicker from 'react-datepicker'
 import * as Api from '../../api'
 import Style from '../../App.module.css'
-import {TimeUtil} from '../../common/timeUtil'
+import {TimeUtil} from '../../common/TimeUtil'
 
 function CertificateEditForm({setCertificates, currentCertificate,setIsEditing}){
     const [title, setTitle] = useState(currentCertificate.title)
@@ -11,7 +11,7 @@ function CertificateEditForm({setCertificates, currentCertificate,setIsEditing})
     const [whenDate, setWhenDate] = useState(
         new Date(currentCertificate.whenDate)
     )
-
+console.log(currentCertificate)
     async function submitHandler(e){
         e.preventDefault()
         e.stopPropagation()
@@ -20,15 +20,19 @@ function CertificateEditForm({setCertificates, currentCertificate,setIsEditing})
 
         const when_date = (TimeUtil.getTime(whenDate)).toISOString().split('T')[0]
 
-        await Api.put(`certificate/${currentCertificate.id}`,{
+        const updatedCertificate = await Api.put(`certificate/${currentCertificate.id}`,{
             userId,
             title,
             description,
             whenDate: when_date
         })
 
-        const res = await Api.get("certificate/list", userId)
-        setCertificates(res.data)
+        setCertificates((prev) => prev.map((certificate) => {
+            return (certificate.id === currentCertificate.id) 
+                ? (updatedCertificate.data)
+                : (certificate)
+        }))
+
         setIsEditing(false)
     }
 

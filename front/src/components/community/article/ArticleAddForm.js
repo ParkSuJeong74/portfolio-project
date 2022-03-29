@@ -14,19 +14,17 @@ const ArticleAddForm = ({ owner, category, articles, dispatch, setIsAdding }) =>
         e.preventDefault()
         try {
             //TODO: Api post 요청!
-            await Api.post(`article/create`, {
+            const newArticle = await Api.post(`article/create`, {
                 author: owner.id,
                 categoryName,
                 hidden,
                 title,
                 description
-            })
+            });
 
             dispatch({
                 type: 'ADD',
-                payload: {
-                    categoryName, author: owner.id, title, description, hidden, authorName: owner.name
-                }
+                payload: newArticle.data
             })
 
             setIsAdding(false)

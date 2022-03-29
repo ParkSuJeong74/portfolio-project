@@ -7,7 +7,7 @@ function Comment({owner, comment, dispatch, isLogin}) {
     const [isEditing, setIsEditing] = useState(false)
 
     //* 댓글 작성자 = 로그인한 사용자 일 때만 수정, 삭제 가능함
-    const isEditable = isLogin && comment.userId === owner.id
+    const isEditable = isLogin && comment.writerId === owner.id
 
     async function removeComment(){
         //TODO: Api put 요청하기! (soft delete)

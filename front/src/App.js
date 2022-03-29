@@ -12,6 +12,8 @@ import Portfolio from "./components/Portfolio"
 import Home from './components/Home'
 import Footer from "./components/Footer"
 
+import Style from './App.module.css'
+
 export const UserStateContext = createContext(null)
 export const DispatchContext = createContext(null)
 
@@ -25,8 +27,7 @@ function App() {
 
     const fetchCurrentUser = async () => {
         try {
-            const res = await Api.get("user/current");
-            console.log(res.data)
+            const res = await Api.get("user/current")
             const currentUser = res.data;
 
             userDispatch({
@@ -53,19 +54,21 @@ function App() {
         <DispatchContext.Provider value={userDispatch}>
             <UserStateContext.Provider value={userState}>
                 <Router >
-                    <Header />
-                    <Routes >
-                        <Route path="/" exact element={<Home />} />
-                        <Route path="/:categoryId" exact element={<Home />} />
-                        <Route path="/:categoryId/:articleName" element={<Home />} />
-                        <Route path="/login" element={<LoginForm />} />
-                        <Route path="/register" element={<RegisterForm />} />
-                        <Route path="/user/:userId" element={<Portfolio />} />
-                        <Route path="/portfolio" element={<Portfolio />} />
-                        <Route path="/userlist" element={<Network />} />
-                        <Route path="*" element={<Home />} />
-                    </Routes>
-                    <Footer />
+                    <div className={Style.mainWrapper}>
+                        <Header />
+                        <Routes >
+                            <Route path="/" exact element={<Home />} />
+                            <Route path="/:categoryId" exact element={<Home />} />
+                            <Route path="/:categoryId/:articleName" element={<Home />} />
+                            <Route path="/login" element={<LoginForm />} />
+                            <Route path="/register" element={<RegisterForm />} />
+                            <Route path="/user/:userId" element={<Portfolio />} />
+                            <Route path="/portfolio" element={<Portfolio />} />
+                            <Route path="/userlist" element={<Network />} />
+                            <Route path="*" element={<Home />} />
+                        </Routes>
+                        <Footer />
+                    </div>
                 </Router>
 
             </UserStateContext.Provider>

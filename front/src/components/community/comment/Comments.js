@@ -33,12 +33,10 @@ function Comments({ isLogin, category, article, owner }) {
             alert(error.response.data)
         }
     }
-
     useLayoutEffect(() => {
         getData();
-    }, [comments])
-
-    // 추가중 여부
+    }, [article.id])
+    
     const [isAdding, setIsAdding] = useState(false);
     async function liking() {
         try {
@@ -63,7 +61,15 @@ function Comments({ isLogin, category, article, owner }) {
 
 
             <div style={{ padding: '30px' }}>
-                <div class={Style.articleDetailDesc}>{article.description}</div>
+                <div class={Style.articleDetailDesc}>{article.description.split("\n").map((line) => {
+                    return (
+                    <span>
+                        {line}
+                        <br />
+                    </span>
+                    );
+                })}
+                </div>
 
                 <button onClick={() => {
                                     liking()

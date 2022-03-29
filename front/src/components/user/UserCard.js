@@ -6,7 +6,7 @@ import * as Api from "../../api"
 import UnfollowModal from "./UnfollowModal"
 import { UserStateContext } from '../../App'
 
-function UserCard({ user, setIsEditing, isEditable, myID, isNetwork }) {
+function UserCard({ user, setIsEditing, isEditable, myID, isNetwork, setUsers }) {
     const navigate = useNavigate()
     const userState = useContext(UserStateContext)
 
@@ -31,6 +31,7 @@ function UserCard({ user, setIsEditing, isEditable, myID, isNetwork }) {
                 const res = await Api.put(`user/follow/${myID}`, { userIdYour: yourID })
                 alert("팔로우되었습니다!")
                 console.log(res)
+                Api.get("user/list").then((res) => setUsers(res.data));
             }
             else {
                 handleShow()
@@ -103,7 +104,7 @@ function UserCard({ user, setIsEditing, isEditable, myID, isNetwork }) {
             </Card>
 
             <UnfollowModal handleClose={handleClose} show={show}
-                myID={myID} yourID={user?.id} />
+                myID={myID} yourID={user?.id} setUsers={setUsers} />
         </>
     )
 }

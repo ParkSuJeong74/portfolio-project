@@ -40,12 +40,14 @@ commentRouter.put('/:id', async (req, res, next) => {
         //const userId = req.currentUserId
         const commentId = req.params.id
         const { userId, comment, hidden } = req.body
+        let writerName
 
         if(hidden == true) { // 익명 처리
             writerName = '익명'
         }
         else {
             const user = await User.findById({ userId })
+            console.log(user)
             writerName = user.nickname // 닉네임으로 출력
         }
 
