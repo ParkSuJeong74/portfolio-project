@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from "react";
-import * as Api from "../../api";
-import Education from "./Education";
-import EducationAddForm from "./EducationAddForm";
+import React, { useEffect, useState } from "react"
+import * as Api from "../../api"
+import Education from "./Education"
+import EducationAddForm from "./EducationAddForm"
 
-import Style from "../../App.module.css";
 import {
   Accordion,
   AccordionSummary,
@@ -16,19 +15,19 @@ import {
   Dialog,
   DialogTitle,
   DialogContent,
-} from "@mui/material";
-import AddCircleRoundedIcon from "@mui/icons-material/AddCircleRounded";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+} from "@mui/material"
+import AddCircleRoundedIcon from "@mui/icons-material/AddCircleRounded"
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore"
 
 function Educations({ portfolioOwnerId, isEditable }) {
-  const [educations, setEducations] = useState([]); // 해당 유저의 학력을 저장합니다.
-  const [isAdding, setIsAdding] = useState(false); // 학력 추가 버튼 클릭 상태를 저장합니다.
+  const [educations, setEducations] = useState([]) // 해당 유저의 학력을 저장합니다.
+  const [isAdding, setIsAdding] = useState(false) // 학력 추가 버튼 클릭 상태를 저장합니다.
 
   useEffect(() => {
     Api.get("education/list", portfolioOwnerId)
       .then((res) => setEducations(res.data))
-      .catch((err) => alert(err.response.data));
-  }, [portfolioOwnerId]);
+      .catch((err) => alert(err.response.data))
+  }, [portfolioOwnerId])
 
   return (
     <Card sx={{ marginBottom: "20px", borderRadius: "15px" }}>
@@ -74,7 +73,15 @@ function Educations({ portfolioOwnerId, isEditable }) {
           </Box>
           {isAdding && (
             <Dialog open={isAdding} onClose={() => setIsAdding((cur) => !cur)}>
-              <DialogTitle>학력 추가</DialogTitle>
+              <DialogTitle
+                sx={{
+                  fontFamily: "Elice Digital Baeum",
+                  fontWeight: 500,
+                  fontSize: "1.5rem",
+                }}
+              >
+                학력 추가
+              </DialogTitle>
               <DialogContent>
                 <EducationAddForm
                   portfolioOwnerId={portfolioOwnerId}
@@ -87,7 +94,7 @@ function Educations({ portfolioOwnerId, isEditable }) {
         </CardContent>
       )}
     </Card>
-  );
+  )
 }
 
-export default Educations;
+export default Educations

@@ -1,107 +1,115 @@
-import { useState } from 'react'
-import { Form, Col, Row } from 'react-bootstrap'
-import * as Api from '../../api'
-import Style from '../../App.module.css'
+import { useState } from "react"
+import {
+  Box,
+  TextField,
+  Stack,
+  FormControlLabel,
+  Radio,
+  RadioGroup,
+  Button,
+} from "@mui/material"
+import { styled } from "@mui/material/styles"
+import * as Api from "../../api"
 
 function EducationEditForm({ setEducations, currentEducation, setIsEditing }) {
-    const [school, setSchool] = useState(currentEducation.school)
-    const [major, setMajor] = useState(currentEducation.major)
-    const [position, setPosition] = useState(currentEducation.position)
+  const [school, setSchool] = useState(currentEducation.school) // 학교 이름을 저장할 상태입니다.
+  const [major, setMajor] = useState(currentEducation.major) // 전공을 저장할 상태입니다.
+  const [educationStatus, setEducationStatus] = useState(
+    currentEducation.position,
+  ) // 재학/졸업 여부를 저장할 상태입니다.
 
-    async function submitHandler(e) {
-        e.preventDefault()
-        e.stopPropagation()
+  const statusArr = ["재학중", "학사졸업", "석사졸업", "박사졸업"] // postion을 저장하는 배열입니다.
 
-        const userId = currentEducation.userId
+  const RadioBtnClickHandler = (e, value) => {
+    setEducationStatus(value)
+  }
 
-        try {
-            const editedEducation = await Api.put(`education/${currentEducation.id}`, {
-                userId,
-                school,
-                major,
-                position
-            })
-            setEducations((prev) => prev.map((education) => {
-                return education.id === currentEducation.id 
-                        ? (editedEducation.data)
-                        : (education)
-            }))
+  async function submitHandler(e) {
+    e.preventDefault()
+    e.stopPropagation()
 
-            setIsEditing(false)
-
-        } catch (error) {
-            alert(error.response.data)
-        }
+    const userId = currentEducation.userId
+    const editedEducation = {
+      userId,
+      school,
+      major,
+      position: educationStatus,
     }
 
-    const positionInformations = ['재학중', '학사졸업', '석사졸업', '박사졸업']
+    try {
+      await Api.put(`education/${currentEducation.id}`, editedEducation)
+      const res = await Api.get("education/list", userId)
+      setEducations(res.data)
+      setIsEditing(false)
+    } catch (error) {
+      alert(error.response.data)
+    }
+  }
 
-    return (
-        <Form onSubmit={submitHandler}>
-            <Form.Group controlId="formBasicSchool" className="mt-3">
-                <Form.Control
-                    type="text"
-                    placeholder={currentEducation.school}
-                    value={school}
-                    style={{
-                        width: 'auto',
-                        border: 'solid 2px #DBC7FF'
-                    }}
-                    onChange={(e) => setSchool(e.target.value)}
-                />
-            </Form.Group>
-
-            <Form.Group controlId="formBasicMajor" className="mt-3">
-                <Form.Control
-                    type="text"
-                    placeholder={currentEducation.major}
-                    value={major}
-                    style={{
-                        border: 'solid 2px #DBC7FF'
-                    }}
-                    onChange={(e) => setMajor(e.target.value)}
-                />
-            </Form.Group>
-
-            <Form.Group controlId="formBasicPosition" className="mt-3">
-
-                {positionInformations.map((Info, index) => (
-
-                    <label style={{ margin: '7px' }}>
-                        <input
-                            style={{ marginRight: '7px' }}
-                            type="radio"
-                            key={index}
-                            inline
-                            name={Info}
-                            id={Info}
-                            checked={position === Info}
-                            onChange={(e) => setPosition(e.target.name)}
-                        />
-                        {Info}
-                    </label>
-
-                ))}
-
-            </Form.Group>
-
-            <Form.Group as={Row} className="mt-3 text-center">
-                <Col sm={{ span: 20 }}>
-                    <button
-                        type="submit"
-                        className={Style.mvpConfirmButton}>
-                        확인
-                    </button>
-
-                    <button
-                        onClick={() => setIsEditing(false)}
-                        className={Style.mvpCancelButton}>
-                        취소
-                    </button>
-                </Col>
-            </Form.Group>
-        </Form>
-    )
+  return (
+    <Box component="form" onSubmit={submitHandler} sx={{ mt: 1 }}>
+      <Stack spacing={2}>
+        <StyledTextField
+          required
+          label="학교 이름"
+          onChange={(e) => setSchool(e.target.value)}
+          value={school}
+        />
+        <StyledTextField
+          required
+          label="전공"
+          onChange={(e) => setMajor(e.target.value)}
+          value={major}
+        />
+      </Stack>
+      <Stack direction="row" spacing={2} sx={{ mt: 2 }}>
+        <RadioGroup
+          name="radio-buttons-group"
+          row
+          value={educationStatus}
+          onChange={RadioBtnClickHandler}
+        >
+          {statusArr.map((item, i) => (
+            <FormControlLabel
+              key={"position" + i}
+              control={<Radio />}
+              label={item}
+              value={item}
+            />
+          ))}
+        </RadioGroup>
+      </Stack>
+      <Stack
+        direction="row"
+        spacing={2}
+        sx={{ mt: 2, justifyContent: "center" }}
+      >
+        <Button variant="contained" type="submit" sx={{ bgcolor: "#08075C" }}>
+          확인
+        </Button>{" "}
+        <Button
+          type="reset"
+          onClick={() => setIsEditing(false)}
+          variant="outlined"
+        >
+          취소
+        </Button>{" "}
+      </Stack>
+    </Box>
+  )
 }
+const StyledTextField = styled(TextField)({
+  "& label.Mui-focused": {
+    color: "#08075C",
+  },
+  "& .MuiInput-underline:after": {
+    borderBottomColor: "#08075C",
+  },
+  "& .MuiOutlinedInput-root": {
+    "&.Mui-focused fieldset": {
+      borderColor: "#08075C",
+    },
+  },
+})
 
 export default EducationEditForm

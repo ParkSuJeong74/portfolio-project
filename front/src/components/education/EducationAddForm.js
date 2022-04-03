@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import * as Api from "../../api";
+import React, { useState } from "react"
+import * as Api from "../../api"
 import {
   Box,
   TextField,
@@ -8,23 +8,24 @@ import {
   Radio,
   RadioGroup,
   Button,
-} from "@mui/material";
+} from "@mui/material"
+import { styled } from "@mui/material/styles"
 
 function EducationAddForm({ setIsAdding, portfolioOwnerId, setEducations }) {
-  const [school, setSchool] = useState(""); // 학교 이름을 저장할 상태입니다.
-  const [major, setMajor] = useState(""); // 전공을 저장할 상태입니다.
-  const [educationStatus, setEducationStatus] = useState("재학중"); // 재학/졸업 여부를 저장할 상태입니다.
+  const [school, setSchool] = useState("") // 학교 이름을 저장할 상태입니다.
+  const [major, setMajor] = useState("") // 전공을 저장할 상태입니다.
+  const [educationStatus, setEducationStatus] = useState("재학중") // 재학/졸업 여부를 저장할 상태입니다.
 
   // postion을 저장하는 배열입니다.
-  const statusArr = ["재학중", "학사졸업", "석사졸업", "박사졸업"];
+  const statusArr = ["재학중", "학사졸업", "석사졸업", "박사졸업"]
 
   // radio button 클릭에 따라 position을 저장합니다.
   const RadioBtnClickHandler = (e, value) => {
-    setEducationStatus(value);
-  };
+    setEducationStatus(value)
+  }
 
   async function handleSubmit(e) {
-    e.preventDefault();
+    e.preventDefault()
 
     try {
       const newEducation = {
@@ -32,27 +33,27 @@ function EducationAddForm({ setIsAdding, portfolioOwnerId, setEducations }) {
         school,
         major,
         position: educationStatus,
-      };
-      await Api.post("education/create", newEducation);
+      }
+      await Api.post("education/create", newEducation)
 
-      const res = await Api.get("education/list", portfolioOwnerId);
-      setEducations(res.data);
-      setIsAdding(false);
+      const res = await Api.get("education/list", portfolioOwnerId)
+      setEducations(res.data)
+      setIsAdding(false)
     } catch (error) {
-      alert(error.response.data);
+      alert(error.response.data)
     }
   }
 
   return (
     <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
       <Stack spacing={2}>
-        <TextField
+        <StyledTextField
           required
           label="학교 이름"
           value={school}
           onChange={(e) => setSchool(e.target.value)}
         />
-        <TextField
+        <StyledTextField
           required
           label="전공"
           onChange={(e) => setMajor(e.target.value)}
@@ -93,6 +94,20 @@ function EducationAddForm({ setIsAdding, portfolioOwnerId, setEducations }) {
         </Button>{" "}
       </Stack>
     </Box>
-  );
+  )
 }
-export default EducationAddForm;
+const StyledTextField = styled(TextField)({
+  "& label.Mui-focused": {
+    color: "#08075C",
+  },
+  "& .MuiInput-underline:after": {
+    borderBottomColor: "#08075C",
+  },
+  "& .MuiOutlinedInput-root": {
+    "&.Mui-focused fieldset": {
+      borderColor: "#08075C",
+    },
+  },
+})
+
+export default EducationAddForm
