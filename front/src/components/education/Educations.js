@@ -68,7 +68,7 @@ function Educations({ portfolioOwnerId, isEditable }) {
               aria-label="add-education"
               onClick={() => setIsAdding((cur) => !cur)}
             >
-              <AddCircleRoundedIcon sx={{ width: "38px", height: "38px" }} />
+              <AddCircleRoundedIcon sx={{ width: "56px", height: "56px" }} />
             </IconButton>
           </Box>
           {isAdding && (
