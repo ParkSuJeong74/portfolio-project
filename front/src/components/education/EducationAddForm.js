@@ -56,6 +56,7 @@ function EducationAddForm({ setIsAdding, portfolioOwnerId, setEducations }) {
         <StyledTextField
           required
           label="전공"
+          value={major}
           onChange={(e) => setMajor(e.target.value)}
         />
       </Stack>
