@@ -1,37 +1,41 @@
 import { useState } from "react"
 import CertificateCard from "./CertificateCard"
 import CertificateEditForm from "./CertificateEditForm"
-import * as Api from '../../api'
+import { Dialog, DialogTitle, DialogContent } from "@mui/material"
 
-function Certificate({setCertificates, certificate, isEditable}){
-    const [isEditing, setIsEditing] = useState(false)
+function Certificate({ setCertificates, certificate, isEditable }) {
+  const [isEditing, setIsEditing] = useState(false) // 편집 버튼 클릭 상태를 저장합니다.
 
-    const removeCertificate = async () => {
-        try{
-            await Api.delete(`certificate/${certificate.id}`)
-            setCertificates(prev => prev.filter(item => item.id !== certificate.id))
-        } catch(error) {
-            alert(error.response.data)
-        }
-    }
+  return (
+    <>
+      <CertificateCard
+        setIsEditing={setIsEditing}
+        certificate={certificate}
+        isEditable={isEditable}
+        setCertificates={setCertificates}
+      />
+      {isEditing && (
+        <Dialog open={isEditing} onClose={() => setIsEditing((cur) => !cur)}>
+          <DialogTitle
+            sx={{
+              fontFamily: "Elice Digital Baeum",
+              fontWeight: 500,
+              fontSize: "1.5rem",
+            }}
+          >
+            자격증 편집
+          </DialogTitle>
 
-    return (
-        <>
-            {isEditing ? (
-                <CertificateEditForm 
-                    setCertificates={setCertificates}
-                    currentCertificate={certificate}
-                    setIsEditing={setIsEditing}
-                />
-            ) : (
-                <CertificateCard 
-                    certificate={certificate}
-                    isEditable={isEditable}
-                    setIsEditing={setIsEditing}
-                    removeCertificate={removeCertificate}
-                />
-            )}
-        </>
-    )
+          <DialogContent>
+            <CertificateEditForm
+              setCertificates={setCertificates}
+              currentCertificate={certificate}
+              setIsEditing={setIsEditing}
+            />
+          </DialogContent>
+        </Dialog>
+      )}
+    </>
+  )
 }
 export default Certificate
