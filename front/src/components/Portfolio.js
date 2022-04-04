@@ -45,7 +45,7 @@ function Portfolio() {
   }, [params, userState, navigate])
 
   if (!isFetchCompleted) {
-    return <Loading />
+    return ""
   }
 
   return (

@@ -56,7 +56,7 @@
 }
 .loadingText {
   position: absolute;
-  animation: rotateLogoText 20s ease-in-out infinite;
+  animation: rotateLogoText 10s infinite;
 }
 @keyframes rotateLogoText {
   100% {

@@ -1,4 +1,10 @@
-import React, { useState, useEffect, useReducer, createContext } from "react"
+import React, {
+  useState,
+  useEffect,
+  useReducer,
+  createContext,
+  Suspense,
+} from "react"
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
 
 import * as Api from "./api"
@@ -8,7 +14,7 @@ import Header from "./components/Header"
 import LoginForm from "./components/user/LoginForm"
 import Network from "./components/user/Network"
 import RegisterForm from "./components/user/RegisterForm"
-import Portfolio from "./components/Portfolio"
+// import Portfolio from "./components/Portfolio"
 import Home from "./components/Home"
 import Footer from "./components/Footer"
 import Loading from "./components/Loading"
@@ -19,6 +25,13 @@ export const UserStateContext = createContext(null)
 export const DispatchContext = createContext(null)
 
 function App() {
+  // const Portfolio = React.lazy(() => import("./components/Portfolio"))
+  const Portfolio = React.lazy(() => {
+    return Promise.all([
+      import("./components/Portfolio"),
+      new Promise((resolve) => setTimeout(resolve, 1000)),
+    ]).then(([moduleExports]) => moduleExports)
+  })
   const [userState, userDispatch] = useReducer(userReducer, {
     user: null,
   })
@@ -62,8 +75,22 @@ function App() {
               <Route path="/:categoryId/:articleName" element={<Home />} />
               <Route path="/login" element={<LoginForm />} />
               <Route path="/register" element={<RegisterForm />} />
-              <Route path="/user/:userId" element={<Portfolio />} />
-              <Route path="/portfolio" element={<Portfolio />} />
+              <Route
+                path="/user/:userId"
+                element={
+                  <Suspense fallback={<Loading />}>
+                    <Portfolio />
+                  </Suspense>
+                }
+              />
+              <Route
+                path="/portfolio"
+                element={
+                  <Suspense fallback={<Loading />}>
+                    <Portfolio />
+                  </Suspense>
+                }
+              />
               <Route path="/userlist" element={<Network />} />
               <Route path="*" element={<Home />} />
             </Routes>
