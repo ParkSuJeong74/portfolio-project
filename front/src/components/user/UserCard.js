@@ -1,45 +1,83 @@
 import { useNavigate } from "react-router-dom"
 import { Card, Row, Button, Col } from "react-bootstrap"
 import { BsFillPersonPlusFill } from "react-icons/bs"
-import { useState, useContext } from 'react'
+import { useState, useContext, useEffect, useCallback } from 'react'
 import * as Api from "../../api"
-import UnfollowModal from "./UnfollowModal"
 import { UserStateContext } from '../../App'
 
-function UserCard({ user, setIsEditing, isEditable, myID, isNetwork, setUsers }) {
+function UserCard({ user, setIsEditing, isEditable, myID, isNetwork, setLoadUserlist, setReloadUser }) {
     const navigate = useNavigate()
     const userState = useContext(UserStateContext)
 
     const isNotMyProfileinHome_Mypage = userState.user?.id !== user?.id
-
     const isNotMyProfileinNetwork = myID !== user?.id
-    
-    const [show, setShow] = useState(false)
 
-    const handleClose = () => setShow(false)
-    const handleShow = () => setShow(true)
+    // 현재 이 user가 팔로우된 상태인지 아닌지를 확인하는 상태값
+    const [isFollowing, setIsFollowing] = useState(null)
 
-    const followFollowing = async (myID, yourID) => {
-        try {
-            const check = await Api.get('user', yourID)
+    // 팔로우된 상태인지 아닌지를 확인해서 버튼을 바꿔주는 로직을 짜야함니다!!!
+    const checkFollowing = async () => {
+        //내 팔로잉 목록을 확인해서
+        const myData = await Api.get('user', myID)
+        const followingList = myData.data.following
 
-            const isfollowed = check.data.follower.find((follower) => follower === myID)
-            const currentFollow = isfollowed ? ('팔로우한 상태입니다.') : ('팔로우한 상태가 아닙니다.')
-            console.log(currentFollow)
-
-            if (!isfollowed) {
-                const res = await Api.put(`user/follow/${myID}`, { userIdYour: yourID })
-                alert("팔로우되었습니다!")
-                console.log(res)
-                Api.get("user/list").then((res) => setUsers(res.data));
-            }
-            else {
-                handleShow()
-            }
-        } catch (error) {
-            alert(error.response.data)
+        if(followingList.find((following) => following === user?.id)){
+            // 현재 내가 팔로잉을 하고 있으면 isFollowing을 true로 설정하기
+            setIsFollowing(true)
+        }
+        else{
+            // 내가 팔로잉을 하고 있지 않고 있다면 isFollowing을 false로 설정하기
+            setIsFollowing(false)
         }
     }
+
+    // 왜 await 안붙여주면 Promise 객체가 반환될까?? -> 캡쳐사진 확인하기
+    useEffect( () => {
+        console.log("초기에 팔로우 상태를 확인합니다..")
+        checkFollowing()
+    }, [user?.id])
+
+    const handleFollowing = useCallback( async (myID, yourID) => {
+        try {
+            const myData = await Api.get('user', myID)
+            const followingList = myData.data.following
+            console.log(followingList)
+            console.log(isFollowing)
+            const check = followingList.find((following) => following === yourID)
+            if(check){
+                // 현재 내가 팔로잉을 하고 있으면 isFollowing을 true로 설정하기
+                console.log(user?.name, "팔로우 상태입니다")
+            }
+            else{
+                // 내가 팔로잉을 하고 있지 않고 있다면 isFollowing을 false로 설정하기
+                console.log(user?.name, "언팔로우 상태입니다")
+            }
+            console.log(check)
+            //setIsFollowing('아무거나')
+            console.log(isFollowing)
+            // check가 true라면 팔로우된 상태이기 때문에 언팔로우로 만들어야 함
+            if (check) {
+                console.log("팔로우된 상태이기 때문에", isFollowing)
+                const res = await Api.put(`user/follow/${myID}`, {userIdYour: yourID})
+                setIsFollowing(false)
+                alert("언팔로우 되었습니다!")
+                
+            }
+            // check가 false라면 언팔로우된 상태이기 때문에 팔로우로 만들어야 함
+            else {
+                console.log("언팔로우된 상태이기 때문에", isFollowing)
+                const res = await Api.put(`user/follow/${myID}`, { userIdYour: yourID })
+                setIsFollowing(true)
+                alert("팔로우 되었습니다!")
+            }
+            console.log(isFollowing)
+            isNetwork ? (setLoadUserlist((prev) => !prev))
+                    : (setReloadUser((prev) => !prev)) 
+        } catch (error) {
+            console.log(error)
+            //alert(error.response.data)
+        }
+    }, [])
 
     return (
         <>
@@ -55,11 +93,13 @@ function UserCard({ user, setIsEditing, isEditable, myID, isNetwork, setUsers })
 
                     <Card.Title>{user?.name}({user?.nickname})
                         <span className="ms-3">
-
+                            {console.log(user?.name, isFollowing)}
                             {isNotMyProfileinHome_Mypage && isNotMyProfileinNetwork && (
                                 <BsFillPersonPlusFill onClick={() => {
-                                    followFollowing(myID, user?.id)
-                                }} />
+                                    handleFollowing(myID, user?.id)
+                                }} style={{
+                                    color: isFollowing ? 'blue' : 'black'
+                                }}/>
                             )}
 
                         </span >
@@ -103,8 +143,7 @@ function UserCard({ user, setIsEditing, isEditable, myID, isNetwork, setUsers })
                 )}
             </Card>
 
-            <UnfollowModal handleClose={handleClose} show={show}
-                myID={myID} yourID={user?.id} setUsers={setUsers} />
+        
         </>
     )
 }

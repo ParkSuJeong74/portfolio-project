@@ -38,7 +38,7 @@ function Portfolio() {
 			const ownerId = params.userId
 			fetchPorfolioOwner(ownerId)
 		} else {
-			const ownerId = userState.user.id
+			const ownerId = userState.user?.id
 			fetchPorfolioOwner(ownerId)
 		}
 	}, [params, userState, navigate])

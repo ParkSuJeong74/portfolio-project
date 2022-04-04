@@ -11,7 +11,11 @@ function Network() {
     const userState = useContext(UserStateContext);
     const [users, setUsers] = useState([]);
 
+    //현재 로그인한 자기 아이디
     const myID = userState.user?.id
+
+    // follow를 하거나 unfollow를 할 때 눌렀으면(상태가 변경되는 걸 감지하고) list를 다시 불러오도록 함
+    const [loadUserlist, setLoadUserlist] = useState(false)
 
     useEffect(() => {
         if (!userState.user) {
@@ -20,7 +24,7 @@ function Network() {
         }
 
         Api.get("user/list").then((res) => setUsers(res.data));
-    }, [navigate]);
+    }, [navigate, loadUserlist]);
 
     return (
         <Container fluid>
@@ -33,7 +37,7 @@ function Network() {
                     key={user.id} 
                     user={user} 
                     myID={myID}
-                    setUsers={setUsers}
+                    setLoadUserlist={setLoadUserlist}
                     isNetwork />
             ))}
             </Row>
