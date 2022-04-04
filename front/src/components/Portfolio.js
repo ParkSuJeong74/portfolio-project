@@ -10,6 +10,7 @@ import Educations from "./education/Educations"
 import Certificates from "./certificate/Certificates"
 import Awards from "./award/Awards"
 import Projects from "./project/Projects"
+import Loading from "./Loading"
 
 import Style from "../App.module.css"
 
@@ -44,7 +45,7 @@ function Portfolio() {
   }, [params, userState, navigate])
 
   if (!isFetchCompleted) {
-    return "loading..."
+    return <Loading />
   }
 
   return (
