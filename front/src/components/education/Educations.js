@@ -1,93 +1,63 @@
-import React, { useEffect, useState } from "react";
-import * as Api from "../../api";
-import Education from "./Education";
-import EducationAddForm from "./EducationAddForm";
-
-import Style from "../../App.module.css";
-import {
-  Accordion,
-  AccordionSummary,
-  AccordionDetails,
-  Card,
-  CardContent,
-  Typography,
-  IconButton,
-  Box,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-} from "@mui/material";
-import AddCircleRoundedIcon from "@mui/icons-material/AddCircleRounded";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import { Card, Row, Col } from 'react-bootstrap'
+import React, { useEffect, useState } from 'react'
+import * as Api from '../../api'
+import Education from './Education'
+import EducationAddForm from './EducationAddForm'
+import Style from '../../App.module.css'
 
 function Educations({ portfolioOwnerId, isEditable }) {
-  const [educations, setEducations] = useState([]); // 해당 유저의 학력을 저장합니다.
-  const [isAdding, setIsAdding] = useState(false); // 학력 추가 버튼 클릭 상태를 저장합니다.
+    const [educations, setEducations] = useState([])
+    const [isAdding, setIsAdding] = useState(false)
 
-  useEffect(() => {
-    Api.get("education/list", portfolioOwnerId)
-      .then((res) => setEducations(res.data))
-      .catch((err) => alert(err.response.data));
-  }, [portfolioOwnerId]);
+    useEffect(() => {
+        async function getData(){
+            try{
+                await Api.get("education/list", portfolioOwnerId).then((res) => setEducations(res.data))
+            } catch(error) {
+                alert(error.response.data)
+            }
+        }
+        getData()
+    }, [portfolioOwnerId])
 
-  return (
-    <Card sx={{ marginBottom: "20px", borderRadius: "15px" }}>
-      <Accordion defaultExpanded={true} sx={{ boxShadow: 0 }}>
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel1a-content"
-          id="panel1a-header"
-        >
-          <Typography
-            sx={{
-              fontFamily: "Elice Digital Baeum",
-              fontSize: "2em",
-              color: "#08075C",
-              fontWeight: 800,
-            }}
-          >
-            학력
-          </Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          {educations &&
-            educations.map((edu) => (
-              <Education
-                key={edu.id}
-                education={edu}
-                setEducations={setEducations}
-                isEditable={isEditable}
-              />
-            ))}
-        </AccordionDetails>
-      </Accordion>
-      {isEditable && (
-        <CardContent>
-          <Box sx={{ display: "flex", justifyContent: "center" }}>
-            <IconButton
-              style={{ color: "#08075C" }}
-              aria-label="add-education"
-              onClick={() => setIsAdding((cur) => !cur)}
-            >
-              <AddCircleRoundedIcon sx={{ width: "38px", height: "38px" }} />
-            </IconButton>
-          </Box>
-          {isAdding && (
-            <Dialog open={isAdding} onClose={() => setIsAdding((cur) => !cur)}>
-              <DialogTitle>학력 추가</DialogTitle>
-              <DialogContent>
-                <EducationAddForm
-                  portfolioOwnerId={portfolioOwnerId}
-                  setIsAdding={setIsAdding}
-                  setEducations={setEducations}
-                />
-              </DialogContent>
-            </Dialog>
-          )}
-        </CardContent>
-      )}
-    </Card>
-  );
+    return (
+        <Card
+            style={{backgroundColor: '#FFF5F5' , borderRadius: '15px'}}>
+            <Card.Body>
+                <Card.Title class={Style.mvpType}>학력</Card.Title>
+
+                {educations.map((education) => (
+                    <Education
+                        key={education.id}
+                        education={education}
+                        isEditable={isEditable}
+                        setEducations={setEducations}
+                    />
+                ))}
+
+                {isEditable && (
+                    <Row className="text-center mt-3 mb-4">
+                        <Col sm={{ span: 20 }}>
+
+                        <button
+                            onClick={() => setIsAdding(true)}
+                            className={Style.formAddButton}>
+                        </button>
+                        
+                        </Col>
+                    </Row>
+                )}
+                
+                {isAdding && (
+                    <EducationAddForm
+                        setIsAdding={setIsAdding}
+                        portfolioOwnerId={portfolioOwnerId}
+                        setEducations={setEducations} />
+                )}
+
+            </Card.Body>
+        </Card>
+    )
 }
 
-export default Educations;
+export default Educations

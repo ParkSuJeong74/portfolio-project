@@ -1,76 +1,74 @@
 import React, { useState } from "react";
+import { Form, Col, Row } from "react-bootstrap";
 import * as Api from "../../api";
-import {
-    Box,
-    TextField,
-    Stack,
-    Button,
-  } from "@mui/material";
+import Style from '../../App.module.css'
 
 function AwardAddForm({ portfolioOwnerId, setAwards, setIsAdding }) {
 
     const [title, setTitle] = useState("");
+
     const [description, setDescription] = useState("");
 
-    async function handleSubmit(e) {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-    
-        try {
-          const newAward = {
+
+        const newAward = await Api.post("award/create", {
             userId: portfolioOwnerId,
             title,
-            description
-            
-          };
-          await Api.post("award/create", newAward);
-    
-          const res = await Api.get("award/list", portfolioOwnerId);
-          setAwards(res.data);
-          setIsAdding(false);
-        } catch (error) {
-          alert(error.response.data);
-        }
-      }
-    
-    
+            description,
+        });
+
+        setAwards((prev) => [...prev, newAward.data])
+
+        setIsAdding(false);
+    };
 
     return (
-        <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1}}>
-            <Stack spacing={2}>
-                <TextField
-                    required
-                    label="수상내역"
+        <Form onSubmit={handleSubmit}>
+            <Form.Group controlId="formBasicTitle">
+                <Form.Control
+                    type="text"
+                    placeholder="수상내역"
                     value={title}
+                    style={{ 
+                        width: 'auto',
+                        border: 'solid 2px #DBC7FF'
+                    }}
                     onChange={(e) => {
                         setTitle(e.target.value)
                     }}
                 />
-                <TextField
-                    required
-                    label="상세내역"
+            </Form.Group>
+
+            <Form.Group controlId="formBasicDescription" className="mt-3">
+                <Form.Control
+                    type="text"
+                    placeholder="상세내역"
                     value={description}
+                    style={{
+                        border: 'solid 2px #DBC7FF'
+                    }}
                     onChange={(e) => setDescription(e.target.value)}
                 />
-            </Stack>
+            </Form.Group>
 
-            <Stack
-                direction="row"
-                spacing={2}
-                sx={{ mt: 2, justifyContent: "center" }}
-            >
-                <Button variant="contained" type="submit" sx={{ bgcolor: "#08075C" }}>
-                    확인
-                </Button>{" "}
-                <Button
-                    type="reset"
-                    onClick={() => setIsAdding(false)}
-                    variant="outlined"
-                    color="error"
-                >
-                취소
-                </Button>{" "}
-            </Stack>
-        </Box>
+            <Form.Group as={Row} className="mt-3 text-center">
+                <Col sm={{ span: 20 }}>
+
+                    <button
+                        type="submit"
+                        className={Style.mvpConfirmButton}>
+                        확인
+                    </button>
+
+                    <button
+                        onClick={() => setIsAdding(false)}
+                        className={Style.mvpCancelButton}>
+                        취소
+                    </button>
+                </Col>
+            </Form.Group>
+        </Form>
     );
 }
 
