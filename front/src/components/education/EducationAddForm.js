@@ -1,98 +1,96 @@
-import React, { useState } from "react";
-import * as Api from "../../api";
-import {
-  Box,
-  TextField,
-  Stack,
-  FormControlLabel,
-  Radio,
-  RadioGroup,
-  Button,
-} from "@mui/material";
+import { Form, Row, Col } from 'react-bootstrap'
+import React, { useState } from 'react'
+import * as Api from '../../api'
+import Style from '../../App.module.css'
 
 function EducationAddForm({ setIsAdding, portfolioOwnerId, setEducations }) {
-  const [school, setSchool] = useState(""); // 학교 이름을 저장할 상태입니다.
-  const [major, setMajor] = useState(""); // 전공을 저장할 상태입니다.
-  const [educationStatus, setEducationStatus] = useState("재학중"); // 재학/졸업 여부를 저장할 상태입니다.
+    const [school, setSchool] = useState('')
+    const [major, setMajor] = useState('')
+    const [position, setPosition] = useState('')
 
-  // postion을 저장하는 배열입니다.
-  const statusArr = ["재학중", "학사졸업", "석사졸업", "박사졸업"];
+    async function handleSubmit(e) {
+        e.preventDefault()
 
-  // radio button 클릭에 따라 position을 저장합니다.
-  const RadioBtnClickHandler = (e, value) => {
-    setEducationStatus(value);
-  };
-
-  async function handleSubmit(e) {
-    e.preventDefault();
-
-    try {
-      const newEducation = {
-        userId: portfolioOwnerId,
-        school,
-        major,
-        position: educationStatus,
-      };
-      await Api.post("education/create", newEducation);
-
-      const res = await Api.get("education/list", portfolioOwnerId);
-      setEducations(res.data);
-      setIsAdding(false);
-    } catch (error) {
-      alert(error.response.data);
+        try{
+            const newEducation = await Api.post('education/create', {
+                userId: portfolioOwnerId,
+                school,
+                major,
+                position
+            })
+            setEducations((prev) => [...prev, newEducation.data])
+            
+            setIsAdding(false)
+        } catch(error) {
+            alert(error.response.data)
+        }
     }
-  }
 
-  return (
-    <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
-      <Stack spacing={2}>
-        <TextField
-          required
-          label="학교 이름"
-          value={school}
-          onChange={(e) => setSchool(e.target.value)}
-        />
-        <TextField
-          required
-          label="전공"
-          onChange={(e) => setMajor(e.target.value)}
-        />
-      </Stack>
-      <Stack direction="row" spacing={2} sx={{ mt: 2 }}>
-        <RadioGroup
-          defaultValue="재학중"
-          name="radio-buttons-group"
-          row
-          onChange={RadioBtnClickHandler}
-        >
-          {statusArr.map((item, i) => (
-            <FormControlLabel
-              key={"educationStatus" + i}
-              control={<Radio />}
-              label={item}
-              value={item}
-            />
-          ))}
-        </RadioGroup>
-      </Stack>
-      <Stack
-        direction="row"
-        spacing={2}
-        sx={{ mt: 2, justifyContent: "center" }}
-      >
-        <Button variant="contained" type="submit" sx={{ bgcolor: "#08075C" }}>
-          확인
-        </Button>{" "}
-        <Button
-          type="reset"
-          onClick={() => setIsAdding(false)}
-          variant="outlined"
-          color="error"
-        >
-          취소
-        </Button>{" "}
-      </Stack>
-    </Box>
-  );
+    const positionInformations = ['재학중', '학사졸업', '석사졸업', '박사졸업']
+
+    return (
+        <Form onSubmit={handleSubmit}>
+            <Form.Group controlId="formBasicSchool" className="mt-3">
+                <Form.Control
+                    type="text"
+                    placeholder="학교이름"
+                    value={school}
+                    style={{ 
+                        width: 'auto',
+                        border: 'solid 2px #DBC7FF'
+                    }}
+                    onChange={(e) => setSchool(e.target.value)}
+                />
+            </Form.Group>
+
+            <Form.Group controlId="formBasicMajor" className="mt-3">
+                <Form.Control
+                    type="text"
+                    placeholder="전공"
+                    value={major}
+                    style={{
+                        border: 'solid 2px #DBC7FF'
+                    }}
+                    onChange={(e) => setMajor(e.target.value)}
+                />
+            </Form.Group>
+
+            <Form.Group controlId="formBasicPosition" className="mt-3">
+
+                {positionInformations.map((Info, index) => (
+                    <label style={{ margin: '7px' }}>
+                        <input
+                            style={{ marginRight: '7px' }}
+                            type="radio"
+                            key={index}
+                            inline
+                            name={Info}
+                            id={Info}
+                            checked={position === Info}
+                            onChange={(e) => setPosition(e.target.name)}
+                        />
+                        {Info}
+                    </label>
+                ))}
+                
+            </Form.Group>
+
+            <Form.Group as={Row} className="mt-3 text-center">
+                <Col sm={{ span: 20 }}>
+                <button
+                    type="submit"
+                    className={Style.mvpConfirmButton}>
+                    확인
+                </button>
+
+                <button
+                    onClick={() => setIsAdding(false)}
+                    className={Style.mvpCancelButton}>
+                    취소
+                </button>
+                </Col>
+            </Form.Group>
+        </Form>
+    )
 }
-export default EducationAddForm;
+export default EducationAddForm
