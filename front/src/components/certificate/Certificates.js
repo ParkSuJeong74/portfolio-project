@@ -1,7 +1,4 @@
 import { useEffect, useState } from "react"
-import * as Api from "../../api"
-import Certificate from "./Certificate"
-import CertificateAddForm from "./CertificateAddForm"
 
 import {
   Accordion,
@@ -18,6 +15,11 @@ import {
 } from "@mui/material"
 import AddCircleRoundedIcon from "@mui/icons-material/AddCircleRounded"
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore"
+import CloseIcon from "@mui/icons-material/Close"
+
+import * as Api from "../../api"
+import Certificate from "./Certificate"
+import CertificateAddForm from "./CertificateAddForm"
 
 function Certificates({ portfolioOwnerId, isEditable }) {
   const [certificates, setCertificates] = useState([]) // 해당 유저의 자격증을 저장합니다.
@@ -48,6 +50,7 @@ function Certificates({ portfolioOwnerId, isEditable }) {
             자격증
           </Typography>
         </AccordionSummary>
+
         <AccordionDetails>
           {certificates.map((certificate) => (
             <Certificate
@@ -59,6 +62,7 @@ function Certificates({ portfolioOwnerId, isEditable }) {
           ))}
         </AccordionDetails>
       </Accordion>
+
       {isEditable && (
         <CardContent>
           <Box sx={{ display: "flex", justifyContent: "center" }}>
@@ -70,6 +74,7 @@ function Certificates({ portfolioOwnerId, isEditable }) {
               <AddCircleRoundedIcon sx={{ width: "56px", height: "56px" }} />
             </IconButton>
           </Box>
+
           {isAdding && (
             <Dialog open={isAdding} onClose={() => setIsAdding((cur) => !cur)}>
               <DialogTitle
@@ -79,6 +84,17 @@ function Certificates({ portfolioOwnerId, isEditable }) {
                   fontSize: "1.5rem",
                 }}
               >
+                <IconButton
+                  onClick={() => setIsAdding((cur) => !cur)}
+                  sx={{
+                    position: "absolute",
+                    right: 10,
+                    top: 10,
+                    color: "#9e9e9e",
+                  }}
+                >
+                  <CloseIcon />
+                </IconButton>
                 자격증 추가
               </DialogTitle>
               <DialogContent>

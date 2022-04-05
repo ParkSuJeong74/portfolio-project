@@ -1,4 +1,5 @@
 import { useState } from "react"
+
 import { Box, TextField, Stack, Button } from "@mui/material"
 import AdapterDateFns from "@mui/lab/AdapterDateFns"
 import LocalizationProvider from "@mui/lab/LocalizationProvider"
@@ -19,6 +20,7 @@ function CertificateAddForm({
 
   async function submitHandler(e) {
     e.preventDefault()
+
     try {
       const date = TimeUtil.getTime(whenDate).toISOString().split("T")[0]
 
@@ -72,26 +74,15 @@ function CertificateAddForm({
         </Stack>
       </LocalizationProvider>
 
-      <Stack
-        direction="row"
-        spacing={2}
-        sx={{ mt: 2, justifyContent: "center" }}
-      >
-        <Button variant="contained" type="submit" sx={{ bgcolor: "#08075C" }}>
-          확인
-        </Button>{" "}
-        <Button
-          type="reset"
-          onClick={() => setIsAdding(false)}
-          variant="outlined"
-          color="error"
-        >
-          취소
-        </Button>{" "}
-      </Stack>
+      <StyledButton variant="contained" type="submit" size="large" fullWidth>
+        확인
+      </StyledButton>
     </Box>
   )
 }
+
+export default CertificateAddForm
+
 const StyledTextField = styled(TextField)({
   "& label.Mui-focused": {
     color: "#08075C",
@@ -105,5 +96,10 @@ const StyledTextField = styled(TextField)({
     },
   },
 })
-
-export default CertificateAddForm
+const StyledButton = styled(Button)({
+  backgroundColor: "#08075C",
+  marginTop: "20px",
+  "&:hover": {
+    backgroundColor: "#2422b8",
+  },
+})
