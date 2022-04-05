@@ -32,7 +32,7 @@ function UserEditForm({ user, setIsEditing, setUser, setBasic }) {
         const config = {
           headers: {
             "Content-Type": "multipart/form-data",
-            Authorization: `Bearer ${sessionStorage.getItem("useßrToken")}`,
+            Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
           },
         }
         formData.set("file", imageInfo)
