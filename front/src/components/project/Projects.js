@@ -68,7 +68,7 @@ function Projects({ portfolioOwnerId, isEditable }) {
           <Box sx={{ display: "flex", justifyContent: "center" }}>
             <IconButton
               style={{ color: "#08075C" }}
-              aria-label="add-education"
+              aria-label="add-projects"
               onClick={() => setClickAddBtn((cur) => !cur)}
             >
               <AddCircleRoundedIcon sx={{ width: "56px", height: "56px" }} />
