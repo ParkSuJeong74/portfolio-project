@@ -1,34 +1,30 @@
-import React, { useContext, useState, useEffect } from "react"
+import React, { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
 import { logout } from "../redux/action/userAction"
-import { UserStateContext, DispatchContext } from "../App"
+
 import Style from "../App.module.css"
 import WithdrawModal from "./WithdrawModal"
 
 function Header() {
   const dispatch = useDispatch()
   const navigate = useNavigate()
+  const userState = useSelector((state) => state.user)
 
-  const user = useSelector((state) => state.user)
-  const userState = useContext(UserStateContext)
-  const userDispatch = useContext(DispatchContext)
+  const [show, setShow] = useState(false)
 
   const isLogin = !!userState.user
 
   const logoutHandler = () => {
     sessionStorage.removeItem("userToken")
-    dispatch(logout(user))
+    dispatch(logout(userState))
     navigate("/")
-    userDispatch({ type: "LOGOUT" })
   }
-
-  const [show, setShow] = useState(false)
 
   const handleClose = () => setShow(false)
   const handleShow = () => setShow(true)
 
-  const naviagationInformations = [
+  const navInfos = [
     { title: "HOME", link: "/" },
     { title: "마이페이지", link: "/portfolio" },
     { title: "유저리스트", link: "/userlist" },
@@ -41,7 +37,7 @@ function Header() {
           ˚｡.⋆｡ MY PORTFOLIO˚｡⋆.˚☽˚｡
         </div>
         <ul style={{ gap: 30 }} className={Style.navItems}>
-          {naviagationInformations.map((navigationItem) => (
+          {navInfos.map((navigationItem) => (
             <li
               onClick={() => {
                 navigate(navigationItem.link)

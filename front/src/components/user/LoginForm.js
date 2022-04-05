@@ -1,10 +1,9 @@
-import React, { useState, useContext } from "react"
+import React, { useState } from "react"
 import { useNavigate } from "react-router-dom"
-import { useDispatch, useSelector } from "react-redux"
+import { useDispatch } from "react-redux"
 import { Container, Col, Row, Form, Button } from "react-bootstrap"
 
 import * as Api from "../../api"
-import { DispatchContext } from "../../App"
 import { login } from "../../redux/action/userAction"
 
 import PasswordChangeModal from "./PasswordChangeModal"
@@ -12,7 +11,6 @@ import PasswordChangeModal from "./PasswordChangeModal"
 function LoginForm() {
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  const userDispatch = useContext(DispatchContext)
 
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
@@ -43,11 +41,6 @@ function LoginForm() {
       sessionStorage.setItem("userToken", jwtToken)
 
       dispatch(login(user))
-      userDispatch({
-        type: "LOGIN_SUCCESS",
-        payload: user,
-      })
-
       navigate("/", { replace: true })
     } catch (error) {
       alert(error.response.data)
