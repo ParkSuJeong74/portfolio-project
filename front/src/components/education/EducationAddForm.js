@@ -1,5 +1,4 @@
 import React, { useState } from "react"
-import * as Api from "../../api"
 import {
   Box,
   TextField,
@@ -10,6 +9,8 @@ import {
   Button,
 } from "@mui/material"
 import { styled } from "@mui/material/styles"
+
+import * as Api from "../../api"
 
 function EducationAddForm({ setIsAdding, portfolioOwnerId, setEducations }) {
   const [school, setSchool] = useState("") // 학교 이름을 저장할 상태입니다.
@@ -77,13 +78,7 @@ function EducationAddForm({ setIsAdding, portfolioOwnerId, setEducations }) {
           ))}
         </RadioGroup>
       </Stack>
-      <StyledButton
-        variant="contained"
-        type="submit"
-        size="large"
-        fullWidth
-        sx={{ bgcolor: "#08075C", mt: 2 }}
-      >
+      <StyledButton variant="contained" type="submit" size="large" fullWidth>
         확인
       </StyledButton>
     </Box>
@@ -110,6 +105,8 @@ const StyledRadioBtn = styled(Radio)({
 })
 
 const StyledButton = styled(Button)({
+  backgroundColor: "#08075C",
+  marginTop: "20px",
   "&:hover": {
     backgroundColor: "#2422b8",
   },
