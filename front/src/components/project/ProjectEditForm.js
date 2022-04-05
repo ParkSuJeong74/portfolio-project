@@ -1,118 +1,125 @@
 import React, { useState } from "react"
-import { Form, Col, Row } from "react-bootstrap"
+import { Box, TextField, Stack, Button } from "@mui/material";
+import AdapterDateFns from "@mui/lab/AdapterDateFns";
+import LocalizationProvider from "@mui/lab/LocalizationProvider";
+import DesktopDatePicker from "@mui/lab/DesktopDatePicker";
+
 import * as Api from "../../api"
-import DatePicker from "react-datepicker"
-import Style from '../../App.module.css'
 import {TimeUtil} from '../../common/TimeUtil'
 
-function ProjectEditForm({ currentProject, setProjects, setIsEditing }) {
+function ProjectEditForm({ project, setProjects, setClickEditBtn  }) {
 
-    const [title, setTitle] = useState(currentProject.title)
+    const [title, setTitle] = useState(project.title)
 
-    const [description, setDescription] = useState(currentProject.description);
+    const [description, setDescription] = useState(project.description);
 
     const [fromDate, setFromDate] = useState(
-        new Date(currentProject.fromDate)
+        new Date(project.fromDate)
     )
     const [toDate, setToDate] = useState(
-        new Date(currentProject.toDate)
+        new Date(project.toDate)
     )
 
-    const handleSubmit = async (e) => {
+    const onSubmitHandler = async (e) => {
         e.preventDefault()
-        e.stopPropagation()
 
-        const userId = currentProject.userId;
+        const userId = project.userId;
 
-        const from_date = (TimeUtil.getTime(fromDate)).toISOString().split('T')[0]
-        const to_date = (TimeUtil.getTime(toDate)).toISOString().split('T')[0]
+        const from = (TimeUtil.getTime(fromDate)).toISOString().split('T')[0]
+        const to = (TimeUtil.getTime(toDate)).toISOString().split('T')[0]
 
-        const editedProject = await Api.put(`project/${currentProject.id}`, {
+        const editedProject = await Api.put(`project/${project.id}`, {
             userId,
             title,
             description,
-            fromDate: from_date,
-            toDate: to_date
+            fromDate: from,
+            toDate: to
         })
 
-        setProjects((prev) => prev.map((project) => {
-            return project.id === currentProject.id
+        setProjects((prev) => prev.map((item) => {
+            return item.id === project.id
                 ? (editedProject.data)
-                : (project)
+                : (item)
         }))
 
-        setIsEditing(false)
+        setClickEditBtn(false)
     }
 
-return (
-    <Form onSubmit={handleSubmit}>
-        <Form.Group controlId="formBasicTitle">
-            <Form.Control
-                type="text"
-                placeholder="프로젝트 제목"
-                value={title}
-                style={{
-                width: 'auto',
-                border: 'solid 2px #DBC7FF'
-                }}
-                onChange={(e) => setTitle(e.target.value)}
-            />
-        </Form.Group>
-
-        <Form.Group controlId="formBasicDescription" className="mt-3">
-            <Form.Control
-                type="text"
-                placeholder="상세내역"
-                value={description}
-                style={{
-                border: 'solid 2px #DBC7FF'
-                }}
-                onChange={(e) => setDescription(e.target.value)}
-            />
-        </Form.Group>
-
-        <Row xs={1} sm={2} className="mt-3">
-            <Col xs={'auto'} sm={'auto'}>
-                <Form.Label className="mb-1">시작날짜</Form.Label>
-                <DatePicker
-                type="text"
-                wrapperClassName="datePicker"
-                dateFormat="yyyy.MM.dd(eee)"
-                selected={fromDate}
-                onChange={(fromDate) => setFromDate(fromDate)}
+    return (
+        <Box component="form" onSubmit={onSubmitHandler} sx={{ mt: 1 }}>
+            <Stack spacing={2}>
+                <TextField
+                    required
+                    label="프로젝트 제목"
+                    onChange={(e) => setTitle(e.target.value)}
+                    defaultValue={title}
                 />
-            </Col>
-            <Col xs={'auto'} sm={'auto'}>
-                <Form.Label className="mb-1">종료날짜</Form.Label>
-                <DatePicker
-                    type="text"
-                    wrapperClassName="datePicker"
-                    dateFormat="yyyy.MM.dd(eee)"
-                    selected={toDate}
-                    onChange={(toDate) => setToDate(toDate)}
+                <TextField
+                    required
+                    label="상세내역"
+                    onChange={(e) => setDescription(e.target.value)}
+                    defaultValue={description}
                 />
-            </Col>
-        </Row>
+            </Stack>
 
-        <Form.Group as={Row} className="mt-3 text-center mb-4">
-            <Col sm={{ span: 20 }}>
+            <LocalizationProvider dateAdapter={AdapterDateFns}>
+                <Stack direction="row" spacing={2} sx={{ mt: 2 }}>
+                <DesktopDatePicker
+                    label="from"
+                    inputFormat={"yyyy-MM-dd"}
+                    mask={"____-__-__"}
+                    value={fromDate}
+                    maxDate={toDate}
+                    onChange={(date) => setFromDate(date)}
+                    renderInput={(params) => <TextField {...params} />}
+                />
+                <DesktopDatePicker
+                    label="to"
+                    inputFormat={"yyyy-MM-dd"}
+                    mask={"____-__-__"}
+                    value={toDate}
+                    minDate={fromDate}
+                    onChange={(date) => setToDate(date)}
+                    renderInput={(params) => <TextField {...params} />}
+                />
+                </Stack>
+            </LocalizationProvider>
 
-            <button
-                type="submit"
-                className={Style.mvpConfirmButton}>
-                확인
-            </button>
-
-            <button
-                onClick={() => setIsEditing(false)}
-                className={Style.mvpCancelButton}>
-                취소
-            </button>
-                
-            </Col>
-        </Form.Group>
-    </Form>
+            <Stack
+                direction="row"
+                spacing={2}
+                sx={{ mt: 2, justifyContent: "center" }}
+            >
+                <Button variant="contained" type="submit" sx={ButtonStyle.confirm} disableElevation disableRipple>
+                    확인
+                </Button>{" "}
+                <Button
+                    type="reset"
+                    onClick={() => setClickEditBtn(false)}
+                    variant="outlined"
+                    sx={ButtonStyle.cancel}
+                >
+                    취소
+                </Button>{" "}
+            </Stack>
+        </Box>
     )
 }
 
 export default ProjectEditForm;
+
+const ButtonStyle = {
+    confirm : { bgcolor: '#D0CE7C', color: '#31311C',
+        ':hover': {
+            bgcolor: '#b1b068',
+            color: 'white',
+        }
+    },
+    cancel: { border: 'solid 1px #db3f2b', color: '#db3f2b', 
+        ':hover': {
+            bgcolor: '#bd3421',
+            color: 'white',
+            border: '0px'
+        }
+    },
+}

@@ -1,56 +1,95 @@
 import React, { useEffect,useState } from "react"
-import { Card, Row, Col } from "react-bootstrap";
-import Style from '../../App.module.css'
-import dayjs from "dayjs"
+import { Button, Grid, IconButton, Menu, MenuItem } from "@mui/material";
+import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
 
-function ProjectCard({ project, isEditable, setIsEditing, removeProject }) {
+import AlertDialog from '../utils/AlertDialog'
+import * as Api from "../../api";
+import dayjs from "dayjs";
+
+function ProjectCard({ project, setClickEditBtn, isEditable, setProjects }) {
+    const [anchorEl, setAnchorEl] = useState(null); // Menu Element를 가리킵니다.
+    const [isOpen, setIsOpen] = useState(null); // Menu Element의 Open 상태를 저장합니다.
+    const [isDeleting, setIsDeleting] = useState(false); // 삭제 여부를 저장합니다.
+
     const [period, setPeriod] = useState('')
-    let from_date = dayjs(project.fromDate)
-    let to_date = dayjs(project.toDate)
+    let from = dayjs(project.fromDate)
+    let to = dayjs(project.toDate)
+
+    const handleClick = (event) => {
+        setAnchorEl(event.currentTarget);
+        setIsOpen(Boolean(event.currentTarget));
+    };
+
+    const handleClose = () => {
+        setAnchorEl(null);
+        setIsOpen(false);
+    };
+    
+    const DelBtnClickHandler = async (isDeleting) => {
+        if (isDeleting) {
+            // projects로 DELETE 요청을 보내 프로젝트를 삭제합니다.
+            await Api.delete(`project/${project.id}`)
+
+            setProjects(prev => prev.filter(item => item.id !== project.id))
+        }
+    }
 
     useEffect(() => {
-        if (to_date.diff(from_date, "year") > 0){
-            setPeriod(`${to_date.diff(from_date, "year")}년 동안`)
-        } else if (to_date.diff(from_date, "month") > 0){
-            setPeriod(`${to_date.diff(from_date, "month")}개월 동안`)
+        if (to.diff(from, "year") > 0){
+            setPeriod(`${to.diff(from, "year")}년 동안`)
+        } else if (to.diff(from, "month") > 0){
+            setPeriod(`${to.diff(from, "month")}개월 동안`)
         } else {
-            setPeriod(`${to_date.diff(from_date, "day")}일 동안`)
+            setPeriod(`${to.diff(from, "day")}일 동안`)
         }
-    }, [])
+    }, [project])
 
     return (
-        <Card.Text>
-            <Row className="align-items-center" 
-                style={{paddingLeft: '28px'}}>
-                <Col className="mb-3">
-                    <span style={{
-                    fontWeight: 'bold',
-                    fontSize: '1.2rem',
-                    }}>{project.title}</span>
-                    <br />
-                    <span className="text-muted">{project.description}</span>
-                    <br />
-                    <span className="text-muted">{project.fromDate} ~ {project.toDate} <span style={{ marginLeft: "10px" }}>({period})</span></span>
-
-                </Col>
-
+        <Grid container spacing={2}>
+            <Grid item xs={10}>
+                <p style={{ marginBottom: 0 }}>{project.title}</p>
+                <p className="text-muted">
+                    {project.description} <br />
+                    {project.fromDate} ~ {project.toDate} ({period})
+                </p>
+            </Grid>
+            <Grid item xs={2}>
                 {isEditable && (
-                    <Col xs={2}>
-                    <button
-                        onClick={() => setIsEditing((prev) => !prev)}
-                        className={Style.mvpEditButton}>
-                        수정
-                    </button>
-
-                    <button
-                        onClick={() => removeProject()}
-                        className={Style.mvpRemoveButton}>
-                        삭제
-                    </button>
-                    </Col>
+                    <>
+                    <IconButton onClick={handleClick} sx={{ float: "right", mb: 2 }}>
+                        <MoreHorizIcon />
+                    </IconButton>
+                    {isOpen && (
+                        <Menu anchorEl={anchorEl} open={isOpen} onClose={handleClose}>
+                            <MenuItem onClick={handleClose}>
+                                <Button
+                                    onClick={() => setClickEditBtn((cur) => !cur)}
+                                    startIcon={<EditIcon />}
+                                >
+                                    편집
+                                </Button>
+                            </MenuItem>
+                            
+                            <MenuItem onClick={handleClose}>
+                                <Button
+                                    color="error"
+                                    startIcon={<DeleteIcon />}
+                                    onClick={() => setIsDeleting(true)}
+                                >
+                                    삭제
+                                </Button>
+                            </MenuItem>
+                        </Menu>
+                    )}
+                    {isDeleting && (
+                        <AlertDialog checkDeleteComplete={DelBtnClickHandler} />
+                    )}
+                    </>
                 )}
-            </Row>
-        </Card.Text>
+            </Grid>
+        </Grid>
     );
 }
 
