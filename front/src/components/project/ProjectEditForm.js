@@ -63,7 +63,6 @@ function ProjectEditForm({ project, setProjects, setClickEditBtn }) {
             inputFormat={"yyyy-MM-dd"}
             mask={"____-__-__"}
             value={fromDate}
-            maxDate={toDate}
             onChange={(date) => setFromDate(date)}
             renderInput={(params) => <TextField {...params} />}
           />
@@ -72,7 +71,6 @@ function ProjectEditForm({ project, setProjects, setClickEditBtn }) {
             inputFormat={"yyyy-MM-dd"}
             mask={"____-__-__"}
             value={toDate}
-            minDate={fromDate}
             onChange={(date) => setToDate(date)}
             renderInput={(params) => <TextField {...params} />}
           />
