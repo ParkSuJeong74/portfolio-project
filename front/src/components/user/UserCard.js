@@ -4,6 +4,8 @@ import { BsFillPersonPlusFill } from "react-icons/bs"
 import { useState, useContext, useEffect } from "react"
 import * as Api from "../../api"
 import { UserStateContext } from "../../App"
+import { IconButton } from "@mui/material"
+import GroupAddIcon from "@mui/icons-material/GroupAdd"
 
 function UserCard({
     user,
@@ -23,7 +25,7 @@ function UserCard({
     // 현재 이 user가 팔로우된 상태인지 아닌지를 확인하는 상태값
     const [isFollowing, setIsFollowing] = useState(null)
 
-    const [targetUser, setTargetUser] = useState("")
+    const [targetUser, setTargetUser] = useState(null)
 
     // 왜 await 안붙여주면 Promise 객체가 반환될까?? -> 캡쳐사진 확인하기
     useEffect(() => {
@@ -49,9 +51,8 @@ function UserCard({
     const findTargetUser = async (id) => {
         const myData = await Api.get("user", myID)
         const followingList = myData.data.following
-        const targetUser = followingList.find(
-            (following) => following === user?.id
-        )
+        const target = followingList.find((following) => following === id)
+        setTargetUser(target)
     }
 
     const handleFollowing = async (myID, yourID) => {
@@ -104,20 +105,28 @@ function UserCard({
 
                     <Card.Title>
                         {user?.name}({user?.nickname})
-                        <span className="ms-3">
+                        <span className="ms-1">
                             {console.log(user?.name, isFollowing)}
                             {isNotMyProfileinHome_Mypage &&
                                 isNotMyProfileinNetwork && (
-                                    <BsFillPersonPlusFill
-                                        onClick={() => {
-                                            handleFollowing(myID, user?.id)
-                                        }}
-                                        style={{
-                                            color: isFollowing
-                                                ? "blue"
-                                                : "black",
-                                        }}
-                                    />
+                                    <>
+                                        <IconButton size="medium">
+                                            <GroupAddIcon
+                                                fontSize="inherit"
+                                                onClick={() => {
+                                                    handleFollowing(
+                                                        myID,
+                                                        user?.id
+                                                    )
+                                                }}
+                                                style={{
+                                                    color: isFollowing
+                                                        ? "#514FD6"
+                                                        : "lightgray",
+                                                }}
+                                            />
+                                        </IconButton>
+                                    </>
                                 )}
                         </span>
                     </Card.Title>
