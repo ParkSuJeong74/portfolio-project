@@ -70,30 +70,22 @@ function EducationAddForm({ setIsAdding, portfolioOwnerId, setEducations }) {
           {statusArr.map((item, i) => (
             <FormControlLabel
               key={"educationStatus" + i}
-              control={<Radio />}
+              control={<StyledRadioBtn />}
               label={item}
               value={item}
             />
           ))}
         </RadioGroup>
       </Stack>
-      <Stack
-        direction="row"
-        spacing={2}
-        sx={{ mt: 2, justifyContent: "center" }}
+      <StyledButton
+        variant="contained"
+        type="submit"
+        size="large"
+        fullWidth
+        sx={{ bgcolor: "#08075C", mt: 2 }}
       >
-        <Button variant="contained" type="submit" sx={{ bgcolor: "#08075C" }}>
-          확인
-        </Button>{" "}
-        <Button
-          type="reset"
-          onClick={() => setIsAdding(false)}
-          variant="outlined"
-          color="error"
-        >
-          취소
-        </Button>{" "}
-      </Stack>
+        확인
+      </StyledButton>
     </Box>
   )
 }
@@ -111,4 +103,15 @@ const StyledTextField = styled(TextField)({
   },
 })
 
+const StyledRadioBtn = styled(Radio)({
+  "&.Mui-checked": {
+    color: "#08075C",
+  },
+})
+
+const StyledButton = styled(Button)({
+  "&:hover": {
+    backgroundColor: "#2422b8",
+  },
+})
 export default EducationAddForm
