@@ -1,9 +1,9 @@
-import React, { useState, useEffect, useReducer, createContext } from "react"
+import React, { useState, useEffect } from "react"
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
-import { useDispatch, useSelector } from "react-redux"
+import { useDispatch } from "react-redux"
 
 import * as Api from "./api"
-import { userReducer } from "./reducer"
+
 import { login } from "./redux/action/userAction"
 
 import Header from "./components/Header"
@@ -16,14 +16,8 @@ import Footer from "./components/Footer"
 
 import Style from "./App.module.css"
 
-export const UserStateContext = createContext(null)
-export const DispatchContext = createContext(null)
-
 function App() {
   const dispatch = useDispatch()
-  const [userState, userDispatch] = useReducer(userReducer, {
-    user: null,
-  })
 
   const [isFetchCompleted, setIsFetchCompleted] = useState(false)
 
@@ -33,10 +27,6 @@ function App() {
       const currentUser = res.data
 
       dispatch(login(currentUser))
-      userDispatch({
-        type: "LOGIN_SUCCESS",
-        payload: currentUser,
-      })
 
       console.log("%c sessionStorage에 토큰 있음.", "color: #d93d1a;")
     } catch {
@@ -54,27 +44,23 @@ function App() {
   }
 
   return (
-    <DispatchContext.Provider value={userDispatch}>
-      <UserStateContext.Provider value={userState}>
-        <Router>
-          <div className={Style.mainWrapper}>
-            <Header />
-            <Routes>
-              <Route path="/" exact element={<Home />} />
-              <Route path="/:categoryId" exact element={<Home />} />
-              <Route path="/:categoryId/:articleName" element={<Home />} />
-              <Route path="/login" element={<LoginForm />} />
-              <Route path="/register" element={<RegisterForm />} />
-              <Route path="/user/:userId" element={<Portfolio />} />
-              <Route path="/portfolio" element={<Portfolio />} />
-              <Route path="/userlist" element={<Network />} />
-              <Route path="*" element={<Home />} />
-            </Routes>
-            <Footer />
-          </div>
-        </Router>
-      </UserStateContext.Provider>
-    </DispatchContext.Provider>
+    <Router>
+      <div className={Style.mainWrapper}>
+        <Header />
+        <Routes>
+          <Route path="/" exact element={<Home />} />
+          <Route path="/:categoryId" exact element={<Home />} />
+          <Route path="/:categoryId/:articleName" element={<Home />} />
+          <Route path="/login" element={<LoginForm />} />
+          <Route path="/register" element={<RegisterForm />} />
+          <Route path="/user/:userId" element={<Portfolio />} />
+          <Route path="/portfolio" element={<Portfolio />} />
+          <Route path="/userlist" element={<Network />} />
+          <Route path="*" element={<Home />} />
+        </Routes>
+        <Footer />
+      </div>
+    </Router>
   )
 }
 
