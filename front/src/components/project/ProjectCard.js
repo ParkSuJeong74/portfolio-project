@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react"
+import { useSelector } from "react-redux"
+
 import { Button, Grid, IconButton, Menu, MenuItem } from "@mui/material"
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz"
 import EditIcon from "@mui/icons-material/Edit"
@@ -8,10 +10,11 @@ import * as Api from "../../api"
 import dayjs from "dayjs"
 
 function ProjectCard({ project, setClickEditBtn, isEditable, setProjects }) {
+  const userState = useSelector((state) => state.user)
   const [anchorEl, setAnchorEl] = useState(null) // Menu Element를 가리킵니다.
   const [isOpen, setIsOpen] = useState(null) // Menu Element의 Open 상태를 저장합니다.
-
   const [period, setPeriod] = useState("")
+
   let from = dayjs(project.fromDate)
   let to = dayjs(project.toDate)
 
@@ -30,7 +33,8 @@ function ProjectCard({ project, setClickEditBtn, isEditable, setProjects }) {
       // projects로 DELETE 요청을 보내 프로젝트를 삭제합니다.
       await Api.delete(`project/${project.id}`)
 
-      setProjects((prev) => prev.filter((item) => item.id !== project.id))
+      const res = await Api.get("project/list", userState.user.id)
+      setProjects(res.data)
     } catch (error) {
       alert(error.response.message)
     }
