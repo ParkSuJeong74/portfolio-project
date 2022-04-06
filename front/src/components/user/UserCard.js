@@ -1,6 +1,5 @@
 import { useNavigate } from "react-router-dom"
 import { Card, Row, Button, Col } from "react-bootstrap"
-import { BsFillPersonPlusFill } from "react-icons/bs"
 import { useState, useContext, useEffect } from "react"
 import * as Api from "../../api"
 import { UserStateContext } from "../../App"
@@ -25,9 +24,6 @@ function UserCard({
     // 현재 이 user가 팔로우된 상태인지 아닌지를 확인하는 상태값
     const [isFollowing, setIsFollowing] = useState(null)
 
-    const [targetUser, setTargetUser] = useState(null)
-
-    // 왜 await 안붙여주면 Promise 객체가 반환될까?? -> 캡쳐사진 확인하기
     useEffect(() => {
         // 초기에 팔로우 상태를 확인
         checkFollowing()
@@ -35,12 +31,8 @@ function UserCard({
 
     // 팔로우된 상태인지 아닌지를 확인
     const checkFollowing = async () => {
-        const myData = await Api.get("user", myID)
-        const followingList = myData.data.following
-        const targetUser = followingList.find(
-            (following) => following === user?.id
-        )
-        //findTargetUser(user?.id)
+        const targetUser = await findTargetUser(user?.id)
+        console.log("결과:", user?.id, targetUser)
         if (targetUser) {
             setIsFollowing(true)
         } else {
@@ -48,21 +40,16 @@ function UserCard({
         }
     }
 
-    const findTargetUser = async (id) => {
+    async function findTargetUser(id) {
         const myData = await Api.get("user", myID)
         const followingList = myData.data.following
         const target = followingList.find((following) => following === id)
-        setTargetUser(target)
+        return target
     }
 
     const handleFollowing = async (myID, yourID) => {
         try {
-            const myData = await Api.get("user", myID)
-            const followingList = myData.data.following
-            const targetUser = followingList.find(
-                (following) => following === yourID
-            )
-            //findTargetUser(yourID)
+            const targetUser = await findTargetUser(yourID)
             await Api.put(`user/follow/${myID}`, {
                 userIdYour: yourID,
             })
