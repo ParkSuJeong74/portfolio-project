@@ -72,29 +72,16 @@ function EducationEditForm({ setEducations, currentEducation, setIsEditing }) {
           {statusArr.map((item, i) => (
             <FormControlLabel
               key={"position" + i}
-              control={<Radio />}
+              control={<StyledRadioBtn />}
               label={item}
               value={item}
             />
           ))}
         </RadioGroup>
       </Stack>
-      <Stack
-        direction="row"
-        spacing={2}
-        sx={{ mt: 2, justifyContent: "center" }}
-      >
-        <Button variant="contained" type="submit" sx={{ bgcolor: "#08075C" }}>
-          확인
-        </Button>{" "}
-        <Button
-          type="reset"
-          onClick={() => setIsEditing(false)}
-          variant="outlined"
-        >
-          취소
-        </Button>{" "}
-      </Stack>
+      <StyledButton variant="contained" type="submit" size="large" fullWidth>
+        확인
+      </StyledButton>
     </Box>
   )
 }
@@ -109,6 +96,18 @@ const StyledTextField = styled(TextField)({
     "&.Mui-focused fieldset": {
       borderColor: "#08075C",
     },
+  },
+})
+const StyledRadioBtn = styled(Radio)({
+  "&.Mui-checked": {
+    color: "#08075C",
+  },
+})
+const StyledButton = styled(Button)({
+  backgroundColor: "#08075C",
+  marginTop: "20px",
+  "&:hover": {
+    backgroundColor: "#2422b8",
   },
 })
 

@@ -1,7 +1,10 @@
 import React, { useState } from "react"
+
+import { Dialog, DialogTitle, DialogContent, IconButton } from "@mui/material"
+import CloseIcon from "@mui/icons-material/Close"
+
 import EducationCard from "./EducationCard"
 import EducationEditForm from "./EducationEditForm"
-import { Dialog, DialogTitle, DialogContent } from "@mui/material"
 
 function Education({ education, isEditable, setEducations }) {
   const [isEditing, setIsEditing] = useState(false) // 편집 버튼 클릭 상태를 저장합니다.
@@ -23,6 +26,17 @@ function Education({ education, isEditable, setEducations }) {
               fontSize: "1.5rem",
             }}
           >
+            <IconButton
+              onClick={() => setIsEditing((cur) => !cur)}
+              sx={{
+                position: "absolute",
+                right: 10,
+                top: 10,
+                color: "#9e9e9e",
+              }}
+            >
+              <CloseIcon />
+            </IconButton>
             학력 편집
           </DialogTitle>
 

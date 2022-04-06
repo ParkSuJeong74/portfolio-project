@@ -1,7 +1,4 @@
 import React, { useEffect, useState } from "react"
-import * as Api from "../../api"
-import Education from "./Education"
-import EducationAddForm from "./EducationAddForm"
 
 import {
   Accordion,
@@ -18,6 +15,11 @@ import {
 } from "@mui/material"
 import AddCircleRoundedIcon from "@mui/icons-material/AddCircleRounded"
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore"
+import CloseIcon from "@mui/icons-material/Close"
+
+import * as Api from "../../api"
+import Education from "./Education"
+import EducationAddForm from "./EducationAddForm"
 
 function Educations({ portfolioOwnerId, isEditable }) {
   const [educations, setEducations] = useState([]) // 해당 유저의 학력을 저장합니다.
@@ -48,6 +50,7 @@ function Educations({ portfolioOwnerId, isEditable }) {
             학력
           </Typography>
         </AccordionSummary>
+
         <AccordionDetails>
           {educations &&
             educations.map((edu) => (
@@ -60,6 +63,7 @@ function Educations({ portfolioOwnerId, isEditable }) {
             ))}
         </AccordionDetails>
       </Accordion>
+
       {isEditable && (
         <CardContent>
           <Box sx={{ display: "flex", justifyContent: "center" }}>
@@ -80,6 +84,17 @@ function Educations({ portfolioOwnerId, isEditable }) {
                   fontSize: "1.5rem",
                 }}
               >
+                <IconButton
+                  onClick={() => setIsAdding((cur) => !cur)}
+                  sx={{
+                    position: "absolute",
+                    right: 10,
+                    top: 10,
+                    color: "#9e9e9e",
+                  }}
+                >
+                  <CloseIcon />
+                </IconButton>
                 학력 추가
               </DialogTitle>
               <DialogContent>

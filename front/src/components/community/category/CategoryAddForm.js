@@ -1,70 +1,74 @@
-import { useContext, useState } from 'react'
-import {Form} from 'react-bootstrap'
-import { UserStateContext } from '../../../App'
-import Style from '../../../App.module.css'
-import * as Api from '../../../api'
+import { useState } from "react"
+import { useSelector } from "react-redux"
 
-function CategoryAddForm({setIsAdding, dispatch}){
-    const userState = useContext(UserStateContext)
-    const userId = userState.user?.id
+import { Form } from "react-bootstrap"
+import Style from "../../../App.module.css"
 
-    const [name, setName] = useState('')
-    const [description, setDescription] = useState('')
+import * as Api from "../../../api"
 
-    async function submitHandler(e){
-        e.preventDefault()
+function CategoryAddForm({ setIsAdding, dispatch }) {
+  const userState = useSelector((state) => state.user)
+  const userId = userState.user?.id
 
-        //TODO: Api post 요청하기!
-        try{
-            const newCategory = await Api.post('category/create', {
-                userId,
-                name, description
-            })
+  const [name, setName] = useState("")
+  const [description, setDescription] = useState("")
 
-            dispatch({
-                type: 'ADD',
-                payload: {id:newCategory.data.id, name, description}
-            })
+  async function submitHandler(e) {
+    e.preventDefault()
 
-            setIsAdding(false)
-        } catch(error){
-            alert(error.response.data)
-        }
+    //TODO: Api post 요청하기!
+    try {
+      const newCategory = await Api.post("category/create", {
+        userId,
+        name,
+        description,
+      })
+
+      dispatch({
+        type: "ADD",
+        payload: { id: newCategory.data.id, name, description },
+      })
+
+      setIsAdding(false)
+    } catch (error) {
+      alert(error.response.data)
     }
-    
-    return (
-        <Form onSubmit={submitHandler} className="p-4">
-            <Form.Group className="mb-3" controlId="formBasicEmail">
-                <Form.Control 
-                    className="mb-3"
-                    type="text" 
-                    placeholder="게시판 이름"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)} />
-                
-                <Form.Control 
-                    type="text" 
-                    placeholder="게시판에 대한 설명"
-                    value={description}
-                    onChange={(e) => setDescription(e.target.value)} />
+  }
 
-                <Form.Text className="text-muted">
-                    어떤 종류의 커뮤니티를 만들건가요?
-                </Form.Text>
-            </Form.Group>
+  return (
+    <Form onSubmit={submitHandler} className="p-4">
+      <Form.Group className="mb-3" controlId="formBasicEmail">
+        <Form.Control
+          className="mb-3"
+          type="text"
+          placeholder="게시판 이름"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
 
-            <button
-                type="submit"
-                className={[Style.confirmButton, Style.communityAddButton].join(' ')}>
-                확인
-            </button>
+        <Form.Control
+          type="text"
+          placeholder="게시판에 대한 설명"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+        />
 
-            <button
-                onClick={() => setIsAdding(false)}
-                className={Style.cancelButton}>
-                취소
-            </button>
-        </Form>
-    )
+        <Form.Text className="text-muted">
+          어떤 종류의 커뮤니티를 만들건가요?
+        </Form.Text>
+      </Form.Group>
+
+      <button
+        type="submit"
+        className={[Style.confirmButton, Style.communityAddButton].join(" ")}
+      >
+        확인
+      </button>
+
+      <button onClick={() => setIsAdding(false)} className={Style.cancelButton}>
+        취소
+      </button>
+    </Form>
+  )
 }
 export default CategoryAddForm
