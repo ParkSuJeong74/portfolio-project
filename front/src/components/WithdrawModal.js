@@ -1,40 +1,39 @@
-import { useContext } from "react"
-import { Button, Modal } from "react-bootstrap"
+import { useSelector } from "react-redux"
 import { useNavigate } from "react-router"
-import { UserStateContext } from "../App"
-import * as Api from '../api'
 
-function WithdrawModal({show, handleClose}){
-    const userState = useContext(UserStateContext)
-    const navigate = useNavigate()
+import { Button, Modal } from "react-bootstrap"
+import * as Api from "../api"
 
-    async function withdraw(){
-        console.log(userState.user?.id)
-        await Api.delete(`user/${userState.user?.id}`)
+function WithdrawModal({ show, handleClose }) {
+  const navigate = useNavigate()
+  const userState = useSelector((state) => state.user)
 
-        console.log('회원이 탈퇴되었습니다.')
-        handleClose()
-        navigate("/login");
-    }
+  async function withdraw() {
+    console.log(userState.user?.id)
+    await Api.delete(`user/${userState.user?.id}`)
 
-    return (
-        <Modal show={show} onHide={handleClose}>
-            <Modal.Header closeButton>
-                <Modal.Title>경고창!!</Modal.Title>
-            </Modal.Header>
+    console.log("회원이 탈퇴되었습니다.")
+    handleClose()
+    navigate("/login")
+  }
 
-            <Modal.Body>정말 회원 탈퇴하실 건가요???</Modal.Body>
+  return (
+    <Modal show={show} onHide={handleClose}>
+      <Modal.Header closeButton>
+        <Modal.Title>경고창!!</Modal.Title>
+      </Modal.Header>
 
-            <Modal.Footer>
-                <Button variant="secondary" onClick={withdraw}>
-                    네.
-                </Button>
-                <Button variant="primary" onClick={handleClose}>
-                    아니요!
-                </Button>
-            </Modal.Footer>
-        </Modal>
-    )
-    
+      <Modal.Body>정말 회원 탈퇴하실 건가요???</Modal.Body>
+
+      <Modal.Footer>
+        <Button variant="secondary" onClick={withdraw}>
+          네.
+        </Button>
+        <Button variant="primary" onClick={handleClose}>
+          아니요!
+        </Button>
+      </Modal.Footer>
+    </Modal>
+  )
 }
 export default WithdrawModal
