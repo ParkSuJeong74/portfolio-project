@@ -12,6 +12,7 @@ import {
   InputBase,
   Typography,
   IconButton,
+  Grid,
 } from "@mui/material"
 import MenuIcon from "@mui/icons-material/Menu"
 import SearchIcon from "@mui/icons-material/Search"
@@ -38,43 +39,55 @@ function Header() {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static" sx={{ boxShadow: 0 }}>
         <StyledToolbar>
-          <IconButton
-            edge="start"
-            color="inherit"
-            aria-label="menu"
-            sx={{ mr: 2 }}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h5" sx={{ marginTop: "5px" }}>
-            Community
-          </Typography>
-          <Box className={classes.container}>
-            <img src="pupa_logo.png" alt="logo" className={classes.logo} />
-            <Box className={classes.searchContainer}>
-              <Search>
-                <SearchIconWrapper>
-                  <SearchIcon />
-                </SearchIconWrapper>
-                <StyledInputBase
-                  placeholder="검색어를 입력하세요"
-                  inputProps={{ "aria-label": "search" }}
-                />
-              </Search>
-              <StyledButton variant="contained">Search</StyledButton>
-            </Box>
-          </Box>
-          <IconButton color="inherit">
-            <NotificationsIcon />
-          </IconButton>
-          <Button color="inherit" onClick={() => navigate("/portfolio")}>
-            MY PAGE
-          </Button>
-          {isLogin && (
-            <Button color="inherit" onClick={logoutHandler}>
-              LOGOUT
-            </Button>
-          )}
+          <Grid container xs={12}>
+            <Grid item xs={6} sx={{ display: "flex", alignItems: "center" }}>
+              <IconButton
+                edge="start"
+                color="inherit"
+                aria-label="menu"
+                sx={{ mr: 2 }}
+              >
+                <MenuIcon />
+              </IconButton>
+              <Typography variant="h5" sx={{ display: "inline" }}>
+                Community
+              </Typography>
+            </Grid>
+            <Grid
+              item
+              xs={6}
+              sx={{ display: "flex", justifyContent: "flex-end" }}
+            >
+              <IconButton color="inherit">
+                <NotificationsIcon />
+              </IconButton>
+              <Button color="inherit" onClick={() => navigate("/portfolio")}>
+                MY PAGE
+              </Button>
+              {isLogin && (
+                <Button color="inherit" onClick={logoutHandler}>
+                  LOGOUT
+                </Button>
+              )}
+            </Grid>
+            <Grid item xs={12}>
+              <Box className={classes.container}>
+                <img src="pupa_logo.png" alt="logo" className={classes.logo} />
+                <Box className={classes.searchContainer}>
+                  <Search>
+                    <SearchIconWrapper>
+                      <SearchIcon />
+                    </SearchIconWrapper>
+                    <StyledInputBase
+                      placeholder="검색어를 입력하세요"
+                      inputProps={{ "aria-label": "search" }}
+                    />
+                  </Search>
+                  <StyledButton variant="contained">Search</StyledButton>
+                </Box>
+              </Box>
+            </Grid>
+          </Grid>
         </StyledToolbar>
       </AppBar>
       <Nav />
