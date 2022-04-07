@@ -10,7 +10,7 @@ function UserCard({
     user,
     setIsEditing,
     isEditable,
-    myID,
+    loginUserId,
     isNetwork,
     setReloadUserlist,
     setReloadUser,
@@ -19,9 +19,9 @@ function UserCard({
     const userState = useContext(UserStateContext)
 
     const isNotMyProfileinHome_Mypage = userState.user?.id !== user?.id
-    const isNotMyProfileinNetwork = myID !== user?.id
+    const isNotMyProfileinNetwork = loginUserId !== user?.id
 
-    // 현재 이 user가 팔로우된 상태인지 아닌지를 확인하는 상태값
+    // 현재 내가 이 user를 팔로우하고 있는지 아닌지를 확인하는 상태값
     const [isFollowing, setIsFollowing] = useState(null)
 
     useEffect(() => {
@@ -29,10 +29,9 @@ function UserCard({
         checkFollowing()
     }, [user?.id])
 
-    // 팔로우된 상태인지 아닌지를 확인
+    // 팔로우한 상태인지를 확인해서 상태를 설정
     const checkFollowing = async () => {
         const targetUser = await findTargetUser(user?.id)
-        console.log("결과:", user?.id, targetUser)
         if (targetUser) {
             setIsFollowing(true)
         } else {
@@ -40,8 +39,9 @@ function UserCard({
         }
     }
 
+    // 클릭한 해당 user가 현재 내 follower목록에 있는지 확인
     async function findTargetUser(id) {
-        const myData = await Api.get("user", myID)
+        const myData = await Api.get("user", loginUserId)
         const followingList = myData.data.following
         const target = followingList.find((following) => following === id)
         return target
@@ -53,7 +53,7 @@ function UserCard({
             await Api.put(`user/follow/${myID}`, {
                 userIdYour: yourID,
             })
-
+            //follower 목록에 있으면 언팔로우, 없으면 팔로우
             if (targetUser) {
                 setIsFollowing(false)
                 alert("언팔로우 되었습니다!")
@@ -93,7 +93,6 @@ function UserCard({
                     <Card.Title>
                         {user?.name}({user?.nickname})
                         <span className="ms-1">
-                            {console.log(user?.name, isFollowing)}
                             {isNotMyProfileinHome_Mypage &&
                                 isNotMyProfileinNetwork && (
                                     <>
@@ -102,13 +101,13 @@ function UserCard({
                                                 fontSize="inherit"
                                                 onClick={() => {
                                                     handleFollowing(
-                                                        myID,
+                                                        loginUserId,
                                                         user?.id
                                                     )
                                                 }}
                                                 style={{
                                                     color: isFollowing
-                                                        ? "#514FD6"
+                                                        ? "#4644B8"
                                                         : "lightgray",
                                                 }}
                                             />

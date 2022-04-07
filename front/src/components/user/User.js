@@ -10,7 +10,7 @@ function User({ portfolioOwnerId, isEditable }) {
 
     const userState = useContext(UserStateContext)
     //현재 로그인한 자기 아이디
-    const myID = userState.user?.id
+    const loginUserId = userState.user?.id
 
     // follow를 하거나 unfollow를 할 때 상태가 변경되는 걸 감지하고 해당 user 정보를 다시 불러오도록 함
     const [ReloadUser, setReloadUser] = useState(false)
@@ -30,7 +30,7 @@ function User({ portfolioOwnerId, isEditable }) {
             ) : (
                 <UserCard
                     user={user}
-                    myID={myID}
+                    loginUserId={loginUserId}
                     setIsEditing={setIsEditing}
                     isEditable={isEditable}
                     setReloadUser={setReloadUser}
