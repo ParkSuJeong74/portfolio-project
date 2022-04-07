@@ -24,13 +24,17 @@ export const nav = makeStyles({
   container: {
     flex: 1,
     display: "flex",
-    bgcolor: "#000d3e",
+    zIndex: 2,
+    marginTop: "-30px",
   },
   btnContainer: {
+    width: "100%",
     display: "flex",
-    bgcolor: "white",
-    padding: "20px 20px",
-    justifyContent: "center",
+    borderRadius: "7px",
+    padding: "15px 20px",
+    zIndex: 1,
+    backgroundColor: "rgba(255, 255, 255, 1)",
+    justifyContent: "space-around",
     margin: "0 10%",
   },
 })

@@ -10,7 +10,7 @@ function Nav() {
     <Box className={classes.container}>
       <Box className={classes.btnContainer}>
         <StyledButton variant="contained" size="large">
-          Q&A 게시판
+          QnA 게시판
         </StyledButton>
         <StyledButton variant="contained" size="large">
           커뮤니티
@@ -39,8 +39,9 @@ const StyledButton = styled(Button)({
   backgroundColor: "white",
   color: "#000d3e",
   margin: "0 20px",
-  width: "200px",
+  width: "100%",
   "&:hover": {
     backgroundColor: "#eee",
   },
+  textTransform: "none",
 })
