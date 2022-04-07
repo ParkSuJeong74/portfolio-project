@@ -47,7 +47,6 @@ commentRouter.put("/:id", async (req, res, next) => {
       writerName = "익명"
     } else {
       const user = await User.findById({ userId })
-      console.log(user)
       writerName = user.nickname // 닉네임으로 출력
     }
 
