@@ -5,8 +5,6 @@ import { Container, Col, Row, Form, Button } from 'react-bootstrap';
 import * as Api from '../../api';
 import { DispatchContext } from '../../App';
 
-import PasswordChangeModal from './PasswordChangeModal';
-
 function LoginForm() {
     const navigate = useNavigate();
     const userDispatch = useContext(DispatchContext);
@@ -49,11 +47,6 @@ function LoginForm() {
             alert(error.response.data)
         }
     };
-
-    const [isModalActive, setIsModalActive] = useState(false);
-
-    const handleModalClose = () => setIsModalActive(false);
-    const handleModalShow = () => setIsModalActive(true);
 
     return (
         <>
@@ -117,10 +110,7 @@ function LoginForm() {
                                 <Col sm={{ span: 20 }}>
                                     <Button
                                         style={{ backgroundColor: '#FF87D2', border: 'solid 2px' }}
-                                        onClick={() => {
-                                            handleModalShow();
-                                        }}
-                                    >
+                                        onClick={() => navigate('/findPassword') }>
                                         비밀번호 찾기
                                     </Button>
                                 </Col>
@@ -130,12 +120,6 @@ function LoginForm() {
                 </Row>
             </Container>
             
-            {isModalActive && (
-                <PasswordChangeModal
-                    onConfirm={handleModalClose}
-                    onCancel={handleModalClose}
-                />
-            )}
         </>
     );
 }
