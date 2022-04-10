@@ -11,6 +11,8 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import * as Api from '../../api';
 import { useNavigate } from 'react-router';
+import styled, { createGlobalStyle } from "styled-components";
+
 
 const theme = createTheme();
 
@@ -59,16 +61,29 @@ function FindPassword(){
         }
     };
     
+    const GlobalStyle = createGlobalStyle`
+        body{
+            background-color: #E5E5E5;
+        }
+    `;
+
     return (
     <ThemeProvider theme={theme}>
-        <Container component="main" maxWidth="xs">
+        <Container component="main" maxWidth="xs"
+            sx={{
+                paddingTop: 1,
+                paddingBottom: 2,
+                marginTop: '140px',
+                bgcolor: 'white',
+                boxShadow: '0px 0px 10px gray'
+            }}>
         <CssBaseline />
+        <GlobalStyle />
         <Box
             sx={{
-            marginTop: 17,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
             }}
         >
             <Avatar sx={{ m: 1, p:0.6, bgcolor: '#08075C' }} src="pupa-logo-no-bg.png"/>
