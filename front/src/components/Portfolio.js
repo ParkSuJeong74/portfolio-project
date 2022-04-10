@@ -8,6 +8,7 @@ import Educations from "./education/Educations"
 import Certificates from "./certificate/Certificates"
 import Awards from "./award/Awards"
 import Projects from "./project/Projects"
+import Calendar from "./calendar/Calendar"
 
 import { Container, Grid } from "@mui/material"
 import Style from "../App.module.css"
@@ -55,13 +56,8 @@ function Portfolio() {
             isEditable={portfolioOwner.id === userState.user?.id}
           />
         </Grid>
-        <Grid
-          item
-          md={9}
-          xs={12}
-          className={[Style.mvpBackground, "mt-4", "mb-4"].join(" ")}
-        >
-          <Educations
+        <Grid item md={9} xs={12}>
+          {/* <Educations
             portfolioOwnerId={portfolioOwner.id}
             isEditable={portfolioOwner.id === userState.user?.id}
           />
@@ -79,7 +75,8 @@ function Portfolio() {
           <Projects
             portfolioOwnerId={portfolioOwner.id}
             isEditable={portfolioOwner.id === userState.user?.id}
-          />
+          /> */}
+          <Calendar />
         </Grid>
       </Grid>
     </Container>
