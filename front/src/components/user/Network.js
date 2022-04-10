@@ -1,44 +1,50 @@
-import React, { useEffect, useContext, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { Container, Row } from "react-bootstrap";
+import React, { useEffect, useState } from "react"
+import { useNavigate } from "react-router-dom"
+import { useSelector } from "react-redux"
 
-import * as Api from "../../api";
-import UserCard from "./UserCard";
-import { UserStateContext } from "../../App";
+import { Container, Row } from "react-bootstrap"
+
+import * as Api from "../../api"
+import UserCard from "./UserCard"
 
 function Network() {
-    const navigate = useNavigate();
-    const userState = useContext(UserStateContext);
-    const [users, setUsers] = useState([]);
+  const navigate = useNavigate()
+  const userState = useSelector((state) => state.user)
+  const [users, setUsers] = useState([])
 
-    const myID = userState.user?.id
+  const myID = userState.user?.id
 
-    useEffect(() => {
-        if (!userState.user) {
-            navigate("/login");
-            return;
-        }
+  useEffect(() => {
+    if (!userState.user) {
+      navigate("/login")
+      return
+    }
 
-        Api.get("user/list").then((res) => setUsers(res.data));
-    }, [navigate]);
+    Api.get("user/list").then((res) => setUsers(res.data))
+  }, [navigate])
 
-    return (
-        <Container fluid>
-            <Row xs="auto" className="jusify-content-center"
-                style={{
-                    marginTop: '30px', marginBottom: '20px'
-                }}>
-            {users.map((user) => (
-                <UserCard 
-                    key={user.id} 
-                    user={user} 
-                    myID={myID}
-                    setUsers={setUsers}
-                    isNetwork />
-            ))}
-            </Row>
-        </Container>
-    );
+  return (
+    <Container fluid>
+      <Row
+        xs="auto"
+        className="jusify-content-center"
+        style={{
+          marginTop: "30px",
+          marginBottom: "20px",
+        }}
+      >
+        {users.map((user) => (
+          <UserCard
+            key={user.id}
+            user={user}
+            myID={myID}
+            setUsers={setUsers}
+            isNetwork
+          />
+        ))}
+      </Row>
+    </Container>
+  )
 }
 
-export default Network;
+export default Network

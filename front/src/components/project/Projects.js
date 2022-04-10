@@ -1,58 +1,118 @@
-import React, { useEffect, useState } from "react";
-import { Card, Row, Col } from "react-bootstrap";
-import * as Api from "../../api";
-import Project from "./Project";
-import ProjectAddForm from "./ProjectAddForm";
-import Style from'../../App.module.css'
+import React, { useEffect, useState } from "react"
+import {
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
+  Card,
+  CardContent,
+  Typography,
+  IconButton,
+  Box,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+} from "@mui/material"
+
+import AddCircleRoundedIcon from "@mui/icons-material/AddCircleRounded"
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore"
+import CloseIcon from "@mui/icons-material/Close"
+
+import Project from "./Project"
+import ProjectAddForm from "./ProjectAddForm"
+import * as Api from "../../api"
 
 function Projects({ portfolioOwnerId, isEditable }) {
+  const [projects, setProjects] = useState([])
+  const [clickAddBtn, setClickAddBtn] = useState(false)
 
-    const [projects, setProjects] = useState([]);
+  useEffect(() => {
+    Api.get("project/list", portfolioOwnerId).then((res) => {
+      setProjects(res.data)
+    })
+  }, [portfolioOwnerId])
 
-    const [isAdding, setIsAdding] = useState(false);
+  return (
+    <Card sx={{ marginBottom: "20px", borderRadius: "15px" }}>
+      <Accordion defaultExpanded={true} sx={{ boxShadow: 0 }}>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel1a-content"
+          id="panel1a-header"
+        >
+          <Typography
+            sx={{
+              fontFamily: "Elice Digital Baeum",
+              fontSize: "2em",
+              color: "#08075C",
+              fontWeight: 800,
+            }}
+          >
+            프로젝트
+          </Typography>
+        </AccordionSummary>
 
-    useEffect(() => {
-        Api.get("project/list", portfolioOwnerId).then((res) => setProjects(res.data));
-    }, [portfolioOwnerId]);
+        <AccordionDetails>
+          {projects.map((project) => (
+            <Project
+              key={project.id}
+              project={project}
+              setProjects={setProjects}
+              isEditable={isEditable}
+            />
+          ))}
+        </AccordionDetails>
+      </Accordion>
 
-    return (
-        <Card
-            style={{backgroundColor: '#FFF5F5' , borderRadius: '15px'}}>
-            <Card.Body>
-                <Card.Title class={Style.mvpType}>프로젝트</Card.Title>
+      {isEditable && (
+        <CardContent>
+          <Box sx={{ display: "flex", justifyContent: "center" }}>
+            <IconButton
+              style={{ color: "#08075C" }}
+              aria-label="add-projects"
+              onClick={() => setClickAddBtn((cur) => !cur)}
+            >
+              <AddCircleRoundedIcon sx={{ width: "56px", height: "56px" }} />
+            </IconButton>
+          </Box>
 
-                {projects.map((project) => (
-                    <Project
-                    key={project.id}
-                    project={project}
-                    setProjects={setProjects}
-                    isEditable={isEditable}
-                    />
-                ))}
-
-                {isEditable && (
-                    <Row className="mt-3 text-center mb-4">
-                    <Col sm={{ span: 20 }}>
-
-                        <button
-                        onClick={() => setIsAdding(true)}
-                        className={Style.formAddButton}>
-                        </button>
-                        
-                    </Col>
-                    </Row>
-                )}
-                
-                {isAdding && (
-                    <ProjectAddForm
-                    portfolioOwnerId={portfolioOwnerId}
-                    setProjects={setProjects}
-                    setIsAdding={setIsAdding}
-                    />
-                )}
-            </Card.Body>
-        </Card>
-    );
+          {clickAddBtn && (
+            <Dialog
+              open={clickAddBtn}
+              onClose={() => setClickAddBtn((cur) => !cur)}
+            >
+              <DialogTitle
+                sx={{
+                  fontFamily: "Elice Digital Baeum",
+                  fontWeight: 500,
+                  fontSize: "1.5rem",
+                }}
+              >
+                <IconButton
+                  onClick={() => setClickAddBtn((cur) => !cur)}
+                  sx={{
+                    position: "absolute",
+                    right: 10,
+                    top: 10,
+                    color: "#9e9e9e",
+                  }}
+                >
+                  <CloseIcon />
+                </IconButton>
+                프로젝트 추가
+              </DialogTitle>
+              <DialogContent>
+                <ProjectAddForm
+                  portfolioOwnerId={portfolioOwnerId}
+                  setClickAddBtn={setClickAddBtn}
+                  setProjects={setProjects}
+                />
+              </DialogContent>
+            </Dialog>
+          )}
+        </CardContent>
+      )}
+    </Card>
+  )
 }
 
-export default Projects;
+export default Projects

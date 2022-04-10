@@ -1,98 +1,109 @@
 import { useState } from "react"
-import {Form,Col,Row} from 'react-bootstrap'
-import DatePicker from 'react-datepicker'
-import * as Api from '../../api'
-import Style from '../../App.module.css'
-import {TimeUtil} from '../../common/TimeUtil'
 
-function CertificateEditForm({setCertificates, currentCertificate,setIsEditing}){
-    const [title, setTitle] = useState(currentCertificate.title)
-    const [description, setDescription] = useState(currentCertificate.description)
-    const [whenDate, setWhenDate] = useState(
-        new Date(currentCertificate.whenDate)
-    )
-console.log(currentCertificate)
-    async function submitHandler(e){
-        e.preventDefault()
-        e.stopPropagation()
+import { Box, TextField, Stack, Button } from "@mui/material"
+import AdapterDateFns from "@mui/lab/AdapterDateFns"
+import LocalizationProvider from "@mui/lab/LocalizationProvider"
+import DesktopDatePicker from "@mui/lab/DesktopDatePicker"
+import { styled } from "@mui/material/styles"
 
-        const userId = currentCertificate.userId
+import * as Api from "../../api"
+import { TimeUtil } from "../../common/TimeUtil"
 
-        const when_date = (TimeUtil.getTime(whenDate)).toISOString().split('T')[0]
+function CertificateEditForm({
+  setCertificates,
+  currentCertificate,
+  setIsEditing,
+}) {
+  const [title, setTitle] = useState(currentCertificate.title)
+  const [description, setDescription] = useState(currentCertificate.description)
+  const [whenDate, setWhenDate] = useState(
+    new Date(currentCertificate.whenDate),
+  )
 
-        const updatedCertificate = await Api.put(`certificate/${currentCertificate.id}`,{
-            userId,
-            title,
-            description,
-            whenDate: when_date
-        })
+  async function submitHandler(e) {
+    e.preventDefault()
+    e.stopPropagation()
 
-        setCertificates((prev) => prev.map((certificate) => {
-            return (certificate.id === currentCertificate.id) 
-                ? (updatedCertificate.data)
-                : (certificate)
-        }))
+    const userId = currentCertificate.userId
+    const date = TimeUtil.getTime(whenDate).toISOString().split("T")[0]
 
-        setIsEditing(false)
+    const updatedCertificate = {
+      userId,
+      title,
+      description,
+      whenDate: date,
     }
+    try {
+      await Api.put(`certificate/${currentCertificate.id}`, updatedCertificate)
 
-    return (
-        <Form onSubmit={submitHandler}>
-            <Form.Group controlId="formBasicTitle" className="mt-3">
-                
-                <Form.Control 
-                    type="text"
-                    placeholder="자격증제목" 
-                    value={title} 
-                    style={{
-                        width: 'auto',
-                        border: 'solid 2px #DBC7FF'
-                    }}
-                    onChange={(e) => setTitle(e.target.value)}
-                />
-                
-            </Form.Group>
+      const res = await Api.get("certificate/list", userId)
+      setCertificates(res.data)
 
-            <Form.Group controlId="formBasicDescription" className="mt-3">
-                
-                <Form.Control 
-                    type="text" 
-                    placeholder="상세내역"
-                    value={description} 
-                    style={{
-                        border: 'solid 2px #DBC7FF'
-                    }}
-                    onChange={(e) => setDescription(e.target.value)}
-                />
+      setIsEditing(false)
+    } catch (error) {
+      alert(error.response.data)
+    }
+  }
 
-            </Form.Group>
-            
-            <Form.Group as={Col} xs="auto" xxl={3} controlId="formBasicDate" className="mt-3">
-                <DatePicker 
-                    selected={whenDate}
-                    placeholderText="취득날짜"
-                    dateFormat = "yyyy.MM.dd(eee)"
-                    onChange={(whenDate) => setWhenDate(whenDate)}/>
-            </Form.Group>
+  return (
+    <Box
+      component="form"
+      onSubmit={submitHandler}
+      sx={{ mt: 1, width: "400px" }}
+    >
+      <Stack spacing={2}>
+        <StyledTextField
+          required
+          label="자격증 제목"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+        />
+        <StyledTextField
+          required
+          label="상세내역"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+        />
+      </Stack>
+      <LocalizationProvider dateAdapter={AdapterDateFns}>
+        <Stack direction="row" spacing={2} sx={{ mt: 2 }}>
+          <DesktopDatePicker
+            label="취득일자"
+            inputFormat={"yyyy-MM-dd"}
+            mask={"____-__-__"}
+            value={whenDate}
+            onChange={(date) => setWhenDate(date)}
+            renderInput={(params) => <TextField {...params} />}
+          />
+        </Stack>
+      </LocalizationProvider>
 
-            <Form.Group as={Row} className="mt-3 text-center">
-                <Col sm={{ span: 20 }}>
-
-                <button
-                    type="submit"
-                    className={Style.mvpConfirmButton}>
-                    확인
-                </button>
-
-                <button
-                    onClick={() => setIsEditing(false)}
-                    className={Style.mvpCancelButton}>
-                    취소
-                </button>
-                
-                </Col>
-            </Form.Group>
-        </Form>
-    )
+      <StyledButton variant="contained" type="submit" size="large" fullWidth>
+        확인
+      </StyledButton>
+    </Box>
+  )
 }
+
 export default CertificateEditForm
+
+const StyledTextField = styled(TextField)({
+  "& label.Mui-focused": {
+    color: "#08075C",
+  },
+  "& .MuiInput-underline:after": {
+    borderBottomColor: "#08075C",
+  },
+  "& .MuiOutlinedInput-root": {
+    "&.Mui-focused fieldset": {
+      borderColor: "#08075C",
+    },
+  },
+})
+const StyledButton = styled(Button)({
+  backgroundColor: "#08075C",
+  marginTop: "20px",
+  "&:hover": {
+    backgroundColor: "#2422b8",
+  },
+})

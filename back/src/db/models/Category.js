@@ -1,55 +1,43 @@
-const { CategoryModel } = require('../schemas/category')
+const { CategoryModel } = require("../schemas/category")
 const { ArticleModel } = require("../schemas/article")
 
 const Category = {
-    create : async ({ newCategory }) => {
-        const createNewCategory = await CategoryModel.create(newCategory)
-        
-        return createNewCategory
-    },
+  create: async ({ newCategory }) => {
+    const createNewCategory = await CategoryModel.create(newCategory)
 
-    findAll : async ({}) => {
-        const categorys = await CategoryModel.find({}).sort({ name: 1 }) // 카테고리명 오름차순
-        return categorys
-    },
+    return createNewCategory
+  },
 
-    findByName : async ({ name }) => {
-        const category = await CategoryModel.findOne({ name })
-        return category
-    },
+  findAll: async ({}) => {
+    const categorys = await CategoryModel.find({}).sort({ name: 1 }) // 카테고리명 오름차순
+    return categorys
+  },
 
-    findAllByName : async ({ name }) => {
-        const category = await CategoryModel.findOne({ name })
-        const article = await ArticleModel.find({ categoryName: name }).sort({ createdAt: -1 }) // 게시글 최신것부터
-        return { category, article }
-    },
-    
-    update : async ({ categoryName, updateObject }) => {
-        const filter = { name : categoryName }
-        const update = { $set : updateObject }
-        const option = { returnOriginal: false }
-        const updatedCategory = await CategoryModel.findOneAndUpdate(
-            filter,
-            update,
-            option,
-        )
+  findByName: async ({ name }) => {
+    const category = await CategoryModel.findOne({ name })
+    return category
+  },
 
-        let result = updatedCategory
+  findById: async ({ categoryId }) => {
+    const category = await CategoryModel.findOne({ id: categoryId })
+    const article = await ArticleModel.find({ categoryId }).sort({
+      createdAt: -1,
+    }) // 게시글 최신것부터
+    return { category, article }
+  },
 
-        if(updateObject.name){
-            const filter = { categoryName : categoryName }
-            const update = { categoryName: updateObject.name }
-            const option = { returnOriginal: false }
-            const updatedArticle = await ArticleModel.findOneAndUpdate(
-                filter,
-                update,
-                option,
-            )
-            result = `{${result} , ${updatedArticle}}`
-        }
+  update: async ({ categoryId, updateObject }) => {
+    const filter = { id: categoryId }
+    const update = { $set: updateObject }
+    const option = { returnOriginal: false }
+    const updatedCategory = await CategoryModel.findOneAndUpdate(
+      filter,
+      update,
+      option
+    )
 
-        return result
-    }
+    return updatedCategory
+  },
 }
 
 module.exports = { Category }

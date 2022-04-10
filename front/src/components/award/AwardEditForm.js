@@ -1,82 +1,86 @@
-import React, {useState} from 'react'
-import {Form, Row,Col} from 'react-bootstrap'
-import * as Api from '../../api'
-import Style from '../../App.module.css'
+import React, { useState } from "react"
 
-function AwardEditForm({currentAward, setAwards, setIsEditing}){
-    const [title, setTitle] = useState(currentAward.title)
-    const [description, setDescription] = useState(currentAward.description)
-console.log(currentAward)
-    async function submitHandler(e){
-        e.preventDefault()
-        e.stopPropagation()
+import { Box, TextField, Stack, Button } from "@mui/material"
+import { styled } from "@mui/material/styles"
 
-        const userId = currentAward.userId
+import * as Api from "../../api"
 
-        const editedAward = await Api.put(`award/${currentAward.id}`, {
-            userId,
-            title,
-            description
-        })
+function AwardEditForm({ currentAward, setAwards, setIsEditing }) {
+  const [title, setTitle] = useState(currentAward.title)
+  const [description, setDescription] = useState(currentAward.description)
 
-        setAwards((prev) => prev.map((award) => {
-            return award.id === currentAward.id 
-            ? ( editedAward.data )
-            : (award)
-        }))
+  async function submitHandler(e) {
+    e.preventDefault()
+    e.stopPropagation()
 
-        setIsEditing(false)
+    const userId = currentAward.userId
+    try {
+      const editedAward = {
+        userId,
+        title,
+        description,
+      }
+      await Api.put(`award/${currentAward.id}`, editedAward)
+
+      const res = await Api.get("award/list", userId)
+      setAwards(res.data)
+
+      setIsEditing(false)
+    } catch (error) {
+      alert(error.response.data)
     }
+  }
 
-    return (
-        <Form onSubmit={submitHandler}>
-            <Form.Group controlId="formBasicTitle">
-                
-                <Form.Control 
-                    type="text"
-                    placeholder="수상내역" 
-                    value={title} 
-                    style={{
-                        width: 'auto',
-                        border: 'solid 2px #DBC7FF'
-                    }}
-                    onChange={(e) => setTitle(e.target.value)}
-                />
-                
-            </Form.Group>
+  return (
+    <Box
+      component="form"
+      onSubmit={submitHandler}
+      sx={{ mt: 1, width: "400px" }}
+    >
+      <Stack spacing={2}>
+        <StyledTextField
+          required
+          label="수상내역"
+          value={title}
+          onChange={(e) => {
+            setTitle(e.target.value)
+          }}
+        />
+        <StyledTextField
+          required
+          label="상세내역"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+        />
+      </Stack>
 
-            <Form.Group controlId="formBasicDescription" className="mt-3">
-                
-                <Form.Control 
-                    type="text" 
-                    placeholder="상세내역"
-                    value={description} 
-                    style={{
-                        border: 'solid 2px #DBC7FF'
-                    }}
-                    onChange={(e) => setDescription(e.target.value)}
-                />
-            </Form.Group>
-            
-            <Form.Group as={Row} className="text-center mt-3">
-                <Col sm={{ span: 20 }}>
-
-                <button
-                    type="submit"
-                    className={Style.mvpConfirmButton}>
-                    확인
-                </button>
-
-                <button
-                    onClick={() => setIsEditing(false)}
-                    className={Style.mvpCancelButton}>
-                    취소
-                </button>
-                
-                </Col>
-            </Form.Group>
-        </Form>
-    )
+      <StyledButton variant="contained" type="submit" size="large" fullWidth>
+        확인
+      </StyledButton>
+    </Box>
+  )
 }
 
 export default AwardEditForm
+
+const StyledTextField = styled(TextField)({
+  "& label.Mui-focused": {
+    color: "#08075C",
+  },
+  "& .MuiInput-underline:after": {
+    borderBottomColor: "#08075C",
+  },
+  "& .MuiOutlinedInput-root": {
+    "&.Mui-focused fieldset": {
+      borderColor: "#08075C",
+    },
+  },
+})
+
+const StyledButton = styled(Button)({
+  backgroundColor: "#08075C",
+  marginTop: "20px",
+  "&:hover": {
+    backgroundColor: "#2422b8",
+  },
+})
