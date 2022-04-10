@@ -163,28 +163,37 @@ function LoginForm() {
                 </Grid>
               </Grid>
               
-                <Box sx={{minWidth: '30px', width: '30px', height: '30px'}}>
-                  <IconButton sx={{ width: 'inherit', height: 'inherit' }}>
-                    <img src={process.env.PUBLIC_URL + '/google.png'} style={{ width: 'inherit', height: 'inherit' }} />
-                  </IconButton>
-                </Box>
-                
-                  <IconButton>
-                    <img src={process.env.PUBLIC_URL + '/kakao.png'} style={{width: '30px', height: '30px'}} />
-                  </IconButton>
-                
-                  <IconButton >
-                    <img src={process.env.PUBLIC_URL + '/naver.png'} style={{width: '40px', height: '40px'}} />
-                  </IconButton>
-                
-                  <IconButton >
-                    <img src={process.env.PUBLIC_URL + '/github.png'} style={{width: '40px', height: '40px'}} />
-                  </IconButton>
-                
-                  <IconButton >
-                    <img src={process.env.PUBLIC_URL + '/facebook.png'} style={{width: '30px', height: '30px'}} />
-                  </IconButton>
-                
+                <Row className= 'mt-3'>
+                  <Col>
+                    <IconButton sx={{ minWidth: '30px', width: '30px', height: '30px' }}>
+                      <img src={process.env.PUBLIC_URL + '/google.png'} style={{ width: 'inherit', height: 'inherit' }} />
+                    </IconButton>
+                  </Col>
+
+                  <Col>
+                    <IconButton sx={{ minWidth: '30px', width: '30px', height: '30px' }}>
+                      <img src={process.env.PUBLIC_URL + '/kakao.png'} style={{width: '30px', height: '30px'}} />
+                    </IconButton>
+                  </Col>
+
+                  <Col>
+                    <IconButton sx={{ minWidth: '30px', width: '30px', height: '30px' }}>
+                      <img src={process.env.PUBLIC_URL + '/naver.png'} style={{width: '40px', height: '40px'}} />
+                    </IconButton>
+                  </Col>
+
+                  <Col>
+                    <IconButton sx={{ minWidth: '30px', width: '30px', height: '30px' }}>
+                      <img src={process.env.PUBLIC_URL + '/github.png'} style={{width: '30px', height: '30px'}} />
+                    </IconButton>
+                  </Col>
+
+                  <Col>
+                    <IconButton sx={{ minWidth: '30px', width: '30px', height: '30px' }}>
+                      <img src={process.env.PUBLIC_URL + '/facebook.png'} style={{width: '30px', height: '30px'}} />
+                    </IconButton>
+                  </Col>
+                </Row> 
             </Box>
           </Box>
           <Copyright sx={{ mt: 8, mb: 4 }} />
