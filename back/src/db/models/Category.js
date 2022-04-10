@@ -18,18 +18,16 @@ const Category = {
     return category
   },
 
-  findAllById: async ({ categoryId }) => {
-    const category = await CategoryModel.findOne({ categoryId })
+  findById: async ({ categoryId }) => {
+    const category = await CategoryModel.findOne({ id: categoryId })
     const article = await ArticleModel.find({ categoryId }).sort({
       createdAt: -1,
     }) // 게시글 최신것부터
     return { category, article }
   },
 
-  //findById
-
-  update: async ({ categoryName, updateObject }) => {
-    const filter = { name: categoryName }
+  update: async ({ categoryId, updateObject }) => {
+    const filter = { id: categoryId }
     const update = { $set: updateObject }
     const option = { returnOriginal: false }
     const updatedCategory = await CategoryModel.findOneAndUpdate(
@@ -38,21 +36,7 @@ const Category = {
       option
     )
 
-    let result = updatedCategory
-
-    if (updateObject.name) {
-      const filter = { categoryName: categoryName }
-      const update = { categoryName: updateObject.name }
-      const option = { returnOriginal: false }
-      const updatedArticle = await ArticleModel.findOneAndUpdate(
-        filter,
-        update,
-        option
-      )
-      result = `{${result} , ${updatedArticle}}`
-    }
-
-    return result
+    return updatedCategory
   },
 }
 

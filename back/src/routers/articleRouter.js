@@ -18,7 +18,6 @@ articleRouter.post("/", async (req, res, next) => {
     }
 
     //const userId = req.currentUserId // jwt토큰에서 추출된 로그인 사용자 id
-    //const author = userId // 지금 로그인 한 사용자 = 게시글 작성자
     const { categoryId, hidden, title, description, author } = req.body
     const newArticle = await ArticleService.addArticle({
       categoryId,
@@ -51,8 +50,8 @@ articleRouter.put("/:id", async (req, res, next) => {
   try {
     //const userId = req.currentUserId // jwt토큰에서 추출된 로그인 사용자 id
     const articleId = req.params.id
-    const { userId, author, hidden, title, description } = req.body
-
+    const userId = req.currentUserId
+    const { author, hidden, title, description } = req.body
     if (userId == author) {
       // 로그인 사용자 = 게시글 작성자이면
       const toUpdate = { hidden, title, description }
