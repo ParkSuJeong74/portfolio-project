@@ -1,52 +1,63 @@
 {
-    "name": "mvp_21_front",
-    "version": "0.1.0",
-    "description": "portfolio web service project(21) - front",
-    "author": "dev_JM, dev_YJ",
-    "private": true,
-    "dependencies": {
-        "@fortawesome/fontawesome-svg-core": "^6.1.0",
-        "@fortawesome/free-solid-svg-icons": "^6.1.0",
-        "@fortawesome/react-fontawesome": "^0.1.18",
-        "@testing-library/jest-dom": "^5.14.1",
-        "@testing-library/react": "^12.0.0",
-        "@testing-library/user-event": "^13.2.1",
-        "axios": "^0.26.1",
-        "bootstrap": "^5.1.3",
-        "dayjs": "^1.11.0",
-        "dotenv": "^16.0.0",
-        "react": "^17.0.2",
-        "react-bootstrap": "^2.2.0",
-        "react-datepicker": "^4.7.0",
-        "react-dom": "^17.0.2",
-        "react-icons": "^4.3.1",
-        "react-router": "^6.2.2",
-        "react-router-dom": "^6.2.2",
-        "react-scripts": "5.0.0",
-        "web-vitals": "^2.1.0"
-    },
-    "scripts": {
-        "start": "react-scripts start",
-        "build": "react-scripts build",
-        "test": "react-scripts test",
-        "eject": "react-scripts eject"
-    },
-    "eslintConfig": {
-        "extends": [
-            "react-app",
-            "react-app/jest"
-        ]
-    },
-    "browserslist": {
-        "production": [
-            ">0.2%",
-            "not dead",
-            "not op_mini all"
-        ],
-        "development": [
-            "last 1 chrome version",
-            "last 1 firefox version",
-            "last 1 safari version"
-        ]
-    }
+  "name": "mvp_21_front",
+  "version": "0.1.0",
+  "description": "portfolio web service project(21) - front",
+  "author": "dev_JM, dev_YJ",
+  "private": true,
+  "dependencies": {
+    "@emotion/react": "^11.8.2",
+    "@emotion/styled": "^11.8.1",
+    "@fortawesome/fontawesome-svg-core": "^6.1.0",
+    "@fortawesome/free-solid-svg-icons": "^6.1.0",
+    "@fortawesome/react-fontawesome": "^0.1.18",
+    "@mui/icons-material": "^5.5.1",
+    "@mui/lab": "^5.0.0-alpha.75",
+    "@mui/material": "^5.5.3",
+    "@mui/styles": "^5.6.0",
+    "@testing-library/jest-dom": "^5.14.1",
+    "@testing-library/react": "^12.0.0",
+    "@testing-library/user-event": "^13.2.1",
+    "axios": "^0.26.1",
+    "bootstrap": "^5.1.3",
+    "dayjs": "^1.11.0",
+    "dotenv": "^16.0.0",
+    "react": "^17.0.2",
+    "react-bootstrap": "^2.2.0",
+    "react-datepicker": "^4.7.0",
+    "react-dom": "^17.0.2",
+    "react-icons": "^4.3.1",
+    "react-redux": "^7.2.8",
+    "react-router": "^6.2.2",
+    "react-router-dom": "^6.2.2",
+    "react-scripts": "5.0.0",
+    "redux": "^4.1.2",
+    "redux-devtools-extension": "^2.13.9",
+    "redux-promise": "^0.6.0",
+    "redux-thunk": "^2.4.1",
+    "web-vitals": "^2.1.0"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
 }

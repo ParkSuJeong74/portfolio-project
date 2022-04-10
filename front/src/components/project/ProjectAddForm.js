@@ -1,111 +1,109 @@
 import React, { useState } from "react"
-import { Form, Col, Row } from "react-bootstrap"
+
+import { Box, TextField, Stack, Button } from "@mui/material"
+import AdapterDateFns from "@mui/lab/AdapterDateFns"
+import LocalizationProvider from "@mui/lab/LocalizationProvider"
+import DesktopDatePicker from "@mui/lab/DesktopDatePicker"
+import { styled } from "@mui/material/styles"
+
 import * as Api from "../../api"
-import DatePicker from "react-datepicker"
-import Style from '../../App.module.css'
 import dayjs from "dayjs"
 
-function ProjectAddForm({ portfolioOwnerId, setProjects, setIsAdding }) {
+function ProjectAddForm({ portfolioOwnerId, setProjects, setClickAddBtn }) {
+  const [title, setTitle] = useState("")
+  const [description, setDescription] = useState("")
+  const [fromDate, setFromDate] = useState(new Date())
+  const [toDate, setToDate] = useState(new Date())
 
-    const [title, setTitle] = useState("")
+  const onSubmitHandler = async (e) => {
+    e.preventDefault()
 
-    const [description, setDescription] = useState("")
+    let from = dayjs(fromDate)
+    let to = dayjs(toDate)
 
-    const [fromDate, setFromDate] = useState(new Date())
-    const [toDate, setToDate] = useState(new Date())
+    from = dayjs(fromDate).format("YYYY-MM-DD")
+    to = dayjs(toDate).format("YYYY-MM-DD")
 
-    const handleSubmit = async (e) => {
-        e.preventDefault()
-
-        let from_date = dayjs(fromDate)
-        let to_date = dayjs(toDate)
-
-        from_date = dayjs(fromDate).format("YYYY-MM-DD")
-        to_date = dayjs(toDate).format("YYYY-MM-DD")
-
-        const newProject = await Api.post("project/create", {
-            userId: portfolioOwnerId,
-            title,
-            description,
-            fromDate: from_date,
-            toDate: to_date
-        })
-
-        setProjects((prev) =>  [...prev, newProject.data])
-
-        setIsAdding(false);
+    const newProject = {
+      userId: portfolioOwnerId,
+      title,
+      description,
+      fromDate: from,
+      toDate: to,
     }
+    try {
+      await Api.post("project/create", newProject)
+      const res = await Api.get("project/list", portfolioOwnerId)
+      setProjects(res.data)
+      setClickAddBtn(false)
+    } catch (err) {
+      alert(err.response.message)
+    }
+  }
 
-    return (
-        <Form onSubmit={handleSubmit}>
-            <Form.Group controlId="formBasicTitle">
-                <Form.Control
-                    type="text"
-                    placeholder="프로젝트 제목"
-                    value={title}
-                    style={{ 
-                    width: 'auto',
-                    border: 'solid 2px #DBC7FF'
-                    }}
-                    onChange={(e) => setTitle(e.target.value)}
-                />
-            </Form.Group>
+  return (
+    <Box component="form" onSubmit={onSubmitHandler} sx={{ mt: 1 }}>
+      <Stack spacing={2}>
+        <StyledTextField
+          required
+          label="프로젝트 제목"
+          onChange={(e) => setTitle(e.target.value)}
+        />
+        <StyledTextField
+          required
+          label="상세내역"
+          onChange={(e) => setDescription(e.target.value)}
+        />
+      </Stack>
 
-            <Form.Group controlId="formBasicDescription" className="mt-3">
-                <Form.Control
-                    type="text"
-                    placeholder="상세내역"
-                    value={description}
-                    style={{
-                    border: 'solid 2px #DBC7FF'
-                    }}
-                    onChange={(e) => setDescription(e.target.value)}
-                />
-            </Form.Group>
+      <LocalizationProvider dateAdapter={AdapterDateFns}>
+        <Stack direction="row" spacing={2} sx={{ mt: 2 }}>
+          <DesktopDatePicker
+            label="from"
+            inputFormat={"yyyy-MM-dd"}
+            mask={"____-__-__"}
+            value={fromDate}
+            onChange={(date) => setFromDate(date)}
+            renderInput={(params) => <TextField {...params} />}
+          />
+          <DesktopDatePicker
+            label="to"
+            inputFormat={"yyyy-MM-dd"}
+            mask={"____-__-__"}
+            value={toDate}
+            onChange={(date) => setToDate(date)}
+            renderInput={(params) => <TextField {...params} />}
+          />
+        </Stack>
+      </LocalizationProvider>
 
-            <Row xs={1} sm={2} className="mt-3">
-                <Col xs={'auto'} sm={'auto'}>
-                    <Form.Label className="mb-1">시작날짜</Form.Label>
-                    <DatePicker
-                    type="text"
-                    wrapperClassName="datePicker"
-                    dateFormat="yyyy.MM.dd(eee)"
-                    selected={fromDate}
-                    onChange={(fromDate) => setFromDate(fromDate)}
-                    />
-                </Col>
-
-                <Col xs={'auto'} sm={'auto'}>
-                    <Form.Label className="mb-1">종료날짜</Form.Label>
-                    <DatePicker
-                        type="text"
-                        wrapperClassName="datePicker"
-                        dateFormat="yyyy.MM.dd(eee)"
-                        selected={toDate}
-                        onChange={(toDate) => setToDate(toDate)}
-                    />
-                </Col>
-            </Row>
-
-            <Form.Group as={Row} className="mt-3 text-center">
-                <Col sm={{ span: 20 }}>
-                    
-                    <button
-                    type="submit"
-                    className={Style.mvpConfirmButton}>
-                    확인
-                    </button>
-
-                    <button
-                    onClick={() => setIsAdding(false)}
-                    className={Style.mvpCancelButton}>
-                    취소
-                    </button>
-                    
-                </Col>
-            </Form.Group>
-        </Form>
-    )
+      <StyledButton variant="contained" type="submit" size="large" fullWidth>
+        확인
+      </StyledButton>
+    </Box>
+  )
 }
 
 export default ProjectAddForm
+
+const StyledTextField = styled(TextField)({
+  "& label.Mui-focused": {
+    color: "#08075C",
+  },
+  "& .MuiInput-underline:after": {
+    borderBottomColor: "#08075C",
+  },
+  "& .MuiOutlinedInput-root": {
+    "&.Mui-focused fieldset": {
+      borderColor: "#08075C",
+    },
+  },
+})
+
+const StyledButton = styled(Button)({
+  backgroundColor: "#08075C",
+  marginTop: "20px",
+  "&:hover": {
+    backgroundColor: "#2422b8",
+  },
+})
