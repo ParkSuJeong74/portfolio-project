@@ -47,7 +47,7 @@ function App() {
   return (
     <Router>
       <div className={Style.mainWrapper}>
-        <Header />
+        <Header/>
         <Routes>
           <Route path="/" exact element={<Home />} />
           <Route path="/:categoryId" exact element={<Home />} />

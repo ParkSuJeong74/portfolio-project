@@ -65,8 +65,7 @@ function FindPassword(){
         <CssBaseline />
         <Box
             sx={{
-            marginTop: 8,
-            marginBottom: 8,
+            marginTop: 17,
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',

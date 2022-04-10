@@ -30,6 +30,10 @@ function Header() {
     { title: "유저리스트", link: "/userlist" },
   ]
 
+  if (window.location.pathname === '/findPassword'){
+    return null
+  } 
+
   return (
     <>
       <div className={Style.navBar}>
