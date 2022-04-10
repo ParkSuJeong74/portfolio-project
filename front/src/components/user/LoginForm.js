@@ -1,7 +1,7 @@
 import  { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { useDispatch } from "react-redux"
-// import { Container, Col, Row, Form, Button } from "react-bootstrap"
+import {Col, Row, Form } from "react-bootstrap"
 
 import * as Api from "../../api"
 import { login } from "../../redux/action/userAction"
@@ -11,6 +11,7 @@ import PasswordChangeModal from "./PasswordChangeModal"
 import * as React from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
+import IconButton from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
@@ -18,10 +19,11 @@ import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 
 
 function Copyright(props) {
@@ -95,7 +97,7 @@ function LoginForm() {
 
   return (
     <>
-      <ThemeProvider theme={theme}>
+      
         <Container component="main" maxWidth="xs">
           <CssBaseline />
           <Box
@@ -160,11 +162,34 @@ function LoginForm() {
                   </Link>
                 </Grid>
               </Grid>
+              
+                <Box sx={{minWidth: '30px', width: '30px', height: '30px'}}>
+                  <IconButton sx={{ width: 'inherit', height: 'inherit' }}>
+                    <img src={process.env.PUBLIC_URL + '/google.png'} style={{ width: 'inherit', height: 'inherit' }} />
+                  </IconButton>
+                </Box>
+                
+                  <IconButton>
+                    <img src={process.env.PUBLIC_URL + '/kakao.png'} style={{width: '30px', height: '30px'}} />
+                  </IconButton>
+                
+                  <IconButton >
+                    <img src={process.env.PUBLIC_URL + '/naver.png'} style={{width: '40px', height: '40px'}} />
+                  </IconButton>
+                
+                  <IconButton >
+                    <img src={process.env.PUBLIC_URL + '/github.png'} style={{width: '40px', height: '40px'}} />
+                  </IconButton>
+                
+                  <IconButton >
+                    <img src={process.env.PUBLIC_URL + '/facebook.png'} style={{width: '30px', height: '30px'}} />
+                  </IconButton>
+                
             </Box>
           </Box>
           <Copyright sx={{ mt: 8, mb: 4 }} />
         </Container>
-      </ThemeProvider>
+      
 
       {isModalActive && (
         <PasswordChangeModal
