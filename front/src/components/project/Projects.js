@@ -16,6 +16,7 @@ import {
 import AddCircleRoundedIcon from "@mui/icons-material/AddCircleRounded"
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore"
 import CloseIcon from "@mui/icons-material/Close"
+import HistoryEduRoundedIcon from '@mui/icons-material/HistoryEduRounded';
 
 import Project from "./Project"
 import ProjectAddForm from "./ProjectAddForm"
@@ -39,15 +40,17 @@ function Projects({ portfolioOwnerId, isEditable }) {
           aria-controls="panel1a-content"
           id="panel1a-header"
         >
+          <HistoryEduRoundedIcon sx={{fontSize: "2.8em"}}/>
           <Typography
             sx={{
               fontFamily: "Elice Digital Baeum",
-              fontSize: "2em",
+              fontSize: "1.8em",
               color: "#08075C",
               fontWeight: 800,
+              marginLeft: "15px"
             }}
           >
-            프로젝트
+            Project
           </Typography>
         </AccordionSummary>
 

@@ -16,6 +16,7 @@ import {
 import AddCircleRoundedIcon from "@mui/icons-material/AddCircleRounded"
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore"
 import CloseIcon from "@mui/icons-material/Close"
+import CreditCardRoundedIcon from '@mui/icons-material/CreditCardRounded';
 
 import * as Api from "../../api"
 import Certificate from "./Certificate"
@@ -39,15 +40,17 @@ function Certificates({ portfolioOwnerId, isEditable }) {
           aria-controls="panel1a-content"
           id="panel1a-header"
         >
+          <CreditCardRoundedIcon sx={{fontSize: "2.8em"}}/>
           <Typography
             sx={{
               fontFamily: "Elice Digital Baeum",
-              fontSize: "2em",
+              fontSize: "1.8em",
               color: "#08075C",
               fontWeight: 800,
+              marginLeft: "15px"
             }}
           >
-            자격증
+            Certificate
           </Typography>
         </AccordionSummary>
 
