@@ -8,6 +8,7 @@ import Educations from "./education/Educations"
 import Certificates from "./certificate/Certificates"
 import Awards from "./award/Awards"
 import Projects from "./project/Projects"
+import PortfolioSection from './PortfolioSection'
 
 import { Container, Grid } from "@mui/material"
 import Style from "../App.module.css"
@@ -49,6 +50,7 @@ function Portfolio() {
   return (
     <Container maxWidth="xl">
       <Grid container spacing={2}>
+
         <Grid item md={3} xs={12}>
           <User
             portfolioOwnerId={portfolioOwner.id}
@@ -61,6 +63,8 @@ function Portfolio() {
           xs={12}
           className={[Style.mvpBackground, "mt-4", "mb-4"].join(" ")}
         >
+          <PortfolioSection />
+
           <Educations
             portfolioOwnerId={portfolioOwner.id}
             isEditable={portfolioOwner.id === userState.user?.id}
