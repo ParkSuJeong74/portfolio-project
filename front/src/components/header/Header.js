@@ -35,6 +35,11 @@ function Header() {
     navigate("/")
   }
 
+  if (window.location.pathname === '/findPassword'){
+    return null;
+  } 
+
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static" sx={{ boxShadow: 0 }}>

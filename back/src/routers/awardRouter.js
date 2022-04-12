@@ -6,7 +6,7 @@ const awardRouter = Router()
 
 awardRouter.use(login_required)
 
-awardRouter.post("/create", async (req, res, next) => {
+awardRouter.post("/", async (req, res, next) => {
   try {
     if (is.emptyObject(req.body)) {
       throw new Error(
@@ -27,7 +27,7 @@ awardRouter.post("/create", async (req, res, next) => {
   }
 })
 
-awardRouter.get("/list/:userId", async (req, res, next) => {
+awardRouter.get("/lists/:userId", async (req, res, next) => {
   try {
     const userId = req.params.userId
     const awardList = await AwardService.getAwardList({ userId })

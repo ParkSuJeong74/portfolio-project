@@ -1,0 +1,18 @@
+version: '3'
+services:
+  frontend_server:
+    image: ghcr.io/parksujeong74/pupa-front:ver1.0.0
+    restart: "on-failure"
+    ports:
+      - 80:80
+    networks:
+      - portfolio-service
+  backend_server:
+    image: ghcr.io/parksujeong74/pupa-back:ver1.0.0
+    restart: "on-failure"
+    ports:
+      - 5001:5001
+    networks:
+      - portfolio-service
+networks:
+  portfolio-service:
