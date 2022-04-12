@@ -1,9 +1,8 @@
 import styled from "styled-components";
 
-const COLOR = '#6D55FF'
-
 function PortfolioSection(){
-    
+    const COLOR = '#6D55FF'
+
     return (
         <>
             <Rect style={{backgroundColor: COLOR}}>

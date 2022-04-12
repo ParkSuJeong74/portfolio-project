@@ -36,22 +36,41 @@ function Certificates({ portfolioOwnerId, isEditable }) {
     <Card sx={{ marginBottom: "20px", borderRadius: "15px" }}>
       <Accordion defaultExpanded={true} sx={{ boxShadow: 0 }}>
         <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1a-content"
           id="panel1a-header"
+          style={{padding: 0}}
         >
-          <CreditCardRoundedIcon sx={{fontSize: "2.8em"}}/>
-          <Typography
-            sx={{
-              fontFamily: "Elice Digital Baeum",
-              fontSize: "1.8em",
-              color: "#08075C",
-              fontWeight: 800,
-              marginLeft: "15px"
-            }}
-          >
-            Certificate
-          </Typography>
+          <Box 
+            sx={{ 
+              width: '100%', 
+              display: 'flex', 
+              justifyContent: 'space-between', 
+            }}>
+          
+            <Box sx={{ display: 'flex', marginLeft: '20px'}}>
+              <CreditCardRoundedIcon sx={{fontSize: "2.8em"}}/>
+              <Typography
+                sx={{
+                  fontFamily: "Elice Digital Baeum",
+                  fontSize: "1.8em",
+                  color: "#08075C",
+                  fontWeight: 800,
+                  marginLeft: "15px",
+                }}
+              >
+                Certificate
+              </Typography>
+            </Box>
+          
+            <Typography
+              sx={{
+                marginTop: '10px',
+                width: '500px',
+                height: '20px',
+                backgroundColor: '#6D55FF',
+              }} />
+        </Box>
+          
         </AccordionSummary>
 
         <AccordionDetails>

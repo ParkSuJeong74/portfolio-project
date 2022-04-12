@@ -62,6 +62,7 @@ function Awards({ portfolioOwnerId, isEditable }) {
           
             <Typography
               sx={{
+                marginTop: '10px',
                 width: '500px',
                 height: '20px',
                 backgroundColor: '#6D55FF',
