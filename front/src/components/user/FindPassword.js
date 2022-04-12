@@ -73,7 +73,7 @@ function FindPassword(){
             sx={{
                 paddingTop: 1,
                 paddingBottom: 2,
-                marginTop: '140px',
+                marginTop: 'auto',
                 bgcolor: 'white',
                 boxShadow: '0px 0px 10px gray'
             }}>
