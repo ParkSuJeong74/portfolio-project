@@ -10,6 +10,7 @@ import Header from "./components/header/Header"
 import LoginForm from "./components/user/LoginForm"
 import Network from "./components/user/Network"
 import RegisterForm from "./components/user/RegisterForm"
+import FindPassword from "./components/user/FindPassword"
 import Portfolio from "./components/Portfolio"
 import Home from "./components/Home"
 import Footer from "./components/Footer"
@@ -46,13 +47,14 @@ function App() {
   return (
     <Router>
       <div className={Style.mainWrapper}>
-        <Header />
+        <Header/>
         <Routes>
           <Route path="/" exact element={<Home />} />
           <Route path="/:categoryId" exact element={<Home />} />
           <Route path="/:categoryId/:articleName" element={<Home />} />
           <Route path="/login" element={<LoginForm />} />
           <Route path="/register" element={<RegisterForm />} />
+          <Route path="/findPassword" element={<FindPassword />} />
           <Route path="/user/:userId" element={<Portfolio />} />
           <Route path="/portfolio" element={<Portfolio />} />
           <Route path="/userlist" element={<Network />} />
