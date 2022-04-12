@@ -15,6 +15,7 @@ const { errorMiddleware } = require("./middlewares/errorMiddleware")
 const app = express()
 // CORS 에러 방지
 
+//app.use(cors({ origin: 'http://elice-kdt-ai-4th-team21.elicecoding.com', optionsSuccessStatus: 200 } ))
 app.use(cors())
 // express 기본 제공 middleware
 // express.json(): POST 등의 요청과 함께 오는 json형태의 데이터를 인식하고 핸들링할 수 있게 함.
@@ -31,15 +32,15 @@ app.get("/", (req, res) => {
 })
 
 // router, service 구현 (userAuthRouter는 맨 위에 있어야 함.)
-app.use("/user", userAuthRouter)
-app.use("/password", passwordRouter)
-app.use("/award", awardRouter)
-app.use("/project", projectRouter)
-app.use("/education", educationRouter)
-app.use("/certificate", certificateRouter)
-app.use("/category", categoryRouter)
-app.use("/article", articleRouter)
-app.use("/comment", commentRouter)
+app.use("/users", userAuthRouter)
+app.use("/passwords", passwordRouter)
+app.use("/awards", awardRouter)
+app.use("/projects", projectRouter)
+app.use("/educations", educationRouter)
+app.use("/certificates", certificateRouter)
+app.use("/categories", categoryRouter)
+app.use("/articles", articleRouter)
+app.use("/comments", commentRouter)
 
 // 순서 중요 (router 에서 next() 시 아래의 에러 핸들링  middleware로 전달됨)
 app.use(errorMiddleware)

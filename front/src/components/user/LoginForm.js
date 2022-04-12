@@ -6,8 +6,6 @@ import { Container, Col, Row, Form, Button } from "react-bootstrap"
 import * as Api from "../../api"
 import { login } from "../../redux/action/userAction"
 
-import PasswordChangeModal from "./PasswordChangeModal"
-
 function LoginForm() {
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -114,9 +112,7 @@ function LoginForm() {
                 <Col sm={{ span: 20 }}>
                   <Button
                     style={{ backgroundColor: "#FF87D2", border: "solid 2px" }}
-                    onClick={() => {
-                      handleModalShow()
-                    }}
+                    onClick={() => navigate('/findPassword')}
                   >
                     비밀번호 찾기
                   </Button>
@@ -127,12 +123,7 @@ function LoginForm() {
         </Row>
       </Container>
 
-      {isModalActive && (
-        <PasswordChangeModal
-          onConfirm={handleModalClose}
-          onCancel={handleModalClose}
-        />
-      )}
+     
     </>
   )
 }
