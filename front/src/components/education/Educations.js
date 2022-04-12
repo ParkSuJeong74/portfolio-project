@@ -12,10 +12,14 @@ import {
   Dialog,
   DialogTitle,
   DialogContent,
+  Stack,
+  Grid,
 } from "@mui/material"
 import AddCircleRoundedIcon from "@mui/icons-material/AddCircleRounded"
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore"
 import CloseIcon from "@mui/icons-material/Close"
+import SchoolIcon from '@mui/icons-material/School';
+
 
 import * as Api from "../../api"
 import Education from "./Education"
@@ -33,22 +37,45 @@ function Educations({ portfolioOwnerId, isEditable }) {
 
   return (
     <Card sx={{ marginBottom: "20px", borderRadius: "15px" }}>
+      
       <Accordion defaultExpanded={true} sx={{ boxShadow: 0 }}>
         <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1a-content"
           id="panel1a-header"
+          style={{padding: 0}}
         >
-          <Typography
-            sx={{
-              fontFamily: "Elice Digital Baeum",
-              fontSize: "2em",
-              color: "#08075C",
-              fontWeight: 800,
-            }}
-          >
-            학력
-          </Typography>
+          <Box 
+            sx={{ 
+              width: '100%', 
+              display: 'flex', 
+              justifyContent: 'space-between', 
+            }}>
+          
+            <Box sx={{ display: 'flex', marginLeft: '20px'}}>
+              <SchoolIcon sx={{fontSize: "2.8em"}}/>
+              <Typography
+                sx={{
+                  fontFamily: "Elice Digital Baeum",
+                  fontSize: "1.8em",
+                  color: "#08075C",
+                  fontWeight: 800,
+                  marginLeft: "15px",
+                }}
+              >
+                Education
+              </Typography>
+            </Box>
+          
+            <Typography
+              sx={{
+                marginTop: '10px',
+                width: '500px',
+                height: '20px',
+                backgroundColor: '#6D55FF',
+              }} />
+
+        </Box>
+
         </AccordionSummary>
 
         <AccordionDetails>
