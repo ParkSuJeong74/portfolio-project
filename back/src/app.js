@@ -37,7 +37,7 @@ app.use("/awards", awardRouter)
 app.use("/projects", projectRouter)
 app.use("/educations", educationRouter)
 app.use("/certificates", certificateRouter)
-app.use("/categorys", categoryRouter)
+app.use("/categories", categoryRouter)
 app.use("/articles", articleRouter)
 app.use("/comments", commentRouter)
 
