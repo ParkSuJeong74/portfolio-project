@@ -15,6 +15,7 @@ const Articles = ({ isLogin, category, owner }) => {
         const getData = async () => {
             try {
                 await Api.get(`categories/${category?.id}`).then((res) => {
+                    console.log(res.data)
                     articleDispatch({
                         type: "SET",
                         payload: res.data.article,

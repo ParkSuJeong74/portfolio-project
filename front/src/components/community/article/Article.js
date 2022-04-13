@@ -1,21 +1,29 @@
 import { useState } from "react"
 import ArticleCard from "./ArticleCard"
 import ArticleEditForm from "./ArticleEditForm"
-import { Link } from 'react-router-dom'
-import Style from '../../../App.module.css'
-import * as Api from '../../../api'
+import { Link } from "react-router-dom"
+import Style from "../../../App.module.css"
+import * as Api from "../../../api"
 
-const Article = ({ category, article, dispatch, owner, isLogin, setIsDetail, setSelectedArticle }) => {
+const Article = ({
+    category,
+    article,
+    dispatch,
+    owner,
+    isLogin,
+    setIsDetail,
+    setSelectedArticle,
+}) => {
     const [isEditing, setIsEditing] = useState(false)
 
     const removeArticle = async () => {
         //TODO: Api delete 요청
         try {
-            await Api.delete(`article/${article.id}`)
+            await Api.delete(`articles/${article.id}`)
 
             dispatch({
-                type: 'DELETE',
-                payload: article
+                type: "DELETE",
+                payload: article,
             })
         } catch (error) {
             alert(error.response.data)
@@ -28,9 +36,13 @@ const Article = ({ category, article, dispatch, owner, isLogin, setIsDetail, set
                 <ArticleEditForm
                     currentArticle={article}
                     dispatch={dispatch}
-                    setIsEditing={setIsEditing} />
+                    setIsEditing={setIsEditing}
+                />
             ) : (
-                <Link to={`/${category.id}/${article.title}`} className={Style.articleLink}>
+                <Link
+                    to={`/${category.id}/${article.title}`}
+                    className={Style.articleLink}
+                >
                     <ArticleCard
                         className={Style.articleCard}
                         article={article}
@@ -39,7 +51,8 @@ const Article = ({ category, article, dispatch, owner, isLogin, setIsDetail, set
                         removeArticle={removeArticle}
                         setIsEditing={setIsEditing}
                         setIsDetail={setIsDetail}
-                        setSelectedArticle={setSelectedArticle} />
+                        setSelectedArticle={setSelectedArticle}
+                    />
                 </Link>
             )}
         </>
