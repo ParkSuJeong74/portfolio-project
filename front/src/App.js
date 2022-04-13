@@ -18,52 +18,55 @@ import Footer from "./components/Footer"
 import Style from "./App.module.css"
 
 function App() {
-  const dispatch = useDispatch()
+    const dispatch = useDispatch()
 
-  const [isFetchCompleted, setIsFetchCompleted] = useState(false)
+    const [isFetchCompleted, setIsFetchCompleted] = useState(false)
 
-  const fetchCurrentUser = async () => {
-    try {
-      const res = await Api.get("user/current")
-      const currentUser = res.data
+    const fetchCurrentUser = async () => {
+        try {
+            const res = await Api.get("users/current")
+            const currentUser = res.data
 
-      dispatch(login(currentUser))
+            dispatch(login(currentUser))
 
-      console.log("%c sessionStorage에 토큰 있음.", "color: #d93d1a;")
-    } catch {
-      console.log("%c SessionStorage에 토큰 없음.", "color: #d93d1a;")
+            console.log("%c sessionStorage에 토큰 있음.", "color: #d93d1a;")
+        } catch {
+            console.log("%c SessionStorage에 토큰 없음.", "color: #d93d1a;")
+        }
+        setIsFetchCompleted(true)
     }
-    setIsFetchCompleted(true)
-  }
 
-  useEffect(() => {
-    fetchCurrentUser()
-  }, [])
+    useEffect(() => {
+        fetchCurrentUser()
+    }, [])
 
-  if (!isFetchCompleted) {
-    return "loading..."
-  }
+    if (!isFetchCompleted) {
+        return "loading..."
+    }
 
-  return (
-    <Router>
-      <div className={Style.mainWrapper}>
-        <Header/>
-        <Routes>
-          <Route path="/" exact element={<Home />} />
-          <Route path="/:categoryId" exact element={<Home />} />
-          <Route path="/:categoryId/:articleName" element={<Home />} />
-          <Route path="/login" element={<LoginForm />} />
-          <Route path="/register" element={<RegisterForm />} />
-          <Route path="/findPassword" element={<FindPassword />} />
-          <Route path="/user/:userId" element={<Portfolio />} />
-          <Route path="/portfolio" element={<Portfolio />} />
-          <Route path="/userlist" element={<Network />} />
-          <Route path="*" element={<Home />} />
-        </Routes>
-        <Footer />
-      </div>
-    </Router>
-  )
+    return (
+        <Router>
+            <div className={Style.mainWrapper}>
+                <Header />
+                <Routes>
+                    <Route path="/" exact element={<Home />} />
+                    <Route path="/:categoryId" exact element={<Home />} />
+                    <Route
+                        path="/:categoryId/:articleName"
+                        element={<Home />}
+                    />
+                    <Route path="/login" element={<LoginForm />} />
+                    <Route path="/register" element={<RegisterForm />} />
+                    <Route path="/findPassword" element={<FindPassword />} />
+                    <Route path="/user/:userId" element={<Portfolio />} />
+                    <Route path="/portfolio" element={<Portfolio />} />
+                    <Route path="/userlist" element={<Network />} />
+                    <Route path="*" element={<Home />} />
+                </Routes>
+                <Footer />
+            </div>
+        </Router>
+    )
 }
 
 export default App

@@ -12,82 +12,81 @@ import Categories from "./community/category/Categories"
 import { categoryReducer } from "../reducer"
 
 function Home() {
-  const navigate = useNavigate()
-  const params = useParams()
-  const userState = useSelector((state) => state.user)
+    const navigate = useNavigate()
+    const params = useParams()
+    const userState = useSelector((state) => state.user)
 
-  const [categories, categoryDispatch] = useReducer(categoryReducer, [])
-  const [owner, setOwner] = useState(null)
-  const [IsArticleOpen, setIsArticleOpen] = useState(false) // 카테고리 하위 Article visible 여부 저장
-  const [selectedCategory, setSelectedCategory] = useState({}) // 선택된 카테고리 저장
-  const [IsinitialCategory, setIsinitialCategory] = useState(false) // 공지사항 visible 여부 저장
-  const [initialCategory, setInitialCategory] = useState({}) // 카테고리 리스트 저장
+    const [categories, categoryDispatch] = useReducer(categoryReducer, [])
+    const [owner, setOwner] = useState(null)
+    const [IsArticleOpen, setIsArticleOpen] = useState(false) // 카테고리 하위 Article visible 여부 저장
+    const [selectedCategory, setSelectedCategory] = useState({}) // 선택된 카테고리 저장
+    const [IsinitialCategory, setIsinitialCategory] = useState(false) // 공지사항 visible 여부 저장
+    const [initialCategory, setInitialCategory] = useState({}) // 카테고리 리스트 저장
 
-  const fetchOwner = async (ownerId) => {
-    const res = await Api.get("user", ownerId)
-    const ownerData = res.data
-    setOwner(ownerData)
-  }
-
-  useEffect(() => {
-    if (params.userId) {
-      const ownerId = params.userId
-      fetchOwner(ownerId)
-    } else {
-      const ownerId = userState.user?.id
-      fetchOwner(ownerId)
+    const fetchOwner = async (ownerId) => {
+        const res = await Api.get("users", ownerId)
+        const ownerData = res.data
+        setOwner(ownerData)
     }
-  }, [params, userState, navigate])
 
-  // 전역상태에서 user가 null이 아니라면 로그인 성공 상태임.
-  const isLogin = !!userState.user
+    useEffect(() => {
+        if (params.userId) {
+            const ownerId = params.userId
+            fetchOwner(ownerId)
+        } else {
+            const ownerId = userState.user?.id
+            fetchOwner(ownerId)
+        }
+    }, [params, userState, navigate])
 
-  useEffect(() => {
-    const categoryName = "*공지사항*"
-    Api.get(`category/${categoryName}`).then((res) => {
-      setInitialCategory(res.data.category)
-      setIsinitialCategory(true)
-    })
-  }, [])
+    // 전역상태에서 user가 null이 아니라면 로그인 성공 상태임.
+    const isLogin = !!userState.user
 
-  return (
-    <Container>
-      <Row xs={1} xxl={2}>
-        <Col md="3" lg="3" xxl={3}>
-          {isLogin ? (
-            <User portfolioOwnerId={userState.user?.id} />
-          ) : (
-            <LoginForm />
-          )}
-          <Categories
-            categories={categories}
-            isLogin={isLogin}
-            dispatch={categoryDispatch}
-            setIsArticleOpen={setIsArticleOpen}
-            setSelectedCategory={setSelectedCategory}
-            setIsinitialCategory={setIsinitialCategory}
-          />
-        </Col>
+    useEffect(() => {
+        Api.get("categories/lists").then((res) => {
+            setInitialCategory(res.data[0])
+            setIsinitialCategory(true)
+        })
+    }, [])
 
-        <Col xxl={9} className="mb-4">
-          {IsinitialCategory && (
-            <Articles
-              isLogin={isLogin}
-              owner={owner}
-              category={initialCategory}
-            />
-          )}
+    return (
+        <Container>
+            <Row xs={1} xxl={2}>
+                <Col md="3" lg="3" xxl={3}>
+                    {isLogin ? (
+                        <User portfolioOwnerId={userState.user?.id} />
+                    ) : (
+                        <LoginForm />
+                    )}
+                    <Categories
+                        categories={categories}
+                        isLogin={isLogin}
+                        dispatch={categoryDispatch}
+                        setIsArticleOpen={setIsArticleOpen}
+                        setSelectedCategory={setSelectedCategory}
+                        setIsinitialCategory={setIsinitialCategory}
+                    />
+                </Col>
 
-          {IsArticleOpen && (
-            <Articles
-              isLogin={isLogin}
-              owner={owner}
-              category={selectedCategory}
-            />
-          )}
-        </Col>
-      </Row>
-    </Container>
-  )
+                <Col xxl={9} className="mb-4">
+                    {IsinitialCategory && (
+                        <Articles
+                            isLogin={isLogin}
+                            owner={owner}
+                            category={initialCategory}
+                        />
+                    )}
+
+                    {IsArticleOpen && (
+                        <Articles
+                            isLogin={isLogin}
+                            owner={owner}
+                            category={selectedCategory}
+                        />
+                    )}
+                </Col>
+            </Row>
+        </Container>
+    )
 }
 export default Home
