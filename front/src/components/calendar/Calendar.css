@@ -1,0 +1,15 @@
+@import "~@fullcalendar/daygrid/main.css";
+
+/* calendar custom */
+.fc .fc-col-header-cell-cushion {
+  display: inline-block;
+  padding: 2px 4px;
+  text-decoration: none;
+}
+
+.fc .fc-daygrid-day-number {
+  position: relative;
+  z-index: 4;
+  padding: 4px;
+  text-decoration: none;
+}
