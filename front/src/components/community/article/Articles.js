@@ -1,28 +1,27 @@
-import { useEffect, useReducer, useState } from 'react'
-import { Card, Row, Col } from 'react-bootstrap'
-import Article from './Article'
+import { useEffect, useReducer, useState } from "react"
+import { Card, Row, Col } from "react-bootstrap"
+import Article from "./Article"
 import * as Api from "../../../api"
-import ArticleAddForm from './ArticleAddForm'
-import Style from '../../../App.module.css'
-import ArticleDetail from './ArticleDetail'
-import { articleReducer } from '../../../reducer'
+import ArticleAddForm from "./ArticleAddForm"
+import Style from "../../../App.module.css"
+import ArticleDetail from "./ArticleDetail"
+import { articleReducer } from "../../../reducer"
 
 const Articles = ({ isLogin, category, owner }) => {
-
     const [articles, articleDispatch] = useReducer(articleReducer, [])
 
     //TODO: API get 요청해서 set하기!
     useEffect(() => {
         const getData = async () => {
             try {
-                await Api.get(`category/${category?.name}`)
-                    .then((res) => {
-                        articleDispatch({
-                            type: 'SET',
-                            payload: res.data.article
-                        })
-                        console.log('게시글 목록을 불러왔어요.')
+                await Api.get(`categories/${category?.id}`).then((res) => {
+                    console.log(res.data)
+                    articleDispatch({
+                        type: "SET",
+                        payload: res.data.article,
                     })
+                    console.log("게시글 목록을 불러왔어요.")
+                })
             } catch (error) {
                 alert(error.response.data)
             }
@@ -42,9 +41,11 @@ const Articles = ({ isLogin, category, owner }) => {
         setIsDetail(false)
     }, [category?.name])
     return (
-        <Card className={['mt-4', 'mb-4'].join(' ')}>
+        <Card className={["mt-4", "mb-4"].join(" ")}>
             <div class={Style.articleItem}>
-                <Card.Title style={{ fontWeight: 'bolder' }}>{category?.name}</Card.Title>
+                <Card.Title style={{ fontWeight: "bolder" }}>
+                    {category?.name}
+                </Card.Title>
             </div>
 
             {isDetail ? (
@@ -53,7 +54,8 @@ const Articles = ({ isLogin, category, owner }) => {
                     setIsDetail={setIsDetail}
                     selectedArticle={selectedArticle}
                     isLogin={isLogin}
-                    owner={owner} />
+                    owner={owner}
+                />
             ) : (
                 <Card.Body style={{ backgroundColor: "#F6F7FF" }}>
                     {/*로그인했을 때만 글작성할 수 있음 */}
@@ -62,8 +64,11 @@ const Articles = ({ isLogin, category, owner }) => {
                             <Col className="mb-4">
                                 <button
                                     onClick={() => setIsAdding(true)}
-                                    className={[Style.formAddButton, Style.communityAddButton].join(' ')}>
-                                </button>
+                                    className={[
+                                        Style.formAddButton,
+                                        Style.communityAddButton,
+                                    ].join(" ")}
+                                ></button>
                             </Col>
                         </Row>
                     )}
@@ -74,7 +79,8 @@ const Articles = ({ isLogin, category, owner }) => {
                             category={category}
                             articles={articles}
                             dispatch={articleDispatch}
-                            setIsAdding={setIsAdding} />
+                            setIsAdding={setIsAdding}
+                        />
                     )}
 
                     {articles.map((article) => (
@@ -92,7 +98,6 @@ const Articles = ({ isLogin, category, owner }) => {
                 </Card.Body>
             )}
         </Card>
-        
     )
 }
 export default Articles

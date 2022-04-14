@@ -1,73 +1,76 @@
-import React, { useState } from "react";
-import { Form, Col, Row } from "react-bootstrap";
-import * as Api from "../../../api";
-import Style from '../../../App.module.css'
+import React, { useState } from "react"
+import { Form, Col, Row } from "react-bootstrap"
+import * as Api from "../../../api"
+import Style from "../../../App.module.css"
 
 function CommentAddForm({ owner, comments, dispatch, setIsAdding, article }) {
-    
-    const [comment, setComment] = useState("");
+    const [comment, setComment] = useState("")
 
     const [hidden, setHidden] = useState(false)
 
     const handleSubmit = async (e) => {
-        e.preventDefault();
+        e.preventDefault()
         // TODO: Api post 요청하기!
         try {
-            const newComment = await Api.post(`comment/create`, {
+            const newComment = await Api.post(`comments`, {
                 userId: owner.id,
                 articleId: article.id,
                 writerId: owner.id,
                 comment: comment,
-                hidden: hidden
+                hidden: hidden,
             })
 
             dispatch({
-                type: 'ADD',
-                payload: newComment.data
-                
+                type: "ADD",
+                payload: newComment.data,
             })
-    
-            setIsAdding(false);
+
+            setIsAdding(false)
         } catch (error) {
             alert(error.response.data)
         }
-    };
+    }
 
     return (
         <Form onSubmit={handleSubmit}>
-
-            <Form.Check 
+            <Form.Check
                 type="checkbox"
-                label= "익명"
-                checked = {hidden}
-                onChange={() => setHidden((prev) => !prev)} />
-        
+                label="익명"
+                checked={hidden}
+                onChange={() => setHidden((prev) => !prev)}
+            />
+
             <Form.Group controlId="formBasicContent" className="mt-3">
                 <Form.Control
                     type="text"
                     placeholder="댓글 내용"
                     value={comment}
-                    onChange={(e) => setComment(e.target.value)} />
+                    onChange={(e) => setComment(e.target.value)}
+                />
             </Form.Group>
 
             <Form.Group as={Row} className="mt-3 text-center">
                 <Col sm={{ span: 20 }}>
                     <button
                         type="submit"
-                        className={[Style.confirmButton, Style.communityAddButton].join(' ')}>
+                        className={[
+                            Style.confirmButton,
+                            Style.communityAddButton,
+                        ].join(" ")}
+                    >
                         확인
                     </button>
 
                     <button
                         onClick={() => setIsAdding(false)}
-                        className={Style.cancelButton}>
+                        className={Style.cancelButton}
+                    >
                         취소
                     </button>
                 </Col>
             </Form.Group>
-
         </Form>
-    );
+    )
 }
 
-export default CommentAddForm;
+export default CommentAddForm

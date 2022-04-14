@@ -1,14 +1,14 @@
-import {Modal, Button} from 'react-bootstrap'
-import * as Api from '../../api'
+import { Modal, Button } from "react-bootstrap"
+import * as Api from "../../api"
 
-function UnfollowModal({handleClose, show, myID, yourID, setUsers}){
-
-    async function unFollow(){
-        const res = await Api.put(`user/follow/${myID}`, {userIdYour: yourID})
-        console.log(res)
+function UnfollowModal({ handleClose, show, myID, yourID, setUsers }) {
+    async function unFollow() {
+        await Api.put(`users/follow/${myID}`, {
+            userIdYour: yourID,
+        })
         handleClose()
         alert("언팔로우 되었습니다!!")
-        Api.get("user/list").then((res) => setUsers(res.data));
+        Api.get("users/lists").then((res) => setUsers(res.data))
     }
 
     return (
@@ -21,10 +21,10 @@ function UnfollowModal({handleClose, show, myID, yourID, setUsers}){
 
             <Modal.Footer>
                 <Button variant="secondary" onClick={unFollow}>
-                네! 
+                    네!
                 </Button>
                 <Button variant="primary" onClick={handleClose}>
-                아니요! 
+                    아니요!
                 </Button>
             </Modal.Footer>
         </Modal>
