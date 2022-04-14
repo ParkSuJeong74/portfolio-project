@@ -83,6 +83,21 @@ userAuthRouter.get("/current", login_required, async (req, res, next) => {
     }
 })
 
+userAuthRouter.put("/follow", login_required, async (req, res, next) => {
+    try {
+        const userIdMy = req.currentUserId
+        console.log(userIdMy)
+        const { targetUserId } = req.body
+        const updatedUsers = await userAuthService.setUserFollow({
+            userIdYour: targetUserId,
+            userIdMy,
+        })
+        res.status(200).json(updatedUsers)
+    } catch (error) {
+        next(error)
+    }
+})
+
 // put user info
 userAuthRouter.put("/:id", login_required, async (req, res, next) => {
     try {
@@ -123,22 +138,6 @@ userAuthRouter.delete("/:id", login_required, async (req, res, next) => {
         const result = await userAuthService.deleteUser({ userId })
 
         res.status(200).send(result)
-    } catch (error) {
-        next(error)
-    }
-})
-
-userAuthRouter.put("/follow/:id", login_required, async (req, res, next) => {
-    try {
-        const userId = req.params.id
-        const { targetUserId } = req.body
-
-        const updatedUsers = await userAuthService.setUserFollow({
-            targetUserId,
-            userId,
-        })
-
-        res.status(200).json(updatedUsers)
     } catch (error) {
         next(error)
     }

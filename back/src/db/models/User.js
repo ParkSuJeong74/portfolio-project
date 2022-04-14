@@ -32,13 +32,13 @@ const User = {
         const option = { returnOriginal: false }
 
         const updatedUser = await UserModel.findOneAndUpdate(
-        filter,
-        update,
-        option
+            filter,
+            update,
+            option
         )
         return updatedUser
     },
-    
+
     updatePassword: async ({ email, newPassword }) => {
         const filter = { email }
         const update = { password: newPassword }
@@ -55,7 +55,7 @@ const User = {
         const deleteResult = await UserModel.deleteOne({ id: userId })
         const isDataDeleted = deleteResult.deletedCount === 1
         return isDataDeleted
-    }
+    },
 }
 
 module.exports = { User }

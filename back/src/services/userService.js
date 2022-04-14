@@ -110,7 +110,7 @@ const userAuthService = {
         return { status: "ok" }
     },
 
-    setUserFollow: async ({ userIdYour: targetUserId, userIdMy: userId }) => {
+    setUserFollow: async ({ userIdYour, userIdMy }) => {
         let userYour = await User.findById({ userId: userIdYour })
         if (!userYour) {
             throw new Error("사용자 정보를 불러올 수 없습니다.")
