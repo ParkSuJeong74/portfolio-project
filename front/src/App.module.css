@@ -16,7 +16,11 @@
     font-family: "Elice Digital Baeum", sans-serif;
 }
 
-
+.mainWrapper {
+    min-height: 100vh;
+    display: flex; 
+    flex-direction: column;
+}
 
 .Title {
     font-family: 'SANGJUDajungdagam';
@@ -126,7 +130,6 @@
 }
 
 .mvpBackground {
-    background-color: #E5D6FF;
     padding: 20px;
     border-radius: 15px;
     margin-top: 20px;

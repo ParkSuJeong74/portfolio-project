@@ -200,12 +200,7 @@ function LoginForm() {
         </Container>
       
 
-      {isModalActive && (
-        <PasswordChangeModal
-          onConfirm={handleModalClose}
-          onCancel={handleModalClose}
-        />
-      )}
+     
     </>
   )
 }
