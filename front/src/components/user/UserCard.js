@@ -8,32 +8,25 @@ import { BsFillPersonPlusFill } from "react-icons/bs"
 import * as Api from "../../api"
 import UnfollowModal from "./UnfollowModal"
 
-function UserCard({
-    user,
-    setIsEditing,
-    isEditable,
-    myID,
-    isNetwork,
-    setUsers,
-}) {
+function UserCard({ user, setIsEditing, isEditable, isNetwork, setUsers }) {
     const navigate = useNavigate()
     const userState = useSelector((state) => state.user)
+    const userId = userState.user.id
 
-    const isNotMyProfileinHome_Mypage = userState.user?.id !== user?.id
-
-    const isNotMyProfileinNetwork = myID !== user?.id
+    const isNotMyProfileinHome_Mypage = userId !== user?.id
+    const isNotMyProfileinNetwork = userId !== user?.id
 
     const [show, setShow] = useState(false)
 
     const handleClose = () => setShow(false)
     const handleShow = () => setShow(true)
 
-    const followFollowing = async (myID, yourID) => {
+    const followFollowing = async (userId, targetUserId) => {
         try {
-            const check = await Api.get("users", yourID)
+            const check = await Api.get("users", targetUserId)
 
             const isfollowed = check.data.follower.find(
-                (follower) => follower === myID,
+                (follower) => follower === userId,
             )
             const currentFollow = isfollowed
                 ? "팔로우한 상태입니다."
@@ -41,11 +34,10 @@ function UserCard({
             console.log(currentFollow)
 
             if (!isfollowed) {
-                const res = await Api.put(`users/follow/${myID}`, {
-                    userIdYour: yourID,
+                await Api.put("users/follow", {
+                    targetUserId,
                 })
                 alert("팔로우되었습니다!")
-                console.log(res)
                 Api.get("users/lists").then((res) => setUsers(res.data))
             } else {
                 handleShow()
@@ -78,7 +70,7 @@ function UserCard({
                                 isNotMyProfileinNetwork && (
                                     <BsFillPersonPlusFill
                                         onClick={() => {
-                                            followFollowing(myID, user?.id)
+                                            followFollowing(userId, user?.id)
                                         }}
                                     />
                                 )}
@@ -134,8 +126,7 @@ function UserCard({
             <UnfollowModal
                 handleClose={handleClose}
                 show={show}
-                myID={myID}
-                yourID={user?.id}
+                targetUserId={user?.id}
                 setUsers={setUsers}
             />
         </>
