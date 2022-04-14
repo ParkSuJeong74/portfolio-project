@@ -54,7 +54,7 @@ function LoginForm() {
         return email
             .toLowerCase()
             .match(
-                /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+                /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
             )
     }
 
@@ -192,6 +192,7 @@ function LoginForm() {
                                             width: "inherit",
                                             height: "inherit",
                                         }}
+                                        alt="google_login"
                                     />
                                 </IconButton>
                             </Col>
@@ -213,6 +214,7 @@ function LoginForm() {
                                             width: "30px",
                                             height: "30px",
                                         }}
+                                        alt="kakao_login"
                                     />
                                 </IconButton>
                             </Col>
@@ -234,6 +236,7 @@ function LoginForm() {
                                             width: "40px",
                                             height: "40px",
                                         }}
+                                        alt="naver_login"
                                     />
                                 </IconButton>
                             </Col>
@@ -255,6 +258,7 @@ function LoginForm() {
                                             width: "30px",
                                             height: "30px",
                                         }}
+                                        alt="github_login"
                                     />
                                 </IconButton>
                             </Col>
@@ -276,6 +280,7 @@ function LoginForm() {
                                             width: "30px",
                                             height: "30px",
                                         }}
+                                        alt="facebook_login"
                                     />
                                 </IconButton>
                             </Col>
