@@ -1,10 +1,11 @@
-import React, { useState, useContext } from "react"
+import React, { useState } from "react"
+import { useSelector } from "react-redux"
+
 import { Button, Grid, IconButton, Menu, MenuItem } from "@mui/material"
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz"
 import EditIcon from "@mui/icons-material/Edit"
 import DeleteIcon from "@mui/icons-material/Delete"
 
-import { UserStateContext } from "../../App"
 import * as Api from "../../api"
 
 function CertificateCard({
@@ -13,7 +14,7 @@ function CertificateCard({
   certificate,
   setCertificates,
 }) {
-  const userState = useContext(UserStateContext) // 현재 로그인된 유저의 정보를 가져옵니다.
+  const userState = useSelector((state) => state.user) // 현재 로그인된 유저의 정보를 가져옵니다.
   const [anchorEl, setAnchorEl] = useState(null) // Menu Element를 가리킵니다.
   const [isOpen, setIsOpen] = useState(null) // Menu Element의 Open 상태를 저장합니다.
 
@@ -30,7 +31,7 @@ function CertificateCard({
 
   const removeCertificate = async () => {
     try {
-      // certificate DELETE 요청을 보내 학력을 삭제합니다.
+      // certificate로 DELETE 요청을 보내 학력을 삭제합니다.
       await Api.delete("certificate", certificate.id)
 
       const res = await Api.get("certificate/list", userId)
@@ -39,6 +40,7 @@ function CertificateCard({
       alert(error.response.data)
     }
   }
+
   return (
     <Grid container spacing={2}>
       <Grid item xs={10}>

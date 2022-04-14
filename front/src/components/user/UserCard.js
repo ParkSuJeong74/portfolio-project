@@ -1,10 +1,12 @@
+import { useState } from "react"
 import { useNavigate } from "react-router-dom"
+import { useSelector } from "react-redux"
+
 import { Card, Row, Button, Col } from "react-bootstrap"
 import { BsFillPersonPlusFill } from "react-icons/bs"
-import { useState, useContext } from "react"
+
 import * as Api from "../../api"
 import UnfollowModal from "./UnfollowModal"
-import { UserStateContext } from "../../App"
 
 function UserCard({
   user,
@@ -15,7 +17,7 @@ function UserCard({
   setUsers,
 }) {
   const navigate = useNavigate()
-  const userState = useContext(UserStateContext)
+  const userState = useSelector((state) => state.user)
 
   const isNotMyProfileinHome_Mypage = userState.user?.id !== user?.id
 

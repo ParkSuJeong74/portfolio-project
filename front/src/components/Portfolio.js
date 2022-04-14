@@ -1,25 +1,24 @@
-import React, { useContext, useState, useEffect } from "react"
+import React, { useState, useEffect } from "react"
 import { useNavigate, useParams } from "react-router-dom"
-import { Container, Grid } from "@mui/material"
+import { useSelector } from "react-redux"
 
-import { UserStateContext } from "../App"
 import * as Api from "../api"
-
 import User from "./user/User"
 import Educations from "./education/Educations"
 import Certificates from "./certificate/Certificates"
 import Awards from "./award/Awards"
 import Projects from "./project/Projects"
 
+import { Container, Grid } from "@mui/material"
 import Style from "../App.module.css"
 
 function Portfolio() {
   const navigate = useNavigate()
+  const userState = useSelector((state) => state.user)
   const params = useParams()
 
   const [portfolioOwner, setPortfolioOwner] = useState(null)
   const [isFetchCompleted, setIsFetchCompleted] = useState(false)
-  const userState = useContext(UserStateContext)
 
   const fetchPorfolioOwner = async (ownerId) => {
     const res = await Api.get("user", ownerId)

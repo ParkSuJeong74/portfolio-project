@@ -1,143 +1,213 @@
-import React, { useState, useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Container, Col, Row, Form, Button } from 'react-bootstrap';
+import  { useState } from "react"
+import { useNavigate } from "react-router-dom"
+import { useDispatch } from "react-redux"
+import {Col, Row, Form } from "react-bootstrap"
 
-import * as Api from '../../api';
-import { DispatchContext } from '../../App';
+import * as Api from "../../api"
+import { login } from "../../redux/action/userAction"
 
-import PasswordChangeModal from './PasswordChangeModal';
+import PasswordChangeModal from "./PasswordChangeModal"
 
-function LoginForm() {
-    const navigate = useNavigate();
-    const userDispatch = useContext(DispatchContext);
+import * as React from 'react';
+import Avatar from '@mui/material/Avatar';
+import Button from '@mui/material/Button';
+import IconButton from '@mui/material/Button';
+import CssBaseline from '@mui/material/CssBaseline';
+import TextField from '@mui/material/TextField';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
+import Link from '@mui/material/Link';
+import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
 
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+import Typography from '@mui/material/Typography';
+import Container from '@mui/material/Container';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 
-    const validateEmail = (email) => {
-        return email
-            .toLowerCase()
-            .match(
-                /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-            );
-    };
 
-    const isEmailValid = validateEmail(email);
-    const isPasswordValid = password.length >= 4;
-
-    const isFormValid = isEmailValid && isPasswordValid;
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-
-        try {
-            const res = await Api.post('user/login', {
-                email,
-                password,
-            });
-            const user = res.data;
-            const jwtToken = user.token;
-            sessionStorage.setItem('userToken', jwtToken);
-
-            userDispatch({
-                type: 'LOGIN_SUCCESS',
-                payload: user,
-            });
-
-            navigate('/', { replace: true });
-        } catch (error) {
-            alert(error.response.data)
-        }
-    };
-
-    const [isModalActive, setIsModalActive] = useState(false);
-
-    const handleModalClose = () => setIsModalActive(false);
-    const handleModalShow = () => setIsModalActive(true);
-
-    return (
-        <>
-            <Container>
-                <Row className="justify-content-md-center mt-5">
-                    <Col lg={12}>
-                        <Form onSubmit={handleSubmit}>
-                            <Form.Group controlId="loginEmail">
-                                <Form.Label>이메일 주소</Form.Label>
-                                <Form.Control
-                                    type="email"
-                                    autoComplete="on"
-                                    value={email}
-                                    style={{
-                                        border: 'solid 2px #DBC7FF',
-                                    }}
-                                    onChange={(e) => setEmail(e.target.value)}
-                                />
-                                {!isEmailValid && (
-                                    <Form.Text className="text-success">
-                                        이메일 형식이 올바르지 않습니다.
-                                    </Form.Text>
-                                )}
-                            </Form.Group>
-
-                            <Form.Group controlId="loginPassword" className="mt-3">
-                                <Form.Label>비밀번호</Form.Label>
-                                <Form.Control
-                                    type="password"
-                                    autoComplete="on"
-                                    value={password}
-                                    style={{
-                                        border: 'solid 2px #DBC7FF',
-                                    }}
-                                    onChange={(e) => setPassword(e.target.value)}
-                                />
-                                {!isPasswordValid && (
-                                    <Form.Text className="text-success">
-                                        비밀번호는 4글자 이상입니다.
-                                    </Form.Text>
-                                )}
-                            </Form.Group>
-
-                            <Form.Group as={Row} className="mt-3 text-center">
-                                <Col sm={{ span: 20 }}>
-                                    <Button
-                                        className="me-5"
-                                        variant="primary"
-                                        type="submit"
-                                        disabled={!isFormValid}
-                                    >
-                                        로그인
-                                    </Button>
-                                    <Button variant="light" onClick={() => navigate('/register')}>
-                                        회원가입
-                                    </Button>
-                                </Col>
-                            </Form.Group>
-
-                            <Form.Group as={Row} className="mt-3 text-center">
-                                <Col sm={{ span: 20 }}>
-                                    <Button
-                                        style={{ backgroundColor: '#FF87D2', border: 'solid 2px' }}
-                                        onClick={() => {
-                                            handleModalShow();
-                                        }}
-                                    >
-                                        비밀번호 찾기
-                                    </Button>
-                                </Col>
-                            </Form.Group>
-                        </Form>
-                    </Col>
-                </Row>
-            </Container>
-            
-            {isModalActive && (
-                <PasswordChangeModal
-                    onConfirm={handleModalClose}
-                    onCancel={handleModalClose}
-                />
-            )}
-        </>
-    );
+function Copyright(props) {
+  return (
+    <Typography variant="body2" color="text.secondary" align="center" {...props}>
+      {'Copyright © '}
+      <Link color="inherit" href="localhost:3000">
+        PUPA
+      </Link>{' '}
+      {new Date().getFullYear()}
+      {'.'}
+    </Typography>
+  );
 }
 
-export default LoginForm;
+const theme = createTheme();
+
+function LoginForm() {
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+
+  const validateEmail = (email) => {
+    return email
+      .toLowerCase()
+      .match(
+        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+      )
+  }
+
+  const isEmailValid = validateEmail(email)
+  const isPasswordValid = password.length >= 4
+
+  // const isFormValid = isEmailValid && isPasswordValid
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+
+    try {
+      const res = await Api.post("user/login", {
+        email,
+        password,
+      })
+      const user = res.data
+      const jwtToken = user.token
+      sessionStorage.setItem("userToken", jwtToken)
+
+      dispatch(login(user))
+      navigate("/", { replace: true })
+    } catch (error) {
+      alert(error.response.data)
+    }
+  }
+
+  const [isModalActive, setIsModalActive] = useState(false)
+
+  const handleModalClose = () => setIsModalActive(false)
+  const handleModalShow = () => setIsModalActive(true)
+
+
+  // const handleSubmit = (event) => {
+  //   event.preventDefault();
+  //   const data = new FormData(event.currentTarget);
+  //   console.log({
+  //     email: data.get('email'),
+  //     password: data.get('password'),
+  //   });
+  // };
+
+  return (
+    <>
+      
+        <Container component="main" maxWidth="xs">
+          <CssBaseline />
+          <Box
+            sx={{
+              marginTop: 8,
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+            }}
+          >
+            <Avatar sx={{ m: 1, bgcolor: '#08075C' }}>
+              <img src={process.env.PUBLIC_URL + '/only_butterflies.png'} style={{width: '80px', height: '40px'}} />
+            </Avatar>
+            <Typography component="h1" variant="h5">
+              Sign in
+            </Typography>
+            <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                id="email"
+                label="Email Address"
+                name="email"
+                autoComplete="email"
+                autoFocus
+                onChange={(e) => setEmail(e.target.value)}
+              />
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                name="password"
+                label="Password"
+                type="password"
+                id="password"
+                autoComplete="current-password"
+                onChange={(e) => setPassword(e.target.value)}
+              />
+              <FormControlLabel
+                control={<Checkbox value="remember" color="primary" />}
+                label="Remember me"
+              />
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                sx={{ mt: 3, mb: 2 }}
+                style={{backgroundColor: '#08075C'}}
+              >
+                Sign In
+              </Button>
+              <Grid container>
+                <Grid item xs>
+                  <Link onClick={()=>{ handleModalShow()}} variant="body2">
+                    Forgot password?
+                  </Link>
+                </Grid>
+                <Grid item>
+                  <Link onClick={()=>navigate("/register")} variant="body2">
+                    {"Don't have an account? Sign Up"}
+                  </Link>
+                </Grid>
+              </Grid>
+              
+                <Row className= 'mt-3'>
+                  <Col>
+                    <IconButton sx={{ minWidth: '30px', width: '30px', height: '30px' }}>
+                      <img src={process.env.PUBLIC_URL + '/google.png'} style={{ width: 'inherit', height: 'inherit' }} />
+                    </IconButton>
+                  </Col>
+
+                  <Col>
+                    <IconButton sx={{ minWidth: '30px', width: '30px', height: '30px' }}>
+                      <img src={process.env.PUBLIC_URL + '/kakao.png'} style={{width: '30px', height: '30px'}} />
+                    </IconButton>
+                  </Col>
+
+                  <Col>
+                    <IconButton sx={{ minWidth: '30px', width: '30px', height: '30px' }}>
+                      <img src={process.env.PUBLIC_URL + '/naver.png'} style={{width: '40px', height: '40px'}} />
+                    </IconButton>
+                  </Col>
+
+                  <Col>
+                    <IconButton sx={{ minWidth: '30px', width: '30px', height: '30px' }}>
+                      <img src={process.env.PUBLIC_URL + '/github.png'} style={{width: '30px', height: '30px'}} />
+                    </IconButton>
+                  </Col>
+
+                  <Col>
+                    <IconButton sx={{ minWidth: '30px', width: '30px', height: '30px' }}>
+                      <img src={process.env.PUBLIC_URL + '/facebook.png'} style={{width: '30px', height: '30px'}} />
+                    </IconButton>
+                  </Col>
+                </Row> 
+            </Box>
+          </Box>
+          <Copyright sx={{ mt: 8, mb: 4 }} />
+        </Container>
+      
+
+      {isModalActive && (
+        <PasswordChangeModal
+          onConfirm={handleModalClose}
+          onCancel={handleModalClose}
+        />
+      )}
+    </>
+  )
+}
+
+export default LoginForm
